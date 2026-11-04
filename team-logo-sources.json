@@ -1,0 +1,298 @@
+[
+  {
+    "key": "T1",
+    "name": "T1",
+    "url": "https://static.lolesports.com/teams/1726801573959_539px-T1_2019_full_allmode.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "f8c8ec8a6a7c351d768425f411170a940a64aaf33f534101b94bbcbb50e4a009",
+    "bytes": 16197
+  },
+  {
+    "key": "DRX",
+    "name": "DRX Academy",
+    "url": "https://static.lolesports.com/teams/1672910754122_01.Basic_B.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "a499d415074eda823fbead469a1dd3e37ec480314600d686b71ab6a2597f29fa",
+    "bytes": 3116
+  },
+  {
+    "key": "DPLUS",
+    "name": "Dplus KIA",
+    "url": "https://static.lolesports.com/teams/1673260049704_DPlusKIALOGO2.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "d07ea8242c8f4eee3d6c5878eb083c887ad9f60b02a43bdd71c7b2c30cc43bae",
+    "bytes": 7110
+  },
+  {
+    "key": "KT",
+    "name": "kt Rolster",
+    "url": "https://static.lolesports.com/teams/kt_whitebackground.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "c3eeb5d614a3d3ed0625aa0352212b7c815487805bd1b5283b776269b7243223",
+    "bytes": 40467
+  },
+  {
+    "key": "NS",
+    "name": "NONGSHIM RED FORCE",
+    "url": "https://static.lolesports.com/teams/NSFullonLight.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "40ce7cd0fc90bde4e646790e35ab1656fe58333e360e5c9d69a9d5e466ab1f53",
+    "bytes": 20021
+  },
+  {
+    "key": "BRO",
+    "name": "BRO Academy",
+    "url": "https://static.lolesports.com/teams/1672911283897_BRIONlogo_profile1.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "a6810e4e256e9d480c08a96250d42d56248e11b11a482f931e019df8682c771d",
+    "bytes": 22786
+  },
+  {
+    "key": "HLE",
+    "name": "Hanwha Life Esports",
+    "url": "https://static.lolesports.com/teams/hle-2021-color-on-light2.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "6c44b9ab475660f69aae8b455cd4bb6ef199093a922fa8d5b5c98ffc2f4dd291",
+    "bytes": 61943
+  },
+  {
+    "key": "JDG",
+    "name": "Beijing JDG Esports",
+    "url": "https://static.lolesports.com/teams/1627457924722_29.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "4c61b67a32fe8b72242e9feb9126214aae34cd1bd13eb6a735513b355b47af09",
+    "bytes": 18749
+  },
+  {
+    "key": "RNG",
+    "name": "Royal Never Give Up",
+    "url": "https://static.lolesports.com/teams/1631819360134_rng-2021-worlds.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "fb78990cbf0a42f5d2b229b118de1746c2a7bae5f463e60828afa2d5643d532a",
+    "bytes": 21984
+  },
+  {
+    "key": "EDG",
+    "name": "EDWARD GAMING",
+    "url": "https://static.lolesports.com/teams/1694151726921_logo-edg.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "4f3749b6fb907f867c3e652a0ca2d2d8139db6225314030025e67556f1676682",
+    "bytes": 27624
+  },
+  {
+    "key": "TES",
+    "name": "TOP ESPORTS",
+    "url": "https://static.lolesports.com/teams/1592592064573_TopEsportsTES-03-FullonLight.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "b45234426fcce4afb03007f0e32517e98d5d9fd57e8a8743bda4d54ab2017a21",
+    "bytes": 7996
+  },
+  {
+    "key": "BLG",
+    "name": "BILIBILI GAMING",
+    "url": "https://static.lolesports.com/teams/1682322954527_Bilibili_Gaming_logo_20211.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "86bec7c42ffac90feac3555e2e15741660d734f1168715e88cbc8cbd2404dfe1",
+    "bytes": 22151
+  },
+  {
+    "key": "WBG",
+    "name": "WeiboGaming",
+    "url": "https://static.lolesports.com/teams/1641202879910_1.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "311e52edb92fdd33fdbd206923d27773e9da5f63156e460f43a22a3c4f456528",
+    "bytes": 23803
+  },
+  {
+    "key": "G2",
+    "name": "G2 Esports",
+    "url": "https://static.lolesports.com/teams/G2-FullonLight.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "2def0c4a1a119c5449d47d0fe7c5dcaf502ebd0c65174983b4de2161bf90bc58",
+    "bytes": 16727
+  },
+  {
+    "key": "FNC",
+    "name": "Fnatic",
+    "url": "https://static.lolesports.com/teams/1592591295310_FnaticFNC-03-FullonLight.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "01c41bd32c492677b2a08e9b7d0e2d4eff5146de7221fcf38f7b8d35c1d7680a",
+    "bytes": 10879
+  },
+  {
+    "key": "RGE",
+    "name": "Rogue",
+    "url": "https://static.lolesports.com/teams/1705054928406_RGE.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "f6fa5b10114c11eda11b556faf118dce743c1f0f1342c673d07e474604ba3b49",
+    "bytes": 83714
+  },
+  {
+    "key": "C9",
+    "name": "Cloud9 Challengers",
+    "url": "https://static.lolesports.com/teams/1592590172119_Cloud9C9-03-FullonLight.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "843c1027995cff8b699c7235757c84a1552f41d0536ca899d2b847f528260173",
+    "bytes": 93423
+  },
+  {
+    "key": "TL",
+    "name": "Team Liquid Honda First",
+    "url": "https://static.lolesports.com/teams/1673449715067_TL_logo_color.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "18e426eefe1bc5509609b69730adb9f94c7a28be45e9fe3fb3b9a994f536dbe0",
+    "bytes": 51443
+  },
+  {
+    "key": "100T",
+    "name": "100 Thieves",
+    "url": "https://static.lolesports.com/teams/1631819887423_100t-2021-worlds.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "aa6273b9f7de383a50a1dd59f267138900ee839b5069fe28c6a7b9d92d51e8cb",
+    "bytes": 125908
+  },
+  {
+    "key": "EG",
+    "name": "Evil Geniuses LG",
+    "url": "https://static.lolesports.com/teams/1592590374875_EvilGeniusesEG-03-FullonLight.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "8792e4deaaf3ac85c84c5975691053face58d6b2b41cf1a9405a0e89aeed73ef",
+    "bytes": 9442
+  },
+  {
+    "key": "PSG",
+    "name": "PSG Talon",
+    "url": "https://static.lolesports.com/teams/1752559016251_PSG_TALON_COLOR.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "cf222613f20b0cf76366095c8127771e57c25e553d2f6867f0cf027dacbf1e6d",
+    "bytes": 142350
+  },
+  {
+    "key": "CFO",
+    "name": "CTBC Flying Oyster",
+    "url": "https://static.lolesports.com/teams/1656307849321_CFO_Logo.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "cd34e587b8405d05942153c685e21b91ca3efa4598fefa8b607cd86224a2f1a5",
+    "bytes": 69614
+  },
+  {
+    "key": "GAM",
+    "name": "GAM Esports",
+    "url": "https://static.lolesports.com/teams/1643263093449_GAMyellow.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "3cee23a1259ac23a99cfb739231ee3844d626d4e6cff816af0a73b99b402148b",
+    "bytes": 77813
+  },
+  {
+    "key": "DFM",
+    "name": "DetonatioN FocusMe",
+    "url": "https://static.lolesports.com/teams/1673415140445_dfm.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "8c65f38c61daf86321b9d2f3572cf1d08324889f53f6da97c123aa2a90e251af",
+    "bytes": 8000
+  },
+  {
+    "key": "LOUD",
+    "name": "LOUD",
+    "url": "https://static.lolesports.com/teams/Logo-LOUD-Esports_Original.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "dfae32324ce6bcff828bdaf4685d6bb378b7356076755c29cfe7fa77fd9e5341",
+    "bytes": 392159
+  },
+  {
+    "key": "BDS",
+    "name": "Team BDS Academy",
+    "url": "https://static.lolesports.com/teams/1641944663689_bdslogo.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "41374e5d260bfe21ae9a4b944e04a9a8a8ca579653aab97068745c6d951ed8b3",
+    "bytes": 6002
+  },
+  {
+    "key": "DWG",
+    "name": "DWG_KIAlogo_square.png",
+    "url": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/3/32/DWG_KIAlogo_square.png/revision/latest/scale-to-width-down/160",
+    "source": "Leaguepedia historical team logo",
+    "sha256": "7cd03bd9456b8b94da45199e8e6419f767c26c604f1b230c598588192f230a57",
+    "bytes": 3644
+  },
+  {
+    "key": "AF",
+    "name": "Afreeca_Freecslogo_square.png",
+    "url": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/7/70/Afreeca_Freecslogo_square.png/revision/latest/scale-to-width-down/160",
+    "source": "Leaguepedia historical team logo",
+    "sha256": "035f44cd1c217d613f6bdacbc7fede079eac1e94c951a5506941ec2e00a4a874",
+    "bytes": 1772
+  },
+  {
+    "key": "KDF",
+    "name": "Kwangdong_Freecslogo_square.png",
+    "url": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/7/79/Kwangdong_Freecslogo_square.png/revision/latest/scale-to-width-down/160",
+    "source": "Leaguepedia historical team logo",
+    "sha256": "6b2b1d57c39db5a42af6675c680108514a3c191c912833659ad076085229e1da",
+    "bytes": 6070
+  },
+  {
+    "key": "LSB",
+    "name": "Liiv_SANDBOXlogo_square.png",
+    "url": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/a/ad/Liiv_SANDBOXlogo_square.png/revision/latest/scale-to-width-down/160",
+    "source": "Leaguepedia historical team logo",
+    "sha256": "b66112cfe7e66ceebab5ae17a1cc5646f932facb8099c7181da1e1b11e8c4e67",
+    "bytes": 12228
+  },
+  {
+    "key": "FOX",
+    "name": "FearXlogo_square.png",
+    "url": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/0/0e/FearXlogo_square.png/revision/latest/scale-to-width-down/160",
+    "source": "Leaguepedia historical team logo",
+    "sha256": "2d0c1ca5dcbaa99f5ff3f595afb17feeca271eca8a485441627ec8b27be0e11b",
+    "bytes": 3136
+  },
+  {
+    "key": "BFX",
+    "name": "BNK_FEARXlogo_square.png",
+    "url": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/5/5b/BNK_FEARXlogo_square.png/revision/latest/scale-to-width-down/160",
+    "source": "Leaguepedia historical team logo",
+    "sha256": "e82f9a3d298ceafc35206f1bda930770512ce39f28d1d41934bd6df57f8d29df",
+    "bytes": 12790
+  },
+  {
+    "key": "DNF",
+    "name": "DN_Freecslogo_square.png",
+    "url": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/7/77/DN_Freecslogo_square.png/revision/latest/scale-to-width-down/160",
+    "source": "Leaguepedia historical team logo",
+    "sha256": "ee4b0b09cc355a44ff3ccba292c0a3a5a8a355992d4b673802976579c4e276c8",
+    "bytes": 1824
+  },
+  {
+    "key": "SGB",
+    "name": "Saigon_Buffalologo_square.png",
+    "url": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/4/44/Saigon_Buffalologo_square.png/revision/latest/scale-to-width-down/160",
+    "source": "Leaguepedia historical team logo",
+    "sha256": "706582a64b890c5fcfcb0fe0152214701eff6b75ee7db4d7a935b0f5ed577a11",
+    "bytes": 9846
+  },
+  {
+    "key": "ISG",
+    "name": "Isuruslogo_square.png",
+    "url": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/5/50/Isuruslogo_square.png/revision/latest/scale-to-width-down/160",
+    "source": "Leaguepedia historical team logo",
+    "sha256": "c1fde9c9358538bc68b7b3915b956bc6e74e88b5e7869156efd1df8718956a1d",
+    "bytes": 8472
+  },
+  {
+    "key": "GEN",
+    "name": "Gen.Glogo_square.png",
+    "url": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/e/e3/Gen.Glogo_square.png/revision/latest/scale-to-width-down/160",
+    "source": "Leaguepedia historical team logo",
+    "sha256": "7976846a26426cecd4042cc6f509ebcb25d0bc4f852889c4b43a882dc55313ed",
+    "bytes": 1742
+  },
+  {
+    "key": "MAD",
+    "name": "MAD Lions",
+    "url": "https://static.lolesports.com/teams/1592591395341_MadLionsMAD-03-FullonLight.png",
+    "source": "Riot historical team logo",
+    "sha256": "bdf8d985e063357e31ce8c7b534a413d3305efa02e03a174f2f6b69fa4375cdc",
+    "bytes": 27691
+  }
+]
