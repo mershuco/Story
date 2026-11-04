@@ -1,0 +1,3390 @@
+{
+  "sources": {
+    "2014": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2014_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "1985de5baac22e3106c5f9559700b0b2b7d2ac9e51a332edb81b2a128b7fc6dd",
+      "rows": 9180
+    },
+    "2015": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2015_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "73911149a403abb7dcec5c6cee623e45132b737d78a4360afa5029c3a7b22c22",
+      "rows": 18160
+    },
+    "2016": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2016_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "de1cad3a46232e1dde2f9679f87974d710f2334865d29f6d0228101a5339633f",
+      "rows": 42140
+    },
+    "2017": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2017_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "0a0e9e9f0e6a5f7b417decdb037141c8f3b4bc1e1700151718317c3d5e16e3f1",
+      "rows": 57020
+    },
+    "2018": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2018_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "0607ca899a212685c17367fcbdabbe6c2d4f033d76737d927ad6657c00cad93e",
+      "rows": 67370
+    },
+    "2019": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2019_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "ad59340e88fa091e4f5814cd8cf083889c28f9e7d1bbefe226489db1dccd20e5",
+      "rows": 81250
+    },
+    "2020": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2020_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "8e4a5717c8a5fcef0164d8d572547396ba97479bebb75273419d8ade6e34ae65",
+      "rows": 97510
+    },
+    "2021": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2021_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "425610d96ae6ed5b00a12947498c7a3f1551db261c14ae9dbdb42ac6810fee2b",
+      "rows": 123720
+    },
+    "2022": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2022_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "af4a2bfc89bc82d3c57d94baf0564f3c59b96e67638220fce2a7665422d14c7c",
+      "rows": 124150
+    },
+    "2023": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2023_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "7bd46b6a3c26248124caf9b9ceb64cbe4300ef0d3ade2b260032900fe8749ef2",
+      "rows": 111190
+    },
+    "2024": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2024_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "80bcb27fd138b0a5bc19246bd302b5cf01eaee71af2339bf8801956c7e827b1d",
+      "rows": 101990
+    },
+    "2025": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2025_LoL_esports_match_data_from_OraclesElixir.csv",
+      "sha256": "ce53b0b2df69a078a641d88f1a7910cb2ec542d337711e7292998c7d3699ccf5",
+      "rows": 100530
+    }
+  },
+  "events": [
+    {
+      "id": "2014-WLDs-",
+      "year": 2014,
+      "league": "WLDs",
+      "name": "2014 WLDs",
+      "date": "2014-10-19",
+      "winner": "Samsung White",
+      "runner": "Royal Club",
+      "points": 18,
+      "participants": {
+        "Samsung White": [],
+        "Royal Club": []
+      },
+      "games": [
+        "TRLH3/1000480040",
+        "TRLH3/1000480046",
+        "TRLH3/1000480047",
+        "TRLH3/1000490068"
+      ],
+      "source": "2014",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2014-EU LCS-Spring",
+      "year": 2014,
+      "league": "EU LCS",
+      "name": "2014 EU LCS Spring",
+      "date": "2014-04-17",
+      "winner": "Fnatic",
+      "runner": "SK Gaming",
+      "points": 6,
+      "participants": {
+        "Fnatic": [
+          "oe:player:d8362fe0d38ca0e70953ed957deaa00"
+        ],
+        "SK Gaming": []
+      },
+      "games": [
+        "TRLH3/1000150151",
+        "TRLH3/1000150155",
+        "TRLH3/1000150156",
+        "TRLH3/1000150157"
+      ],
+      "source": "2014",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2015-WLDs-",
+      "year": 2015,
+      "league": "WLDs",
+      "name": "2015 WLDs",
+      "date": "2015-10-31",
+      "winner": "SK Telecom T1",
+      "runner": "ROX Tigers",
+      "points": 18,
+      "participants": {
+        "ROX Tigers": [],
+        "SK Telecom T1": [
+          "oe:player:526e67744f0b90739ec17c191c62d24",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc"
+        ]
+      },
+      "games": [
+        "TRLH3/1001440036",
+        "TRLH3/1001440041",
+        "TRLH3/1001440042",
+        "TRLH3/1001440043"
+      ],
+      "source": "2015",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2015-MSI-",
+      "year": 2015,
+      "league": "MSI",
+      "name": "2015 MSI",
+      "date": "2015-05-11",
+      "winner": "EDward Gaming",
+      "runner": "SK Telecom T1",
+      "points": 12,
+      "participants": {
+        "SK Telecom T1": [
+          "oe:player:526e67744f0b90739ec17c191c62d24",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc"
+        ],
+        "EDward Gaming": [
+          "oe:player:c588a2d07b69ca4ba61c96aebd3f793"
+        ]
+      },
+      "games": [
+        "TRLH1/1001130414",
+        "TRLH1/1001130420",
+        "TRLH1/1001130423",
+        "TRLH1/1001140341",
+        "TRLH1/1001140344"
+      ],
+      "source": "2015",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2015-LCK-Spring",
+      "year": 2015,
+      "league": "LCK",
+      "name": "2015 LCK Spring",
+      "date": "2015-05-02",
+      "winner": "SK Telecom T1",
+      "runner": "ROX Tigers",
+      "points": 8,
+      "participants": {
+        "ROX Tigers": [],
+        "SK Telecom T1": [
+          "oe:player:526e67744f0b90739ec17c191c62d24",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc"
+        ]
+      },
+      "games": [
+        "TRKR1/590145",
+        "TRKR1/590153",
+        "TRKR1/590155"
+      ],
+      "source": "2015",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2015-LCK-Summer",
+      "year": 2015,
+      "league": "LCK",
+      "name": "2015 LCK Summer",
+      "date": "2015-08-29",
+      "winner": "SK Telecom T1",
+      "runner": "KT Rolster",
+      "points": 8,
+      "participants": {
+        "SK Telecom T1": [
+          "oe:player:526e67744f0b90739ec17c191c62d24",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc"
+        ],
+        "KT Rolster": []
+      },
+      "games": [
+        "TRKR1/750465",
+        "TRKR1/750467",
+        "TRKR1/750469"
+      ],
+      "source": "2015",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2015-EU LCS-Spring",
+      "year": 2015,
+      "league": "EU LCS",
+      "name": "2015 EU LCS Spring",
+      "date": "2015-04-19",
+      "winner": "Fnatic",
+      "runner": "Unicorns of Love",
+      "points": 6,
+      "participants": {
+        "Fnatic": [],
+        "Unicorns of Love": []
+      },
+      "games": [
+        "TRLH3/1001130066",
+        "TRLH3/1001130067",
+        "TRLH3/1001130068",
+        "TRLH3/1001130069",
+        "TRLH3/1001130070"
+      ],
+      "source": "2015",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2015-EU LCS-Summer",
+      "year": 2015,
+      "league": "EU LCS",
+      "name": "2015 EU LCS Summer",
+      "date": "2015-08-23",
+      "winner": "Fnatic",
+      "runner": "Origen",
+      "points": 6,
+      "participants": {
+        "Fnatic": [
+          "oe:player:d8362fe0d38ca0e70953ed957deaa00"
+        ],
+        "Origen": []
+      },
+      "games": [
+        "TRLH3/1001290080",
+        "TRLH3/1001290081",
+        "TRLH3/1001290082",
+        "TRLH3/1001290083",
+        "TRLH3/1001290084"
+      ],
+      "source": "2015",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2016-WLDs-",
+      "year": 2016,
+      "league": "WLDs",
+      "name": "2016 WLDs",
+      "date": "2016-10-30",
+      "winner": "SK Telecom T1",
+      "runner": "Samsung Galaxy",
+      "points": 18,
+      "participants": {
+        "Samsung Galaxy": [
+          "oe:player:eada4723af6f51cf2391d85b5fde49b"
+        ],
+        "SK Telecom T1": [
+          "oe:player:526e67744f0b90739ec17c191c62d24",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:e4ef81cce7e4e10033ebb10962dfdd5"
+        ]
+      },
+      "games": [
+        "TRLH1/1001960052",
+        "TRLH1/1001960063",
+        "TRLH1/1001960064",
+        "TRLH1/1001960065",
+        "TRLH1/1001960067"
+      ],
+      "source": "2016",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2016-MSI-",
+      "year": 2016,
+      "league": "MSI",
+      "name": "2016 MSI",
+      "date": "2016-05-15",
+      "winner": "SK Telecom T1",
+      "runner": "Counter Logic Gaming",
+      "points": 12,
+      "participants": {
+        "Counter Logic Gaming": [],
+        "SK Telecom T1": [
+          "oe:player:526e67744f0b90739ec17c191c62d24",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:e4ef81cce7e4e10033ebb10962dfdd5"
+        ]
+      },
+      "games": [
+        "TRLT3/70046",
+        "TRLT3/70062",
+        "TRLT3/70063"
+      ],
+      "source": "2016",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2016-LCK-Spring",
+      "year": 2016,
+      "league": "LCK",
+      "name": "2016 LCK Spring",
+      "date": "2016-04-23",
+      "winner": "SK Telecom T1",
+      "runner": "ROX Tigers",
+      "points": 8,
+      "participants": {
+        "ROX Tigers": [
+          "oe:player:dda4a873265dfd06df50a0d8a294908"
+        ],
+        "SK Telecom T1": [
+          "oe:player:526e67744f0b90739ec17c191c62d24",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:e4ef81cce7e4e10033ebb10962dfdd5"
+        ]
+      },
+      "games": [
+        "TRKR1/1041038",
+        "TRKR1/1041040",
+        "TRKR1/1041041",
+        "TRKR1/1041043"
+      ],
+      "source": "2016",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2016-LCK-Summer",
+      "year": 2016,
+      "league": "LCK",
+      "name": "2016 LCK Summer",
+      "date": "2016-08-20",
+      "winner": "ROX Tigers",
+      "runner": "KT Rolster",
+      "points": 8,
+      "participants": {
+        "ROX Tigers": [
+          "oe:player:dda4a873265dfd06df50a0d8a294908"
+        ],
+        "KT Rolster": [
+          "oe:player:6c1fa8d6ae91f559b9d317477dad3ea"
+        ]
+      },
+      "games": [
+        "TRKR1/1180446",
+        "TRKR1/1180447",
+        "TRKR1/1180449",
+        "TRKR1/1180453",
+        "TRKR1/1180454"
+      ],
+      "source": "2016",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2016-LPL-Summer",
+      "year": 2016,
+      "league": "LPL",
+      "name": "2016 LPL Summer",
+      "date": "2016-08-26",
+      "winner": "EDward Gaming",
+      "runner": "Royal Never Give Up",
+      "points": 8,
+      "participants": {
+        "EDward Gaming": [
+          "oe:player:c588a2d07b69ca4ba61c96aebd3f793"
+        ],
+        "Royal Never Give Up": []
+      },
+      "games": [
+        "1102-1309",
+        "1102-1310",
+        "1102-1311"
+      ],
+      "source": "2016",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2017-WLDs-",
+      "year": 2017,
+      "league": "WLDs",
+      "name": "2017 WLDs",
+      "date": "2017-11-04",
+      "winner": "Samsung Galaxy",
+      "runner": "SK Telecom T1",
+      "points": 18,
+      "participants": {
+        "Samsung Galaxy": [
+          "oe:player:eada4723af6f51cf2391d85b5fde49b"
+        ],
+        "SK Telecom T1": [
+          "oe:player:526e67744f0b90739ec17c191c62d24",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:e4ef81cce7e4e10033ebb10962dfdd5"
+        ]
+      },
+      "games": [
+        "TRLH3/1002320090",
+        "TRLH3/1002320097",
+        "TRLH3/1002320098"
+      ],
+      "source": "2017",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2017-MSI-",
+      "year": 2017,
+      "league": "MSI",
+      "name": "2017 MSI",
+      "date": "2017-05-21",
+      "winner": "SK Telecom T1",
+      "runner": "G2 Esports",
+      "points": 12,
+      "participants": {
+        "G2 Esports": [],
+        "SK Telecom T1": [
+          "oe:player:526e67744f0b90739ec17c191c62d24",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc"
+        ]
+      },
+      "games": [
+        "TRLH1/1002180435",
+        "TRLH1/1002180449",
+        "TRLH1/1002180451",
+        "TRLH1/1002180452"
+      ],
+      "source": "2017",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2017-LCK-Spring",
+      "year": 2017,
+      "league": "LCK",
+      "name": "2017 LCK Spring",
+      "date": "2017-04-22",
+      "winner": "SK Telecom T1",
+      "runner": "KT Rolster",
+      "points": 8,
+      "participants": {
+        "KT Rolster": [
+          "oe:player:c588a2d07b69ca4ba61c96aebd3f793"
+        ],
+        "SK Telecom T1": [
+          "oe:player:526e67744f0b90739ec17c191c62d24",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:e4ef81cce7e4e10033ebb10962dfdd5"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT06/170084",
+        "ESPORTSTMNT06/170093",
+        "ESPORTSTMNT06/180040"
+      ],
+      "source": "2017",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2017-LCK-Summer",
+      "year": 2017,
+      "league": "LCK",
+      "name": "2017 LCK Summer",
+      "date": "2017-08-26",
+      "winner": "Longzhu Gaming",
+      "runner": "SK Telecom T1",
+      "points": 8,
+      "participants": {
+        "Longzhu Gaming": [
+          "oe:player:30361653a485a9609fb2d3aa073282c",
+          "oe:player:b9972f46c1e52797d66236b118d2970",
+          "oe:player:f9fe6d28d5b67bf9ac673b2cc8edf15"
+        ],
+        "SK Telecom T1": [
+          "oe:player:526e67744f0b90739ec17c191c62d24",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:e4ef81cce7e4e10033ebb10962dfdd5"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT06/341202",
+        "ESPORTSTMNT06/341204",
+        "ESPORTSTMNT06/341210",
+        "ESPORTSTMNT06/351146"
+      ],
+      "source": "2017",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2018-WLDs-",
+      "year": 2018,
+      "league": "WLDs",
+      "name": "2018 WLDs",
+      "date": "2018-11-03",
+      "winner": "Invictus Gaming",
+      "runner": "Fnatic",
+      "points": 18,
+      "participants": {
+        "Invictus Gaming": [],
+        "Fnatic": [
+          "oe:player:d8362fe0d38ca0e70953ed957deaa00"
+        ]
+      },
+      "games": [
+        "TRLH4/1002520047",
+        "TRLH4/1002520051",
+        "TRLH4/1002520052"
+      ],
+      "source": "2018",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2018-MSI-",
+      "year": 2018,
+      "league": "MSI",
+      "name": "2018 MSI",
+      "date": "2018-05-20",
+      "winner": "Royal Never Give Up",
+      "runner": "Kingzone DragonX",
+      "points": 12,
+      "participants": {
+        "Royal Never Give Up": [],
+        "Kingzone DragonX": [
+          "oe:player:30361653a485a9609fb2d3aa073282c",
+          "oe:player:b9972f46c1e52797d66236b118d2970",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:f9fe6d28d5b67bf9ac673b2cc8edf15"
+        ]
+      },
+      "games": [
+        "TRLH1/1002570087",
+        "TRLH1/1002570096",
+        "TRLH1/1002570097",
+        "TRLH1/1002570098"
+      ],
+      "source": "2018",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2018-LCK-Spring",
+      "year": 2018,
+      "league": "LCK",
+      "name": "2018 LCK Spring",
+      "date": "2018-04-14",
+      "winner": "Kingzone DragonX",
+      "runner": "DN SOOPers",
+      "points": 8,
+      "participants": {
+        "Kingzone DragonX": [
+          "oe:player:30361653a485a9609fb2d3aa073282c",
+          "oe:player:b9972f46c1e52797d66236b118d2970",
+          "oe:player:dda4a873265dfd06df50a0d8a294908"
+        ],
+        "DN SOOPers": [
+          "oe:player:03daae1844b9ad257324c3eedf41e28"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT06/651257",
+        "ESPORTSTMNT06/651264",
+        "ESPORTSTMNT06/651267",
+        "ESPORTSTMNT06/651272"
+      ],
+      "source": "2018",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2018-LCK-Summer",
+      "year": 2018,
+      "league": "LCK",
+      "name": "2018 LCK Summer",
+      "date": "2018-09-08",
+      "winner": "KT Rolster",
+      "runner": "Griffin",
+      "points": 8,
+      "participants": {
+        "KT Rolster": [
+          "oe:player:bd6a2e6aaeb993fd29f43790265297f",
+          "oe:player:c588a2d07b69ca4ba61c96aebd3f793"
+        ],
+        "Griffin": [
+          "oe:player:9573154ad8bc9459b4c0d940315054f",
+          "oe:player:b3dae530a02238b0628518ef886e505",
+          "oe:player:e4e24b8656e4e6a74b939af730b0148",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT06/801742",
+        "ESPORTSTMNT06/801761",
+        "ESPORTSTMNT06/801762",
+        "ESPORTSTMNT06/801765",
+        "ESPORTSTMNT06/801767"
+      ],
+      "source": "2018",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2018-EU LCS-Spring",
+      "year": 2018,
+      "league": "EU LCS",
+      "name": "2018 EU LCS Spring",
+      "date": "2018-04-08",
+      "winner": "Fnatic",
+      "runner": "G2 Esports",
+      "points": 6,
+      "participants": {
+        "Fnatic": [
+          "oe:player:d8362fe0d38ca0e70953ed957deaa00"
+        ],
+        "G2 Esports": []
+      },
+      "games": [
+        "TRLH3/1002490089",
+        "TRLH3/1002490090",
+        "TRLH3/1002490091"
+      ],
+      "source": "2018",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2018-EU LCS-Summer",
+      "year": 2018,
+      "league": "EU LCS",
+      "name": "2018 EU LCS Summer",
+      "date": "2018-09-09",
+      "winner": "Fnatic",
+      "runner": "FC Schalke 04 Esports",
+      "points": 6,
+      "participants": {
+        "Fnatic": [
+          "oe:player:d8362fe0d38ca0e70953ed957deaa00"
+        ],
+        "FC Schalke 04 Esports": []
+      },
+      "games": [
+        "TRLH3/1002700040",
+        "TRLH3/1002700041",
+        "TRLH3/1002700044",
+        "TRLH3/1002700045"
+      ],
+      "source": "2018",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2019-WLDs-",
+      "year": 2019,
+      "league": "WLDs",
+      "name": "2019 WLDs",
+      "date": "2019-11-10",
+      "winner": "FunPlus Phoenix",
+      "runner": "G2 Esports",
+      "points": 18,
+      "participants": {
+        "FunPlus Phoenix": [],
+        "G2 Esports": []
+      },
+      "games": [
+        "ESPORTSTMNT06/1072511",
+        "ESPORTSTMNT06/1072516",
+        "ESPORTSTMNT06/1072517"
+      ],
+      "source": "2019",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2019-MSI-",
+      "year": 2019,
+      "league": "MSI",
+      "name": "2019 MSI",
+      "date": "2019-05-19",
+      "winner": "G2 Esports",
+      "runner": "Team Liquid",
+      "points": 12,
+      "participants": {
+        "G2 Esports": [],
+        "Team Liquid": []
+      },
+      "games": [
+        "ESPORTSTMNT01/1111464",
+        "ESPORTSTMNT01/1111467",
+        "ESPORTSTMNT01/1111468"
+      ],
+      "source": "2019",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2019-LCK-Spring",
+      "year": 2019,
+      "league": "LCK",
+      "name": "2019 LCK Spring",
+      "date": "2019-04-13",
+      "winner": "SK Telecom T1",
+      "runner": "Griffin",
+      "points": 8,
+      "participants": {
+        "Griffin": [
+          "oe:player:9573154ad8bc9459b4c0d940315054f",
+          "oe:player:b3dae530a02238b0628518ef886e505",
+          "oe:player:e4e24b8656e4e6a74b939af730b0148",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ],
+        "SK Telecom T1": [
+          "oe:player:2b5fa564a1259b97bc238fbfa719b07",
+          "oe:player:b9972f46c1e52797d66236b118d2970",
+          "oe:player:d3abb04a273ed8615be5f54a391818e",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT02/1023942",
+        "ESPORTSTMNT02/1023979",
+        "ESPORTSTMNT02/1023980"
+      ],
+      "source": "2019",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2019-LCK-Summer",
+      "year": 2019,
+      "league": "LCK",
+      "name": "2019 LCK Summer",
+      "date": "2019-08-31",
+      "winner": "SK Telecom T1",
+      "runner": "Griffin",
+      "points": 8,
+      "participants": {
+        "SK Telecom T1": [
+          "oe:player:035b9ae578574cdf728d8760483d804",
+          "oe:player:2b5fa564a1259b97bc238fbfa719b07",
+          "oe:player:b9972f46c1e52797d66236b118d2970",
+          "oe:player:d3abb04a273ed8615be5f54a391818e",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc"
+        ],
+        "Griffin": [
+          "oe:player:9573154ad8bc9459b4c0d940315054f",
+          "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8",
+          "oe:player:e4e24b8656e4e6a74b939af730b0148",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT03/1132697",
+        "ESPORTSTMNT03/1142535",
+        "ESPORTSTMNT03/1142556",
+        "ESPORTSTMNT03/1142571"
+      ],
+      "source": "2019",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2020-WLDs-",
+      "year": 2020,
+      "league": "WLDs",
+      "name": "2020 WLDs",
+      "date": "2020-10-31",
+      "winner": "Dplus Kia",
+      "runner": "Suning",
+      "points": 18,
+      "participants": {
+        "Dplus Kia": [
+          "oe:player:5f8ff49cd56eae61d635966b183a451",
+          "oe:player:78081d0b3c01f1f295d52d53744261a",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:dee54127bb56d2e2540ba71cc416f1c",
+          "oe:player:f17b90d1dd0f1814bb1f82f77c2f861"
+        ],
+        "Suning": []
+      },
+      "games": [
+        "ESPORTSTMNT03/1533024",
+        "ESPORTSTMNT03/1533025",
+        "ESPORTSTMNT03/1533026",
+        "ESPORTSTMNT03/1533027"
+      ],
+      "source": "2020",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2020-LCK-Spring",
+      "year": 2020,
+      "league": "LCK",
+      "name": "2020 LCK Spring",
+      "date": "2020-04-25",
+      "winner": "T1",
+      "runner": "Gen.G",
+      "points": 8,
+      "participants": {
+        "Gen.G": [
+          "oe:player:30361653a485a9609fb2d3aa073282c",
+          "oe:player:9daf04bfd9c8815cc827414f59f45af",
+          "oe:player:b0ec3df39d61f953e7af0afd8eb8c4a",
+          "oe:player:d3abb04a273ed8615be5f54a391818e",
+          "oe:player:dea5251e486aed942e1bc06e1d5c116",
+          "oe:player:eada4723af6f51cf2391d85b5fde49b"
+        ],
+        "T1": [
+          "oe:player:035b9ae578574cdf728d8760483d804",
+          "oe:player:2b5fa564a1259b97bc238fbfa719b07",
+          "oe:player:579ae2e0addc18db74179b2a3d33294",
+          "oe:player:7577c239c73fa5f3011cd7b5503e75e",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f9fe6d28d5b67bf9ac673b2cc8edf15"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT03/1343103",
+        "ESPORTSTMNT03/1353189",
+        "ESPORTSTMNT03/1353193"
+      ],
+      "source": "2020",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2020-LCK-Summer",
+      "year": 2020,
+      "league": "LCK",
+      "name": "2020 LCK Summer",
+      "date": "2020-09-05",
+      "winner": "Dplus Kia",
+      "runner": "DRX",
+      "points": 8,
+      "participants": {
+        "Dplus Kia": [
+          "oe:player:5f8ff49cd56eae61d635966b183a451",
+          "oe:player:78081d0b3c01f1f295d52d53744261a",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:dee54127bb56d2e2540ba71cc416f1c",
+          "oe:player:f17b90d1dd0f1814bb1f82f77c2f861"
+        ],
+        "DRX": [
+          "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8",
+          "oe:player:a2357eb17578485c2ba736db36cbc42",
+          "oe:player:c588a2d07b69ca4ba61c96aebd3f793",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT03/1443415",
+        "ESPORTSTMNT03/1443471",
+        "ESPORTSTMNT03/1443489"
+      ],
+      "source": "2020",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-WLDs-",
+      "year": 2021,
+      "league": "WLDs",
+      "name": "2021 WLDs",
+      "date": "2021-11-06",
+      "winner": "EDward Gaming",
+      "runner": "Dplus Kia",
+      "points": 18,
+      "participants": {
+        "Dplus Kia": [
+          "oe:player:5f8ff49cd56eae61d635966b183a451",
+          "oe:player:78081d0b3c01f1f295d52d53744261a",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:b9972f46c1e52797d66236b118d2970",
+          "oe:player:dee54127bb56d2e2540ba71cc416f1c"
+        ],
+        "EDward Gaming": [
+          "oe:player:9573154ad8bc9459b4c0d940315054f"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT04_1961415",
+        "ESPORTSTMNT04_1961427",
+        "ESPORTSTMNT04_1961428",
+        "ESPORTSTMNT04_1961429",
+        "ESPORTSTMNT04_1961430"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-MSI-",
+      "year": 2021,
+      "league": "MSI",
+      "name": "2021 MSI",
+      "date": "2021-05-23",
+      "winner": "Royal Never Give Up",
+      "runner": "Dplus Kia",
+      "points": 12,
+      "participants": {
+        "Royal Never Give Up": [],
+        "Dplus Kia": [
+          "oe:player:5f8ff49cd56eae61d635966b183a451",
+          "oe:player:78081d0b3c01f1f295d52d53744261a",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:b9972f46c1e52797d66236b118d2970",
+          "oe:player:dee54127bb56d2e2540ba71cc416f1c"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT06/1721069",
+        "ESPORTSTMNT06/1721084",
+        "ESPORTSTMNT06/1721085",
+        "ESPORTSTMNT06/1721086",
+        "ESPORTSTMNT06/1721087"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LCK-Spring",
+      "year": 2021,
+      "league": "LCK",
+      "name": "2021 LCK Spring",
+      "date": "2021-04-10",
+      "winner": "Dplus Kia",
+      "runner": "Gen.G",
+      "points": 8,
+      "participants": {
+        "Gen.G": [
+          "oe:player:30361653a485a9609fb2d3aa073282c",
+          "oe:player:9daf04bfd9c8815cc827414f59f45af",
+          "oe:player:d3abb04a273ed8615be5f54a391818e",
+          "oe:player:dea5251e486aed942e1bc06e1d5c116",
+          "oe:player:eada4723af6f51cf2391d85b5fde49b"
+        ],
+        "Dplus Kia": [
+          "oe:player:5f8ff49cd56eae61d635966b183a451",
+          "oe:player:78081d0b3c01f1f295d52d53744261a",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:b9972f46c1e52797d66236b118d2970",
+          "oe:player:dee54127bb56d2e2540ba71cc416f1c"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT03/1816080",
+        "ESPORTSTMNT03/1816145",
+        "ESPORTSTMNT03/1816183"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LCK-Summer",
+      "year": 2021,
+      "league": "LCK",
+      "name": "2021 LCK Summer",
+      "date": "2021-08-28",
+      "winner": "Dplus Kia",
+      "runner": "T1",
+      "points": 8,
+      "participants": {
+        "T1": [
+          "oe:player:2b5fa564a1259b97bc238fbfa719b07",
+          "oe:player:7577c239c73fa5f3011cd7b5503e75e",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ],
+        "Dplus Kia": [
+          "oe:player:5f8ff49cd56eae61d635966b183a451",
+          "oe:player:78081d0b3c01f1f295d52d53744261a",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:b9972f46c1e52797d66236b118d2970",
+          "oe:player:dee54127bb56d2e2540ba71cc416f1c"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT01_2201262",
+        "ESPORTSTMNT01_2201263",
+        "ESPORTSTMNT01_2201266",
+        "ESPORTSTMNT01_2201273"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LCKC-Spring",
+      "year": 2021,
+      "league": "LCKC",
+      "name": "2021 LCKC Spring",
+      "date": "2021-04-09",
+      "winner": "T1 Esports Academy",
+      "runner": "Hanwha Life Esports Challengers",
+      "points": 3,
+      "participants": {
+        "Hanwha Life Esports Challengers": [
+          "oe:player:3dbe8ecf9c97fc12b28ad199bdb5f82",
+          "oe:player:4a18312b5b75f549d5551e5912ad6eb",
+          "oe:player:cada0080d5951aaafd67134bcbd7760"
+        ],
+        "T1 Esports Academy": [
+          "oe:player:460ae5a7af8d68f7831b70307210ab3"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT03/1815864",
+        "ESPORTSTMNT03/1815874",
+        "ESPORTSTMNT03/1815897"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LCKC-Summer",
+      "year": 2021,
+      "league": "LCKC",
+      "name": "2021 LCKC Summer",
+      "date": "2021-08-27",
+      "winner": "Gen.G Global Academy",
+      "runner": "DN SOOPers Challengers",
+      "points": 3,
+      "participants": {
+        "DN SOOPers Challengers": [
+          "oe:player:2f4e392b28239f7751efa2308caf725",
+          "oe:player:317aeb74a6dd16bea711bbad361ca44",
+          "oe:player:92c21511d7b383b2f8ba5b00c3c9a47",
+          "oe:player:ad173d59265cf2cbe796b2af2554da3",
+          "oe:player:cf1fc00c5f362d9b4988cbb260cbc95",
+          "oe:player:f23c7426104cc4df2b49b3be2c6d024"
+        ],
+        "Gen.G Global Academy": [
+          "oe:player:39b7c8fcabea217972326ec1f441b0a",
+          "oe:player:498246d6c44175256a07ed5f322c817",
+          "oe:player:b0e54ad49a5ce7a200bcb877eee7ed9",
+          "oe:player:d24f38ec30ce6f7577066f80e43e4bf"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT01_2201151",
+        "ESPORTSTMNT01_2201159",
+        "ESPORTSTMNT01_2201174",
+        "ESPORTSTMNT01_2201177"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LCS-Spring",
+      "year": 2021,
+      "league": "LCS",
+      "name": "2021 LCS Spring",
+      "date": "2021-04-12",
+      "winner": "Cloud9",
+      "runner": "Team Liquid",
+      "points": 6,
+      "participants": {
+        "Team Liquid": [],
+        "Cloud9": []
+      },
+      "games": [
+        "ESPORTSTMNT02/1810478",
+        "ESPORTSTMNT02/1810480",
+        "ESPORTSTMNT02/1810481",
+        "ESPORTSTMNT02/1810482",
+        "ESPORTSTMNT02/1810483"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LCS-Summer",
+      "year": 2021,
+      "league": "LCS",
+      "name": "2021 LCS Summer",
+      "date": "2021-08-29",
+      "winner": "100 Thieves",
+      "runner": "Team Liquid",
+      "points": 6,
+      "participants": {
+        "Team Liquid": [],
+        "100 Thieves": []
+      },
+      "games": [
+        "ESPORTSTMNT03_2130440",
+        "ESPORTSTMNT03_2130462",
+        "ESPORTSTMNT03_2130463"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LEC-Spring",
+      "year": 2021,
+      "league": "LEC",
+      "name": "2021 LEC Spring",
+      "date": "2021-04-11",
+      "winner": "MAD Lions KOI",
+      "runner": "Rogue",
+      "points": 6,
+      "participants": {
+        "Rogue": [],
+        "MAD Lions KOI": []
+      },
+      "games": [
+        "ESPORTSTMNT03/1826244",
+        "ESPORTSTMNT03/1826259",
+        "ESPORTSTMNT03/1826261",
+        "ESPORTSTMNT03/1826266",
+        "ESPORTSTMNT03/1826284"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LEC-Summer",
+      "year": 2021,
+      "league": "LEC",
+      "name": "2021 LEC Summer",
+      "date": "2021-08-29",
+      "winner": "MAD Lions KOI",
+      "runner": "Fnatic",
+      "points": 6,
+      "participants": {
+        "Fnatic": [],
+        "MAD Lions KOI": []
+      },
+      "games": [
+        "ESPORTSTMNT06_1881424",
+        "ESPORTSTMNT06_1881436",
+        "ESPORTSTMNT06_1881437",
+        "ESPORTSTMNT06_1881438"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LPL-Spring",
+      "year": 2021,
+      "league": "LPL",
+      "name": "2021 LPL Spring",
+      "date": "2021-04-18",
+      "winner": "Royal Never Give Up",
+      "runner": "FunPlus Phoenix",
+      "points": 8,
+      "participants": {
+        "FunPlus Phoenix": [
+          "oe:player:f17b90d1dd0f1814bb1f82f77c2f861"
+        ],
+        "Royal Never Give Up": []
+      },
+      "games": [
+        "7386-10023",
+        "7386-10024",
+        "7386-10025",
+        "7386-10026"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LPL-Summer",
+      "year": 2021,
+      "league": "LPL",
+      "name": "2021 LPL Summer",
+      "date": "2021-09-02",
+      "winner": "EDward Gaming",
+      "runner": "FunPlus Phoenix",
+      "points": 8,
+      "participants": {
+        "FunPlus Phoenix": [
+          "oe:player:f17b90d1dd0f1814bb1f82f77c2f861"
+        ],
+        "EDward Gaming": [
+          "oe:player:9573154ad8bc9459b4c0d940315054f"
+        ]
+      },
+      "games": [
+        "8106-11276",
+        "8106-11277",
+        "8106-11278",
+        "8106-11279"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LJL-Spring",
+      "year": 2021,
+      "league": "LJL",
+      "name": "2021 LJL Spring",
+      "date": "2021-04-11",
+      "winner": "DetonatioN FocusMe",
+      "runner": "V3 Esports",
+      "points": 5,
+      "participants": {
+        "V3 Esports": [],
+        "DetonatioN FocusMe": [
+          "oe:player:2e82913920d8a6d0efa480bc35f1ba8"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT02/1800585",
+        "ESPORTSTMNT02/1800586",
+        "ESPORTSTMNT02/1800587",
+        "ESPORTSTMNT02/1800588"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-LJL-Summer",
+      "year": 2021,
+      "league": "LJL",
+      "name": "2021 LJL Summer",
+      "date": "2021-09-05",
+      "winner": "DetonatioN FocusMe",
+      "runner": "Rascal Jester",
+      "points": 5,
+      "participants": {
+        "Rascal Jester": [],
+        "DetonatioN FocusMe": [
+          "oe:player:2e82913920d8a6d0efa480bc35f1ba8"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT01_2250570",
+        "ESPORTSTMNT01_2250571",
+        "ESPORTSTMNT01_2250572"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2021-EUM-Summer",
+      "year": 2021,
+      "league": "EUM",
+      "name": "2021 EUM Summer",
+      "date": "2021-09-19",
+      "winner": "Karmine Corp",
+      "runner": "Fnatic Rising",
+      "points": 3,
+      "participants": {
+        "Karmine Corp": [],
+        "Fnatic Rising": []
+      },
+      "games": [
+        "ESPORTSTMNT06_1920134",
+        "ESPORTSTMNT06_1930129",
+        "ESPORTSTMNT06_1930131",
+        "ESPORTSTMNT06_1930133",
+        "ESPORTSTMNT06_1930135"
+      ],
+      "source": "2021",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-WLDs-",
+      "year": 2022,
+      "league": "WLDs",
+      "name": "2022 WLDs",
+      "date": "2022-11-06",
+      "winner": "DRX",
+      "runner": "T1",
+      "points": 18,
+      "participants": {
+        "T1": [
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ],
+        "DRX": [
+          "oe:player:3ee0c18b85e7bb8eaad86d58498e27d",
+          "oe:player:618a87d272773f68239d8ce5555f39d",
+          "oe:player:a2357eb17578485c2ba736db36cbc42",
+          "oe:player:c588a2d07b69ca4ba61c96aebd3f793",
+          "oe:player:dee54127bb56d2e2540ba71cc416f1c",
+          "oe:player:f9cd2ef9afea5cda0eb3263a025cec1"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT02_3080864",
+        "ESPORTSTMNT02_3080870",
+        "ESPORTSTMNT02_3080871",
+        "ESPORTSTMNT02_3080872",
+        "ESPORTSTMNT02_3080905"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-MSI-",
+      "year": 2022,
+      "league": "MSI",
+      "name": "2022 MSI",
+      "date": "2022-05-29",
+      "winner": "Royal Never Give Up",
+      "runner": "T1",
+      "points": 12,
+      "participants": {
+        "Royal Never Give Up": [],
+        "T1": [
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT03_2714860",
+        "ESPORTSTMNT03_2714868",
+        "ESPORTSTMNT03_2714869",
+        "ESPORTSTMNT03_2714870",
+        "ESPORTSTMNT03_2714871"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LCK-Spring",
+      "year": 2022,
+      "league": "LCK",
+      "name": "2022 LCK Spring",
+      "date": "2022-04-02",
+      "winner": "T1",
+      "runner": "Gen.G",
+      "points": 8,
+      "participants": {
+        "Gen.G": [
+          "oe:player:25546fe55464aef59d6f46b52f22bcb",
+          "oe:player:8f8eaac8e99c203ee76e57c5c81c91f",
+          "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:e4e24b8656e4e6a74b939af730b0148",
+          "oe:player:eada4723af6f51cf2391d85b5fde49b",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ],
+        "T1": [
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT02_2674644",
+        "ESPORTSTMNT02_2674660",
+        "ESPORTSTMNT02_2674677",
+        "ESPORTSTMNT02_2674680"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LCK-Summer",
+      "year": 2022,
+      "league": "LCK",
+      "name": "2022 LCK Summer",
+      "date": "2022-08-28",
+      "winner": "Gen.G",
+      "runner": "T1",
+      "points": 8,
+      "participants": {
+        "Gen.G": [
+          "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:e4e24b8656e4e6a74b939af730b0148",
+          "oe:player:eada4723af6f51cf2391d85b5fde49b",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ],
+        "T1": [
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT04_2451974",
+        "ESPORTSTMNT04_2472110",
+        "ESPORTSTMNT04_2472111"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LCKC-Spring",
+      "year": 2022,
+      "league": "LCKC",
+      "name": "2022 LCKC Spring",
+      "date": "2022-04-01",
+      "winner": "Dplus Kia Challengers",
+      "runner": "Nongshim Esports Academy",
+      "points": 3,
+      "participants": {
+        "Nongshim Esports Academy": [
+          "oe:player:1a75a7cf8c98442be881fed562346f5",
+          "oe:player:252de481e83ab0bc87aada93aeb424c",
+          "oe:player:341e10748bb6d388250fd1f013e45a4",
+          "oe:player:5ee64eb3feb02e60832a2265db54f71"
+        ],
+        "Dplus Kia Challengers": [
+          "oe:player:10b86429ce8048aba673d802632e358",
+          "oe:player:1efc4e5732e91520d03385900b903f9",
+          "oe:player:559813e734d182e8896481003507b1f",
+          "oe:player:5788fbc5ff334175ec2eccae6f0ed81",
+          "oe:player:e2c655411d8d95ef73d8026704f5e7a"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT02_2674554",
+        "ESPORTSTMNT02_2674567",
+        "ESPORTSTMNT02_2674569",
+        "ESPORTSTMNT02_2674573"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LCKC-Summer",
+      "year": 2022,
+      "league": "LCKC",
+      "name": "2022 LCKC Summer",
+      "date": "2022-08-26",
+      "winner": "Nongshim Esports Academy",
+      "runner": "Dplus Kia Challengers",
+      "points": 3,
+      "participants": {
+        "Dplus Kia Challengers": [
+          "oe:player:10b86429ce8048aba673d802632e358",
+          "oe:player:1efc4e5732e91520d03385900b903f9",
+          "oe:player:559813e734d182e8896481003507b1f",
+          "oe:player:5788fbc5ff334175ec2eccae6f0ed81",
+          "oe:player:e2c655411d8d95ef73d8026704f5e7a"
+        ],
+        "Nongshim Esports Academy": [
+          "oe:player:1a75a7cf8c98442be881fed562346f5",
+          "oe:player:341e10748bb6d388250fd1f013e45a4",
+          "oe:player:5ee64eb3feb02e60832a2265db54f71",
+          "oe:player:8643b56ba8000250b81fdaca1d7f06e",
+          "oe:player:ee051912ad5f9a97aa9ce4980cbb481"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT04_2471976",
+        "ESPORTSTMNT04_2471977",
+        "ESPORTSTMNT04_2471980",
+        "ESPORTSTMNT04_2471981",
+        "ESPORTSTMNT04_2471983"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LCS-Spring",
+      "year": 2022,
+      "league": "LCS",
+      "name": "2022 LCS Spring",
+      "date": "2022-04-24",
+      "winner": "Evil Geniuses",
+      "runner": "100 Thieves",
+      "points": 6,
+      "participants": {
+        "100 Thieves": [],
+        "Evil Geniuses": []
+      },
+      "games": [
+        "ESPORTSTMNT01_2862448",
+        "ESPORTSTMNT01_2862478",
+        "ESPORTSTMNT01_2862480"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LCS-Summer",
+      "year": 2022,
+      "league": "LCS",
+      "name": "2022 LCS Summer",
+      "date": "2022-09-11",
+      "winner": "Cloud9",
+      "runner": "100 Thieves",
+      "points": 6,
+      "participants": {
+        "100 Thieves": [],
+        "Cloud9": [
+          "oe:player:460ae5a7af8d68f7831b70307210ab3"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT02_2965292",
+        "ESPORTSTMNT02_2965320",
+        "ESPORTSTMNT02_2965321"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LEC-Spring",
+      "year": 2022,
+      "league": "LEC",
+      "name": "2022 LEC Spring",
+      "date": "2022-04-10",
+      "winner": "G2 Esports",
+      "runner": "Rogue",
+      "points": 6,
+      "participants": {
+        "G2 Esports": [],
+        "Rogue": [
+          "oe:player:b06f165ee2371a61d3be74d413e1e21"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT06_2260691",
+        "ESPORTSTMNT06_2260700",
+        "ESPORTSTMNT06_2260701"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LEC-Summer",
+      "year": 2022,
+      "league": "LEC",
+      "name": "2022 LEC Summer",
+      "date": "2022-09-11",
+      "winner": "Rogue",
+      "runner": "G2 Esports",
+      "points": 6,
+      "participants": {
+        "Rogue": [
+          "oe:player:b06f165ee2371a61d3be74d413e1e21"
+        ],
+        "G2 Esports": []
+      },
+      "games": [
+        "ESPORTSTMNT05_3090891",
+        "ESPORTSTMNT05_3090907",
+        "ESPORTSTMNT05_3090908"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LPL-Spring",
+      "year": 2022,
+      "league": "LPL",
+      "name": "2022 LPL Spring",
+      "date": "2022-04-23",
+      "winner": "Royal Never Give Up",
+      "runner": "Top Esports",
+      "points": 8,
+      "participants": {
+        "Royal Never Give Up": [],
+        "Top Esports": []
+      },
+      "games": [
+        "8821-8821_game_1",
+        "8821-8821_game_2",
+        "8821-8821_game_3",
+        "8821-8821_game_4",
+        "8821-8821_game_5"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LPL-Summer",
+      "year": 2022,
+      "league": "LPL",
+      "name": "2022 LPL Summer",
+      "date": "2022-09-01",
+      "winner": "JD Gaming",
+      "runner": "Top Esports",
+      "points": 8,
+      "participants": {
+        "JD Gaming": [],
+        "Top Esports": []
+      },
+      "games": [
+        "9362-9362_game_1",
+        "9362-9362_game_2",
+        "9362-9362_game_3",
+        "9362-9362_game_4",
+        "9362-9362_game_5"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LJL-Spring",
+      "year": 2022,
+      "league": "LJL",
+      "name": "2022 LJL Spring",
+      "date": "2022-04-10",
+      "winner": "DetonatioN FocusMe",
+      "runner": "QT DIG∞",
+      "points": 5,
+      "participants": {
+        "QT DIG∞": [
+          "oe:player:82a08dfbbc2a9515bc6962cd307507c"
+        ],
+        "DetonatioN FocusMe": [
+          "oe:player:0015d99e65183977a9e65547b37f1cb"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT03_2657172",
+        "ESPORTSTMNT03_2657178",
+        "ESPORTSTMNT03_2657181",
+        "ESPORTSTMNT03_2657183",
+        "ESPORTSTMNT03_2657190"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-LJL-Summer",
+      "year": 2022,
+      "league": "LJL",
+      "name": "2022 LJL Summer",
+      "date": "2022-09-04",
+      "winner": "DetonatioN FocusMe",
+      "runner": "QT DIG∞",
+      "points": 5,
+      "participants": {
+        "QT DIG∞": [
+          "oe:player:252de481e83ab0bc87aada93aeb424c",
+          "oe:player:82a08dfbbc2a9515bc6962cd307507c"
+        ],
+        "DetonatioN FocusMe": [
+          "oe:player:0015d99e65183977a9e65547b37f1cb"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT02_2964840",
+        "ESPORTSTMNT02_2964845",
+        "ESPORTSTMNT02_2964848"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-EUM-Spring",
+      "year": 2022,
+      "league": "EUM",
+      "name": "2022 EUM Spring",
+      "date": "2022-05-07",
+      "winner": "Karmine Corp",
+      "runner": "LDLC OL",
+      "points": 3,
+      "participants": {
+        "LDLC OL": [],
+        "Karmine Corp": [
+          "oe:player:d8362fe0d38ca0e70953ed957deaa00"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT04_2270139",
+        "ESPORTSTMNT04_2270140",
+        "ESPORTSTMNT04_2280124",
+        "ESPORTSTMNT04_2280125"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2022-EUM-Summer",
+      "year": 2022,
+      "league": "EUM",
+      "name": "2022 EUM Summer",
+      "date": "2022-09-25",
+      "winner": "Team Heretics",
+      "runner": "Team BDS Academy",
+      "points": 3,
+      "participants": {
+        "Team Heretics": [],
+        "Team BDS Academy": []
+      },
+      "games": [
+        "ESPORTSTMNT06_2570562",
+        "ESPORTSTMNT06_2570564",
+        "ESPORTSTMNT06_2570567",
+        "ESPORTSTMNT06_2570568",
+        "ESPORTSTMNT06_2570569"
+      ],
+      "source": "2022",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-WLDs-",
+      "year": 2023,
+      "league": "WLDs",
+      "name": "2023 WLDs",
+      "date": "2023-11-19",
+      "winner": "T1",
+      "runner": "Weibo Gaming",
+      "points": 18,
+      "participants": {
+        "Weibo Gaming": [],
+        "T1": [
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT03_3227846",
+        "ESPORTSTMNT03_3227847",
+        "ESPORTSTMNT03_3228396"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-MSI-",
+      "year": 2023,
+      "league": "MSI",
+      "name": "2023 MSI",
+      "date": "2023-05-21",
+      "winner": "JD Gaming",
+      "runner": "Bilibili Gaming",
+      "points": 12,
+      "participants": {
+        "Bilibili Gaming": [],
+        "JD Gaming": [
+          "oe:player:eada4723af6f51cf2391d85b5fde49b"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT04_2677225",
+        "ESPORTSTMNT04_2677229",
+        "ESPORTSTMNT04_2677230",
+        "ESPORTSTMNT04_2677232"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LCK-Spring",
+      "year": 2023,
+      "league": "LCK",
+      "name": "2023 LCK Spring",
+      "date": "2023-04-09",
+      "winner": "Gen.G",
+      "runner": "T1",
+      "points": 8,
+      "participants": {
+        "Gen.G": [
+          "oe:player:051ca2e31ba25123961b3df95fdef4c",
+          "oe:player:5bbc2b92348d930ebd500cb9ce71bb7",
+          "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ],
+        "T1": [
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT01_3344120",
+        "ESPORTSTMNT01_3344136",
+        "ESPORTSTMNT01_3344140",
+        "ESPORTSTMNT01_3344160"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LCK-Summer",
+      "year": 2023,
+      "league": "LCK",
+      "name": "2023 LCK Summer",
+      "date": "2023-08-20",
+      "winner": "Gen.G",
+      "runner": "T1",
+      "points": 8,
+      "participants": {
+        "Gen.G": [
+          "oe:player:051ca2e31ba25123961b3df95fdef4c",
+          "oe:player:5bbc2b92348d930ebd500cb9ce71bb7",
+          "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ],
+        "T1": [
+          "oe:player:4e0ee55680fa265c49e158f85e26650",
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT01_3417138",
+        "ESPORTSTMNT01_3417141",
+        "ESPORTSTMNT01_3418098"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LCKC-Spring",
+      "year": 2023,
+      "league": "LCKC",
+      "name": "2023 LCKC Spring",
+      "date": "2023-04-07",
+      "winner": "Dplus Kia Challengers",
+      "runner": "DRX Challengers",
+      "points": 3,
+      "participants": {
+        "Dplus Kia Challengers": [
+          "oe:player:10b86429ce8048aba673d802632e358",
+          "oe:player:1efc4e5732e91520d03385900b903f9",
+          "oe:player:559813e734d182e8896481003507b1f",
+          "oe:player:5788fbc5ff334175ec2eccae6f0ed81",
+          "oe:player:e2c655411d8d95ef73d8026704f5e7a",
+          "oe:player:e9741b3a238723ea6380ef2113fae63"
+        ],
+        "DRX Challengers": [
+          "oe:player:3f4027dc08a489bd4d5390913f5dc71",
+          "oe:player:4ff7b91bbc9492e9f96d28dda496653",
+          "oe:player:7fdedd3126915607d5c8f42f8239253",
+          "oe:player:973547129a691fb61e886add170ac7a",
+          "oe:player:d87853a5c1c5463889d70a62cdbcffc"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT01_3340828",
+        "ESPORTSTMNT01_3340840",
+        "ESPORTSTMNT01_3341796",
+        "ESPORTSTMNT01_3341829"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LCKC-Summer",
+      "year": 2023,
+      "league": "LCKC",
+      "name": "2023 LCKC Summer",
+      "date": "2023-08-22",
+      "winner": "Nongshim Esports Academy",
+      "runner": "Dplus Kia Challengers",
+      "points": 3,
+      "participants": {
+        "Nongshim Esports Academy": [
+          "oe:player:252de481e83ab0bc87aada93aeb424c",
+          "oe:player:7287b0a4cd5548a002e49dfdfbbc2e9",
+          "oe:player:87f7503a6cdacffa612aeee7f04cc7c",
+          "oe:player:c25ed32694e455959de4abe0c535ecc",
+          "oe:player:c9441d0e78cf438ef0b372dc74010e3"
+        ],
+        "Dplus Kia Challengers": [
+          "oe:player:10b86429ce8048aba673d802632e358",
+          "oe:player:1efc4e5732e91520d03385900b903f9",
+          "oe:player:559813e734d182e8896481003507b1f",
+          "oe:player:8807c97721e343cdc1fa2444cc00415",
+          "oe:player:e2c655411d8d95ef73d8026704f5e7a",
+          "oe:player:f45792335d83b10581da2f0cbdd6e8e"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT01_3416359",
+        "ESPORTSTMNT01_3417254",
+        "ESPORTSTMNT01_3417259",
+        "ESPORTSTMNT01_3417260",
+        "ESPORTSTMNT01_3418246"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LCS-Spring",
+      "year": 2023,
+      "league": "LCS",
+      "name": "2023 LCS Spring",
+      "date": "2023-04-09",
+      "winner": "Cloud9",
+      "runner": "Golden Guardians",
+      "points": 6,
+      "participants": {
+        "Golden Guardians": [
+          "oe:player:94e552221e552e3ebaaeefff76fd6ea"
+        ],
+        "Cloud9": [
+          "oe:player:460ae5a7af8d68f7831b70307210ab3"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT01_3342290",
+        "ESPORTSTMNT01_3342295",
+        "ESPORTSTMNT01_3343206",
+        "ESPORTSTMNT01_3344237"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LCS-Summer",
+      "year": 2023,
+      "league": "LCS",
+      "name": "2023 LCS Summer",
+      "date": "2023-08-20",
+      "winner": "NRG",
+      "runner": "Cloud9",
+      "points": 6,
+      "participants": {
+        "Cloud9": [
+          "oe:player:460ae5a7af8d68f7831b70307210ab3"
+        ],
+        "NRG": []
+      },
+      "games": [
+        "ESPORTSTMNT01_3416273",
+        "ESPORTSTMNT01_3416274",
+        "ESPORTSTMNT01_3417173",
+        "ESPORTSTMNT01_3417177"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LEC-Finals",
+      "year": 2023,
+      "league": "LEC",
+      "name": "2023 LEC Finals",
+      "date": "2023-09-10",
+      "winner": "G2 Esports",
+      "runner": "Fnatic",
+      "points": 6,
+      "participants": {
+        "G2 Esports": [],
+        "Fnatic": [
+          "oe:player:95d286ec0a5d750d09e848a4e630c56"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT02_3231935",
+        "ESPORTSTMNT02_3231936",
+        "ESPORTSTMNT02_3232892",
+        "ESPORTSTMNT02_3233875"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LEC-Spring",
+      "year": 2023,
+      "league": "LEC",
+      "name": "2023 LEC Spring",
+      "date": "2023-04-23",
+      "winner": "MAD Lions KOI",
+      "runner": "Team BDS",
+      "points": 6,
+      "participants": {
+        "Team BDS": [],
+        "MAD Lions KOI": []
+      },
+      "games": [
+        "ESPORTSTMNT05_3220686",
+        "ESPORTSTMNT05_3222670",
+        "ESPORTSTMNT05_3222671",
+        "ESPORTSTMNT05_3223371",
+        "ESPORTSTMNT05_3223379"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LEC-Summer",
+      "year": 2023,
+      "league": "LEC",
+      "name": "2023 LEC Summer",
+      "date": "2023-07-30",
+      "winner": "G2 Esports",
+      "runner": "Excel Esports",
+      "points": 6,
+      "participants": {
+        "Excel Esports": [
+          "oe:player:53841c6e42a6ce77b6f3b80133c9342"
+        ],
+        "G2 Esports": []
+      },
+      "games": [
+        "ESPORTSTMNT06_2821457",
+        "ESPORTSTMNT06_2821467",
+        "ESPORTSTMNT06_2822475"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LEC-Winter",
+      "year": 2023,
+      "league": "LEC",
+      "name": "2023 LEC Winter",
+      "date": "2023-02-26",
+      "winner": "G2 Esports",
+      "runner": "MAD Lions KOI",
+      "points": 6,
+      "participants": {
+        "MAD Lions KOI": [],
+        "G2 Esports": []
+      },
+      "games": [
+        "ESPORTSTMNT04_2666301",
+        "ESPORTSTMNT04_2667287",
+        "ESPORTSTMNT04_2668245"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LPL-Spring",
+      "year": 2023,
+      "league": "LPL",
+      "name": "2023 LPL Spring",
+      "date": "2023-04-15",
+      "winner": "JD Gaming",
+      "runner": "Bilibili Gaming",
+      "points": 8,
+      "participants": {
+        "JD Gaming": [
+          "oe:player:eada4723af6f51cf2391d85b5fde49b"
+        ],
+        "Bilibili Gaming": []
+      },
+      "games": [
+        "10016-10016_game_1",
+        "10016-10016_game_2",
+        "10016-10016_game_3",
+        "10016-10016_game_4"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LPL-Summer",
+      "year": 2023,
+      "league": "LPL",
+      "name": "2023 LPL Summer",
+      "date": "2023-08-05",
+      "winner": "JD Gaming",
+      "runner": "LNG Esports",
+      "points": 8,
+      "participants": {
+        "LNG Esports": [],
+        "JD Gaming": [
+          "oe:player:eada4723af6f51cf2391d85b5fde49b"
+        ]
+      },
+      "games": [
+        "10392-10392_game_1",
+        "10392-10392_game_2",
+        "10392-10392_game_3",
+        "10392-10392_game_4",
+        "10392-10392_game_5"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LJL-Spring",
+      "year": 2023,
+      "league": "LJL",
+      "name": "2023 LJL Spring",
+      "date": "2023-04-15",
+      "winner": "DetonatioN FocusMe",
+      "runner": "QT DIG∞",
+      "points": 5,
+      "participants": {
+        "DetonatioN FocusMe": [
+          "oe:player:0015d99e65183977a9e65547b37f1cb",
+          "oe:player:2e82913920d8a6d0efa480bc35f1ba8"
+        ],
+        "QT DIG∞": [
+          "oe:player:82a08dfbbc2a9515bc6962cd307507c"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT01_3342605",
+        "ESPORTSTMNT01_3342607",
+        "ESPORTSTMNT01_3344551"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-LJL-Summer",
+      "year": 2023,
+      "league": "LJL",
+      "name": "2023 LJL Summer",
+      "date": "2023-08-20",
+      "winner": "DetonatioN FocusMe",
+      "runner": "Fukuoka SoftBank HAWKS gaming",
+      "points": 5,
+      "participants": {
+        "DetonatioN FocusMe": [
+          "oe:player:0015d99e65183977a9e65547b37f1cb",
+          "oe:player:2e82913920d8a6d0efa480bc35f1ba8"
+        ],
+        "Fukuoka SoftBank HAWKS gaming": [
+          "oe:player:16c1637b4b44b008b4d6627f68ae30a"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT01_3416198",
+        "ESPORTSTMNT01_3416228",
+        "ESPORTSTMNT01_3416245",
+        "ESPORTSTMNT01_3418126",
+        "ESPORTSTMNT01_3418139"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-EM-Spring",
+      "year": 2023,
+      "league": "EM",
+      "name": "2023 EM Spring",
+      "date": "2023-04-29",
+      "winner": "İstanbul Wildcats",
+      "runner": "Unicorns of Love Sexy Edition",
+      "points": 3,
+      "participants": {
+        "Unicorns of Love Sexy Edition": [
+          "oe:player:4a18312b5b75f549d5551e5912ad6eb",
+          "oe:player:53841c6e42a6ce77b6f3b80133c9342"
+        ],
+        "İstanbul Wildcats": [
+          "oe:player:21846207612858fb49a468b43e56dd3",
+          "oe:player:6c1d0c529e73fe4c8b9a5306867c4bf"
+        ]
+      },
+      "games": [
+        "ESPORTSTMNT05_3225012",
+        "ESPORTSTMNT05_3225013",
+        "ESPORTSTMNT05_3225016",
+        "ESPORTSTMNT05_3226014",
+        "ESPORTSTMNT05_3226015"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2023-EM-Summer",
+      "year": 2023,
+      "league": "EM",
+      "name": "2023 EM Summer",
+      "date": "2023-09-01",
+      "winner": "Karmine Corp",
+      "runner": "Team GO",
+      "points": 3,
+      "participants": {
+        "Team GO": [],
+        "Karmine Corp": []
+      },
+      "games": [
+        "ESPORTSTMNT05_3240591",
+        "ESPORTSTMNT05_3240592",
+        "ESPORTSTMNT05_3241613",
+        "ESPORTSTMNT05_3241615",
+        "ESPORTSTMNT05_3241616"
+      ],
+      "source": "2023",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-WLDs-",
+      "year": 2024,
+      "league": "WLDs",
+      "name": "2024 WLDs",
+      "date": "2024-11-02",
+      "winner": "T1",
+      "runner": "Bilibili Gaming",
+      "points": 18,
+      "participants": {
+        "Bilibili Gaming": [],
+        "T1": [
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ]
+      },
+      "games": [
+        "LOLTMNT05_90304",
+        "LOLTMNT05_90306",
+        "LOLTMNT05_90307",
+        "LOLTMNT05_91213",
+        "LOLTMNT05_91214"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-MSI-",
+      "year": 2024,
+      "league": "MSI",
+      "name": "2024 MSI",
+      "date": "2024-05-19",
+      "winner": "Gen.G",
+      "runner": "Bilibili Gaming",
+      "points": 12,
+      "participants": {
+        "Gen.G": [
+          "oe:player:03daae1844b9ad257324c3eedf41e28",
+          "oe:player:5bbc2b92348d930ebd500cb9ce71bb7",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:e4e24b8656e4e6a74b939af730b0148",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ],
+        "Bilibili Gaming": []
+      },
+      "games": [
+        "11061-11061_game_1",
+        "11061-11061_game_2",
+        "11061-11061_game_3",
+        "11061-11061_game_4"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-EWC-",
+      "year": 2024,
+      "league": "EWC",
+      "name": "2024 EWC",
+      "date": "2024-07-07",
+      "winner": "T1",
+      "runner": "Top Esports",
+      "points": 8,
+      "participants": {
+        "Top Esports": [],
+        "T1": [
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ]
+      },
+      "games": [
+        "LOLTMNT03_111456",
+        "LOLTMNT03_111473",
+        "LOLTMNT03_111502",
+        "LOLTMNT03_112180"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LCK-Spring",
+      "year": 2024,
+      "league": "LCK",
+      "name": "2024 LCK Spring",
+      "date": "2024-04-14",
+      "winner": "Gen.G",
+      "runner": "T1",
+      "points": 8,
+      "participants": {
+        "T1": [
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ],
+        "Gen.G": [
+          "oe:player:03daae1844b9ad257324c3eedf41e28",
+          "oe:player:5bbc2b92348d930ebd500cb9ce71bb7",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:e4e24b8656e4e6a74b939af730b0148",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ]
+      },
+      "games": [
+        "LOLTMNT02_76144",
+        "LOLTMNT02_76145",
+        "LOLTMNT02_76146",
+        "LOLTMNT02_76147",
+        "LOLTMNT02_76148"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LCK-Summer",
+      "year": 2024,
+      "league": "LCK",
+      "name": "2024 LCK Summer",
+      "date": "2024-09-08",
+      "winner": "Hanwha Life Esports",
+      "runner": "Gen.G",
+      "points": 8,
+      "participants": {
+        "Gen.G": [
+          "oe:player:03daae1844b9ad257324c3eedf41e28",
+          "oe:player:5bbc2b92348d930ebd500cb9ce71bb7",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:e4e24b8656e4e6a74b939af730b0148",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ],
+        "Hanwha Life Esports": [
+          "oe:player:051ca2e31ba25123961b3df95fdef4c",
+          "oe:player:9573154ad8bc9459b4c0d940315054f",
+          "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:f9cd2ef9afea5cda0eb3263a025cec1"
+        ]
+      },
+      "games": [
+        "LOLTMNT03_146529",
+        "LOLTMNT03_147402",
+        "LOLTMNT03_147403",
+        "LOLTMNT03_147404",
+        "LOLTMNT03_147405"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LCKC-Spring",
+      "year": 2024,
+      "league": "LCKC",
+      "name": "2024 LCKC Spring",
+      "date": "2024-04-12",
+      "winner": "KT Rolster Challengers",
+      "runner": "Dplus Kia Challengers",
+      "points": 3,
+      "participants": {
+        "KT Rolster Challengers": [
+          "oe:player:2452114de900ce4bb971851b668786d",
+          "oe:player:3648451fd5b8a8ab01e4bedf780c1d6",
+          "oe:player:845ea84cec22236278388f19fcd20bf",
+          "oe:player:86a59ad7ba2334ad7505f303d3f2ab6",
+          "oe:player:8c6395564a23f3c2af8d378540012b0"
+        ],
+        "Dplus Kia Challengers": [
+          "oe:player:18a70ca6e551b080cf886828cc18394",
+          "oe:player:da9f969a7ab3819b9e528072aa4d5e6",
+          "oe:player:e2c655411d8d95ef73d8026704f5e7a",
+          "oe:player:e9741b3a238723ea6380ef2113fae63",
+          "oe:player:f45792335d83b10581da2f0cbdd6e8e"
+        ]
+      },
+      "games": [
+        "LOLTMNT02_75038",
+        "LOLTMNT02_75040",
+        "LOLTMNT02_76023",
+        "LOLTMNT02_76029"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LCKC-Summer",
+      "year": 2024,
+      "league": "LCKC",
+      "name": "2024 LCKC Summer",
+      "date": "2024-09-06",
+      "winner": "KT Rolster Challengers",
+      "runner": "Dplus Kia Challengers",
+      "points": 3,
+      "participants": {
+        "KT Rolster Challengers": [
+          "oe:player:2452114de900ce4bb971851b668786d",
+          "oe:player:3648451fd5b8a8ab01e4bedf780c1d6",
+          "oe:player:845ea84cec22236278388f19fcd20bf",
+          "oe:player:86a59ad7ba2334ad7505f303d3f2ab6",
+          "oe:player:8c6395564a23f3c2af8d378540012b0"
+        ],
+        "Dplus Kia Challengers": [
+          "oe:player:18a70ca6e551b080cf886828cc18394",
+          "oe:player:5788fbc5ff334175ec2eccae6f0ed81",
+          "oe:player:bbd0c34fcf8166e45f1161815fefccf",
+          "oe:player:da9f969a7ab3819b9e528072aa4d5e6",
+          "oe:player:f45792335d83b10581da2f0cbdd6e8e"
+        ]
+      },
+      "games": [
+        "LOLTMNT03_146325",
+        "LOLTMNT03_146344",
+        "LOLTMNT03_147168",
+        "LOLTMNT03_147169"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LCS-Spring",
+      "year": 2024,
+      "league": "LCS",
+      "name": "2024 LCS Spring",
+      "date": "2024-03-31",
+      "winner": "Team Liquid",
+      "runner": "FlyQuest",
+      "points": 6,
+      "participants": {
+        "FlyQuest": [],
+        "Team Liquid": [
+          "oe:player:1970fcb701acce66e0771946bbb3105"
+        ]
+      },
+      "games": [
+        "LOLTMNT01_79815",
+        "LOLTMNT01_79828",
+        "LOLTMNT01_80449",
+        "LOLTMNT01_80451"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LCS-Summer",
+      "year": 2024,
+      "league": "LCS",
+      "name": "2024 LCS Summer",
+      "date": "2024-09-07",
+      "winner": "FlyQuest",
+      "runner": "Team Liquid",
+      "points": 6,
+      "participants": {
+        "Team Liquid": [
+          "oe:player:1970fcb701acce66e0771946bbb3105"
+        ],
+        "FlyQuest": [
+          "oe:player:e9017664588010860a92ceb5f8fcb82"
+        ]
+      },
+      "games": [
+        "LOLTMNT03_146495",
+        "LOLTMNT03_146496",
+        "LOLTMNT03_146497",
+        "LOLTMNT03_146500"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LEC-Finals",
+      "year": 2024,
+      "league": "LEC",
+      "name": "2024 LEC Finals",
+      "date": "2024-09-01",
+      "winner": "G2 Esports",
+      "runner": "Fnatic",
+      "points": 6,
+      "participants": {
+        "G2 Esports": [],
+        "Fnatic": [
+          "oe:player:054e5f8aeb885db6713f4a3e7328efc",
+          "oe:player:95d286ec0a5d750d09e848a4e630c56"
+        ]
+      },
+      "games": [
+        "LOLTMNT05_75329",
+        "LOLTMNT05_75330",
+        "LOLTMNT05_75331",
+        "LOLTMNT05_76295"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LEC-Spring",
+      "year": 2024,
+      "league": "LEC",
+      "name": "2024 LEC Spring",
+      "date": "2024-04-14",
+      "winner": "G2 Esports",
+      "runner": "Fnatic",
+      "points": 6,
+      "participants": {
+        "Fnatic": [
+          "oe:player:054e5f8aeb885db6713f4a3e7328efc",
+          "oe:player:95d286ec0a5d750d09e848a4e630c56"
+        ],
+        "G2 Esports": []
+      },
+      "games": [
+        "LOLTMNT05_31072",
+        "LOLTMNT05_32101",
+        "LOLTMNT05_32104",
+        "LOLTMNT05_32107"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LEC-Summer",
+      "year": 2024,
+      "league": "LEC",
+      "name": "2024 LEC Summer",
+      "date": "2024-07-28",
+      "winner": "G2 Esports",
+      "runner": "Fnatic",
+      "points": 6,
+      "participants": {
+        "Fnatic": [
+          "oe:player:054e5f8aeb885db6713f4a3e7328efc",
+          "oe:player:95d286ec0a5d750d09e848a4e630c56"
+        ],
+        "G2 Esports": []
+      },
+      "games": [
+        "LOLTMNT06_66234",
+        "LOLTMNT06_66243",
+        "LOLTMNT06_66246"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LEC-Winter",
+      "year": 2024,
+      "league": "LEC",
+      "name": "2024 LEC Winter",
+      "date": "2024-02-18",
+      "winner": "G2 Esports",
+      "runner": "MAD Lions KOI",
+      "points": 6,
+      "participants": {
+        "MAD Lions KOI": [],
+        "G2 Esports": []
+      },
+      "games": [
+        "LOLTMNT04_28061",
+        "LOLTMNT04_28064",
+        "LOLTMNT04_28065",
+        "LOLTMNT04_28070"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LPL-Spring",
+      "year": 2024,
+      "league": "LPL",
+      "name": "2024 LPL Spring",
+      "date": "2024-04-20",
+      "winner": "Bilibili Gaming",
+      "runner": "Top Esports",
+      "points": 8,
+      "participants": {
+        "Bilibili Gaming": [],
+        "Top Esports": []
+      },
+      "games": [
+        "10956-10956_game_1",
+        "10956-10956_game_2",
+        "10956-10956_game_3",
+        "10956-10956_game_4"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LPL-Summer",
+      "year": 2024,
+      "league": "LPL",
+      "name": "2024 LPL Summer",
+      "date": "2024-08-30",
+      "winner": "Bilibili Gaming",
+      "runner": "Weibo Gaming",
+      "points": 8,
+      "participants": {
+        "Weibo Gaming": [],
+        "Bilibili Gaming": []
+      },
+      "games": [
+        "11362-11362_game_1",
+        "11362-11362_game_2",
+        "11362-11362_game_3"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LJL-Spring",
+      "year": 2024,
+      "league": "LJL",
+      "name": "2024 LJL Spring",
+      "date": "2024-03-03",
+      "winner": "Fukuoka SoftBank HAWKS gaming",
+      "runner": "DetonatioN FocusMe",
+      "points": 5,
+      "participants": {
+        "DetonatioN FocusMe": [
+          "oe:player:0015d99e65183977a9e65547b37f1cb",
+          "oe:player:2e82913920d8a6d0efa480bc35f1ba8"
+        ],
+        "Fukuoka SoftBank HAWKS gaming": [
+          "oe:player:16c1637b4b44b008b4d6627f68ae30a",
+          "oe:player:9170917b7452bef889def6c113af150"
+        ]
+      },
+      "games": [
+        "LOLTMNT02_63440",
+        "LOLTMNT02_63466",
+        "LOLTMNT02_63468"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-LJL-Summer",
+      "year": 2024,
+      "league": "LJL",
+      "name": "2024 LJL Summer",
+      "date": "2024-07-28",
+      "winner": "Fukuoka SoftBank HAWKS gaming",
+      "runner": "DetonatioN FocusMe",
+      "points": 5,
+      "participants": {
+        "DetonatioN FocusMe": [
+          "oe:player:0015d99e65183977a9e65547b37f1cb",
+          "oe:player:2e82913920d8a6d0efa480bc35f1ba8"
+        ],
+        "Fukuoka SoftBank HAWKS gaming": [
+          "oe:player:16c1637b4b44b008b4d6627f68ae30a",
+          "oe:player:9170917b7452bef889def6c113af150"
+        ]
+      },
+      "games": [
+        "LOLTMNT03_132877",
+        "LOLTMNT03_132889",
+        "LOLTMNT03_132896"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-EM-Spring",
+      "year": 2024,
+      "league": "EM",
+      "name": "2024 EM Spring",
+      "date": "2024-04-28",
+      "winner": "Eintracht Spandau",
+      "runner": "Beşiktaş Esports",
+      "points": 3,
+      "participants": {
+        "Eintracht Spandau": [],
+        "Beşiktaş Esports": []
+      },
+      "games": [
+        "LOLTMNT06_32015",
+        "LOLTMNT06_32016",
+        "LOLTMNT06_33016",
+        "LOLTMNT06_33017"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2024-EM-Summer",
+      "year": 2024,
+      "league": "EM",
+      "name": "2024 EM Summer",
+      "date": "2024-08-30",
+      "winner": "Team BDS Academy",
+      "runner": "Vitality.Bee",
+      "points": 3,
+      "participants": {
+        "Team BDS Academy": [],
+        "Vitality.Bee": []
+      },
+      "games": [
+        "LOLTMNT05_75303",
+        "LOLTMNT05_75304",
+        "LOLTMNT05_76260",
+        "LOLTMNT05_76261"
+      ],
+      "source": "2024",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-WLDs-",
+      "year": 2025,
+      "league": "WLDs",
+      "name": "2025 WLDs",
+      "date": "2025-11-09",
+      "winner": "T1",
+      "runner": "KT Rolster",
+      "points": 18,
+      "participants": {
+        "KT Rolster": [
+          "oe:player:18bdb3898e7fecb3bb0be7ff075d509",
+          "oe:player:29bef8f5895e5e4fef8ff0945e68567",
+          "oe:player:30361653a485a9609fb2d3aa073282c",
+          "oe:player:ee051912ad5f9a97aa9ce4980cbb481",
+          "oe:player:f9fe6d28d5b67bf9ac673b2cc8edf15"
+        ],
+        "T1": [
+          "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ]
+      },
+      "games": [
+        "LOLTMNT01_306141",
+        "LOLTMNT01_307101",
+        "LOLTMNT01_307103",
+        "LOLTMNT01_307104",
+        "LOLTMNT01_307105"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-MSI-",
+      "year": 2025,
+      "league": "MSI",
+      "name": "2025 MSI",
+      "date": "2025-07-13",
+      "winner": "Gen.G",
+      "runner": "T1",
+      "points": 12,
+      "participants": {
+        "T1": [
+          "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8",
+          "oe:player:c7319736816efe935787b4381c6f321",
+          "oe:player:db79ce6ad35451c938fbe2995dabd37",
+          "oe:player:e1edfc5cea461399a63cb813cf795cc",
+          "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+        ],
+        "Gen.G": [
+          "oe:player:03daae1844b9ad257324c3eedf41e28",
+          "oe:player:605821ebcf6a2e53f03ec6e8e463d1b",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:eada4723af6f51cf2391d85b5fde49b",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ]
+      },
+      "games": [
+        "LOLTMNT03_271213",
+        "LOLTMNT03_271225",
+        "LOLTMNT03_271258",
+        "LOLTMNT03_272249",
+        "LOLTMNT03_272282"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-FST-",
+      "year": 2025,
+      "league": "FST",
+      "name": "2025 FST",
+      "date": "2025-03-16",
+      "winner": "Hanwha Life Esports",
+      "runner": "Karmine Corp",
+      "points": 8,
+      "participants": {
+        "Hanwha Life Esports": [
+          "oe:player:051ca2e31ba25123961b3df95fdef4c",
+          "oe:player:9573154ad8bc9459b4c0d940315054f",
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:f9cd2ef9afea5cda0eb3263a025cec1"
+        ],
+        "Karmine Corp": [
+          "oe:player:7577c239c73fa5f3011cd7b5503e75e"
+        ]
+      },
+      "games": [
+        "LOLTMNT01_215852",
+        "LOLTMNT01_215856",
+        "LOLTMNT01_215859",
+        "LOLTMNT01_216716"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-EWC-",
+      "year": 2025,
+      "league": "EWC",
+      "name": "2025 EWC",
+      "date": "2025-07-20",
+      "winner": "Gen.G",
+      "runner": "Anyone's Legend",
+      "points": 8,
+      "participants": {
+        "Gen.G": [
+          "oe:player:03daae1844b9ad257324c3eedf41e28",
+          "oe:player:605821ebcf6a2e53f03ec6e8e463d1b",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:eada4723af6f51cf2391d85b5fde49b",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ],
+        "Anyone's Legend": [
+          "oe:player:d24f38ec30ce6f7577066f80e43e4bf"
+        ]
+      },
+      "games": [
+        "LOLTMNT06_128710",
+        "LOLTMNT06_128713",
+        "LOLTMNT06_128727",
+        "LOLTMNT06_129742",
+        "LOLTMNT06_129749"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LCK-Cup",
+      "year": 2025,
+      "league": "LCK",
+      "name": "2025 LCK Cup",
+      "date": "2025-02-23",
+      "winner": "Hanwha Life Esports",
+      "runner": "Gen.G",
+      "points": 8,
+      "participants": {
+        "Hanwha Life Esports": [
+          "oe:player:051ca2e31ba25123961b3df95fdef4c",
+          "oe:player:9573154ad8bc9459b4c0d940315054f",
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:f9cd2ef9afea5cda0eb3263a025cec1"
+        ],
+        "Gen.G": [
+          "oe:player:03daae1844b9ad257324c3eedf41e28",
+          "oe:player:605821ebcf6a2e53f03ec6e8e463d1b",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:eada4723af6f51cf2391d85b5fde49b",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ]
+      },
+      "games": [
+        "LOLTMNT02_223033",
+        "LOLTMNT02_223039",
+        "LOLTMNT02_223046",
+        "LOLTMNT02_223059",
+        "LOLTMNT02_223070"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LCK-Rounds 3-5",
+      "year": 2025,
+      "league": "LCK",
+      "name": "2025 LCK Rounds 3-5",
+      "date": "2025-09-28",
+      "winner": "Gen.G",
+      "runner": "Hanwha Life Esports",
+      "points": 8,
+      "participants": {
+        "Gen.G": [
+          "oe:player:03daae1844b9ad257324c3eedf41e28",
+          "oe:player:605821ebcf6a2e53f03ec6e8e463d1b",
+          "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+          "oe:player:eada4723af6f51cf2391d85b5fde49b",
+          "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+        ],
+        "Hanwha Life Esports": [
+          "oe:player:051ca2e31ba25123961b3df95fdef4c",
+          "oe:player:9573154ad8bc9459b4c0d940315054f",
+          "oe:player:98dd15c330fb5abb4508347265a7f76",
+          "oe:player:dda4a873265dfd06df50a0d8a294908",
+          "oe:player:f9cd2ef9afea5cda0eb3263a025cec1"
+        ]
+      },
+      "games": [
+        "LOLTMNT01_290949",
+        "LOLTMNT01_290950",
+        "LOLTMNT01_290952",
+        "LOLTMNT01_290953"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LCKC-Kickoff",
+      "year": 2025,
+      "league": "LCKC",
+      "name": "2025 LCKC Kickoff",
+      "date": "2025-02-27",
+      "winner": "KT Rolster Challengers",
+      "runner": "T1 Esports Academy",
+      "points": 3,
+      "participants": {
+        "KT Rolster Challengers": [
+          "oe:player:326f63d01099f1c8b91620cbc893813",
+          "oe:player:3648451fd5b8a8ab01e4bedf780c1d6",
+          "oe:player:86a59ad7ba2334ad7505f303d3f2ab6",
+          "oe:player:e5feef89d633a666eeaaf6392ca2fa9",
+          "oe:player:ee051912ad5f9a97aa9ce4980cbb481"
+        ],
+        "T1 Esports Academy": [
+          "oe:player:3950b27e47e381e26f4678ced12bc45",
+          "oe:player:4e0ee55680fa265c49e158f85e26650",
+          "oe:player:9fefcdafef82ae8de67c1187546d622",
+          "oe:player:ab8a2f130a36f7aa619168c53d055d1",
+          "oe:player:c8fe7c65a2ae0ab6ff62674ade6847d"
+        ]
+      },
+      "games": [
+        "LOLTMNT02_223470",
+        "LOLTMNT02_223471",
+        "LOLTMNT02_223472",
+        "LOLTMNT02_224454"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LCKC-Rounds 3-5",
+      "year": 2025,
+      "league": "LCKC",
+      "name": "2025 LCKC Rounds 3-5",
+      "date": "2025-09-30",
+      "winner": "BNK FEARX Youth",
+      "runner": "KT Rolster Challengers",
+      "points": 3,
+      "participants": {
+        "KT Rolster Challengers": [
+          "oe:player:326f63d01099f1c8b91620cbc893813",
+          "oe:player:3648451fd5b8a8ab01e4bedf780c1d6",
+          "oe:player:86a59ad7ba2334ad7505f303d3f2ab6",
+          "oe:player:8c6395564a23f3c2af8d378540012b0",
+          "oe:player:e5feef89d633a666eeaaf6392ca2fa9"
+        ],
+        "BNK FEARX Youth": [
+          "oe:player:38e0af7278d6769d0c81d7c4b47ac1e",
+          "oe:player:5836a085b5ebaa7662fbba55341703c",
+          "oe:player:99e732def3601275db892c84fb85a0c",
+          "oe:player:baf26814ef7b2f10fac33a00c3d53a3",
+          "oe:player:e68cc4b2bef76a96aae344b49a81579"
+        ]
+      },
+      "games": [
+        "LOLTMNT01_291530",
+        "LOLTMNT01_291534",
+        "LOLTMNT01_293013",
+        "LOLTMNT01_293014"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LEC-Spring",
+      "year": 2025,
+      "league": "LEC",
+      "name": "2025 LEC Spring",
+      "date": "2025-06-08",
+      "winner": "Movistar KOI",
+      "runner": "G2 Esports",
+      "points": 6,
+      "participants": {
+        "Movistar KOI": [],
+        "G2 Esports": []
+      },
+      "games": [
+        "LOLTMNT06_122412",
+        "LOLTMNT06_122413",
+        "LOLTMNT06_123414",
+        "LOLTMNT06_123415"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LEC-Summer",
+      "year": 2025,
+      "league": "LEC",
+      "name": "2025 LEC Summer",
+      "date": "2025-09-28",
+      "winner": "G2 Esports",
+      "runner": "Movistar KOI",
+      "points": 6,
+      "participants": {
+        "Movistar KOI": [],
+        "G2 Esports": []
+      },
+      "games": [
+        "LOLTMNT05_154417",
+        "LOLTMNT05_154418",
+        "LOLTMNT05_155418"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LEC-Winter",
+      "year": 2025,
+      "league": "LEC",
+      "name": "2025 LEC Winter",
+      "date": "2025-03-02",
+      "winner": "Karmine Corp",
+      "runner": "G2 Esports",
+      "points": 6,
+      "participants": {
+        "Karmine Corp": [
+          "oe:player:7577c239c73fa5f3011cd7b5503e75e"
+        ],
+        "G2 Esports": []
+      },
+      "games": [
+        "LOLTMNT05_115078",
+        "LOLTMNT05_116057",
+        "LOLTMNT05_116059"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LPL-Split 1",
+      "year": 2025,
+      "league": "LPL",
+      "name": "2025 LPL Split 1",
+      "date": "2025-03-01",
+      "winner": "Top Esports",
+      "runner": "Anyone's Legend",
+      "points": 8,
+      "participants": {
+        "Anyone's Legend": [
+          "oe:player:d24f38ec30ce6f7577066f80e43e4bf"
+        ],
+        "Top Esports": []
+      },
+      "games": [
+        "11772-11772_game_1",
+        "11772-11772_game_2",
+        "11772-11772_game_3",
+        "11772-11772_game_4"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LPL-Split 2",
+      "year": 2025,
+      "league": "LPL",
+      "name": "2025 LPL Split 2",
+      "date": "2025-06-14",
+      "winner": "Anyone's Legend",
+      "runner": "Bilibili Gaming",
+      "points": 8,
+      "participants": {
+        "Anyone's Legend": [
+          "oe:player:d24f38ec30ce6f7577066f80e43e4bf"
+        ],
+        "Bilibili Gaming": []
+      },
+      "games": [
+        "12440-12440_game_1",
+        "12440-12440_game_2",
+        "12440-12440_game_3",
+        "12440-12440_game_4"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LPL-Split 3",
+      "year": 2025,
+      "league": "LPL",
+      "name": "2025 LPL Split 3",
+      "date": "2025-09-21",
+      "winner": "Bilibili Gaming",
+      "runner": "Top Esports",
+      "points": 8,
+      "participants": {
+        "Top Esports": [],
+        "Bilibili Gaming": []
+      },
+      "games": [
+        "12812-12812_game_1",
+        "12812-12812_game_2",
+        "12812-12812_game_3",
+        "12812-12812_game_4",
+        "12812-12812_game_5"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-EM-Spring",
+      "year": 2025,
+      "league": "EM",
+      "name": "2025 EM Spring",
+      "date": "2025-06-21",
+      "winner": "Los Ratones",
+      "runner": "Barça eSports",
+      "points": 3,
+      "participants": {
+        "Barça eSports": [],
+        "Los Ratones": [
+          "oe:player:d8362fe0d38ca0e70953ed957deaa00"
+        ]
+      },
+      "games": [
+        "LOLTMNT05_137439",
+        "LOLTMNT05_138397",
+        "LOLTMNT05_138398"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-EM-Summer",
+      "year": 2025,
+      "league": "EM",
+      "name": "2025 EM Summer",
+      "date": "2025-11-02",
+      "winner": "Karmine Corp Blue",
+      "runner": "Los Heretics",
+      "points": 3,
+      "participants": {
+        "Karmine Corp Blue": [
+          "oe:player:973547129a691fb61e886add170ac7a"
+        ],
+        "Los Heretics": []
+      },
+      "games": [
+        "LOLTMNT04_135952",
+        "LOLTMNT04_135954",
+        "LOLTMNT04_135955"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-EM-Winter",
+      "year": 2025,
+      "league": "EM",
+      "name": "2025 EM Winter",
+      "date": "2025-03-23",
+      "winner": "Los Ratones",
+      "runner": "Ici Japon Corp. Esport",
+      "points": 3,
+      "participants": {
+        "Los Ratones": [
+          "oe:player:d8362fe0d38ca0e70953ed957deaa00"
+        ],
+        "Ici Japon Corp. Esport": [
+          "oe:player:bc4f68ea698f26bb1e2f6d34f900f57"
+        ]
+      },
+      "games": [
+        "LOLTMNT04_102362",
+        "LOLTMNT04_102363",
+        "LOLTMNT04_102364"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LTA N-Split 2",
+      "year": 2025,
+      "league": "LTA N",
+      "name": "2025 LTA N Split 2",
+      "date": "2025-06-15",
+      "winner": "FlyQuest",
+      "runner": "Cloud9",
+      "points": 6,
+      "participants": {
+        "Cloud9": [
+          "oe:player:0a53c1102dafce61e89decc517b3175",
+          "oe:player:1efc4e5732e91520d03385900b903f9"
+        ],
+        "FlyQuest": [
+          "oe:player:e9017664588010860a92ceb5f8fcb82"
+        ]
+      },
+      "games": [
+        "LOLTMNT01_252856",
+        "LOLTMNT01_253074",
+        "LOLTMNT01_253075",
+        "LOLTMNT01_253076",
+        "LOLTMNT01_253078"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LTA N-Split 3",
+      "year": 2025,
+      "league": "LTA N",
+      "name": "2025 LTA N Split 3",
+      "date": "2025-09-07",
+      "winner": "FlyQuest",
+      "runner": "100 Thieves",
+      "points": 6,
+      "participants": {
+        "100 Thieves": [
+          "oe:player:8f8eaac8e99c203ee76e57c5c81c91f"
+        ],
+        "FlyQuest": [
+          "oe:player:e9017664588010860a92ceb5f8fcb82"
+        ]
+      },
+      "games": [
+        "LOLTMNT01_285575",
+        "LOLTMNT01_285591",
+        "LOLTMNT01_285605",
+        "LOLTMNT01_285618"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-LTA-Championship",
+      "year": 2025,
+      "league": "LTA",
+      "name": "2025 LTA Championship",
+      "date": "2025-09-28",
+      "winner": "FlyQuest",
+      "runner": "Vivo Keyd Stars",
+      "points": 6,
+      "participants": {
+        "Vivo Keyd Stars": [],
+        "FlyQuest": [
+          "oe:player:e9017664588010860a92ceb5f8fcb82"
+        ]
+      },
+      "games": [
+        "LOLTMNT02_314584",
+        "LOLTMNT02_314585",
+        "LOLTMNT02_314587",
+        "LOLTMNT02_314588"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-NLC-Spring",
+      "year": 2025,
+      "league": "NLC",
+      "name": "2025 NLC Spring",
+      "date": "2025-06-01",
+      "winner": "Los Ratones",
+      "runner": "NORD Esports",
+      "points": 3,
+      "participants": {
+        "NORD Esports": [],
+        "Los Ratones": [
+          "oe:player:d8362fe0d38ca0e70953ed957deaa00"
+        ]
+      },
+      "games": [
+        "LOLTMNT06_122313",
+        "LOLTMNT06_122326",
+        "LOLTMNT06_123295"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2025-NLC-Winter",
+      "year": 2025,
+      "league": "NLC",
+      "name": "2025 NLC Winter",
+      "date": "2025-03-02",
+      "winner": "Los Ratones",
+      "runner": "NORD Esports",
+      "points": 3,
+      "participants": {
+        "NORD Esports": [],
+        "Los Ratones": [
+          "oe:player:d8362fe0d38ca0e70953ed957deaa00"
+        ]
+      },
+      "games": [
+        "LOLTMNT06_106169",
+        "LOLTMNT06_106172",
+        "LOLTMNT06_106178"
+      ],
+      "source": "2025",
+      "basis": "결승 및 결승 전 30일 내 해당 팀 출전 기록"
+    },
+    {
+      "id": "2013 월즈",
+      "year": 2013,
+      "league": "WLDs",
+      "name": "2013 월즈",
+      "winner": "역사 우승 이력 보완",
+      "runner": null,
+      "points": 18,
+      "participants": {
+        "역사 우승 이력 보완": [
+          "oe:player:e1edfc5cea461399a63cb813cf795cc"
+        ]
+      },
+      "source": "manual",
+      "basis": "자료 기간 밖 주요 이력 수기 보완 · 경기 CSV 검증 아님"
+    },
+    {
+      "id": "2013 Champions Summer",
+      "year": 2013,
+      "league": "LCK",
+      "name": "2013 Champions Summer",
+      "winner": "역사 우승 이력 보완",
+      "runner": null,
+      "points": 8,
+      "participants": {
+        "역사 우승 이력 보완": [
+          "oe:player:e1edfc5cea461399a63cb813cf795cc"
+        ]
+      },
+      "source": "manual",
+      "basis": "자료 기간 밖 주요 이력 수기 보완 · 경기 CSV 검증 아님"
+    },
+    {
+      "id": "2013–2014 Champions Winter",
+      "year": 2014,
+      "league": "LCK",
+      "name": "2013–2014 Champions Winter",
+      "winner": "역사 우승 이력 보완",
+      "runner": null,
+      "points": 8,
+      "participants": {
+        "역사 우승 이력 보완": [
+          "oe:player:e1edfc5cea461399a63cb813cf795cc"
+        ]
+      },
+      "source": "manual",
+      "basis": "자료 기간 밖 주요 이력 수기 보완 · 경기 CSV 검증 아님"
+    },
+    {
+      "id": "2014 Champions Spring",
+      "year": 2014,
+      "league": "LCK",
+      "name": "2014 Champions Spring",
+      "winner": "역사 우승 이력 보완",
+      "runner": null,
+      "points": 8,
+      "participants": {
+        "역사 우승 이력 보완": [
+          "oe:player:c588a2d07b69ca4ba61c96aebd3f793"
+        ]
+      },
+      "source": "manual",
+      "basis": "자료 기간 밖 주요 이력 수기 보완 · 경기 CSV 검증 아님"
+    },
+    {
+      "id": "2015 LPL Spring",
+      "year": 2015,
+      "league": "LPL",
+      "name": "2015 LPL Spring",
+      "winner": "역사 우승 이력 보완",
+      "runner": null,
+      "points": 8,
+      "participants": {
+        "역사 우승 이력 보완": [
+          "oe:player:c588a2d07b69ca4ba61c96aebd3f793"
+        ]
+      },
+      "source": "manual",
+      "basis": "자료 기간 밖 주요 이력 수기 보완 · 경기 CSV 검증 아님"
+    }
+  ],
+  "excluded": [
+    [
+      2025,
+      "NLC",
+      "Summer",
+      "2025-08-30",
+      "BO5 결승 승리 확인 불가"
+    ]
+  ],
+  "manualReferences": [
+    "https://en.wikipedia.org/wiki/League_of_Legends_Champions_Korea",
+    "https://en.wikipedia.org/wiki/2013_League_of_Legends_World_Championship"
+  ],
+  "manualReferenceStatus": "참고 링크 · 이번 실행에서 접근 제한으로 페이지 본문 대조 못함"
+}
