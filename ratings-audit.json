@@ -1,0 +1,2910 @@
+{
+  "methodVersion": 1,
+  "sources": {
+    "2024": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2024_LoL_esports_match_data_from_OraclesElixir.csv",
+      "commit": "37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca",
+      "primary": "https://oracleselixir.com/tools/downloads",
+      "sha256": "80bcb27fd138b0a5bc19246bd302b5cf01eaee71af2339bf8801956c7e827b1d",
+      "firstDate": "2024-01-01 05:13:15",
+      "lastDate": "2024-12-08 09:03:13",
+      "playerRows": 101990
+    },
+    "2025": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2025_LoL_esports_match_data_from_OraclesElixir.csv",
+      "commit": "37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca",
+      "primary": "https://oracleselixir.com/tools/downloads",
+      "sha256": "ce53b0b2df69a078a641d88f1a7910cb2ec542d337711e7292998c7d3699ccf5",
+      "firstDate": "2025-01-11 11:11:24",
+      "lastDate": "2025-12-29 10:52:27",
+      "playerRows": 100530
+    },
+    "2023": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2023_LoL_esports_match_data_from_OraclesElixir.csv",
+      "commit": "37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca",
+      "primary": "https://oracleselixir.com/tools/downloads",
+      "sha256": "7bd46b6a3c26248124caf9b9ceb64cbe4300ef0d3ade2b260032900fe8749ef2",
+      "firstDate": "2023-01-10 17:07:16",
+      "lastDate": "2023-12-31 11:48:06",
+      "playerRows": 111190
+    },
+    "2022": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2022_LoL_esports_match_data_from_OraclesElixir.csv",
+      "commit": "37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca",
+      "primary": "https://oracleselixir.com/tools/downloads",
+      "sha256": "af4a2bfc89bc82d3c57d94baf0564f3c59b96e67638220fce2a7665422d14c7c",
+      "firstDate": "2022-01-10 07:44:08",
+      "lastDate": "2022-12-27 12:43:43",
+      "playerRows": 124150
+    },
+    "2021": {
+      "url": "https://media.githubusercontent.com/media/Matthew-Paoletta/The-Snowballing-Effect/37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca/data/2021_LoL_esports_match_data_from_OraclesElixir.csv",
+      "commit": "37f850b4608cfbd6ed1c64191f29d6f6f2ad8aca",
+      "primary": "https://oracleselixir.com/tools/downloads",
+      "sha256": "425610d96ae6ed5b00a12947498c7a3f1551db261c14ae9dbdb42ac6810fee2b",
+      "firstDate": "2021-01-02 07:40:39",
+      "lastDate": "2021-12-26 13:22:45",
+      "playerRows": 123720
+    }
+  },
+  "identityAudit": [
+    {
+      "id": "p001",
+      "name": "Morgan",
+      "identity": "oe:player:f73dde2d8c7879ae8d1fcdc03c4ffeb",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p002",
+      "name": "Sw0rd",
+      "identity": "oe:player:b3dae530a02238b0628518ef886e505",
+      "alias": "Sword",
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p003",
+      "name": "UmTi",
+      "identity": "oe:player:1970fcb701acce66e0771946bbb3105",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p004",
+      "name": "Lava",
+      "identity": "oe:player:1d18fe2cdd43a72d46421ecfe81b599",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p005",
+      "name": "Hena",
+      "identity": "oe:player:9712524dc88851032bd53054f8b49b4",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p006",
+      "name": "Delight",
+      "identity": "oe:player:051ca2e31ba25123961b3df95fdef4c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p007",
+      "name": "Burdol",
+      "identity": "oe:player:566586ef99b39b57e9c85c59f021da5",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p008",
+      "name": "Hoya",
+      "identity": "oe:player:57ac9f77eae511aeee1e854434f73f2",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p009",
+      "name": "Nuguri",
+      "identity": "oe:player:f17b90d1dd0f1814bb1f82f77c2f861",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p010",
+      "name": "Canyon",
+      "identity": "oe:player:92544d7a994bd6841cccd9f6e42e3de",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p011",
+      "name": "ShowMaker",
+      "identity": "oe:player:5f8ff49cd56eae61d635966b183a451",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p012",
+      "name": "deokdam",
+      "identity": "oe:player:18bdb3898e7fecb3bb0be7ff075d509",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p013",
+      "name": "Kellin",
+      "identity": "oe:player:b0ec3df39d61f953e7af0afd8eb8c4a",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p014",
+      "name": "Kingen",
+      "identity": "oe:player:618a87d272773f68239d8ce5555f39d",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p015",
+      "name": "Pyosik",
+      "identity": "oe:player:a2357eb17578485c2ba736db36cbc42",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p016",
+      "name": "Zeka",
+      "identity": "oe:player:f9cd2ef9afea5cda0eb3263a025cec1",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p017",
+      "name": "Deft",
+      "identity": "oe:player:c588a2d07b69ca4ba61c96aebd3f793",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p018",
+      "name": "BeryL",
+      "identity": "oe:player:dee54127bb56d2e2540ba71cc416f1c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p019",
+      "name": "Doran",
+      "identity": "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p020",
+      "name": "Peanut",
+      "identity": "oe:player:dda4a873265dfd06df50a0d8a294908",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p021",
+      "name": "Chovy",
+      "identity": "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p022",
+      "name": "Ruler",
+      "identity": "oe:player:eada4723af6f51cf2391d85b5fde49b",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p023",
+      "name": "Lehends",
+      "identity": "oe:player:e4e24b8656e4e6a74b939af730b0148",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p024",
+      "name": "DuDu",
+      "identity": "oe:player:6e6a78244523ed9e54731d07d1f79f4",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p025",
+      "name": "OnFleek",
+      "identity": "oe:player:e35d06a0430095562086a40a2676d8e",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p026",
+      "name": "Willer",
+      "identity": "oe:player:baf26814ef7b2f10fac33a00c3d53a3",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p027",
+      "name": "Karis",
+      "identity": "oe:player:498246d6c44175256a07ed5f322c817",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p028",
+      "name": "SamD",
+      "identity": "oe:player:bc4f68ea698f26bb1e2f6d34f900f57",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p029",
+      "name": "Vsta",
+      "identity": "oe:player:16c1637b4b44b008b4d6627f68ae30a",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p030",
+      "name": "Kiin",
+      "identity": "oe:player:03daae1844b9ad257324c3eedf41e28",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p031",
+      "name": "Ellim",
+      "identity": "oe:player:579ae2e0addc18db74179b2a3d33294",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p032",
+      "name": "FATE",
+      "identity": "oe:player:24cd6812f523cf30c3502344539be6f",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p033",
+      "name": "Teddy",
+      "identity": "oe:player:2b5fa564a1259b97bc238fbfa719b07",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p034",
+      "name": "Hoit",
+      "identity": "oe:player:ed4b59fdd87aa318a52777affd42d00",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p035",
+      "name": "Rascal",
+      "identity": "oe:player:9daf04bfd9c8815cc827414f59f45af",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p036",
+      "name": "Cuzz",
+      "identity": "oe:player:f9fe6d28d5b67bf9ac673b2cc8edf15",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p037",
+      "name": "Aria",
+      "identity": "oe:player:2e82913920d8a6d0efa480bc35f1ba8",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p038",
+      "name": "VicLa",
+      "identity": "oe:player:d709285b163a94af9d819e568c592ba",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p039",
+      "name": "Aiming",
+      "identity": "oe:player:85104684d1eb7f4c0ce393441a0b669",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p040",
+      "name": "Life",
+      "identity": "oe:player:dea5251e486aed942e1bc06e1d5c116",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p041",
+      "name": "Dove",
+      "identity": "oe:player:1d22c812efd7b8a4244d93c51acc399",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p042",
+      "name": "Croco",
+      "identity": "oe:player:5c6f901a83ec448d51703aebba0ca64",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p043",
+      "name": "Clozer",
+      "identity": "oe:player:6adb46561c24655e0455d9b3fdc5698",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p044",
+      "name": "Envyy",
+      "identity": "oe:player:b0e54ad49a5ce7a200bcb877eee7ed9",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p045",
+      "name": "Ice",
+      "identity": "oe:player:8bac58409e91b96ecd05f6d8f053e07",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p046",
+      "name": "Prince",
+      "identity": "oe:player:030a726de315d9ad86989bf360809e9",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p047",
+      "name": "Kael",
+      "identity": "oe:player:d24f38ec30ce6f7577066f80e43e4bf",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p048",
+      "name": "Canna",
+      "identity": "oe:player:7577c239c73fa5f3011cd7b5503e75e",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p049",
+      "name": "Dread",
+      "identity": "oe:player:5fac949d3a1a7631ddaef68ea4cbe1e",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p050",
+      "name": "Bdd",
+      "identity": "oe:player:30361653a485a9609fb2d3aa073282c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p051",
+      "name": "Ghost",
+      "identity": "oe:player:78081d0b3c01f1f295d52d53744261a",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p052",
+      "name": "Effort",
+      "identity": "oe:player:035b9ae578574cdf728d8760483d804",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p053",
+      "name": "Peter",
+      "identity": "oe:player:ee051912ad5f9a97aa9ce4980cbb481",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p054",
+      "name": "Zeus",
+      "identity": "oe:player:98dd15c330fb5abb4508347265a7f76",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p055",
+      "name": "Oner",
+      "identity": "oe:player:f8b68f268106124fc4bc1c946adc9b0",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p056",
+      "name": "Faker",
+      "identity": "oe:player:e1edfc5cea461399a63cb813cf795cc",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p057",
+      "name": "Gumayusi",
+      "identity": "oe:player:c7319736816efe935787b4381c6f321",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p058",
+      "name": "Keria",
+      "identity": "oe:player:db79ce6ad35451c938fbe2995dabd37",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p059",
+      "name": "Soboro",
+      "identity": "oe:player:38e0af7278d6769d0c81d7c4b47ac1e",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p060",
+      "name": "Raptor",
+      "identity": "oe:player:637ed20b1e41be1c51bd1a4cb211357",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p061",
+      "name": "Feisty",
+      "identity": "oe:player:d1ae0e2f9f3ac1e0e0cdcb86504ca77",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p062",
+      "name": "Listo",
+      "identity": "oe:player:8ddd8d88391896aa4d9e751dee81770",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p063",
+      "name": "Gamin",
+      "identity": "oe:player:998b3e49b01ecc41eacc392477a98cf",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p064",
+      "name": "Loopy",
+      "identity": "oe:player:e9741b3a238723ea6380ef2113fae63",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p065",
+      "name": "Thanatos",
+      "identity": "oe:player:1efc4e5732e91520d03385900b903f9",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p066",
+      "name": "Lucid",
+      "identity": "oe:player:10b86429ce8048aba673d802632e358",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p067",
+      "name": "Pullbae",
+      "identity": "oe:player:559813e734d182e8896481003507b1f",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p068",
+      "name": "Rahel",
+      "identity": "oe:player:e2c655411d8d95ef73d8026704f5e7a",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p069",
+      "name": "Bible",
+      "identity": "oe:player:5788fbc5ff334175ec2eccae6f0ed81",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p070",
+      "name": "Clear",
+      "identity": "oe:player:d87853a5c1c5463889d70a62cdbcffc",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p071",
+      "name": "Peach",
+      "identity": "oe:player:53841c6e42a6ce77b6f3b80133c9342",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p072",
+      "name": "SeTab",
+      "identity": "oe:player:4ff7b91bbc9492e9f96d28dda496653",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p073",
+      "name": "Pleata",
+      "identity": "oe:player:7fdedd3126915607d5c8f42f8239253",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p074",
+      "name": "Jun",
+      "identity": "oe:player:054e5f8aeb885db6713f4a3e7328efc",
+      "alias": null,
+      "candidateIdentities": 2
+    },
+    {
+      "id": "p075",
+      "name": "Zest",
+      "identity": "oe:player:786b5bbf7bbfb7b79379e8589a865c1",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p076",
+      "name": "Winner",
+      "identity": "oe:player:3e49e4fa76bc82c6f03a12d50ee0a6e",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p077",
+      "name": "Ophelia",
+      "identity": "oe:player:25546fe55464aef59d6f46b52f22bcb",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p078",
+      "name": "Quid",
+      "identity": "oe:player:8f8eaac8e99c203ee76e57c5c81c91f",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p079",
+      "name": "Peyz",
+      "identity": "oe:player:5bbc2b92348d930ebd500cb9ce71bb7",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p080",
+      "name": "Lospa",
+      "identity": "oe:player:0758af26fa0c3af6899bb1569059609",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p081",
+      "name": "LukaLux",
+      "identity": "oe:player:ec04e0f43e44816d11fcce23ea77433",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p082",
+      "name": "Rooster",
+      "identity": "oe:player:285954244fdc2bcce532fb88a1e0ddb",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p083",
+      "name": "Seonbi",
+      "identity": "oe:player:53509762cb97b6d7e1b806d9befb5fb",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p084",
+      "name": "Roamer",
+      "identity": "oe:player:ea58943d300b14d684bb05b3975fe15",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p085",
+      "name": "Cheoni",
+      "identity": "oe:player:cada0080d5951aaafd67134bcbd7760",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p086",
+      "name": "Lure",
+      "identity": "oe:player:4367b1100c2577e20e13ae9e3afd835",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p087",
+      "name": "Baut",
+      "identity": "oe:player:3dbe8ecf9c97fc12b28ad199bdb5f82",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p088",
+      "name": "IlllIma",
+      "identity": "oe:player:f23c7426104cc4df2b49b3be2c6d024",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p089",
+      "name": "Citrus",
+      "identity": "oe:player:ad173d59265cf2cbe796b2af2554da3",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p090",
+      "name": "BuLLDoG",
+      "identity": "oe:player:317aeb74a6dd16bea711bbad361ca44",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p091",
+      "name": "Bull",
+      "identity": "oe:player:92c21511d7b383b2f8ba5b00c3c9a47",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p092",
+      "name": "Minit",
+      "identity": "oe:player:cf1fc00c5f362d9b4988cbb260cbc95",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p093",
+      "name": "Moham",
+      "identity": "oe:player:dfc279de8d7bd571aa8edfd7eb89c03",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p094",
+      "name": "Valkyrie",
+      "identity": "oe:player:2f4e392b28239f7751efa2308caf725",
+      "alias": null,
+      "candidateIdentities": 2
+    },
+    {
+      "id": "p095",
+      "name": "Castle",
+      "identity": "oe:player:80fea0848c57b8e07a79675d41f582c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p096",
+      "name": "PangSu",
+      "identity": null,
+      "alias": null,
+      "candidateIdentities": 0
+    },
+    {
+      "id": "p097",
+      "name": "Mask",
+      "identity": "oe:player:4a18312b5b75f549d5551e5912ad6eb",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p098",
+      "name": "Noah",
+      "identity": "oe:player:95d286ec0a5d750d09e848a4e630c56",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p099",
+      "name": "Rebel",
+      "identity": null,
+      "alias": null,
+      "candidateIdentities": 0
+    },
+    {
+      "id": "p100",
+      "name": "Way",
+      "identity": "oe:player:8c6395564a23f3c2af8d378540012b0",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p101",
+      "name": "Meaning",
+      "identity": "oe:player:7277de5f2ed6f17c61f1f25594591a8",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p102",
+      "name": "HamBak",
+      "identity": "oe:player:845ea84cec22236278388f19fcd20bf",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p103",
+      "name": "Ten10",
+      "identity": "oe:player:22b6f6057ca1b2f7a0cdf1b9a8de831",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p104",
+      "name": "KingKong",
+      "identity": null,
+      "alias": null,
+      "candidateIdentities": 0
+    },
+    {
+      "id": "p105",
+      "name": "Duro",
+      "identity": "oe:player:605821ebcf6a2e53f03ec6e8e463d1b",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p106",
+      "name": "Prove",
+      "identity": "oe:player:8484fddc2b2b38d15cb8ca424d1d442",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p107",
+      "name": "DnDn",
+      "identity": "oe:player:341e10748bb6d388250fd1f013e45a4",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p108",
+      "name": "Sylvie",
+      "identity": "oe:player:1a75a7cf8c98442be881fed562346f5",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p109",
+      "name": "FIESTA",
+      "identity": "oe:player:5ee64eb3feb02e60832a2265db54f71",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p110",
+      "name": "vital",
+      "identity": "oe:player:252de481e83ab0bc87aada93aeb424c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p111",
+      "name": "Blessing",
+      "identity": null,
+      "alias": null,
+      "candidateIdentities": 0
+    },
+    {
+      "id": "p112",
+      "name": "Photon",
+      "identity": "oe:player:fd22b656b23ca07a276181a4953ba2c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p113",
+      "name": "Forest",
+      "identity": "oe:player:9170917b7452bef889def6c113af150",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p114",
+      "name": "Poby",
+      "identity": "oe:player:4e0ee55680fa265c49e158f85e26650",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p115",
+      "name": "TolanD",
+      "identity": "oe:player:157108ff2b64591e5703c64dbae3a2e",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p116",
+      "name": "Trigger",
+      "identity": "oe:player:5bc99370722c5ecbfa9b3c1e17338e6",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p117",
+      "name": "Kabbie",
+      "identity": null,
+      "alias": null,
+      "candidateIdentities": 0
+    },
+    {
+      "id": "p118",
+      "name": "Juhan",
+      "identity": "oe:player:3ee0c18b85e7bb8eaad86d58498e27d",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p119",
+      "name": "Clid",
+      "identity": "oe:player:d3abb04a273ed8615be5f54a391818e",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p120",
+      "name": "YoungJae",
+      "identity": "oe:player:e5feef89d633a666eeaaf6392ca2fa9",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p121",
+      "name": "Taeyoon",
+      "identity": "oe:player:952237fce714ed1eca8ded17523bee9",
+      "alias": null,
+      "candidateIdentities": 2
+    },
+    {
+      "id": "p122",
+      "name": "Frim",
+      "identity": "oe:player:967b6cf132535f07c260af86ebcf7ce",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p123",
+      "name": "DDoiV",
+      "identity": "oe:player:67447707ec7cbde9ab25bfa2ed69877",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p124",
+      "name": "Ivory",
+      "identity": "oe:player:5aea7cdf0f3349ac62a04335ec1c918",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p125",
+      "name": "Enosh",
+      "identity": "oe:player:5836a085b5ebaa7662fbba55341703c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p126",
+      "name": "Gyosoo",
+      "identity": "oe:player:96976e5856f5d7c956f3ca71e409195",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p127",
+      "name": "Pollu",
+      "identity": "oe:player:3126bca5d4d2555ba3b460699508e16",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p128",
+      "name": "Saint",
+      "identity": "oe:player:f45792335d83b10581da2f0cbdd6e8e",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p129",
+      "name": "Sponge",
+      "identity": "oe:player:3f4027dc08a489bd4d5390913f5dc71",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p130",
+      "name": "Paduck",
+      "identity": "oe:player:326f63d01099f1c8b91620cbc893813",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p131",
+      "name": "Piero",
+      "identity": "oe:player:973547129a691fb61e886add170ac7a",
+      "alias": null,
+      "candidateIdentities": 2
+    },
+    {
+      "id": "p132",
+      "name": "Casting",
+      "identity": "oe:player:86a59ad7ba2334ad7505f303d3f2ab6",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p133",
+      "name": "Carfe",
+      "identity": null,
+      "alias": null,
+      "candidateIdentities": 0
+    },
+    {
+      "id": "p134",
+      "name": "Grizzly",
+      "identity": "oe:player:655c522b43d1444e55a0a4615c2b59b",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p135",
+      "name": "Guwon",
+      "identity": "oe:player:6427b0c5a7c3106e92a7c11257a08c6",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p136",
+      "name": "Loki",
+      "identity": "oe:player:0a53c1102dafce61e89decc517b3175",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p137",
+      "name": "Lancer",
+      "identity": "oe:player:f7407edad1ded2d8d1e634ed49a9698",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p138",
+      "name": "Courage",
+      "identity": "oe:player:4e07c3a412cda9ddf875cc14c65efc4",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p139",
+      "name": "Cleaver",
+      "identity": "oe:player:ee552adab222e68b8c8a6a77c126e0d",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p140",
+      "name": "Andil",
+      "identity": "oe:player:5ef70ecd799a70ebbda239cd9a9f1e7",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p141",
+      "name": "PerfecT",
+      "identity": "oe:player:29bef8f5895e5e4fef8ff0945e68567",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p142",
+      "name": "Hype",
+      "identity": "oe:player:2452114de900ce4bb971851b668786d",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p143",
+      "name": "DDahyuk",
+      "identity": "oe:player:e069ed7135e8a018823429510a1f8c1",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p144",
+      "name": "Vincenzo",
+      "identity": "oe:player:ab8a2f130a36f7aa619168c53d055d1",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p145",
+      "name": "Guti",
+      "identity": "oe:player:3950b27e47e381e26f4678ced12bc45",
+      "alias": null,
+      "candidateIdentities": 2
+    },
+    {
+      "id": "p146",
+      "name": "Diable",
+      "identity": "oe:player:178ec186b0d43d2669342596c2808cd",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p147",
+      "name": "PlanB",
+      "identity": "oe:player:d7560fc4ec70f8b12e5dd435668b292",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p148",
+      "name": "Mihile",
+      "identity": "oe:player:c25ed32694e455959de4abe0c535ecc",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p149",
+      "name": "Sounda",
+      "identity": "oe:player:7287b0a4cd5548a002e49dfdfbbc2e9",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p150",
+      "name": "Calix",
+      "identity": "oe:player:c9441d0e78cf438ef0b372dc74010e3",
+      "alias": null,
+      "candidateIdentities": 2
+    },
+    {
+      "id": "p151",
+      "name": "Callme",
+      "identity": "oe:player:87f7503a6cdacffa612aeee7f04cc7c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p152",
+      "name": "HH",
+      "identity": "oe:player:717e208c832f2b72b17afe93c3766f7",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p153",
+      "name": "Dal",
+      "identity": "oe:player:9356c299853ed82cc09c20c32358738",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p154",
+      "name": "Bay",
+      "identity": "oe:player:0582fabc486c42d0db3bf52f56c6fc3",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p155",
+      "name": "Smash",
+      "identity": "oe:player:eaebb7118d7bd83eabac513053e1f6c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p156",
+      "name": "Minous",
+      "identity": "oe:player:2f0b9f7cda18943425d555b51e570e8",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p157",
+      "name": "GIDEON",
+      "identity": "oe:player:60b1614a632775c97a37a57bda799f2",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p158",
+      "name": "Execute",
+      "identity": "oe:player:40cd014b7b6251e3a22e6a45a73a64e",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p159",
+      "name": "Kangin",
+      "identity": "oe:player:49c627c099821a2894c6c4dfd9274b3",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p160",
+      "name": "Samver",
+      "identity": "oe:player:37b0ff747a3bc11f577c0a05f0dedd1",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p161",
+      "name": "Siwoo",
+      "identity": "oe:player:da9f969a7ab3819b9e528072aa4d5e6",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p162",
+      "name": "Sharvel",
+      "identity": "oe:player:18a70ca6e551b080cf886828cc18394",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p163",
+      "name": "Frog",
+      "identity": "oe:player:c942f21cd85aaf8d7892aa712e3e2ce",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p164",
+      "name": "Racerr",
+      "identity": "oe:player:3ee8eecd18ed800812573623f621d35",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p165",
+      "name": "Kania",
+      "identity": "oe:player:e89d89c1f0c59607353f819ad4cc12c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p166",
+      "name": "Zephyr",
+      "identity": "oe:player:0cfe46c9ae6f1654b9363084c559648",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p167",
+      "name": "kyeahoo",
+      "identity": "oe:player:308e48bf56284c09a1a9aadf55bc80c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p168",
+      "name": "BeRr",
+      "identity": "oe:player:b7411c6a095b1dc123931f3cb8d7af5",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p169",
+      "name": "Career",
+      "identity": "oe:player:99e732def3601275db892c84fb85a0c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p170",
+      "name": "HorangE",
+      "identity": "oe:player:21647879fad5377c047bd923bffb07c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p171",
+      "name": "Toye",
+      "identity": "oe:player:984cbdbc440ba61d17c677d848dbe9f",
+      "alias": null,
+      "candidateIdentities": 2
+    },
+    {
+      "id": "p172",
+      "name": "Dooly",
+      "identity": "oe:player:dcfc3c9bd1d00753fe2619381a59fe4",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p173",
+      "name": "SOLBON",
+      "identity": "oe:player:f557edcff47190d6f3e4ab271c0c40c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p174",
+      "name": "Slayer",
+      "identity": "oe:player:be17beb4d906e22fa6995e17060ebd3",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p175",
+      "name": "Dahlia",
+      "identity": "oe:player:ada61b4241a68d672021ea46ab8bbf3",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p176",
+      "name": "Namgung",
+      "identity": "oe:player:97cae9bbdbfe09bafe83c5a7bda0727",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p177",
+      "name": "Tempester",
+      "identity": "oe:player:3d94511f748af7acb6347becd5b4c94",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p178",
+      "name": "Pungyeon",
+      "identity": "oe:player:1c3f29080dd3dd4f666adbd6448cef4",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p179",
+      "name": "Quantum",
+      "identity": "oe:player:c78788a736a0c7e5a77890144fd2986",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p180",
+      "name": "Pout",
+      "identity": "oe:player:ca187ee49dd3e9ed20eaacbbf484fdf",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p181",
+      "name": "Zinie",
+      "identity": "oe:player:3648451fd5b8a8ab01e4bedf780c1d6",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p182",
+      "name": "Janus",
+      "identity": "oe:player:b8441a3fc649ee4789bc3ded34f46d6",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p183",
+      "name": "Daystar",
+      "identity": "oe:player:e68cc4b2bef76a96aae344b49a81579",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p184",
+      "name": "Carim",
+      "identity": "oe:player:e9df36f0c0ce44566f124524d7d904a",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p185",
+      "name": "Rekkles",
+      "identity": "oe:player:d8362fe0d38ca0e70953ed957deaa00",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p186",
+      "name": "Rich",
+      "identity": "oe:player:6fbf57b984dbf130701e09ea4110bb8",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p187",
+      "name": "Ucal",
+      "identity": "oe:player:bd6a2e6aaeb993fd29f43790265297f",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p188",
+      "name": "Berserker",
+      "identity": "oe:player:460ae5a7af8d68f7831b70307210ab3",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p189",
+      "name": "Fisher",
+      "identity": "oe:player:effd5b04b5d98b779f0a6162c40735a",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p190",
+      "name": "Lonely",
+      "identity": "oe:player:39b7c8fcabea217972326ec1f441b0a",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p191",
+      "name": "Starlit",
+      "identity": "oe:player:5668835973c50fc6be8c587752c1ecf",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p192",
+      "name": "Levy",
+      "identity": "oe:player:de30719c9123426d9db5f1aab86dd3f",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p193",
+      "name": "Kice",
+      "identity": "oe:player:539a66f092a09af8d24065a3ac5ae69",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p194",
+      "name": "Jaehyuk",
+      "identity": "oe:player:686e3385a39e937956485d742b689e5",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p195",
+      "name": "Garden",
+      "identity": "oe:player:26626eb3322fd706f5ca63fca2bb022",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p196",
+      "name": "Wayne",
+      "identity": "oe:player:bbd0c34fcf8166e45f1161815fefccf",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p197",
+      "name": "Thumb",
+      "identity": "oe:player:8807c97721e343cdc1fa2444cc00415",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p198",
+      "name": "LazyFeel",
+      "identity": "oe:player:a41eb80b5f23627fc710cc41c516e49",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p199",
+      "name": "Alive",
+      "identity": "oe:player:bd9f7c5d6ab4201b138a3e51dab7056",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p200",
+      "name": "Hanbyeol",
+      "identity": "oe:player:682e8d130e0e745c66836835cb44cdc",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p201",
+      "name": "Wet",
+      "identity": null,
+      "alias": null,
+      "candidateIdentities": 0
+    },
+    {
+      "id": "p202",
+      "name": "Kemish",
+      "identity": "oe:player:6de9a45a1a666afa34d126f9be444c0",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p203",
+      "name": "About",
+      "identity": "oe:player:8f7f4c1ce7a4f933663d10543562b09",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p204",
+      "name": "Pyeonsik",
+      "identity": "oe:player:951959a620881940ca08f98e0226cf3",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p205",
+      "name": "Bluffing",
+      "identity": "oe:player:51e528aaaafe5451e0a14c0da847dc4",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p206",
+      "name": "Bonnie",
+      "identity": "oe:player:8139e3b2070343b1729402f9bf20205",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p207",
+      "name": "Lucy",
+      "identity": "oe:player:dda950e6954035ff3f38b14ef7acc26",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p208",
+      "name": "Haetae",
+      "identity": "oe:player:9fefcdafef82ae8de67c1187546d622",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "p209",
+      "name": "Cloud",
+      "identity": "oe:player:c8fe7c65a2ae0ab6ff62674ade6847d",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h1",
+      "name": "Khan",
+      "identity": "oe:player:b9972f46c1e52797d66236b118d2970",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h2",
+      "name": "Malrang",
+      "identity": "oe:player:b06f165ee2371a61d3be74d413e1e21",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h3",
+      "name": "Destroy",
+      "identity": "oe:player:21846207612858fb49a468b43e56dd3",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h4",
+      "name": "Jett",
+      "identity": "oe:player:82a08dfbbc2a9515bc6962cd307507c",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h5",
+      "name": "SOLKA",
+      "identity": "oe:player:e9017664588010860a92ceb5f8fcb82",
+      "alias": "Quad",
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h6",
+      "name": "BAO",
+      "identity": "oe:player:6c1d0c529e73fe4c8b9a5306867c4bf",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h7",
+      "name": "Becca",
+      "identity": "oe:player:7fdedd3126915607d5c8f42f8239253",
+      "alias": "Pleata",
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h8",
+      "name": "Blank",
+      "identity": "oe:player:e4ef81cce7e4e10033ebb10962dfdd5",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h9",
+      "name": "HyBriD",
+      "identity": "oe:player:d4236a5c6d033d0388ab042acd884f1",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h10",
+      "name": "Harp",
+      "identity": "oe:player:0015d99e65183977a9e65547b37f1cb",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h11",
+      "name": "Zzus",
+      "identity": "oe:player:2df72e2c6d92a7c074a408f7bda4a0b",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h12",
+      "name": "Fly",
+      "identity": "oe:player:6c1fa8d6ae91f559b9d317477dad3ea",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h13",
+      "name": "Leo",
+      "identity": "oe:player:f064e548adf728629afbc6fee730317",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h14",
+      "name": "Bang",
+      "identity": "oe:player:526e67744f0b90739ec17c191c62d24",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h15",
+      "name": "Summit",
+      "identity": "oe:player:99ce2ea4de279c28bb0315848da8a48",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h16",
+      "name": "Gori",
+      "identity": "oe:player:94e552221e552e3ebaaeefff76fd6ea",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h17",
+      "name": "Chieftain",
+      "identity": "oe:player:d824e1e2a435ff9d8a567b1af0bad2a",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h18",
+      "name": "Arthur",
+      "identity": "oe:player:abfd02e2b6f54ea12bc17037b08ff86",
+      "alias": "Mir",
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h19",
+      "name": "yoHan",
+      "identity": "oe:player:cc00384e754d3b4db840275587813eb",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h20",
+      "name": "Viper",
+      "identity": "oe:player:9573154ad8bc9459b4c0d940315054f",
+      "alias": null,
+      "candidateIdentities": 1
+    },
+    {
+      "id": "h21",
+      "name": "Jiwoo",
+      "identity": "oe:player:8643b56ba8000250b81fdaca1d7f06e",
+      "alias": null,
+      "candidateIdentities": 1
+    }
+  ],
+  "unobservedPlayerYears": [
+    [
+      "p002",
+      "Sw0rd",
+      2021
+    ],
+    [
+      "p002",
+      "Sw0rd",
+      2023
+    ],
+    [
+      "p002",
+      "Sw0rd",
+      2024
+    ],
+    [
+      "p002",
+      "Sw0rd",
+      2025
+    ],
+    [
+      "p004",
+      "Lava",
+      2025
+    ],
+    [
+      "p009",
+      "Nuguri",
+      2023
+    ],
+    [
+      "p009",
+      "Nuguri",
+      2024
+    ],
+    [
+      "p009",
+      "Nuguri",
+      2025
+    ],
+    [
+      "p017",
+      "Deft",
+      2025
+    ],
+    [
+      "p025",
+      "OnFleek",
+      2025
+    ],
+    [
+      "p029",
+      "Vsta",
+      2025
+    ],
+    [
+      "p034",
+      "Hoit",
+      2021
+    ],
+    [
+      "p034",
+      "Hoit",
+      2023
+    ],
+    [
+      "p034",
+      "Hoit",
+      2024
+    ],
+    [
+      "p034",
+      "Hoit",
+      2025
+    ],
+    [
+      "p035",
+      "Rascal",
+      2025
+    ],
+    [
+      "p041",
+      "Dove",
+      2025
+    ],
+    [
+      "p046",
+      "Prince",
+      2025
+    ],
+    [
+      "p049",
+      "Dread",
+      2023
+    ],
+    [
+      "p049",
+      "Dread",
+      2024
+    ],
+    [
+      "p049",
+      "Dread",
+      2025
+    ],
+    [
+      "p051",
+      "Ghost",
+      2023
+    ],
+    [
+      "p051",
+      "Ghost",
+      2024
+    ],
+    [
+      "p062",
+      "Listo",
+      2021
+    ],
+    [
+      "p062",
+      "Listo",
+      2023
+    ],
+    [
+      "p063",
+      "Gamin",
+      2024
+    ],
+    [
+      "p063",
+      "Gamin",
+      2025
+    ],
+    [
+      "p067",
+      "Pullbae",
+      2025
+    ],
+    [
+      "p074",
+      "Jun",
+      2021
+    ],
+    [
+      "p076",
+      "Winner",
+      2024
+    ],
+    [
+      "p077",
+      "Ophelia",
+      2024
+    ],
+    [
+      "p081",
+      "LukaLux",
+      2023
+    ],
+    [
+      "p081",
+      "LukaLux",
+      2024
+    ],
+    [
+      "p081",
+      "LukaLux",
+      2025
+    ],
+    [
+      "p083",
+      "Seonbi",
+      2023
+    ],
+    [
+      "p083",
+      "Seonbi",
+      2024
+    ],
+    [
+      "p083",
+      "Seonbi",
+      2025
+    ],
+    [
+      "p085",
+      "Cheoni",
+      2024
+    ],
+    [
+      "p085",
+      "Cheoni",
+      2025
+    ],
+    [
+      "p086",
+      "Lure",
+      2025
+    ],
+    [
+      "p089",
+      "Citrus",
+      2023
+    ],
+    [
+      "p092",
+      "Minit",
+      2024
+    ],
+    [
+      "p092",
+      "Minit",
+      2025
+    ],
+    [
+      "p094",
+      "Valkyrie",
+      2022
+    ],
+    [
+      "p094",
+      "Valkyrie",
+      2023
+    ],
+    [
+      "p094",
+      "Valkyrie",
+      2024
+    ],
+    [
+      "p094",
+      "Valkyrie",
+      2025
+    ],
+    [
+      "p096",
+      "PangSu",
+      2021
+    ],
+    [
+      "p096",
+      "PangSu",
+      2022
+    ],
+    [
+      "p096",
+      "PangSu",
+      2023
+    ],
+    [
+      "p096",
+      "PangSu",
+      2024
+    ],
+    [
+      "p096",
+      "PangSu",
+      2025
+    ],
+    [
+      "p099",
+      "Rebel",
+      2021
+    ],
+    [
+      "p099",
+      "Rebel",
+      2022
+    ],
+    [
+      "p099",
+      "Rebel",
+      2023
+    ],
+    [
+      "p099",
+      "Rebel",
+      2024
+    ],
+    [
+      "p099",
+      "Rebel",
+      2025
+    ],
+    [
+      "p100",
+      "Way",
+      2021
+    ],
+    [
+      "p101",
+      "Meaning",
+      2024
+    ],
+    [
+      "p101",
+      "Meaning",
+      2025
+    ],
+    [
+      "p103",
+      "Ten10",
+      2023
+    ],
+    [
+      "p103",
+      "Ten10",
+      2024
+    ],
+    [
+      "p103",
+      "Ten10",
+      2025
+    ],
+    [
+      "p104",
+      "KingKong",
+      2021
+    ],
+    [
+      "p104",
+      "KingKong",
+      2022
+    ],
+    [
+      "p104",
+      "KingKong",
+      2023
+    ],
+    [
+      "p104",
+      "KingKong",
+      2024
+    ],
+    [
+      "p104",
+      "KingKong",
+      2025
+    ],
+    [
+      "p106",
+      "Prove",
+      2023
+    ],
+    [
+      "p106",
+      "Prove",
+      2024
+    ],
+    [
+      "p106",
+      "Prove",
+      2025
+    ],
+    [
+      "p111",
+      "Blessing",
+      2021
+    ],
+    [
+      "p111",
+      "Blessing",
+      2022
+    ],
+    [
+      "p111",
+      "Blessing",
+      2023
+    ],
+    [
+      "p111",
+      "Blessing",
+      2024
+    ],
+    [
+      "p111",
+      "Blessing",
+      2025
+    ],
+    [
+      "p115",
+      "TolanD",
+      2023
+    ],
+    [
+      "p117",
+      "Kabbie",
+      2021
+    ],
+    [
+      "p117",
+      "Kabbie",
+      2022
+    ],
+    [
+      "p117",
+      "Kabbie",
+      2023
+    ],
+    [
+      "p117",
+      "Kabbie",
+      2024
+    ],
+    [
+      "p117",
+      "Kabbie",
+      2025
+    ],
+    [
+      "p119",
+      "Clid",
+      2024
+    ],
+    [
+      "p119",
+      "Clid",
+      2025
+    ],
+    [
+      "p122",
+      "Frim",
+      2024
+    ],
+    [
+      "p122",
+      "Frim",
+      2025
+    ],
+    [
+      "p123",
+      "DDoiV",
+      2021
+    ],
+    [
+      "p123",
+      "DDoiV",
+      2022
+    ],
+    [
+      "p124",
+      "Ivory",
+      2022
+    ],
+    [
+      "p126",
+      "Gyosoo",
+      2021
+    ],
+    [
+      "p126",
+      "Gyosoo",
+      2022
+    ],
+    [
+      "p126",
+      "Gyosoo",
+      2024
+    ],
+    [
+      "p126",
+      "Gyosoo",
+      2025
+    ],
+    [
+      "p127",
+      "Pollu",
+      2021
+    ],
+    [
+      "p128",
+      "Saint",
+      2021
+    ],
+    [
+      "p129",
+      "Sponge",
+      2021
+    ],
+    [
+      "p132",
+      "Casting",
+      2021
+    ],
+    [
+      "p132",
+      "Casting",
+      2022
+    ],
+    [
+      "p133",
+      "Carfe",
+      2021
+    ],
+    [
+      "p133",
+      "Carfe",
+      2022
+    ],
+    [
+      "p133",
+      "Carfe",
+      2023
+    ],
+    [
+      "p133",
+      "Carfe",
+      2024
+    ],
+    [
+      "p133",
+      "Carfe",
+      2025
+    ],
+    [
+      "p134",
+      "Grizzly",
+      2021
+    ],
+    [
+      "p136",
+      "Loki",
+      2021
+    ],
+    [
+      "p137",
+      "Lancer",
+      2021
+    ],
+    [
+      "p138",
+      "Courage",
+      2021
+    ],
+    [
+      "p139",
+      "Cleaver",
+      2021
+    ],
+    [
+      "p139",
+      "Cleaver",
+      2024
+    ],
+    [
+      "p139",
+      "Cleaver",
+      2025
+    ],
+    [
+      "p140",
+      "Andil",
+      2022
+    ],
+    [
+      "p141",
+      "PerfecT",
+      2021
+    ],
+    [
+      "p141",
+      "PerfecT",
+      2022
+    ],
+    [
+      "p143",
+      "DDahyuk",
+      2021
+    ],
+    [
+      "p143",
+      "DDahyuk",
+      2024
+    ],
+    [
+      "p144",
+      "Vincenzo",
+      2021
+    ],
+    [
+      "p144",
+      "Vincenzo",
+      2022
+    ],
+    [
+      "p145",
+      "Guti",
+      2021
+    ],
+    [
+      "p146",
+      "Diable",
+      2021
+    ],
+    [
+      "p147",
+      "PlanB",
+      2021
+    ],
+    [
+      "p147",
+      "PlanB",
+      2022
+    ],
+    [
+      "p147",
+      "PlanB",
+      2024
+    ],
+    [
+      "p148",
+      "Mihile",
+      2021
+    ],
+    [
+      "p150",
+      "Calix",
+      2021
+    ],
+    [
+      "p151",
+      "Callme",
+      2021
+    ],
+    [
+      "p152",
+      "HH",
+      2022
+    ],
+    [
+      "p152",
+      "HH",
+      2023
+    ],
+    [
+      "p152",
+      "HH",
+      2024
+    ],
+    [
+      "p152",
+      "HH",
+      2025
+    ],
+    [
+      "p153",
+      "Dal",
+      2025
+    ],
+    [
+      "p154",
+      "Bay",
+      2024
+    ],
+    [
+      "p154",
+      "Bay",
+      2025
+    ],
+    [
+      "p159",
+      "Kangin",
+      2022
+    ],
+    [
+      "p161",
+      "Siwoo",
+      2021
+    ],
+    [
+      "p162",
+      "Sharvel",
+      2021
+    ],
+    [
+      "p163",
+      "Frog",
+      2021
+    ],
+    [
+      "p164",
+      "Racerr",
+      2021
+    ],
+    [
+      "p164",
+      "Racerr",
+      2022
+    ],
+    [
+      "p164",
+      "Racerr",
+      2025
+    ],
+    [
+      "p165",
+      "Kania",
+      2021
+    ],
+    [
+      "p165",
+      "Kania",
+      2023
+    ],
+    [
+      "p166",
+      "Zephyr",
+      2021
+    ],
+    [
+      "p166",
+      "Zephyr",
+      2022
+    ],
+    [
+      "p167",
+      "kyeahoo",
+      2021
+    ],
+    [
+      "p168",
+      "BeRr",
+      2021
+    ],
+    [
+      "p170",
+      "HorangE",
+      2021
+    ],
+    [
+      "p170",
+      "HorangE",
+      2022
+    ],
+    [
+      "p170",
+      "HorangE",
+      2025
+    ],
+    [
+      "p171",
+      "Toye",
+      2021
+    ],
+    [
+      "p171",
+      "Toye",
+      2022
+    ],
+    [
+      "p171",
+      "Toye",
+      2025
+    ],
+    [
+      "p172",
+      "Dooly",
+      2021
+    ],
+    [
+      "p172",
+      "Dooly",
+      2022
+    ],
+    [
+      "p173",
+      "SOLBON",
+      2021
+    ],
+    [
+      "p173",
+      "SOLBON",
+      2022
+    ],
+    [
+      "p173",
+      "SOLBON",
+      2023
+    ],
+    [
+      "p174",
+      "Slayer",
+      2021
+    ],
+    [
+      "p174",
+      "Slayer",
+      2022
+    ],
+    [
+      "p175",
+      "Dahlia",
+      2021
+    ],
+    [
+      "p175",
+      "Dahlia",
+      2022
+    ],
+    [
+      "p176",
+      "Namgung",
+      2021
+    ],
+    [
+      "p176",
+      "Namgung",
+      2022
+    ],
+    [
+      "p177",
+      "Tempester",
+      2021
+    ],
+    [
+      "p178",
+      "Pungyeon",
+      2021
+    ],
+    [
+      "p178",
+      "Pungyeon",
+      2022
+    ],
+    [
+      "p178",
+      "Pungyeon",
+      2023
+    ],
+    [
+      "p179",
+      "Quantum",
+      2021
+    ],
+    [
+      "p179",
+      "Quantum",
+      2022
+    ],
+    [
+      "p181",
+      "Zinie",
+      2021
+    ],
+    [
+      "p182",
+      "Janus",
+      2021
+    ],
+    [
+      "p182",
+      "Janus",
+      2022
+    ],
+    [
+      "p183",
+      "Daystar",
+      2022
+    ],
+    [
+      "p184",
+      "Carim",
+      2021
+    ],
+    [
+      "p191",
+      "Starlit",
+      2021
+    ],
+    [
+      "p192",
+      "Levy",
+      2021
+    ],
+    [
+      "p192",
+      "Levy",
+      2022
+    ],
+    [
+      "p194",
+      "Jaehyuk",
+      2021
+    ],
+    [
+      "p194",
+      "Jaehyuk",
+      2022
+    ],
+    [
+      "p194",
+      "Jaehyuk",
+      2023
+    ],
+    [
+      "p195",
+      "Garden",
+      2021
+    ],
+    [
+      "p195",
+      "Garden",
+      2022
+    ],
+    [
+      "p195",
+      "Garden",
+      2023
+    ],
+    [
+      "p196",
+      "Wayne",
+      2021
+    ],
+    [
+      "p196",
+      "Wayne",
+      2022
+    ],
+    [
+      "p196",
+      "Wayne",
+      2023
+    ],
+    [
+      "p197",
+      "Thumb",
+      2021
+    ],
+    [
+      "p198",
+      "LazyFeel",
+      2021
+    ],
+    [
+      "p198",
+      "LazyFeel",
+      2022
+    ],
+    [
+      "p198",
+      "LazyFeel",
+      2023
+    ],
+    [
+      "p199",
+      "Alive",
+      2023
+    ],
+    [
+      "p200",
+      "Hanbyeol",
+      2021
+    ],
+    [
+      "p200",
+      "Hanbyeol",
+      2022
+    ],
+    [
+      "p200",
+      "Hanbyeol",
+      2023
+    ],
+    [
+      "p201",
+      "Wet",
+      2021
+    ],
+    [
+      "p201",
+      "Wet",
+      2022
+    ],
+    [
+      "p201",
+      "Wet",
+      2023
+    ],
+    [
+      "p201",
+      "Wet",
+      2024
+    ],
+    [
+      "p201",
+      "Wet",
+      2025
+    ],
+    [
+      "p202",
+      "Kemish",
+      2021
+    ],
+    [
+      "p202",
+      "Kemish",
+      2022
+    ],
+    [
+      "p203",
+      "About",
+      2021
+    ],
+    [
+      "p203",
+      "About",
+      2022
+    ],
+    [
+      "p203",
+      "About",
+      2023
+    ],
+    [
+      "p204",
+      "Pyeonsik",
+      2021
+    ],
+    [
+      "p204",
+      "Pyeonsik",
+      2022
+    ],
+    [
+      "p205",
+      "Bluffing",
+      2021
+    ],
+    [
+      "p205",
+      "Bluffing",
+      2022
+    ],
+    [
+      "p207",
+      "Lucy",
+      2021
+    ],
+    [
+      "p207",
+      "Lucy",
+      2022
+    ],
+    [
+      "p207",
+      "Lucy",
+      2023
+    ],
+    [
+      "p208",
+      "Haetae",
+      2021
+    ],
+    [
+      "p209",
+      "Cloud",
+      2021
+    ],
+    [
+      "p209",
+      "Cloud",
+      2022
+    ],
+    [
+      "h1",
+      "Khan",
+      2022
+    ],
+    [
+      "h1",
+      "Khan",
+      2023
+    ],
+    [
+      "h1",
+      "Khan",
+      2024
+    ],
+    [
+      "h1",
+      "Khan",
+      2025
+    ],
+    [
+      "h4",
+      "Jett",
+      2025
+    ],
+    [
+      "h5",
+      "SOLKA",
+      2022
+    ],
+    [
+      "h8",
+      "Blank",
+      2023
+    ],
+    [
+      "h8",
+      "Blank",
+      2024
+    ],
+    [
+      "h8",
+      "Blank",
+      2025
+    ],
+    [
+      "h9",
+      "HyBriD",
+      2023
+    ],
+    [
+      "h9",
+      "HyBriD",
+      2024
+    ],
+    [
+      "h9",
+      "HyBriD",
+      2025
+    ],
+    [
+      "h11",
+      "Zzus",
+      2022
+    ],
+    [
+      "h11",
+      "Zzus",
+      2023
+    ],
+    [
+      "h11",
+      "Zzus",
+      2024
+    ],
+    [
+      "h11",
+      "Zzus",
+      2025
+    ],
+    [
+      "h12",
+      "Fly",
+      2022
+    ],
+    [
+      "h12",
+      "Fly",
+      2023
+    ],
+    [
+      "h12",
+      "Fly",
+      2024
+    ],
+    [
+      "h12",
+      "Fly",
+      2025
+    ],
+    [
+      "h13",
+      "Leo",
+      2022
+    ],
+    [
+      "h14",
+      "Bang",
+      2022
+    ],
+    [
+      "h14",
+      "Bang",
+      2023
+    ],
+    [
+      "h14",
+      "Bang",
+      2024
+    ],
+    [
+      "h14",
+      "Bang",
+      2025
+    ],
+    [
+      "h17",
+      "Chieftain",
+      2024
+    ],
+    [
+      "h17",
+      "Chieftain",
+      2025
+    ],
+    [
+      "h19",
+      "yoHan",
+      2022
+    ],
+    [
+      "h21",
+      "Jiwoo",
+      2021
+    ]
+  ],
+  "leagueBaselines": {
+    "LCK": 86,
+    "LPL": 85,
+    "LCKC": 67,
+    "LAS": 58,
+    "LDL": 65,
+    "ASCI": 67,
+    "Asia Master": 67,
+    "ASI": 67,
+    "LEC": 82,
+    "LCS": 80,
+    "LTA N": 80,
+    "LTA S": 76,
+    "LTA": 79,
+    "LCP": 78,
+    "PCS": 77,
+    "VCS": 76,
+    "LJL": 73,
+    "TCL": 73,
+    "CBLOL": 75,
+    "LLA": 71,
+    "WLDs": 89,
+    "MSI": 89,
+    "FST": 88,
+    "EWC": 87,
+    "KeSPA": 78,
+    "DCup": 78,
+    "EM": 72,
+    "EUM": 72,
+    "LFL": 72,
+    "NLC": 70,
+    "NACL": 65
+  },
+  "players": 230,
+  "playerYears": 1150,
+  "observedPlayerYears": 908
+}
