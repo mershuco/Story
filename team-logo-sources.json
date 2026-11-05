@@ -1,5 +1,117 @@
 [
   {
+    "key": "FLY",
+    "name": "FlyQuest",
+    "url": "https://static.lolesports.com/teams/flyquest-new-on-dark.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "4355df9862d35f3bbf9705dd44e7f72d8c516efd4cf14a5f5c4d73a50157f59d",
+    "bytes": 37648
+  },
+  {
+    "key": "FUR",
+    "name": "FURIA",
+    "url": "https://static.lolesports.com/teams/FURIA---black.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "a159a0339d38ccb3263a4a8130e956a3cf6020b48e3a952cf5287567480c9109",
+    "bytes": 38530
+  },
+  {
+    "key": "PNG",
+    "name": "paiN Gaming",
+    "url": "https://static.lolesports.com/teams/1674657070286_pain_preto.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "01a3a6c5964190f7b32693ad8b2e804d396ccf6c74430046cfd0546e1fa7b6d4",
+    "bytes": 37571
+  },
+  {
+    "key": "VKS",
+    "name": "Vivo Keyd Stars",
+    "url": "https://static.lolesports.com/teams/1670541584344_vks.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "008d68bfada7e3c0e62252f7d113de743e54d96b0b442460c994047dbc7a9f53",
+    "bytes": 7307
+  },
+  {
+    "key": "TSW",
+    "name": "Team Secret Whales",
+    "url": "https://static.lolesports.com/teams/1774598000328_White_EyeText_600p.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "0f276ab8356250f16b8fecddb6daab580e18ed6859c2904f08eb5eaae2d437a6",
+    "bytes": 19000
+  },
+  {
+    "key": "SHG",
+    "name": "Fukuoka SoftBank HAWKS gaming",
+    "url": "https://static.lolesports.com/teams/1725885083108_SHG_White_Main.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "7dc2d4b1e81b80764ea07e256725c8bbbcfe31352e96e84b240a2bdbf329dc11",
+    "bytes": 31321
+  },
+  {
+    "key": "VKE",
+    "name": "Vikings Esports (archived)",
+    "url": "https://static.lolesports.com/teams/1704188015429_1280X1280color.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "41cc890fedffa9882085dd4d32e56166924d26e1d71c5fbb16a41ce2b9d93f0c",
+    "bytes": 71726
+  },
+  {
+    "key": "DCG",
+    "name": "Relove Deep Cross Gaming",
+    "url": "https://static.lolesports.com/teams/1785400397161_LCP_DCG_Full_W1.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "e9ff40a6a99961d3ec01d13b0d98fe7686caed2fe8997eea69db026d80829633",
+    "bytes": 33625
+  },
+  {
+    "key": "CHF",
+    "name": "The Chiefs Esports Club",
+    "url": "https://static.lolesports.com/teams/1733833766423_ChiefsEsportsClub-CHF-Color1.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "571a39d484103ea6fa194a3a761c3c9d660541033076ccfd7bdca8b52f808ba4",
+    "bytes": 180262
+  },
+  {
+    "key": "RED",
+    "name": "RED Canids",
+    "url": "https://static.lolesports.com/teams/1671545496840_RED_Canidslogo_square.webp",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "8a95616386365f67e8cc67ea85608166486dede775fb29bc01219c0d97991bfa",
+    "bytes": 55354
+  },
+  {
+    "key": "AZE",
+    "name": "Team Aze",
+    "url": "https://static.lolesports.com/teams/1643739781349_AzeNegro.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "df6d83597f8f52a6a4f1e7a9f846cb4eacb77718f840feb2a5e5cd4300bb4e6b",
+    "bytes": 54477
+  },
+  {
+    "key": "ORD",
+    "name": "ORDER",
+    "url": "https://static.lolesports.com/teams/1642465715087_ORDER_LOGO_2021_ICON-BLACK.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "2ea75c74a64b0e36bf1b67bdf8939c8f234c42fe6c69dc4360293722aacb60db",
+    "bytes": 89313
+  },
+  {
+    "key": "IW",
+    "name": "DenizBank İstanbul Wildcats",
+    "url": "https://static.lolesports.com/teams/1654773501064_DenizBankIstanbulWildcatsWhite1.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "243d8086f5696857b86306577fc1299bd8c6442482f5bc7b88aad40a6dad34fd",
+    "bytes": 258118
+  },
+  {
+    "key": "R7",
+    "name": "Movistar R7",
+    "url": "https://static.lolesports.com/teams/1673451007203_IMG_3488.png",
+    "source": "Riot LoL Esports team metadata",
+    "sha256": "8d28ebafe2f27a7a3ba5b3973c6b2975264774190186d5d0a19baef1299b5e87",
+    "bytes": 77303
+  },
+  {
     "key": "T1",
     "name": "T1",
     "url": "https://static.lolesports.com/teams/1726801573959_539px-T1_2019_full_allmode.png",

@@ -1,0 +1,80 @@
+[
+  {
+    "name": "msi-2022",
+    "url": "https://lolesports.com/en-US/news/msi-2022-primer",
+    "sha256": "a1e8d3606e6558b541c30f19d524fcca482a2ce676a9e8cdf807bcb63fb71737",
+    "bytes": 201851
+  },
+  {
+    "name": "msi-2023",
+    "url": "https://lolesports.com/en-US/news/msi-2023-primer",
+    "sha256": "3c6722dc223d7ff774595fc9fa07019e65fb56c9de4119e753e3c51625a30194",
+    "bytes": 213046
+  },
+  {
+    "name": "msi-2024",
+    "url": "https://lolesports.com/en-US/news/msi-2024-primer",
+    "sha256": "0687bd5cf868ffe62138e43684b23adf5f9a5571e95bf33c5adc6236d10844f8",
+    "bytes": 226120
+  },
+  {
+    "name": "msi-2025",
+    "url": "https://lolesports.com/en-US/news/msi-2025-primer",
+    "sha256": "711303633dd9238bec183313e0a3a05b5f8a485f4bac71a65e4e6254b6712dbc",
+    "bytes": 256598
+  },
+  {
+    "name": "worlds-2022",
+    "url": "https://lolesports.com/en-US/news/worlds-2022-primer",
+    "sha256": "5b6e7363a167a1b85a5e7922757aa2c92918ef6df71d7b0459f4737b8a2d094f",
+    "bytes": 220786
+  },
+  {
+    "name": "worlds-2023",
+    "url": "https://lolesports.com/en-US/news/worlds-2023-primer",
+    "sha256": "0da843112709f7e186189fa3f9efa26a8aefd8122b6edef60077b688d637174d",
+    "bytes": 230205
+  },
+  {
+    "name": "worlds-2024",
+    "url": "https://lolesports.com/en-US/news/worlds-2024-primer",
+    "sha256": "e227e09e4be7295a4159f51b4fe5e1d1b1963c7c9ae87bf15b816554758b5069",
+    "bytes": 240520
+  },
+  {
+    "name": "worlds-2025",
+    "url": "https://lolesports.com/en-US/news/worlds-2025-primer",
+    "sha256": "7c013903703cf9efde96520f19d9770e5fe38ed05178bb4b66a611409179ab84",
+    "bytes": 235761
+  },
+  {
+    "name": "msi-2023 official document 1",
+    "url": "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/96b920d226d09d3c875711aeaac0214975636d56.pdf",
+    "sha256": "151d566555efe82c3bacc4789bc8db2ebab15cc6d97ab5389b2561d074cdba3c",
+    "bytes": 484888
+  },
+  {
+    "name": "msi-2024 official document 1",
+    "url": "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/c0c75f44ec213464146238eaf00be2a5606b6c15.pdf",
+    "sha256": "63d8f9345ee99adf9bc21edcd42447a6afd602c8219b7b511707b31d5e55fac5",
+    "bytes": 1782372
+  },
+  {
+    "name": "msi-2024 official document 2",
+    "url": "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/c5eb4dfed0dd2574a94a145c6ac9a23818cbf8b8.pdf",
+    "sha256": "8d1be783b0b4c79eda800c42b8b5733c7c456cb6921cc5053de85e59256c2bf7",
+    "bytes": 499153
+  },
+  {
+    "name": "msi-2025 official document 1",
+    "url": "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/53e33fce18c6b894749de07156d6bb518d1487fc.pdf",
+    "sha256": "5ad14838ba85ddaf5f08972f2aeb805337651091d46645c32a0576dded076089",
+    "bytes": 628227
+  },
+  {
+    "name": "msi-2025 official document 2",
+    "url": "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/b3dc4f871c1ae4a3dd12005aff507260d225d581.pdf",
+    "sha256": "0d26b07c0837596857d792b3860592488a29cef6e0e154e58b22158e6e9429df",
+    "bytes": 1787703
+  }
+]
