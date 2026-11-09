@@ -406,5 +406,37 @@
     "source": "Riot historical team logo",
     "sha256": "bdf8d985e063357e31ce8c7b534a413d3305efa02e03a174f2f6b69fa4375cdc",
     "bytes": 27691
+  },
+  {
+    "key": "MKOI",
+    "name": "Movistar KOI",
+    "url": "https://static.lolesports.com/teams/1734012609283_MKOI_FullColor_Blue.png",
+    "source": "Riot LoL Esports / Leaguepedia historical asset",
+    "sha256": "593f217f20fd0b1afd31af74932c84d7147eeb9fe491f15986fbec4ac4c1590e",
+    "bytes": 69133
+  },
+  {
+    "key": "KOI",
+    "name": "KOI",
+    "url": "https://static.lolesports.com/teams/1672933825498_KOI_29logo_square.webp",
+    "source": "Riot LoL Esports / Leaguepedia historical asset",
+    "sha256": "d6c4ba9ff65540fbf520f97301f3fb8d666357c17d8c40b4d0fc3c67178e89b1",
+    "bytes": 132778
+  },
+  {
+    "key": "BRO2024",
+    "name": "HANJIN BRION",
+    "url": "https://static.lolesports.com/teams/1716454325887_Nowyprojekt.png",
+    "source": "Riot LoL Esports / Leaguepedia historical asset",
+    "sha256": "fcea979341a070f1e0b076f4945513ac1f1e6446bff1697cdae9a9b0a34264f8",
+    "bytes": 27760
+  },
+  {
+    "key": "MDK",
+    "name": "MAD_Lions_KOIlogo_square.png",
+    "url": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/8/84/MAD_Lions_KOIlogo_square.png/revision/latest/scale-to-width-down/160",
+    "source": "Riot LoL Esports / Leaguepedia historical asset",
+    "sha256": "23a70cd3c4e2505ac29a98929be238bb4e8f57e8dcb7460205c37fc162964140",
+    "bytes": 8044
   }
 ]
