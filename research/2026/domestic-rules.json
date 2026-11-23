@@ -1,0 +1,519 @@
+{
+  "version": "lck-domestic-2026-v1",
+  "reviewedAt": "2026-11-23",
+  "sources": [
+    {
+      "kind": "official_rules",
+      "url": "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/48069c6be1a9630655cab431e64b8e49b9461a74.pdf",
+      "revised": "2026-03-02",
+      "effective": "2026-04-01",
+      "localFile": "2026-lck-competition-rulebook.pdf",
+      "sha256": "43f72ef3ed73bd8113a87840b86071360ab0dc93f13c1294790a5768ebbcacb2"
+    },
+    {
+      "kind": "official_rules",
+      "url": "https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/b5e4819daa2793425433910ca02b1c479b2f15a3.pdf",
+      "revised": "2026-06-29",
+      "effective": "2026-07-29",
+      "localFile": "2026-lck-competition-rulebook-june.pdf",
+      "sha256": "e4c52706feb67dfbac23669ce8cc0a01d5a780be71772b149849d41e9698a670"
+    },
+    {
+      "kind": "official_format",
+      "url": "https://lolesports.com/ko-KR/news/2026-lck-format-explainer"
+    },
+    {
+      "kind": "official_handbook",
+      "url": "https://lolesports.com/ko-KR/season/115547545029543948/handbook/115548016979679444"
+    },
+    {
+      "kind": "official_schedule",
+      "url": "https://lolesports.com/en-US/leagues/first_stand%2Clck%2Clcp%2Cmsi%2Cworlds"
+    }
+  ],
+  "calendar": {
+    "cupGroupOrdinary": {
+      "start": "2026-01-14",
+      "end": "2026-01-25",
+      "series": 20,
+      "bestOf": 3
+    },
+    "cupSuperWeek": {
+      "dates": [
+        "2026-01-28",
+        "2026-01-29",
+        "2026-01-30",
+        "2026-01-31",
+        "2026-02-01"
+      ],
+      "draftSeedOrder": [
+        5,
+        4,
+        3,
+        2,
+        1
+      ],
+      "bestOf": 5
+    },
+    "cupPlayin": {
+      "PI1": [
+        "2026-02-06",
+        "2026-02-06"
+      ],
+      "PI2": [
+        "2026-02-07",
+        "2026-02-07"
+      ],
+      "PIF": [
+        "2026-02-08"
+      ]
+    },
+    "cupPlayoffs": {
+      "U1A": "2026-02-12",
+      "U1B": "2026-02-13",
+      "U2A": "2026-02-14",
+      "U2B": "2026-02-15",
+      "L1": "2026-02-19",
+      "L2": "2026-02-20",
+      "UF": "2026-02-21",
+      "L3": "2026-02-22",
+      "LF": "2026-02-28",
+      "FINAL": "2026-03-01"
+    },
+    "regular12": {
+      "start": "2026-04-01",
+      "end": "2026-05-31",
+      "series": 90
+    },
+    "roadToMsi": {
+      "ROAD56": "2026-06-06",
+      "ROAD4": "2026-06-07",
+      "ROAD_TOP": "2026-06-12",
+      "ROAD3": "2026-06-13",
+      "ROAD_FINAL": "2026-06-14"
+    },
+    "regular34": {
+      "start": "2026-07-29",
+      "end": "2026-08-23",
+      "series": 40
+    },
+    "seasonPlayin": {
+      "PI1": "2026-08-26",
+      "PI2": "2026-08-27",
+      "PIF": "2026-08-28"
+    },
+    "seasonPlayoffs": {
+      "U1A": "2026-08-29",
+      "U1B": "2026-08-30",
+      "U2A": "2026-09-01",
+      "U2B": "2026-09-02",
+      "L1": "2026-09-03",
+      "L2": "2026-09-04",
+      "UF": "2026-09-05",
+      "L3": "2026-09-06",
+      "LF": "2026-09-12",
+      "FINAL": "2026-09-13"
+    }
+  },
+  "cup": {
+    "clauses": [
+      "2.7.3",
+      "3.1",
+      "3.2",
+      "3.3"
+    ],
+    "groups": 2,
+    "teamsPerGroup": 5,
+    "captains": "previousLckChampionAndRunnerUp",
+    "openingCaptains": [
+      "GEN",
+      "HLE"
+    ],
+    "snakeDraft": true,
+    "groupMatches": 25,
+    "ordinaryMatches": 20,
+    "superWeekMatches": 5,
+    "superWeekPairing": "sameGroupDraftSeed;notFinalGroupStandings",
+    "groupWinPoints": {
+      "BO3": 1,
+      "BO5": 2
+    },
+    "individualMatchWinAlways": 1,
+    "setDifferential": "actualScore",
+    "groupPointsTotal": 30,
+    "groupTie": {
+      "first": "sumOfActualSetDifferential",
+      "then": "fearlessBestOf5Relay",
+      "relayRepresentativeGroupRanksBySet": [
+        5,
+        1,
+        5,
+        1,
+        5
+      ],
+      "firstGameRofs": "notExplicitInClause2.7.3;needsGeneralTiebreakInterpretation"
+    },
+    "directPlayoffSeeds": {
+      "1": "winningGroup1",
+      "2": "winningGroup2",
+      "3": "losingGroup1"
+    },
+    "playinTeams": [
+      "winningGroup3",
+      "winningGroup4",
+      "winningGroup5",
+      "losingGroup2",
+      "losingGroup3",
+      "losingGroup4"
+    ],
+    "eliminated": "losingGroup5",
+    "playin": [
+      {
+        "id": "PI1A",
+        "bestOf": 3,
+        "teams": [
+          "playinSeed3",
+          "playinSeed6"
+        ],
+        "rofs": "higherPlayinSeed"
+      },
+      {
+        "id": "PI1B",
+        "bestOf": 3,
+        "teams": [
+          "playinSeed4",
+          "playinSeed5"
+        ],
+        "rofs": "higherPlayinSeed"
+      },
+      {
+        "id": "PI2A",
+        "bestOf": 3,
+        "teams": [
+          "playinSeed1",
+          "chosenPI1Winner"
+        ],
+        "selector": "playinSeed1",
+        "rofs": "higherPlayinSeed"
+      },
+      {
+        "id": "PI2B",
+        "bestOf": 3,
+        "teams": [
+          "playinSeed2",
+          "otherPI1Winner"
+        ],
+        "rofs": "higherPlayinSeed"
+      },
+      {
+        "id": "PIF",
+        "bestOf": 5,
+        "teams": [
+          "loserPI2A",
+          "loserPI2B"
+        ],
+        "rofs": "coinFlip",
+        "winnerPlayoffSeed": 6
+      }
+    ],
+    "pi2WinnerSeeds": "originalHigherPlayinSeed→PO4;other→PO5",
+    "u1Seed3Choice": [
+      "seed4",
+      "seed5",
+      "seed6"
+    ],
+    "playoffFormat": "fullDoubleEliminationFromRound1",
+    "playoffSeries": 10,
+    "firstStandSlots": 2
+  },
+  "regular": {
+    "clauses": [
+      "4.1"
+    ],
+    "rounds12": {
+      "teams": 10,
+      "roundRobins": 2,
+      "bestOf": 3,
+      "perTeamSeries": 18,
+      "totalSeries": 90
+    },
+    "rounds34": {
+      "groups": [
+        "Legend",
+        "Rise"
+      ],
+      "teamsPerGroup": 5,
+      "roundRobins": 2,
+      "bestOf": 3,
+      "perTeamSeries": 8,
+      "totalSeries": 40,
+      "groupMembershipFixedFromRounds12": true,
+      "carryAllRounds12Results": true
+    },
+    "perTeamTotalSeries": 26,
+    "totalSeries": 130,
+    "homeAndAway": "eachOpponentOnceHomeAndOnceAwayWithinEachTwoRoundBlock",
+    "directPlayoffs": {
+      "seed1": "Legend1",
+      "seed2": "Legend2",
+      "seed3": "Legend3",
+      "seed4": "Legend4"
+    },
+    "playin": [
+      "Legend5",
+      "Rise1",
+      "Rise2",
+      "Rise3"
+    ],
+    "eliminatedFinalRanks": {
+      "9": "Rise4",
+      "10": "Rise5"
+    }
+  },
+  "roadToMsi": {
+    "clauses": [
+      "5.1",
+      "5.2"
+    ],
+    "bestOf": 5,
+    "matches": [
+      {
+        "id": "ROAD56",
+        "teams": [
+          "regularSeed5",
+          "regularSeed6"
+        ],
+        "rofs": "higherRegularSeed"
+      },
+      {
+        "id": "ROAD4",
+        "teams": [
+          "regularSeed4",
+          "winnerROAD56"
+        ],
+        "rofs": "higherRegularSeed"
+      },
+      {
+        "id": "ROAD_TOP",
+        "teams": [
+          "regularSeed1",
+          "regularSeed2"
+        ],
+        "rofs": "higherRegularSeed",
+        "winnerMsiSeed": 1
+      },
+      {
+        "id": "ROAD3",
+        "teams": [
+          "regularSeed3",
+          "winnerROAD4"
+        ],
+        "rofs": "higherRegularSeed"
+      },
+      {
+        "id": "ROAD_FINAL",
+        "teams": [
+          "loserROAD_TOP",
+          "winnerROAD3"
+        ],
+        "rofs": "loserROAD_TOP",
+        "winnerMsiSeed": 2
+      }
+    ]
+  },
+  "seasonPlayin": {
+    "clauses": [
+      "4.2"
+    ],
+    "bestOf": 5,
+    "series": 3,
+    "matches": [
+      {
+        "id": "PI1",
+        "teams": [
+          "Legend5",
+          "Rise1"
+        ],
+        "rofs": "Legend5",
+        "winnerPlayoffSeed": 5
+      },
+      {
+        "id": "PI2",
+        "teams": [
+          "Rise2",
+          "Rise3"
+        ],
+        "rofs": "Rise2",
+        "loserFinalRank": 8
+      },
+      {
+        "id": "PIF",
+        "teams": [
+          "loserPI1",
+          "winnerPI2"
+        ],
+        "rofs": "loserPI1",
+        "winnerPlayoffSeed": 6,
+        "loserFinalRank": 7
+      }
+    ]
+  },
+  "playoffTemplate": {
+    "cupClause": "3.3",
+    "seasonClause": "4.3",
+    "bestOf": 5,
+    "series": 10,
+    "nodes": [
+      {
+        "id": "U1A",
+        "teams": [
+          "seed3",
+          "selectedLowerSeedOpponent"
+        ],
+        "rofs": "seed3"
+      },
+      {
+        "id": "U1B",
+        "teams": [
+          "remainingU1TeamA",
+          "remainingU1TeamB"
+        ],
+        "rofs": "higherPlayoffSeed"
+      },
+      {
+        "id": "U2A",
+        "teams": [
+          "seed1",
+          "selectedU1Winner"
+        ],
+        "rofs": "seed1"
+      },
+      {
+        "id": "U2B",
+        "teams": [
+          "seed2",
+          "otherU1Winner"
+        ],
+        "rofs": "seed2"
+      },
+      {
+        "id": "L1",
+        "teams": [
+          "loserU1A",
+          "loserU1B"
+        ],
+        "rofs": "coinFlip",
+        "eliminatedRank": 6
+      },
+      {
+        "id": "L2",
+        "teams": [
+          "winnerL1",
+          "lowerSeedOfU2Losers"
+        ],
+        "rofs": "incomingU2Loser",
+        "eliminatedRank": 5
+      },
+      {
+        "id": "UF",
+        "teams": [
+          "winnerU2A",
+          "winnerU2B"
+        ],
+        "rofs": "coinFlip"
+      },
+      {
+        "id": "L3",
+        "teams": [
+          "winnerL2",
+          "higherSeedOfU2Losers"
+        ],
+        "rofs": "incomingU2Loser",
+        "eliminatedRank": 4
+      },
+      {
+        "id": "LF",
+        "teams": [
+          "loserUF",
+          "winnerL3"
+        ],
+        "rofs": "loserUF",
+        "eliminatedRank": 3
+      },
+      {
+        "id": "FINAL",
+        "teams": [
+          "winnerUF",
+          "winnerLF"
+        ],
+        "rofs": "winnerUF",
+        "game1BothDimensionsTo": "winnerUF",
+        "eliminatedRank": 2
+      }
+    ],
+    "cupU1AChoice": [
+      "seed4",
+      "seed5",
+      "seed6"
+    ],
+    "seasonU1AChoice": [
+      "seed5",
+      "seed6"
+    ],
+    "seasonU1B": "seed4vsUnchosenPIteam",
+    "seasonU1BRofs": "seed4",
+    "u2Seed1ChoosesOpponent": true,
+    "u2LoserRoutingRank": "PLAYOFF_SEED;notRegularStandingNotCurrentPower",
+    "bracketReset": false
+  },
+  "rofs": {
+    "clauses": [
+      "2.6",
+      "3.3.2",
+      "4.3.2"
+    ],
+    "dimensions": [
+      "pickOrder",
+      "mapSide"
+    ],
+    "pickOrderValues": [
+      "first",
+      "second"
+    ],
+    "mapSideValues": [
+      "blue",
+      "red"
+    ],
+    "holderChoosesOneDimensionFirst": true,
+    "otherTeamChoosesOtherDimension": true,
+    "blueDoesNotImplyFirstPick": true,
+    "groupOrRegularGame1": "homeTeam",
+    "afterGame1": "previousSetLoser",
+    "cupAndSeasonFinalGame1Exception": "upperFinalWinnerChoosesBothDimensions",
+    "defaults": {
+      "holderNoSubmission": "firstPick",
+      "nonHolderNoSubmissionIfHolderChoseSide": "firstPick",
+      "nonHolderNoSubmissionIfHolderChosePickOrder": "blueSide"
+    },
+    "juneRevision": "submissionDeadlineChanged;allocationRulesSame"
+  },
+  "worldsDomesticQualification": {
+    "clause": "4.4",
+    "seed1": "seasonChampion",
+    "seed2": "seasonRunnerUp",
+    "seed3": "loserLowerFinal",
+    "seed4IfAllocated": "loserLowerRound3",
+    "msiChampionPersonalGuarantee": {
+      "requiresSixTeamDomesticPlayoffs": true,
+      "minimumSeed": 4,
+      "overrideNormalFourthTeamIfNecessary": true,
+      "notAutomaticIfFailsPlayoffs": true
+    }
+  },
+  "limitations": [
+    "Calendarusesactual2026dateslots;simulatedwinnersnotfixed",
+    "Fullmultiwaytiebreaktableandcoachcommsnotencodedhere",
+    "RelaytiebreakRoFSneedsadditionalinterpretation",
+    "Thisresearchdoesnotclaimgameimplementationpassesallrules"
+  ]
+}

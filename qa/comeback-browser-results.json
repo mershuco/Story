@@ -1,0 +1,18 @@
+{
+  "errors": [],
+  "checks": [
+    "manualconsecutive2picks,secondchoicereload,fourphases,postdraftassignment",
+    "real6Kcomebackevent,savedgoldtotals,finalwinner,intermediateswingandKDAplayback",
+    "compactseedreplaymatchesstoredgoldandresult"
+  ],
+  "example": {
+    "seed": 93,
+    "winner": "GEN",
+    "winnerMaxDeficit": 6612,
+    "leadChanges": 3,
+    "finalGold": {
+      "T1": 63848,
+      "GEN": 63117
+    }
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "file": "worlds-2025-fearless-overlay.jpg",
+    "imageUrl": "https://thespike-strapi-cms.s3.us-east-1.amazonaws.com/t1_worlds_bans_6aa14d182a.jpg",
+    "articleUrl": "https://www.thespike.gg/league-of-legends/beginner-guides/fearless-draft-guide",
+    "use": "research reference only; not shipped as game UI asset"
+  },
+  {
+    "file": "lck-2025-broadcast.jpg",
+    "imageUrl": "https://static.inven.co.kr/column/2025/08/27/news/i1612068781.jpg",
+    "articleUrl": "https://www.inven.co.kr/webzine/news/?news=308890&site=lol",
+    "use": "research reference only; not shipped as game UI asset"
+  },
+  {
+    "file": "worlds-2022-final-game5.png",
+    "imageUrl": "https://static.invenglobal.com/upload/image/2022/11/06/o1667731387429285.png",
+    "articleUrl": "https://www.invenglobal.com/articles/18040/worlds-2022-finals-kr-reactions-i-am-here-to-end-the-wolf-vs-mata-fight",
+    "use": "research reference only; not shipped as game UI asset"
+  }
+]

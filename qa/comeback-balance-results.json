@@ -1,0 +1,62 @@
+{
+  "model": "event-v2",
+  "method": "Synthetic five-role squads;seeds1..2000 ineachpowergap scenario. Game-balance calibration,notofficialLoL orrealLCKwinrates.",
+  "scenarios": [
+    {
+      "powerGap": 0,
+      "trials": 2000,
+      "blueWins": 1006,
+      "redWins": 994,
+      "winnerTrailed3000": 584,
+      "winnerTrailed6000": 109,
+      "leadChanges": 2933,
+      "baronSteals": 347,
+      "largestWinningDeficit": 13333,
+      "blueWinRate": 0.503,
+      "comeback6000Rate": 0.0545,
+      "averageMinutes": 33.491
+    },
+    {
+      "powerGap": 8,
+      "trials": 2000,
+      "blueWins": 1560,
+      "redWins": 440,
+      "winnerTrailed3000": 389,
+      "winnerTrailed6000": 117,
+      "leadChanges": 1844,
+      "baronSteals": 323,
+      "largestWinningDeficit": 11340,
+      "blueWinRate": 0.78,
+      "comeback6000Rate": 0.0585,
+      "averageMinutes": 32.7975
+    },
+    {
+      "powerGap": -8,
+      "trials": 2000,
+      "blueWins": 445,
+      "redWins": 1555,
+      "winnerTrailed3000": 403,
+      "winnerTrailed6000": 107,
+      "leadChanges": 1855,
+      "baronSteals": 317,
+      "largestWinningDeficit": 13264,
+      "blueWinRate": 0.2225,
+      "comeback6000Rate": 0.0535,
+      "averageMinutes": 32.807
+    },
+    {
+      "powerGap": 15,
+      "trials": 2000,
+      "blueWins": 1808,
+      "redWins": 192,
+      "winnerTrailed3000": 192,
+      "winnerTrailed6000": 117,
+      "leadChanges": 634,
+      "baronSteals": 289,
+      "largestWinningDeficit": 12153,
+      "blueWinRate": 0.904,
+      "comeback6000Rate": 0.0585,
+      "averageMinutes": 31.674
+    }
+  ]
+}

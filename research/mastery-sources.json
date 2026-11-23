@@ -1,0 +1,1013 @@
+{
+  "method": {
+    "labelKo": "출전 기록 기반 게임용 숙련도 추정",
+    "officialMastery": false,
+    "riotAccountMastery": "Not queried: no verified account-to-player mapping or API access; professional exposure is not Riot account mastery",
+    "initialPerformanceYear": 2021,
+    "asOfExclusive": "2022-01-01T00:00:00",
+    "scoreFormula": "clamp(50,96,round(50+min(34,9*log2(1+games))+min(7,24*games/playerTotal)+8*((wins+5)/(games+10)-0.5)-min(6,max(0,daysSinceLastGame-90)/60)))",
+    "unobservedScore": 48,
+    "unobservedMeaning": "Unknown evidence; simulated neutral baseline. Does not mean unskilled or unplayable.",
+    "confidenceMeaning": "Exposure/sample volume only, not verified true proficiency. high>=15,medium>=5,low>=1,unknown=0.",
+    "futureInformation": "2022 records are retrospective only; initial scores use2021performance.2022rows may contribute to identity resolution only.",
+    "identityPolicy": "Normalize case/punctuation, validate documented aliases, bind to IDs observed in Korean leagues, then retain international/cross-region rows with those IDs. No Sword→Sw0rd or Asper→Kabbie merge.",
+    "limitation": "2021-only evidence is not lifetime experience; missing2021players and unplayedchampions remain unknown. Competition level/team strength and patch effects are not fully adjusted; heuristic weights uncalibrated.",
+    "availability": "173champion reference entries include future releases; game must filter by patch and tournament eligibility."
+  },
+  "coverage": {
+    "players": 117,
+    "champions": 173,
+    "playerChampionPairs": 20241,
+    "playersWith2021Evidence": 111,
+    "playersWithout2021Evidence": [
+      "Sw0rd",
+      "Hoit",
+      "Listo",
+      "Rebel",
+      "Way",
+      "Blessing"
+    ],
+    "observed2021Pairs": 1502,
+    "estimatedPairs": 18739,
+    "playersWith2022Retrospective": 117,
+    "acceptedPlayerGameRows": {
+      "2021": 6409,
+      "2022": 9114
+    }
+  },
+  "sources": [
+    {
+      "year": 2021,
+      "repo": "gregvoigts/bachelor-arbeit",
+      "commit": "03ddb19734e720f598fe10925279a5439dd1291f",
+      "url": "https://raw.githubusercontent.com/gregvoigts/bachelor-arbeit/03ddb19734e720f598fe10925279a5439dd1291f/2021_LoL_esports_match_data_from_OraclesElixir.csv",
+      "bytes": 93282980,
+      "sha256": "9534ec6426302cebc7c77b40d1b0f75287d56eedf27c3928894c7b4eedbc8e61",
+      "rows": 149808,
+      "observedGamesByIdAndDate": 12484,
+      "dateMin": "2021-01-02 07:40:39",
+      "dateMax": "2021-12-26 13:22:45",
+      "leagueRows": {
+        "KeSPA": 504,
+        "LPL": 8832,
+        "CU": 2448,
+        "GLL": 3132,
+        "BL": 1236,
+        "RCL": 4212,
+        "DL": 1212,
+        "LDL": 16380,
+        "LCK": 5868,
+        "PGN": 2220,
+        "UKLC": 1812,
+        "LCS": 4140,
+        "CBLOL": 2652,
+        "LCK CL": 2712,
+        "SL": 2952,
+        "UL": 2028,
+        "PRM": 4056,
+        "LFL": 2880,
+        "NLC": 4116,
+        "CBLOLA": 2652,
+        "LCSA": 4980,
+        "LVP DDH": 2580,
+        "TAL": 2448,
+        "UPL": 3564,
+        "VCS": 3696,
+        "LEC": 2964,
+        "LJL": 1896,
+        "TCL": 2688,
+        "OTBLX": 3312,
+        "EBL": 1692,
+        "LPLOL": 1968,
+        "BIG": 1776,
+        "BM": 1056,
+        "HM": 2148,
+        "LHE": 3456,
+        "LMF": 3840,
+        "LLA": 2208,
+        "HC": 2112,
+        "LCL": 1788,
+        "PCS": 3192,
+        "UGP": 1584,
+        "LCO": 2196,
+        "GSG": 636,
+        "HS": 960,
+        "NEXO": 1536,
+        "AOL": 444,
+        "NERD": 504,
+        "EM": 3228,
+        "MSI": 972,
+        "LAS": 2856,
+        "EGL": 1104,
+        "VL": 204,
+        "LFL2": 300,
+        "GL": 96,
+        "LJLA": 468,
+        "WCS": 1452,
+        "CT": 684,
+        "NASG": 384,
+        "DC": 792
+      },
+      "delivery": "Oracle’s Elixir data through a third-party public GitHub mirror; source completeness not independently certified"
+    },
+    {
+      "year": 2022,
+      "repo": "stvngo/LoL-Statistical-Analysis",
+      "commit": "6522163c5ebf249a479d7a4066da29516676bf65",
+      "url": "https://raw.githubusercontent.com/stvngo/LoL-Statistical-Analysis/6522163c5ebf249a479d7a4066da29516676bf65/2022_LoL_esports_match_data_from_OraclesElixir.csv",
+      "bytes": 97422123,
+      "sha256": "5ddfae0d4bf7271852eab38118042c690cdfe247124f040fa30d8d31c31b251b",
+      "rows": 150588,
+      "observedGamesByIdAndDate": 12549,
+      "dateMin": "2022-01-10 07:44:08",
+      "dateMax": "2022-12-27 12:43:43",
+      "leagueRows": {
+        "LCKC": 4740,
+        "LPL": 9432,
+        "NLC": 2928,
+        "LVP SL": 2940,
+        "PGC": 6768,
+        "UL": 2928,
+        "PRM": 2844,
+        "LCK": 5604,
+        "LFL": 2964,
+        "LEC": 2916,
+        "LCS": 3672,
+        "LFL2": 2892,
+        "GLL": 1872,
+        "HM": 1836,
+        "ESLOL": 2880,
+        "EBL": 1992,
+        "LPLOL": 2556,
+        "PGN": 1800,
+        "LCSA": 6480,
+        "DDH": 2508,
+        "TAL": 2460,
+        "TCL": 2676,
+        "CBLOL": 2916,
+        "LCO": 2544,
+        "LHE": 2928,
+        "GL": 2088,
+        "EL": 1620,
+        "CBLOLA": 2592,
+        "LMF": 3840,
+        "VL": 2040,
+        "SL (LATAM)": 1980,
+        "LLA": 2244,
+        "HC": 1944,
+        "LDL": 11304,
+        "LJL": 2580,
+        "PCS": 3276,
+        "VCS": 3900,
+        "UPL": 4944,
+        "LCL": 192,
+        "NEXO": 2328,
+        "EUM": 3204,
+        "LAS": 2724,
+        "MSI": 960,
+        "LJLA": 456,
+        "CT": 312,
+        "WLDs": 1860,
+        "ASCI": 888,
+        "NLC Aurora Open": 1680,
+        "PRMP": 1620,
+        "GLLPA": 564,
+        "CDF": 912,
+        "IC": 900,
+        "EBLPA": 228,
+        "USP": 408,
+        "DCup": 924
+      },
+      "delivery": "Oracle’s Elixir data through a third-party public GitHub mirror; source completeness not independently certified"
+    }
+  ],
+  "aliases": {
+    "samd": {
+      "names": [
+        "Hans SamD"
+      ],
+      "source": "https://liquipedia.net/leagueoflegends/SamD"
+    },
+    "pangsu": {
+      "names": [
+        "Bonnie"
+      ],
+      "source": "https://lol.fandom.com/wiki/Bonnie"
+    },
+    "kingkong": {
+      "names": [
+        "Hype"
+      ],
+      "source": "https://lol.fandom.com/wiki/Hype_(Byeon_Jeong-hyeon)"
+    },
+    "rebel": {
+      "names": [
+        "Kice"
+      ],
+      "source": "https://liquipedia.net/leagueoflegends/Kice"
+    },
+    "blessing": {
+      "names": [
+        "Dispel"
+      ],
+      "source": "https://liquipedia.net/leagueoflegends/Dispel"
+    },
+    "kabbie": {
+      "names": [
+        "sanghyeon"
+      ],
+      "source": "https://lol.fandom.com/wiki/Sanghyeon"
+    }
+  },
+  "acceptedIdentities": {
+    "canyon": [
+      {
+        "name": "Canyon",
+        "playerId": "oe:player:92544d7a994bd6841cccd9f6e42e3de"
+      }
+    ],
+    "showmaker": [
+      {
+        "name": "ShowMaker",
+        "playerId": "oe:player:5f8ff49cd56eae61d635966b183a451"
+      }
+    ],
+    "ghost": [
+      {
+        "name": "Ghost",
+        "playerId": "oe:player:78081d0b3c01f1f295d52d53744261a"
+      }
+    ],
+    "beryl": [
+      {
+        "name": "BeryL",
+        "playerId": "oe:player:dee54127bb56d2e2540ba71cc416f1c"
+      }
+    ],
+    "peanut": [
+      {
+        "name": "Peanut",
+        "playerId": "oe:player:dda4a873265dfd06df50a0d8a294908"
+      }
+    ],
+    "deokdam": [
+      {
+        "name": "deokdam",
+        "playerId": "oe:player:18bdb3898e7fecb3bb0be7ff075d509"
+      }
+    ],
+    "kellin": [
+      {
+        "name": "Kellin",
+        "playerId": "oe:player:b0ec3df39d61f953e7af0afd8eb8c4a"
+      }
+    ],
+    "zeka": [
+      {
+        "name": "Zeka",
+        "playerId": "oe:player:f9cd2ef9afea5cda0eb3263a025cec1"
+      }
+    ],
+    "aiming": [
+      {
+        "name": "Aiming",
+        "playerId": "oe:player:85104684d1eb7f4c0ce393441a0b669"
+      }
+    ],
+    "samd": [
+      {
+        "name": "Hans SamD",
+        "playerId": "oe:player:90b5929ccb644ca52c504f4376faad3"
+      }
+    ],
+    "nuguri": [
+      {
+        "name": "Nuguri",
+        "playerId": "oe:player:f17b90d1dd0f1814bb1f82f77c2f861"
+      }
+    ],
+    "rascal": [
+      {
+        "name": "Rascal",
+        "playerId": "oe:player:9daf04bfd9c8815cc827414f59f45af"
+      }
+    ],
+    "bdd": [
+      {
+        "name": "Bdd",
+        "playerId": "oe:player:30361653a485a9609fb2d3aa073282c"
+      }
+    ],
+    "ruler": [
+      {
+        "name": "Ruler",
+        "playerId": "oe:player:eada4723af6f51cf2391d85b5fde49b"
+      }
+    ],
+    "life": [
+      {
+        "name": "Life",
+        "playerId": "oe:player:dea5251e486aed942e1bc06e1d5c116"
+      }
+    ],
+    "doran": [
+      {
+        "name": "Doran",
+        "playerId": "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8"
+      }
+    ],
+    "pangsu": [
+      {
+        "name": "Bonnie",
+        "playerId": "oe:player:8139e3b2070343b1729402f9bf20205"
+      }
+    ],
+    "canna": [
+      {
+        "name": "Canna",
+        "playerId": "oe:player:7577c239c73fa5f3011cd7b5503e75e"
+      }
+    ],
+    "ellim": [
+      {
+        "name": "Ellim",
+        "playerId": "oe:player:579ae2e0addc18db74179b2a3d33294"
+      }
+    ],
+    "clozer": [
+      {
+        "name": "Clozer",
+        "playerId": "oe:player:6adb46561c24655e0455d9b3fdc5698"
+      }
+    ],
+    "gumayusi": [
+      {
+        "name": "Gumayusi",
+        "playerId": "oe:player:c7319736816efe935787b4381c6f321"
+      }
+    ],
+    "keria": [
+      {
+        "name": "Keria",
+        "playerId": "oe:player:db79ce6ad35451c938fbe2995dabd37"
+      }
+    ],
+    "morgan": [
+      {
+        "name": "Morgan",
+        "playerId": "oe:player:f73dde2d8c7879ae8d1fcdc03c4ffeb"
+      }
+    ],
+    "chovy": [
+      {
+        "name": "Chovy",
+        "playerId": "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+      }
+    ],
+    "deft": [
+      {
+        "name": "Deft",
+        "playerId": "oe:player:c588a2d07b69ca4ba61c96aebd3f793"
+      }
+    ],
+    "vsta": [
+      {
+        "name": "Vsta",
+        "playerId": "oe:player:16c1637b4b44b008b4d6627f68ae30a"
+      }
+    ],
+    "croco": [
+      {
+        "name": "Croco",
+        "playerId": "oe:player:5c6f901a83ec448d51703aebba0ca64"
+      }
+    ],
+    "fate": [
+      {
+        "name": "FATE",
+        "playerId": "oe:player:24cd6812f523cf30c3502344539be6f"
+      }
+    ],
+    "effort": [
+      {
+        "name": "Effort",
+        "playerId": "oe:player:035b9ae578574cdf728d8760483d804"
+      }
+    ],
+    "kingen": [
+      {
+        "name": "Kingen",
+        "playerId": "oe:player:618a87d272773f68239d8ce5555f39d"
+      }
+    ],
+    "pyosik": [
+      {
+        "name": "Pyosik",
+        "playerId": "oe:player:a2357eb17578485c2ba736db36cbc42"
+      }
+    ],
+    "pleata": [
+      {
+        "name": "Pleata",
+        "playerId": "oe:player:7fdedd3126915607d5c8f42f8239253"
+      }
+    ],
+    "kiin": [
+      {
+        "name": "Kiin",
+        "playerId": "oe:player:03daae1844b9ad257324c3eedf41e28"
+      }
+    ],
+    "dread": [
+      {
+        "name": "Dread",
+        "playerId": "oe:player:5fac949d3a1a7631ddaef68ea4cbe1e"
+      }
+    ],
+    "lehends": [
+      {
+        "name": "Lehends",
+        "playerId": "oe:player:e4e24b8656e4e6a74b939af730b0148"
+      }
+    ],
+    "hoya": [
+      {
+        "name": "HOYA",
+        "playerId": "oe:player:57ac9f77eae511aeee1e854434f73f2"
+      }
+    ],
+    "umti": [
+      {
+        "name": "UmTi",
+        "playerId": "oe:player:1970fcb701acce66e0771946bbb3105"
+      }
+    ],
+    "lava": [
+      {
+        "name": "Lava",
+        "playerId": "oe:player:1d18fe2cdd43a72d46421ecfe81b599"
+      }
+    ],
+    "hena": [
+      {
+        "name": "Hena",
+        "playerId": "oe:player:9712524dc88851032bd53054f8b49b4"
+      }
+    ],
+    "delight": [
+      {
+        "name": "Delight",
+        "playerId": "oe:player:051ca2e31ba25123961b3df95fdef4c"
+      }
+    ],
+    "faker": [
+      {
+        "name": "Faker",
+        "playerId": "oe:player:e1edfc5cea461399a63cb813cf795cc"
+      }
+    ],
+    "dudu": [
+      {
+        "name": "DuDu",
+        "playerId": "oe:player:6e6a78244523ed9e54731d07d1f79f4"
+      }
+    ],
+    "trigger": [
+      {
+        "name": "Trigger",
+        "playerId": "oe:player:5bc99370722c5ecbfa9b3c1e17338e6"
+      }
+    ],
+    "envyy": [
+      {
+        "name": "Envyy",
+        "playerId": "oe:player:b0e54ad49a5ce7a200bcb877eee7ed9"
+      }
+    ],
+    "kael": [
+      {
+        "name": "Kael",
+        "playerId": "oe:player:d24f38ec30ce6f7577066f80e43e4bf"
+      }
+    ],
+    "clear": [
+      {
+        "name": "Clear",
+        "playerId": "oe:player:d87853a5c1c5463889d70a62cdbcffc"
+      }
+    ],
+    "peach": [
+      {
+        "name": "Peach",
+        "playerId": "oe:player:53841c6e42a6ce77b6f3b80133c9342"
+      }
+    ],
+    "jun": [
+      {
+        "name": "Jun",
+        "playerId": "oe:player:054e5f8aeb885db6713f4a3e7328efc"
+      },
+      {
+        "name": "Jun",
+        "playerId": "oe:player:9f80edbc5030ac495358c47c74da99f"
+      }
+    ],
+    "mask": [
+      {
+        "name": "Mask",
+        "playerId": "oe:player:4a18312b5b75f549d5551e5912ad6eb"
+      }
+    ],
+    "cheoni": [
+      {
+        "name": "Cheoni",
+        "playerId": "oe:player:cada0080d5951aaafd67134bcbd7760"
+      }
+    ],
+    "baut": [
+      {
+        "name": "Baut",
+        "playerId": "oe:player:3dbe8ecf9c97fc12b28ad199bdb5f82"
+      }
+    ],
+    "castle": [
+      {
+        "name": "Castle",
+        "playerId": "oe:player:80fea0848c57b8e07a79675d41f582c"
+      }
+    ],
+    "vicla": [
+      {
+        "name": "VicLa",
+        "playerId": "oe:player:d709285b163a94af9d819e568c592ba"
+      }
+    ],
+    "noah": [
+      {
+        "name": "Noah",
+        "playerId": "oe:player:95d286ec0a5d750d09e848a4e630c56"
+      }
+    ],
+    "thanatos": [
+      {
+        "name": "Thanatos",
+        "playerId": "oe:player:1efc4e5732e91520d03385900b903f9"
+      }
+    ],
+    "valkyrie": [
+      {
+        "name": "Valkyrie",
+        "playerId": "oe:player:2f4e392b28239f7751efa2308caf725"
+      },
+      {
+        "name": "Valkyrie",
+        "playerId": "oe:player:f49e377bb041dc4631d75048e8f8a3f"
+      }
+    ],
+    "dndn": [
+      {
+        "name": "DnDn",
+        "playerId": "oe:player:341e10748bb6d388250fd1f013e45a4"
+      }
+    ],
+    "sylvie": [
+      {
+        "name": "Sylvie",
+        "playerId": "oe:player:1a75a7cf8c98442be881fed562346f5"
+      }
+    ],
+    "fiesta": [
+      {
+        "name": "FIESTA",
+        "playerId": "oe:player:5ee64eb3feb02e60832a2265db54f71"
+      }
+    ],
+    "bull": [
+      {
+        "name": "Bull",
+        "playerId": "oe:player:92c21511d7b383b2f8ba5b00c3c9a47"
+      }
+    ],
+    "lukalux": [
+      {
+        "name": "LukaLux",
+        "playerId": "oe:player:ec04e0f43e44816d11fcce23ea77433"
+      }
+    ],
+    "roamer": [
+      {
+        "name": "Roamer",
+        "playerId": "oe:player:ea58943d300b14d684bb05b3975fe15"
+      }
+    ],
+    "toland": [
+      {
+        "name": "TolanD",
+        "playerId": "oe:player:157108ff2b64591e5703c64dbae3a2e"
+      }
+    ],
+    "ice": [
+      {
+        "name": "Ice",
+        "playerId": "oe:player:8bac58409e91b96ecd05f6d8f053e07"
+      }
+    ],
+    "kabbie": [
+      {
+        "name": "kabbie",
+        "playerId": "oe:player:dd3361ceddb2b1b84803d87950634af"
+      },
+      {
+        "name": "sanghyeon",
+        "playerId": "oe:player:750126a9b77f68942d7f412ad74b67d"
+      }
+    ],
+    "aria": [
+      {
+        "name": "Aria",
+        "playerId": "oe:player:2e82913920d8a6d0efa480bc35f1ba8"
+      }
+    ],
+    "ophelia": [
+      {
+        "name": "Ophelia",
+        "playerId": "oe:player:25546fe55464aef59d6f46b52f22bcb"
+      }
+    ],
+    "prove": [
+      {
+        "name": "Prove",
+        "playerId": "oe:player:8484fddc2b2b38d15cb8ca424d1d442"
+      }
+    ],
+    "cuzz": [
+      {
+        "name": "Cuzz",
+        "playerId": "oe:player:f9fe6d28d5b67bf9ac673b2cc8edf15"
+      }
+    ],
+    "teddy": [
+      {
+        "name": "Teddy",
+        "playerId": "oe:player:2b5fa564a1259b97bc238fbfa719b07"
+      }
+    ],
+    "zeus": [
+      {
+        "name": "Zeus",
+        "playerId": "oe:player:98dd15c330fb5abb4508347265a7f76"
+      }
+    ],
+    "karis": [
+      {
+        "name": "Karis",
+        "playerId": "oe:player:498246d6c44175256a07ed5f322c817"
+      }
+    ],
+    "dove": [
+      {
+        "name": "Dove",
+        "playerId": "oe:player:1d22c812efd7b8a4244d93c51acc399"
+      }
+    ],
+    "kingkong": [
+      {
+        "name": "Hype",
+        "playerId": "oe:player:2452114de900ce4bb971851b668786d"
+      }
+    ],
+    "minit": [
+      {
+        "name": "Minit",
+        "playerId": "oe:player:cf1fc00c5f362d9b4988cbb260cbc95"
+      }
+    ],
+    "onfleek": [
+      {
+        "name": "OnFleek",
+        "playerId": "oe:player:e35d06a0430095562086a40a2676d8e"
+      }
+    ],
+    "prince": [
+      {
+        "name": "Prince",
+        "playerId": "oe:player:030a726de315d9ad86989bf360809e9"
+      }
+    ],
+    "oner": [
+      {
+        "name": "Oner",
+        "playerId": "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+      }
+    ],
+    "photon": [
+      {
+        "name": "Photon",
+        "playerId": "oe:player:fd22b656b23ca07a276181a4953ba2c"
+      }
+    ],
+    "soboro": [
+      {
+        "name": "Soboro",
+        "playerId": "oe:player:38e0af7278d6769d0c81d7c4b47ac1e"
+      }
+    ],
+    "winner": [
+      {
+        "name": "Winner",
+        "playerId": "oe:player:3e49e4fa76bc82c6f03a12d50ee0a6e"
+      }
+    ],
+    "quid": [
+      {
+        "name": "Quid",
+        "playerId": "oe:player:8f8eaac8e99c203ee76e57c5c81c91f"
+      }
+    ],
+    "peyz": [
+      {
+        "name": "Peyz",
+        "playerId": "oe:player:5bbc2b92348d930ebd500cb9ce71bb7"
+      }
+    ],
+    "lospa": [
+      {
+        "name": "Lospa",
+        "playerId": "oe:player:0758af26fa0c3af6899bb1569059609"
+      }
+    ],
+    "moham": [
+      {
+        "name": "Moham",
+        "playerId": "oe:player:dfc279de8d7bd571aa8edfd7eb89c03"
+      }
+    ],
+    "raptor": [
+      {
+        "name": "Raptor",
+        "playerId": "oe:player:637ed20b1e41be1c51bd1a4cb211357"
+      }
+    ],
+    "setab": [
+      {
+        "name": "SeTab",
+        "playerId": "oe:player:4ff7b91bbc9492e9f96d28dda496653"
+      }
+    ],
+    "lucid": [
+      {
+        "name": "Lucid",
+        "playerId": "oe:player:10b86429ce8048aba673d802632e358"
+      }
+    ],
+    "rahel": [
+      {
+        "name": "Rahel",
+        "playerId": "oe:player:e2c655411d8d95ef73d8026704f5e7a"
+      }
+    ],
+    "bible": [
+      {
+        "name": "Bible",
+        "playerId": "oe:player:5788fbc5ff334175ec2eccae6f0ed81"
+      }
+    ],
+    "willer": [
+      {
+        "name": "Willer",
+        "playerId": "oe:player:baf26814ef7b2f10fac33a00c3d53a3"
+      }
+    ],
+    "vital": [
+      {
+        "name": "vital",
+        "playerId": "oe:player:252de481e83ab0bc87aada93aeb424c"
+      }
+    ],
+    "illlima": [
+      {
+        "name": "IlllIma",
+        "playerId": "oe:player:f23c7426104cc4df2b49b3be2c6d024"
+      }
+    ],
+    "citrus": [
+      {
+        "name": "Citrus",
+        "playerId": "oe:player:ad173d59265cf2cbe796b2af2554da3"
+      }
+    ],
+    "bulldog": [
+      {
+        "name": "BuLLDoG",
+        "playerId": "oe:player:317aeb74a6dd16bea711bbad361ca44"
+      }
+    ],
+    "feisty": [
+      {
+        "name": "Feisty",
+        "playerId": "oe:player:d1ae0e2f9f3ac1e0e0cdcb86504ca77"
+      }
+    ],
+    "burdol": [
+      {
+        "name": "Burdol",
+        "playerId": "oe:player:566586ef99b39b57e9c85c59f021da5"
+      }
+    ],
+    "pullbae": [
+      {
+        "name": "Pullbae",
+        "playerId": "oe:player:559813e734d182e8896481003507b1f"
+      }
+    ],
+    "seonbi": [
+      {
+        "name": "Seonbi",
+        "playerId": "oe:player:53509762cb97b6d7e1b806d9befb5fb"
+      }
+    ],
+    "rooster": [
+      {
+        "name": "Rooster",
+        "playerId": "oe:player:285954244fdc2bcce532fb88a1e0ddb"
+      }
+    ],
+    "lure": [
+      {
+        "name": "Lure",
+        "playerId": "oe:player:4367b1100c2577e20e13ae9e3afd835"
+      }
+    ],
+    "meaning": [
+      {
+        "name": "Meaning",
+        "playerId": "oe:player:7277de5f2ed6f17c61f1f25594591a8"
+      }
+    ],
+    "hambak": [
+      {
+        "name": "HamBak",
+        "playerId": "oe:player:845ea84cec22236278388f19fcd20bf"
+      }
+    ],
+    "forest": [
+      {
+        "name": "Forest",
+        "playerId": "oe:player:9170917b7452bef889def6c113af150"
+      }
+    ],
+    "poby": [
+      {
+        "name": "Poby",
+        "playerId": "oe:player:4e0ee55680fa265c49e158f85e26650"
+      }
+    ],
+    "gamin": [
+      {
+        "name": "Gamin",
+        "playerId": "oe:player:998b3e49b01ecc41eacc392477a98cf"
+      }
+    ],
+    "loopy": [
+      {
+        "name": "Loopy",
+        "playerId": "oe:player:e9741b3a238723ea6380ef2113fae63"
+      }
+    ],
+    "peter": [
+      {
+        "name": "Peter",
+        "playerId": "oe:player:ee051912ad5f9a97aa9ce4980cbb481"
+      }
+    ],
+    "ten10": [
+      {
+        "name": "Ten10",
+        "playerId": "oe:player:22b6f6057ca1b2f7a0cdf1b9a8de831"
+      }
+    ],
+    "duro": [
+      {
+        "name": "Duro",
+        "playerId": "oe:player:605821ebcf6a2e53f03ec6e8e463d1b"
+      }
+    ],
+    "zest": [
+      {
+        "name": "Zest",
+        "playerId": "oe:player:786b5bbf7bbfb7b79379e8589a865c1"
+      }
+    ],
+    "blessing": [
+      {
+        "name": "dispel",
+        "playerId": "oe:player:2f96ac60b6a8218682a0825641c80c7"
+      }
+    ],
+    "rebel": [
+      {
+        "name": "Kice",
+        "playerId": "oe:player:539a66f092a09af8d24065a3ac5ae69"
+      }
+    ],
+    "hoit": [
+      {
+        "name": "Hoit",
+        "playerId": "oe:player:ed4b59fdd87aa318a52777affd42d00"
+      }
+    ],
+    "sw0rd": [
+      {
+        "name": "Sw0rd",
+        "playerId": "oe:player:b3dae530a02238b0628518ef886e505"
+      }
+    ],
+    "listo": [
+      {
+        "name": "Listo",
+        "playerId": "oe:player:8ddd8d88391896aa4d9e751dee81770"
+      }
+    ],
+    "way": [
+      {
+        "name": "Way",
+        "playerId": "oe:player:8c6395564a23f3c2af8d378540012b0"
+      }
+    ]
+  },
+  "rejectedHomonyms": [
+    {
+      "year": 2021,
+      "playerId": "dudu",
+      "exportName": "Dudu",
+      "team": "Phlox Gaming",
+      "league": "HS",
+      "rows": 6
+    },
+    {
+      "year": 2021,
+      "playerId": "prince",
+      "exportName": "Prince",
+      "team": "ASUS ROG ELITE",
+      "league": "EBL",
+      "rows": 13
+    },
+    {
+      "year": 2021,
+      "playerId": "dudu",
+      "exportName": "Dudu",
+      "team": "Phlox Gaming",
+      "league": "NEXO",
+      "rows": 15
+    },
+    {
+      "year": 2022,
+      "playerId": "fate",
+      "exportName": "fate",
+      "team": "Royal Club",
+      "league": "LDL",
+      "rows": 12
+    },
+    {
+      "year": 2022,
+      "playerId": "castle",
+      "exportName": "Castle",
+      "team": "Team Ambition Black",
+      "league": "PGC",
+      "rows": 3
+    },
+    {
+      "year": 2022,
+      "playerId": "prince",
+      "exportName": "Prince",
+      "team": "Florida Southern College",
+      "league": "UPL",
+      "rows": 2
+    },
+    {
+      "year": 2022,
+      "playerId": "fate",
+      "exportName": "fate",
+      "team": "Team WE",
+      "league": "LPL",
+      "rows": 17
+    },
+    {
+      "year": 2022,
+      "playerId": "castle",
+      "exportName": "Castle",
+      "team": "Grand View University",
+      "league": "UPL",
+      "rows": 12
+    },
+    {
+      "year": 2022,
+      "playerId": "prince",
+      "exportName": "Prince",
+      "team": "QLASH Spain",
+      "league": "IC",
+      "rows": 2
+    }
+  ],
+  "duplicateRowsRemoved": {}
+}

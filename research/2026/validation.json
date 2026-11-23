@@ -1,0 +1,15 @@
+{
+  "checks": "passed",
+  "domesticPlayers": 106,
+  "internationalPlayers": 95,
+  "pairs": 34773,
+  "openingRosterCount": 50,
+  "clRosterCount": 50,
+  "preseasonEvidencePlayers": 106,
+  "foreignPreseasonEvidencePlayers": 94,
+  "unknownForeignIdentities": [
+    "Pop9"
+  ],
+  "lastObservation": "2026-10-18 19:48:36",
+  "notCovered": "2026 finalWorlds/November match statistics;2027offseasonrostersnotused"
+}

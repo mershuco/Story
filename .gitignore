@@ -1,0 +1,11 @@
+node_modules/
+__pycache__/
+.openai/*.zip
+*.log
+research/raw/
+qa/*.png
+qa/__pycache__/
+*.tar.gz
+
+# Reproducible official-source download cache (hashes retained in research).
+research/2026/ddragon/

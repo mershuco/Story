@@ -1,0 +1,26 @@
+{
+  "errors": [],
+  "checks": [
+    "2026 openingT1 roster and VCT layout preserved",
+    "all20 choices remain lane-free; postdraft60second phase, pause, drag, keyboardselect, reload and incomplete-gameguard",
+    "timerauto-completion preservesmanualroles, usesnoRNG and doesnotstartmatch",
+    "historicaldraftreference preserved;2026championportraits move,pauseandshowresult",
+    "automaticdraft also stops atassignment; fearlessusedpicks carryover; coachbutton completes",
+    "legacyversion1 save restores2022roster, masteryand12.xpatch",
+    "390pxmobile assignment,coachconfirmation andviewer without horizontaloverflow"
+  ],
+  "movement": {
+    "from": "translate(375.79 194.98)",
+    "to": "translate(278.23 230.07)",
+    "sameSvgElement": true
+  },
+  "screenshots": [
+    "2026-club-selection.png",
+    "2026-lobby-desktop.png",
+    "2026-selection-unassigned.png",
+    "2026-assignment-desktop.png",
+    "2026-gank-animation.png",
+    "2026-match-result.png",
+    "2026-assignment-mobile.png"
+  ]
+}

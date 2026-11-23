@@ -1,0 +1,9 @@
+{
+  "name": "lck-manager",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "dev": "python -m http.server 4173 --bind 0.0.0.0 --directory dist"
+  }
+}

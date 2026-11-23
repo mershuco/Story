@@ -1,0 +1,69 @@
+{
+  "formatYear": 2026,
+  "sources": [
+    "https://lolesports.com/en-US/season/115547545029543948/handbook/115548016979679444",
+    "https://lolesports.com/en-AU/news/msi-and-worlds-updates",
+    "https://lolesports.com/en-GB/news/msi-2026-primer",
+    "https://lolesports.com/en-GB/news/worlds-2026-primer"
+  ],
+  "FST": {
+    "entrants": 8,
+    "regionalSlots": {
+      "LCK": 2,
+      "LPL": 2,
+      "LEC": 1,
+      "LCS": 1,
+      "LCP": 1,
+      "CBLOL": 1
+    },
+    "groups": 2,
+    "groupType": "four-team GSL with2qualifiers",
+    "allBestOf": 5,
+    "series": 13
+  },
+  "MSI": {
+    "entrants": 11,
+    "directBracket": 7,
+    "playinTeams": 4,
+    "playinQualifiers": 1,
+    "playinSeries": 6,
+    "bracketType": "8-team double elimination withoutreset",
+    "bracketSeries": 14,
+    "byeRule": "sixfirstseeds plussecondseedfromhighestFSTregionthat hastwoMSIseeds",
+    "allBestOf": 5,
+    "dates": "2026-06-28..2026-07-12"
+  },
+  "Worlds": {
+    "entrants": 19,
+    "regionalBase": {
+      "LCK": 3,
+      "LPL": 3,
+      "LEC": 3,
+      "LCS": 3,
+      "LCP": 3,
+      "CBLOL": 2
+    },
+    "extraSlots": "MSIchampion plusbestotherregion",
+    "directSwiss": 15,
+    "playinTeams": 4,
+    "playinQualifiers": 1,
+    "playinSeries": 6,
+    "playinType": "BO5 double elimination withoutreset",
+    "swissTeams": 16,
+    "pools": 4,
+    "swissSeries": 33,
+    "swissRules": [
+      "3winsqualify/3losseseliminate",
+      "BO3deciders",
+      "norepeatedopponents",
+      "regionalexclusiononlyround1"
+    ],
+    "knockoutSeries": 7,
+    "finalDate": "2026-11-14"
+  },
+  "implementationLimits": [
+    "nonLCKrepresentatives chosenfromselectedpoolbypower",
+    "regionalperformance tie-breaks simplified",
+    "specificorganizerdiscretion exceptions notexhaustively modeled"
+  ]
+}

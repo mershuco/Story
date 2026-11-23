@@ -1,0 +1,28 @@
+"""Manual2pick turns and saved comeback playback use the actual UI."""
+import json
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+ROOT=Path(__file__).resolve().parent
+report={'errors':[],'checks':[]}
+def saved(q):return json.loads(q.evaluate("localStorage.getItem('lck-manager-save-v1')"))
+def load(q,s):q.evaluate("s=>sessionStorage.setItem('_qa_next_save',JSON.stringify(s))",s);q.reload(wait_until='domcontentloaded')
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage']);q=b.new_page(viewport={'width':1440,'height':1050});q.set_default_timeout(20000);q.on('pageerror',lambda e:report['errors'].append(str(e)))
+ q.add_init_script("const pending=sessionStorage.getItem('_qa_next_save');if(pending){localStorage.setItem('lck-manager-save-v1',pending);sessionStorage.removeItem('_qa_next_save');}");q.goto('http://127.0.0.1:4173');q.locator('[data-action=new-game]').click()
+ fixture=q.evaluate("""async()=>{const E=await import('./engine.js');const s=E.newGame('T1',22),m={id:'2026-qa-draft',phase:'CUP_FINAL',competition:'CUP',teams:['T1','GEN'],bestOf:5,date:s.date,sets:[],score:[0,0],status:'scheduled'};s.matches.push(m);s.activeDraft=E.newDraft(s,m,'both:blue:first');while(s.activeDraft.step<9)E.draftAction(s,s.activeDraft,E.legalChampions(s,s.activeDraft)[0].id);return s;}""")
+ load(q,fixture);q.locator('.draft-block-count').wait_for();assert '2픽 중 1번째' in q.locator('.draft-block-count').inner_text();assert q.locator('.draft-rounds>div').count()==4
+ q.locator('.draft-pool [data-action=draft-pick]:not([disabled])').first.click();q.locator('[data-action=draft-lock]').click();q.wait_for_function("JSON.parse(localStorage.getItem('lck-manager-save-v1')).activeDraft.step===10");assert '2픽 중 2번째' in q.locator('.draft-block-count').inner_text();prefix=saved(q)['activeDraft']['history'];q.reload();q.locator('.draft-block-count').wait_for();assert '2픽 중 2번째' in q.locator('.draft-block-count').inner_text();assert saved(q)['activeDraft']['history']==prefix
+ q.screenshot(path=str(ROOT/'2026-two-pick-turn.png'),full_page=True);q.locator('.draft-pool [data-action=draft-pick]:not([disabled])').first.click();q.locator('[data-action=draft-lock]').click();q.locator('[data-action=draft-auto-rest]:not([disabled])').wait_for();q.locator('[data-action=draft-auto-rest]').click();q.locator('.assignment-room').wait_for();assert all(x['role'] is None for x in saved(q)['activeDraft']['picks']['blue']);report['checks'].append('manualconsecutive2picks,secondchoicereload,fourphases,postdraftassignment')
+ comeback=q.evaluate("""async()=>{const E=await import('./engine.js');for(let seed=1;seed<=300;seed++){const s=E.newGame('T1',seed),m={id:'2026-qa-comeback',phase:'CUP_GROUP',competition:'CUP',teams:['T1','GEN'],bestOf:1,date:s.date,sets:[],score:[0,0],status:'scheduled'};s.matches.push(m);const d=E.completeDraft(s,E.newDraft(s,m));E.autoAssignDraft(s,d);E.confirmDraftAssignments(d);const set=E.resolveDraft(s,m,d);if(set.comeback.winnerMaxDeficit>=6000&&set.events.some(e=>e.comeback&&e.kind!=='nexus')){s.viewing={matchId:m.id,setIndex:0};return{state:s,set,seed};}}throw Error('No6Kcomebackfixture');}""")
+ load(q,comeback['state']);q.locator('.vct-shell').wait_for();q.locator('[data-action=menu]').click();q.locator('.vct-quick-menu [data-id=history]').click();q.locator('[data-action=match-record][data-id="2026-qa-comeback"]').click();q.locator('.rift-svg').wait_for()
+ game=comeback['set'];expected={t:f'{v/1000:.1f}K' for t,v in game['finalGold'].items()}
+ for team,gold in expected.items():q.wait_for_function("([id,expected])=>document.querySelector('[data-team-gold=\"'+id+'\"]').textContent===expected",arg=[team,gold])
+ assert '열세를 극복한 승리' in q.locator('#live-swing').inner_text();q.screenshot(path=str(ROOT/'2026-comeback-result.png'),full_page=True)
+ target=next(i for i,e in enumerate(game['events']) if e['comeback'] and e['kind']!='nexus');q.locator(f'[data-action=viewer-scene][data-index="{target}"]').click();q.wait_for_function("document.querySelector('[data-action=viewer-play]').textContent==='재생'")
+ q.wait_for_function("document.querySelector('#live-swing')?.textContent==='골드 역전!'");scene=game['events'][target]
+ for team,value in scene['gold'].items():assert q.locator(f'[data-team-gold="{team}"]').inner_text()==f'{value/1000:.1f}K'
+ q.screenshot(path=str(ROOT/'2026-comeback-swing.png'),full_page=True)
+ # Reconstruct the same result without a stored eventlog, as for anAIgame.
+ compact=json.loads(json.dumps(comeback['state']));compact['matches'][0]['sets'][0]['events']=[];load(q,compact);q.locator('.vct-shell').wait_for();q.locator('[data-action=menu]').click();q.locator('.vct-quick-menu [data-id=history]').click();q.locator('[data-action=match-record][data-id="2026-qa-comeback"]').click();q.locator('.rift-svg').wait_for()
+ for team,gold in expected.items():q.wait_for_function("([id,expected])=>document.querySelector('[data-team-gold=\"'+id+'\"]').textContent===expected",arg=[team,gold])
+ assert not report['errors'],report['errors'];report['checks'].append('real6Kcomebackevent,savedgoldtotals,finalwinner,intermediateswingandKDAplayback');report['checks'].append('compactseedreplaymatchesstoredgoldandresult');report['example']={'seed':comeback['seed'],'winner':game['winner'],'winnerMaxDeficit':game['comeback']['winnerMaxDeficit'],'leadChanges':game['comeback']['leadChanges'],'finalGold':game['finalGold']};(ROOT/'comeback-browser-results.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));print(json.dumps(report,ensure_ascii=False));b.close()

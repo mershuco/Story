@@ -1,0 +1,1726 @@
+{
+  "version": 1,
+  "method": "Historical examples reconstructed from recorded per-team ban/pick order; final role assignments joined separately from player rows. Research replay is distinct from simulated2025rules.",
+  "examples": [
+    {
+      "id": "lck-2022-spring-final-g1",
+      "title": "2022 LCK 스프링 결승 · GEN vs T1 · 1세트",
+      "year": 2022,
+      "league": "LCK",
+      "split": "Spring",
+      "date": "2022-04-02",
+      "dateRecorded": "2022-04-02 07:12:38",
+      "game": 1,
+      "patch": "12.5.1",
+      "sourcePatch": "12.05",
+      "historicalRules": {
+        "fearless": false,
+        "usedBeforeSet": [],
+        "note": "2022 실제 기록은 일반 드래프트다. 이 시리즈의 이전 픽을 금지하면 역사 재생과 달라진다."
+      },
+      "seriesScoreBefore": {
+        "blue": 0,
+        "red": 0
+      },
+      "blue": {
+        "id": "GEN",
+        "name": "Gen.G",
+        "bans": [
+          "LeeSin",
+          "Jayce",
+          "Ahri",
+          "Viego",
+          "Tryndamere"
+        ],
+        "pickOrder": [
+          "Karma",
+          "Ezreal",
+          "Volibear",
+          "Ornn",
+          "Viktor"
+        ],
+        "lineup": [
+          {
+            "champion": "Karma",
+            "nameKo": "카르마",
+            "role": "SUP",
+            "player": "Lehends",
+            "playerId": "lehends",
+            "exportPlayerId": "oe:player:e4e24b8656e4e6a74b939af730b0148"
+          },
+          {
+            "champion": "Ezreal",
+            "nameKo": "이즈리얼",
+            "role": "BOT",
+            "player": "Ruler",
+            "playerId": "ruler",
+            "exportPlayerId": "oe:player:eada4723af6f51cf2391d85b5fde49b"
+          },
+          {
+            "champion": "Volibear",
+            "nameKo": "볼리베어",
+            "role": "JGL",
+            "player": "Peanut",
+            "playerId": "peanut",
+            "exportPlayerId": "oe:player:dda4a873265dfd06df50a0d8a294908"
+          },
+          {
+            "champion": "Ornn",
+            "nameKo": "오른",
+            "role": "TOP",
+            "player": "Doran",
+            "playerId": "doran",
+            "exportPlayerId": "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8"
+          },
+          {
+            "champion": "Viktor",
+            "nameKo": "빅토르",
+            "role": "MID",
+            "player": "Chovy",
+            "playerId": "chovy",
+            "exportPlayerId": "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+          }
+        ]
+      },
+      "red": {
+        "id": "T1",
+        "name": "T1",
+        "bans": [
+          "Zeri",
+          "TwistedFate",
+          "Hecarim",
+          "Corki",
+          "Galio"
+        ],
+        "pickOrder": [
+          "Caitlyn",
+          "Ryze",
+          "Lux",
+          "Nocturne",
+          "Camille"
+        ],
+        "lineup": [
+          {
+            "champion": "Caitlyn",
+            "nameKo": "케이틀린",
+            "role": "BOT",
+            "player": "Gumayusi",
+            "playerId": "gumayusi",
+            "exportPlayerId": "oe:player:c7319736816efe935787b4381c6f321"
+          },
+          {
+            "champion": "Ryze",
+            "nameKo": "라이즈",
+            "role": "MID",
+            "player": "Faker",
+            "playerId": "faker",
+            "exportPlayerId": "oe:player:e1edfc5cea461399a63cb813cf795cc"
+          },
+          {
+            "champion": "Lux",
+            "nameKo": "럭스",
+            "role": "SUP",
+            "player": "Keria",
+            "playerId": "keria",
+            "exportPlayerId": "oe:player:db79ce6ad35451c938fbe2995dabd37"
+          },
+          {
+            "champion": "Nocturne",
+            "nameKo": "녹턴",
+            "role": "JGL",
+            "player": "Oner",
+            "playerId": "oner",
+            "exportPlayerId": "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+          },
+          {
+            "champion": "Camille",
+            "nameKo": "카밀",
+            "role": "TOP",
+            "player": "Zeus",
+            "playerId": "zeus",
+            "exportPlayerId": "oe:player:98dd15c330fb5abb4508347265a7f76"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "step": 0,
+          "side": "blue",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "LeeSin",
+          "name": "리 신",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 1,
+          "slotLabel": null
+        },
+        {
+          "step": 1,
+          "side": "red",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Zeri",
+          "name": "제리",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 1,
+          "slotLabel": null
+        },
+        {
+          "step": 2,
+          "side": "blue",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Jayce",
+          "name": "제이스",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 2,
+          "slotLabel": null
+        },
+        {
+          "step": 3,
+          "side": "red",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "TwistedFate",
+          "name": "트위스티드 페이트",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 2,
+          "slotLabel": null
+        },
+        {
+          "step": 4,
+          "side": "blue",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Ahri",
+          "name": "아리",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 3,
+          "slotLabel": null
+        },
+        {
+          "step": 5,
+          "side": "red",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Hecarim",
+          "name": "헤카림",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 3,
+          "slotLabel": null
+        },
+        {
+          "step": 6,
+          "side": "blue",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Karma",
+          "name": "카르마",
+          "role": "SUP",
+          "player": "Lehends",
+          "playerId": "lehends",
+          "orderInSide": 1,
+          "slotLabel": "B1"
+        },
+        {
+          "step": 7,
+          "side": "red",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Caitlyn",
+          "name": "케이틀린",
+          "role": "BOT",
+          "player": "Gumayusi",
+          "playerId": "gumayusi",
+          "orderInSide": 1,
+          "slotLabel": "R1"
+        },
+        {
+          "step": 8,
+          "side": "red",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Ryze",
+          "name": "라이즈",
+          "role": "MID",
+          "player": "Faker",
+          "playerId": "faker",
+          "orderInSide": 2,
+          "slotLabel": "R2"
+        },
+        {
+          "step": 9,
+          "side": "blue",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Ezreal",
+          "name": "이즈리얼",
+          "role": "BOT",
+          "player": "Ruler",
+          "playerId": "ruler",
+          "orderInSide": 2,
+          "slotLabel": "B2"
+        },
+        {
+          "step": 10,
+          "side": "blue",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Volibear",
+          "name": "볼리베어",
+          "role": "JGL",
+          "player": "Peanut",
+          "playerId": "peanut",
+          "orderInSide": 3,
+          "slotLabel": "B3"
+        },
+        {
+          "step": 11,
+          "side": "red",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Lux",
+          "name": "럭스",
+          "role": "SUP",
+          "player": "Keria",
+          "playerId": "keria",
+          "orderInSide": 3,
+          "slotLabel": "R3"
+        },
+        {
+          "step": 12,
+          "side": "red",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Corki",
+          "name": "코르키",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 4,
+          "slotLabel": null
+        },
+        {
+          "step": 13,
+          "side": "blue",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Viego",
+          "name": "비에고",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 4,
+          "slotLabel": null
+        },
+        {
+          "step": 14,
+          "side": "red",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Galio",
+          "name": "갈리오",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 5,
+          "slotLabel": null
+        },
+        {
+          "step": 15,
+          "side": "blue",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Tryndamere",
+          "name": "트린다미어",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 5,
+          "slotLabel": null
+        },
+        {
+          "step": 16,
+          "side": "red",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Nocturne",
+          "name": "녹턴",
+          "role": "JGL",
+          "player": "Oner",
+          "playerId": "oner",
+          "orderInSide": 4,
+          "slotLabel": "R4"
+        },
+        {
+          "step": 17,
+          "side": "blue",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Ornn",
+          "name": "오른",
+          "role": "TOP",
+          "player": "Doran",
+          "playerId": "doran",
+          "orderInSide": 4,
+          "slotLabel": "B4"
+        },
+        {
+          "step": 18,
+          "side": "blue",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Viktor",
+          "name": "빅토르",
+          "role": "MID",
+          "player": "Chovy",
+          "playerId": "chovy",
+          "orderInSide": 5,
+          "slotLabel": "B5"
+        },
+        {
+          "step": 19,
+          "side": "red",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Camille",
+          "name": "카밀",
+          "role": "TOP",
+          "player": "Zeus",
+          "playerId": "zeus",
+          "orderInSide": 5,
+          "slotLabel": "R5"
+        }
+      ],
+      "result": {
+        "winnerSide": "red",
+        "winner": "T1",
+        "durationSeconds": 1809,
+        "kills": {
+          "blue": 8,
+          "red": 15
+        }
+      },
+      "sources": {
+        "owner": "Oracle’s Elixir",
+        "mirrorUrl": "https://raw.githubusercontent.com/stvngo/LoL-Statistical-Analysis/main/2022_LoL_esports_match_data_from_OraclesElixir.csv",
+        "datasetSha256": "5ddfae0d4bf7271852eab38118042c690cdfe247124f040fa30d8d31c31b251b",
+        "gameId": "ESPORTSTMNT02_2674644",
+        "pickOrderEvidence": "Team rows pick1..pick5; NOT player row order",
+        "assignmentEvidence": "Player rows champion + position + playername; final assignment, not pick-time role certainty",
+        "videoUrl": null,
+        "championPoolUrl": "https://ddragon.leagueoflegends.com/cdn/12.5.1/data/en_US/champion.json"
+      },
+      "validation": {
+        "actions": 20,
+        "uniqueChampions": 20,
+        "picks": 10,
+        "bans": 10,
+        "completeFinalRoles": true,
+        "availableInOfficialPatch": true
+      }
+    },
+    {
+      "id": "lck-2022-summer-final-g1",
+      "title": "2022 LCK 서머 결승 · T1 vs GEN · 1세트",
+      "year": 2022,
+      "league": "LCK",
+      "split": "Summer",
+      "date": "2022-08-28",
+      "dateRecorded": "2022-08-28 02:32:35",
+      "game": 1,
+      "patch": "12.14.1",
+      "sourcePatch": "12.14",
+      "historicalRules": {
+        "fearless": false,
+        "usedBeforeSet": [],
+        "note": "2022 실제 기록은 일반 드래프트다. 이 시리즈의 이전 픽을 금지하면 역사 재생과 달라진다."
+      },
+      "seriesScoreBefore": {
+        "blue": 0,
+        "red": 0
+      },
+      "blue": {
+        "id": "T1",
+        "name": "T1",
+        "bans": [
+          "Poppy",
+          "Lucian",
+          "Yuumi",
+          "Morgana",
+          "Renekton"
+        ],
+        "pickOrder": [
+          "Sivir",
+          "Ahri",
+          "MonkeyKing",
+          "Ornn",
+          "Amumu"
+        ],
+        "lineup": [
+          {
+            "champion": "Sivir",
+            "nameKo": "시비르",
+            "role": "BOT",
+            "player": "Gumayusi",
+            "playerId": "gumayusi",
+            "exportPlayerId": "oe:player:c7319736816efe935787b4381c6f321"
+          },
+          {
+            "champion": "Ahri",
+            "nameKo": "아리",
+            "role": "MID",
+            "player": "Faker",
+            "playerId": "faker",
+            "exportPlayerId": "oe:player:e1edfc5cea461399a63cb813cf795cc"
+          },
+          {
+            "champion": "MonkeyKing",
+            "nameKo": "오공",
+            "role": "JGL",
+            "player": "Oner",
+            "playerId": "oner",
+            "exportPlayerId": "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+          },
+          {
+            "champion": "Ornn",
+            "nameKo": "오른",
+            "role": "TOP",
+            "player": "Zeus",
+            "playerId": "zeus",
+            "exportPlayerId": "oe:player:98dd15c330fb5abb4508347265a7f76"
+          },
+          {
+            "champion": "Amumu",
+            "nameKo": "아무무",
+            "role": "SUP",
+            "player": "Keria",
+            "playerId": "keria",
+            "exportPlayerId": "oe:player:db79ce6ad35451c938fbe2995dabd37"
+          }
+        ]
+      },
+      "red": {
+        "id": "GEN",
+        "name": "Gen.G",
+        "bans": [
+          "Nautilus",
+          "Kalista",
+          "Draven",
+          "Camille",
+          "Karma"
+        ],
+        "pickOrder": [
+          "Zeri",
+          "Azir",
+          "Lulu",
+          "Sejuani",
+          "Aatrox"
+        ],
+        "lineup": [
+          {
+            "champion": "Zeri",
+            "nameKo": "제리",
+            "role": "BOT",
+            "player": "Ruler",
+            "playerId": "ruler",
+            "exportPlayerId": "oe:player:eada4723af6f51cf2391d85b5fde49b"
+          },
+          {
+            "champion": "Azir",
+            "nameKo": "아지르",
+            "role": "MID",
+            "player": "Chovy",
+            "playerId": "chovy",
+            "exportPlayerId": "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+          },
+          {
+            "champion": "Lulu",
+            "nameKo": "룰루",
+            "role": "SUP",
+            "player": "Lehends",
+            "playerId": "lehends",
+            "exportPlayerId": "oe:player:e4e24b8656e4e6a74b939af730b0148"
+          },
+          {
+            "champion": "Sejuani",
+            "nameKo": "세주아니",
+            "role": "JGL",
+            "player": "Peanut",
+            "playerId": "peanut",
+            "exportPlayerId": "oe:player:dda4a873265dfd06df50a0d8a294908"
+          },
+          {
+            "champion": "Aatrox",
+            "nameKo": "아트록스",
+            "role": "TOP",
+            "player": "Doran",
+            "playerId": "doran",
+            "exportPlayerId": "oe:player:a1f3b2bb3f36e5113237f92d76dc4c8"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "step": 0,
+          "side": "blue",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Poppy",
+          "name": "뽀삐",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 1,
+          "slotLabel": null
+        },
+        {
+          "step": 1,
+          "side": "red",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Nautilus",
+          "name": "노틸러스",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 1,
+          "slotLabel": null
+        },
+        {
+          "step": 2,
+          "side": "blue",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Lucian",
+          "name": "루시안",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 2,
+          "slotLabel": null
+        },
+        {
+          "step": 3,
+          "side": "red",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Kalista",
+          "name": "칼리스타",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 2,
+          "slotLabel": null
+        },
+        {
+          "step": 4,
+          "side": "blue",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Yuumi",
+          "name": "유미",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 3,
+          "slotLabel": null
+        },
+        {
+          "step": 5,
+          "side": "red",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Draven",
+          "name": "드레이븐",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 3,
+          "slotLabel": null
+        },
+        {
+          "step": 6,
+          "side": "blue",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Sivir",
+          "name": "시비르",
+          "role": "BOT",
+          "player": "Gumayusi",
+          "playerId": "gumayusi",
+          "orderInSide": 1,
+          "slotLabel": "B1"
+        },
+        {
+          "step": 7,
+          "side": "red",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Zeri",
+          "name": "제리",
+          "role": "BOT",
+          "player": "Ruler",
+          "playerId": "ruler",
+          "orderInSide": 1,
+          "slotLabel": "R1"
+        },
+        {
+          "step": 8,
+          "side": "red",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Azir",
+          "name": "아지르",
+          "role": "MID",
+          "player": "Chovy",
+          "playerId": "chovy",
+          "orderInSide": 2,
+          "slotLabel": "R2"
+        },
+        {
+          "step": 9,
+          "side": "blue",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Ahri",
+          "name": "아리",
+          "role": "MID",
+          "player": "Faker",
+          "playerId": "faker",
+          "orderInSide": 2,
+          "slotLabel": "B2"
+        },
+        {
+          "step": 10,
+          "side": "blue",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "MonkeyKing",
+          "name": "오공",
+          "role": "JGL",
+          "player": "Oner",
+          "playerId": "oner",
+          "orderInSide": 3,
+          "slotLabel": "B3"
+        },
+        {
+          "step": 11,
+          "side": "red",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Lulu",
+          "name": "룰루",
+          "role": "SUP",
+          "player": "Lehends",
+          "playerId": "lehends",
+          "orderInSide": 3,
+          "slotLabel": "R3"
+        },
+        {
+          "step": 12,
+          "side": "red",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Camille",
+          "name": "카밀",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 4,
+          "slotLabel": null
+        },
+        {
+          "step": 13,
+          "side": "blue",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Morgana",
+          "name": "모르가나",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 4,
+          "slotLabel": null
+        },
+        {
+          "step": 14,
+          "side": "red",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Karma",
+          "name": "카르마",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 5,
+          "slotLabel": null
+        },
+        {
+          "step": 15,
+          "side": "blue",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Renekton",
+          "name": "레넥톤",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 5,
+          "slotLabel": null
+        },
+        {
+          "step": 16,
+          "side": "red",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Sejuani",
+          "name": "세주아니",
+          "role": "JGL",
+          "player": "Peanut",
+          "playerId": "peanut",
+          "orderInSide": 4,
+          "slotLabel": "R4"
+        },
+        {
+          "step": 17,
+          "side": "blue",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Ornn",
+          "name": "오른",
+          "role": "TOP",
+          "player": "Zeus",
+          "playerId": "zeus",
+          "orderInSide": 4,
+          "slotLabel": "B4"
+        },
+        {
+          "step": 18,
+          "side": "blue",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Amumu",
+          "name": "아무무",
+          "role": "SUP",
+          "player": "Keria",
+          "playerId": "keria",
+          "orderInSide": 5,
+          "slotLabel": "B5"
+        },
+        {
+          "step": 19,
+          "side": "red",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Aatrox",
+          "name": "아트록스",
+          "role": "TOP",
+          "player": "Doran",
+          "playerId": "doran",
+          "orderInSide": 5,
+          "slotLabel": "R5"
+        }
+      ],
+      "result": {
+        "winnerSide": "red",
+        "winner": "GEN",
+        "durationSeconds": 2294,
+        "kills": {
+          "blue": 8,
+          "red": 19
+        }
+      },
+      "sources": {
+        "owner": "Oracle’s Elixir",
+        "mirrorUrl": "https://raw.githubusercontent.com/stvngo/LoL-Statistical-Analysis/main/2022_LoL_esports_match_data_from_OraclesElixir.csv",
+        "datasetSha256": "5ddfae0d4bf7271852eab38118042c690cdfe247124f040fa30d8d31c31b251b",
+        "gameId": "ESPORTSTMNT04_2451974",
+        "pickOrderEvidence": "Team rows pick1..pick5; NOT player row order",
+        "assignmentEvidence": "Player rows champion + position + playername; final assignment, not pick-time role certainty",
+        "videoUrl": null,
+        "championPoolUrl": "https://ddragon.leagueoflegends.com/cdn/12.14.1/data/en_US/champion.json"
+      },
+      "validation": {
+        "actions": 20,
+        "uniqueChampions": 20,
+        "picks": 10,
+        "bans": 10,
+        "completeFinalRoles": true,
+        "availableInOfficialPatch": true
+      }
+    },
+    {
+      "id": "worlds-2022-final-g5",
+      "title": "2022 Worlds 결승 · T1 vs DRX · 5세트",
+      "year": 2022,
+      "league": "WLDs",
+      "split": "",
+      "date": "2022-11-06",
+      "dateRecorded": "2022-11-06 04:21:13",
+      "game": 5,
+      "patch": "12.18.1",
+      "sourcePatch": "12.18",
+      "historicalRules": {
+        "fearless": false,
+        "usedBeforeSet": [],
+        "note": "2022 실제 기록은 일반 드래프트다. 이 시리즈의 이전 픽을 금지하면 역사 재생과 달라진다."
+      },
+      "seriesScoreBefore": {
+        "blue": 2,
+        "red": 2
+      },
+      "blue": {
+        "id": "T1",
+        "name": "T1",
+        "bans": [
+          "Akali",
+          "Heimerdinger",
+          "Renata",
+          "Sejuani",
+          "Kindred"
+        ],
+        "pickOrder": [
+          "Karma",
+          "Viktor",
+          "Varus",
+          "Viego",
+          "Gwen"
+        ],
+        "lineup": [
+          {
+            "champion": "Karma",
+            "nameKo": "카르마",
+            "role": "SUP",
+            "player": "Keria",
+            "playerId": "keria",
+            "exportPlayerId": "oe:player:db79ce6ad35451c938fbe2995dabd37"
+          },
+          {
+            "champion": "Viktor",
+            "nameKo": "빅토르",
+            "role": "MID",
+            "player": "Faker",
+            "playerId": "faker",
+            "exportPlayerId": "oe:player:e1edfc5cea461399a63cb813cf795cc"
+          },
+          {
+            "champion": "Varus",
+            "nameKo": "바루스",
+            "role": "BOT",
+            "player": "Gumayusi",
+            "playerId": "gumayusi",
+            "exportPlayerId": "oe:player:c7319736816efe935787b4381c6f321"
+          },
+          {
+            "champion": "Viego",
+            "nameKo": "비에고",
+            "role": "JGL",
+            "player": "Oner",
+            "playerId": "oner",
+            "exportPlayerId": "oe:player:f8b68f268106124fc4bc1c946adc9b0"
+          },
+          {
+            "champion": "Gwen",
+            "nameKo": "그웬",
+            "role": "TOP",
+            "player": "Zeus",
+            "playerId": "zeus",
+            "exportPlayerId": "oe:player:98dd15c330fb5abb4508347265a7f76"
+          }
+        ]
+      },
+      "red": {
+        "id": "DRX",
+        "name": "DRX",
+        "bans": [
+          "Yuumi",
+          "Lucian",
+          "Lux",
+          "Yone",
+          "LeeSin"
+        ],
+        "pickOrder": [
+          "Azir",
+          "Caitlyn",
+          "Aatrox",
+          "Bard",
+          "Hecarim"
+        ],
+        "lineup": [
+          {
+            "champion": "Azir",
+            "nameKo": "아지르",
+            "role": "MID",
+            "player": "Zeka",
+            "playerId": "zeka",
+            "exportPlayerId": "oe:player:f9cd2ef9afea5cda0eb3263a025cec1"
+          },
+          {
+            "champion": "Caitlyn",
+            "nameKo": "케이틀린",
+            "role": "BOT",
+            "player": "Deft",
+            "playerId": "deft",
+            "exportPlayerId": "oe:player:c588a2d07b69ca4ba61c96aebd3f793"
+          },
+          {
+            "champion": "Aatrox",
+            "nameKo": "아트록스",
+            "role": "TOP",
+            "player": "Kingen",
+            "playerId": "kingen",
+            "exportPlayerId": "oe:player:618a87d272773f68239d8ce5555f39d"
+          },
+          {
+            "champion": "Bard",
+            "nameKo": "바드",
+            "role": "SUP",
+            "player": "BeryL",
+            "playerId": "beryl",
+            "exportPlayerId": "oe:player:dee54127bb56d2e2540ba71cc416f1c"
+          },
+          {
+            "champion": "Hecarim",
+            "nameKo": "헤카림",
+            "role": "JGL",
+            "player": "Pyosik",
+            "playerId": "pyosik",
+            "exportPlayerId": "oe:player:a2357eb17578485c2ba736db36cbc42"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "step": 0,
+          "side": "blue",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Akali",
+          "name": "아칼리",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 1,
+          "slotLabel": null
+        },
+        {
+          "step": 1,
+          "side": "red",
+          "kind": "ban",
+          "team": "DRX",
+          "champion": "Yuumi",
+          "name": "유미",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 1,
+          "slotLabel": null
+        },
+        {
+          "step": 2,
+          "side": "blue",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Heimerdinger",
+          "name": "하이머딩거",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 2,
+          "slotLabel": null
+        },
+        {
+          "step": 3,
+          "side": "red",
+          "kind": "ban",
+          "team": "DRX",
+          "champion": "Lucian",
+          "name": "루시안",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 2,
+          "slotLabel": null
+        },
+        {
+          "step": 4,
+          "side": "blue",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Renata",
+          "name": "레나타 글라스크",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 3,
+          "slotLabel": null
+        },
+        {
+          "step": 5,
+          "side": "red",
+          "kind": "ban",
+          "team": "DRX",
+          "champion": "Lux",
+          "name": "럭스",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 3,
+          "slotLabel": null
+        },
+        {
+          "step": 6,
+          "side": "blue",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Karma",
+          "name": "카르마",
+          "role": "SUP",
+          "player": "Keria",
+          "playerId": "keria",
+          "orderInSide": 1,
+          "slotLabel": "B1"
+        },
+        {
+          "step": 7,
+          "side": "red",
+          "kind": "pick",
+          "team": "DRX",
+          "champion": "Azir",
+          "name": "아지르",
+          "role": "MID",
+          "player": "Zeka",
+          "playerId": "zeka",
+          "orderInSide": 1,
+          "slotLabel": "R1"
+        },
+        {
+          "step": 8,
+          "side": "red",
+          "kind": "pick",
+          "team": "DRX",
+          "champion": "Caitlyn",
+          "name": "케이틀린",
+          "role": "BOT",
+          "player": "Deft",
+          "playerId": "deft",
+          "orderInSide": 2,
+          "slotLabel": "R2"
+        },
+        {
+          "step": 9,
+          "side": "blue",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Viktor",
+          "name": "빅토르",
+          "role": "MID",
+          "player": "Faker",
+          "playerId": "faker",
+          "orderInSide": 2,
+          "slotLabel": "B2"
+        },
+        {
+          "step": 10,
+          "side": "blue",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Varus",
+          "name": "바루스",
+          "role": "BOT",
+          "player": "Gumayusi",
+          "playerId": "gumayusi",
+          "orderInSide": 3,
+          "slotLabel": "B3"
+        },
+        {
+          "step": 11,
+          "side": "red",
+          "kind": "pick",
+          "team": "DRX",
+          "champion": "Aatrox",
+          "name": "아트록스",
+          "role": "TOP",
+          "player": "Kingen",
+          "playerId": "kingen",
+          "orderInSide": 3,
+          "slotLabel": "R3"
+        },
+        {
+          "step": 12,
+          "side": "red",
+          "kind": "ban",
+          "team": "DRX",
+          "champion": "Yone",
+          "name": "요네",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 4,
+          "slotLabel": null
+        },
+        {
+          "step": 13,
+          "side": "blue",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Sejuani",
+          "name": "세주아니",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 4,
+          "slotLabel": null
+        },
+        {
+          "step": 14,
+          "side": "red",
+          "kind": "ban",
+          "team": "DRX",
+          "champion": "LeeSin",
+          "name": "리 신",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 5,
+          "slotLabel": null
+        },
+        {
+          "step": 15,
+          "side": "blue",
+          "kind": "ban",
+          "team": "T1",
+          "champion": "Kindred",
+          "name": "킨드레드",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 5,
+          "slotLabel": null
+        },
+        {
+          "step": 16,
+          "side": "red",
+          "kind": "pick",
+          "team": "DRX",
+          "champion": "Bard",
+          "name": "바드",
+          "role": "SUP",
+          "player": "BeryL",
+          "playerId": "beryl",
+          "orderInSide": 4,
+          "slotLabel": "R4"
+        },
+        {
+          "step": 17,
+          "side": "blue",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Viego",
+          "name": "비에고",
+          "role": "JGL",
+          "player": "Oner",
+          "playerId": "oner",
+          "orderInSide": 4,
+          "slotLabel": "B4"
+        },
+        {
+          "step": 18,
+          "side": "blue",
+          "kind": "pick",
+          "team": "T1",
+          "champion": "Gwen",
+          "name": "그웬",
+          "role": "TOP",
+          "player": "Zeus",
+          "playerId": "zeus",
+          "orderInSide": 5,
+          "slotLabel": "B5"
+        },
+        {
+          "step": 19,
+          "side": "red",
+          "kind": "pick",
+          "team": "DRX",
+          "champion": "Hecarim",
+          "name": "헤카림",
+          "role": "JGL",
+          "player": "Pyosik",
+          "playerId": "pyosik",
+          "orderInSide": 5,
+          "slotLabel": "R5"
+        }
+      ],
+      "result": {
+        "winnerSide": "red",
+        "winner": "DRX",
+        "durationSeconds": 2529,
+        "kills": {
+          "blue": 10,
+          "red": 19
+        }
+      },
+      "sources": {
+        "owner": "Oracle’s Elixir",
+        "mirrorUrl": "https://raw.githubusercontent.com/stvngo/LoL-Statistical-Analysis/main/2022_LoL_esports_match_data_from_OraclesElixir.csv",
+        "datasetSha256": "5ddfae0d4bf7271852eab38118042c690cdfe247124f040fa30d8d31c31b251b",
+        "gameId": "ESPORTSTMNT02_3080905",
+        "pickOrderEvidence": "Team rows pick1..pick5; NOT player row order",
+        "assignmentEvidence": "Player rows champion + position + playername; final assignment, not pick-time role certainty",
+        "videoUrl": "https://www.youtube.com/watch?v=TzsCRtzIhDE",
+        "championPoolUrl": "https://ddragon.leagueoflegends.com/cdn/12.18.1/data/en_US/champion.json"
+      },
+      "validation": {
+        "actions": 20,
+        "uniqueChampions": 20,
+        "picks": 10,
+        "bans": 10,
+        "completeFinalRoles": true,
+        "availableInOfficialPatch": true
+      }
+    },
+    {
+      "id": "lck-2025-cup-final-g1",
+      "title": "2025 LCK CUP 결승 · HLE vs GEN · 1세트",
+      "year": 2025,
+      "league": "LCK",
+      "split": "Cup",
+      "date": "2025-02-23",
+      "dateRecorded": "2025-02-23 06:21:15",
+      "game": 1,
+      "patch": "15.3.1",
+      "sourcePatch": "15.03",
+      "historicalRules": {
+        "fearless": true,
+        "usedBeforeSet": [],
+        "note": "피어리스 1세트이므로 이전 세트 소진 목록이 비어 있다."
+      },
+      "seriesScoreBefore": {
+        "blue": 0,
+        "red": 0
+      },
+      "blue": {
+        "id": "HLE",
+        "name": "Hanwha Life Esports",
+        "bans": [
+          "Rumble",
+          "Poppy",
+          "KSante",
+          "Jax",
+          "Renekton"
+        ],
+        "pickOrder": [
+          "Yone",
+          "Sejuani",
+          "Kaisa",
+          "Camille",
+          "Alistar"
+        ],
+        "lineup": [
+          {
+            "champion": "Yone",
+            "nameKo": "요네",
+            "role": "MID",
+            "player": "Zeka",
+            "playerId": "zeka",
+            "exportPlayerId": "oe:player:f9cd2ef9afea5cda0eb3263a025cec1"
+          },
+          {
+            "champion": "Sejuani",
+            "nameKo": "세주아니",
+            "role": "JGL",
+            "player": "Peanut",
+            "playerId": "peanut",
+            "exportPlayerId": "oe:player:dda4a873265dfd06df50a0d8a294908"
+          },
+          {
+            "champion": "Kaisa",
+            "nameKo": "카이사",
+            "role": "BOT",
+            "player": "Viper",
+            "playerId": "viper",
+            "exportPlayerId": "oe:player:9573154ad8bc9459b4c0d940315054f"
+          },
+          {
+            "champion": "Camille",
+            "nameKo": "카밀",
+            "role": "TOP",
+            "player": "Zeus",
+            "playerId": "zeus",
+            "exportPlayerId": "oe:player:98dd15c330fb5abb4508347265a7f76"
+          },
+          {
+            "champion": "Alistar",
+            "nameKo": "알리스타",
+            "role": "SUP",
+            "player": "Delight",
+            "playerId": "delight",
+            "exportPlayerId": "oe:player:051ca2e31ba25123961b3df95fdef4c"
+          }
+        ]
+      },
+      "red": {
+        "id": "GEN",
+        "name": "Gen.G",
+        "bans": [
+          "Skarner",
+          "Kalista",
+          "Jayce",
+          "Rell",
+          "Rakan"
+        ],
+        "pickOrder": [
+          "Ezreal",
+          "Nidalee",
+          "Leona",
+          "Ambessa",
+          "Mordekaiser"
+        ],
+        "lineup": [
+          {
+            "champion": "Ezreal",
+            "nameKo": "이즈리얼",
+            "role": "BOT",
+            "player": "Ruler",
+            "playerId": "ruler",
+            "exportPlayerId": "oe:player:eada4723af6f51cf2391d85b5fde49b"
+          },
+          {
+            "champion": "Nidalee",
+            "nameKo": "니달리",
+            "role": "JGL",
+            "player": "Canyon",
+            "playerId": "canyon",
+            "exportPlayerId": "oe:player:92544d7a994bd6841cccd9f6e42e3de"
+          },
+          {
+            "champion": "Leona",
+            "nameKo": "레오나",
+            "role": "SUP",
+            "player": "Duro",
+            "playerId": "duro",
+            "exportPlayerId": "oe:player:605821ebcf6a2e53f03ec6e8e463d1b"
+          },
+          {
+            "champion": "Ambessa",
+            "nameKo": "암베사",
+            "role": "MID",
+            "player": "Chovy",
+            "playerId": "chovy",
+            "exportPlayerId": "oe:player:fb6e61b8acb05df17b7e5ad4ae7c800"
+          },
+          {
+            "champion": "Mordekaiser",
+            "nameKo": "모데카이저",
+            "role": "TOP",
+            "player": "Kiin",
+            "playerId": "kiin",
+            "exportPlayerId": "oe:player:03daae1844b9ad257324c3eedf41e28"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "step": 0,
+          "side": "blue",
+          "kind": "ban",
+          "team": "HLE",
+          "champion": "Rumble",
+          "name": "럼블",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 1,
+          "slotLabel": null
+        },
+        {
+          "step": 1,
+          "side": "red",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Skarner",
+          "name": "스카너",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 1,
+          "slotLabel": null
+        },
+        {
+          "step": 2,
+          "side": "blue",
+          "kind": "ban",
+          "team": "HLE",
+          "champion": "Poppy",
+          "name": "뽀삐",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 2,
+          "slotLabel": null
+        },
+        {
+          "step": 3,
+          "side": "red",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Kalista",
+          "name": "칼리스타",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 2,
+          "slotLabel": null
+        },
+        {
+          "step": 4,
+          "side": "blue",
+          "kind": "ban",
+          "team": "HLE",
+          "champion": "KSante",
+          "name": "크산테",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 3,
+          "slotLabel": null
+        },
+        {
+          "step": 5,
+          "side": "red",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Jayce",
+          "name": "제이스",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 3,
+          "slotLabel": null
+        },
+        {
+          "step": 6,
+          "side": "blue",
+          "kind": "pick",
+          "team": "HLE",
+          "champion": "Yone",
+          "name": "요네",
+          "role": "MID",
+          "player": "Zeka",
+          "playerId": "zeka",
+          "orderInSide": 1,
+          "slotLabel": "B1"
+        },
+        {
+          "step": 7,
+          "side": "red",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Ezreal",
+          "name": "이즈리얼",
+          "role": "BOT",
+          "player": "Ruler",
+          "playerId": "ruler",
+          "orderInSide": 1,
+          "slotLabel": "R1"
+        },
+        {
+          "step": 8,
+          "side": "red",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Nidalee",
+          "name": "니달리",
+          "role": "JGL",
+          "player": "Canyon",
+          "playerId": "canyon",
+          "orderInSide": 2,
+          "slotLabel": "R2"
+        },
+        {
+          "step": 9,
+          "side": "blue",
+          "kind": "pick",
+          "team": "HLE",
+          "champion": "Sejuani",
+          "name": "세주아니",
+          "role": "JGL",
+          "player": "Peanut",
+          "playerId": "peanut",
+          "orderInSide": 2,
+          "slotLabel": "B2"
+        },
+        {
+          "step": 10,
+          "side": "blue",
+          "kind": "pick",
+          "team": "HLE",
+          "champion": "Kaisa",
+          "name": "카이사",
+          "role": "BOT",
+          "player": "Viper",
+          "playerId": "viper",
+          "orderInSide": 3,
+          "slotLabel": "B3"
+        },
+        {
+          "step": 11,
+          "side": "red",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Leona",
+          "name": "레오나",
+          "role": "SUP",
+          "player": "Duro",
+          "playerId": "duro",
+          "orderInSide": 3,
+          "slotLabel": "R3"
+        },
+        {
+          "step": 12,
+          "side": "red",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Rell",
+          "name": "렐",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 4,
+          "slotLabel": null
+        },
+        {
+          "step": 13,
+          "side": "blue",
+          "kind": "ban",
+          "team": "HLE",
+          "champion": "Jax",
+          "name": "잭스",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 4,
+          "slotLabel": null
+        },
+        {
+          "step": 14,
+          "side": "red",
+          "kind": "ban",
+          "team": "GEN",
+          "champion": "Rakan",
+          "name": "라칸",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 5,
+          "slotLabel": null
+        },
+        {
+          "step": 15,
+          "side": "blue",
+          "kind": "ban",
+          "team": "HLE",
+          "champion": "Renekton",
+          "name": "레넥톤",
+          "role": null,
+          "player": null,
+          "playerId": null,
+          "orderInSide": 5,
+          "slotLabel": null
+        },
+        {
+          "step": 16,
+          "side": "red",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Ambessa",
+          "name": "암베사",
+          "role": "MID",
+          "player": "Chovy",
+          "playerId": "chovy",
+          "orderInSide": 4,
+          "slotLabel": "R4"
+        },
+        {
+          "step": 17,
+          "side": "blue",
+          "kind": "pick",
+          "team": "HLE",
+          "champion": "Camille",
+          "name": "카밀",
+          "role": "TOP",
+          "player": "Zeus",
+          "playerId": "zeus",
+          "orderInSide": 4,
+          "slotLabel": "B4"
+        },
+        {
+          "step": 18,
+          "side": "blue",
+          "kind": "pick",
+          "team": "HLE",
+          "champion": "Alistar",
+          "name": "알리스타",
+          "role": "SUP",
+          "player": "Delight",
+          "playerId": "delight",
+          "orderInSide": 5,
+          "slotLabel": "B5"
+        },
+        {
+          "step": 19,
+          "side": "red",
+          "kind": "pick",
+          "team": "GEN",
+          "champion": "Mordekaiser",
+          "name": "모데카이저",
+          "role": "TOP",
+          "player": "Kiin",
+          "playerId": "kiin",
+          "orderInSide": 5,
+          "slotLabel": "R5"
+        }
+      ],
+      "result": {
+        "winnerSide": "blue",
+        "winner": "HLE",
+        "durationSeconds": 1908,
+        "kills": {
+          "blue": 24,
+          "red": 11
+        }
+      },
+      "sources": {
+        "owner": "Oracle’s Elixir",
+        "mirrorUrl": "https://raw.githubusercontent.com/cbplexiglass/LoL-Esports-Regional-Analyses/main/2025_LoL_esports_match_data_from_OraclesElixir.csv",
+        "datasetSha256": "1adfa81d8ea54cd62b332d18f8a4089cb64331da448b11f0ff7084fac55ed406",
+        "gameId": "LOLTMNT02_223033",
+        "pickOrderEvidence": "Team rows pick1..pick5; NOT player row order",
+        "assignmentEvidence": "Player rows champion + position + playername; final assignment, not pick-time role certainty",
+        "videoUrl": null,
+        "championPoolUrl": "https://ddragon.leagueoflegends.com/cdn/15.3.1/data/en_US/champion.json"
+      },
+      "validation": {
+        "actions": 20,
+        "uniqueChampions": 20,
+        "picks": 10,
+        "bans": 10,
+        "completeFinalRoles": true,
+        "availableInOfficialPatch": true
+      }
+    }
+  ]
+}

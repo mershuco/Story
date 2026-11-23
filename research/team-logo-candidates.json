@@ -1,0 +1,82 @@
+{
+  "T1": {
+    "path": "assets/teams/T1.png",
+    "sourceName": "T1",
+    "sourceVariable": "Xg",
+    "extraction": "JSON.parse literal",
+    "sha256": "f8c8ec8a6a7c351d768425f411170a940a64aaf33f534101b94bbcbb50e4a009",
+    "bytes": 16197
+  },
+  "GEN": {
+    "path": "assets/teams/GEN.webp",
+    "sourceName": "Gen.Glogo_square.png",
+    "sourceVariable": "bd",
+    "extraction": "inline object literal",
+    "sha256": "7976846a26426cecd4042cc6f509ebcb25d0bc4f852889c4b43a882dc55313ed",
+    "bytes": 1742
+  },
+  "DK": {
+    "path": "assets/teams/DK.webp",
+    "sourceName": "DWG_KIAlogo_square.png",
+    "sourceVariable": "fd",
+    "extraction": "inline object literal",
+    "sha256": "7cd03bd9456b8b94da45199e8e6419f767c26c604f1b230c598588192f230a57",
+    "bytes": 3644
+  },
+  "DRX": {
+    "path": "assets/teams/DRX.png",
+    "sourceName": "DRX Academy",
+    "sourceVariable": "Kg",
+    "extraction": "inline object literal",
+    "sha256": "a499d415074eda823fbead469a1dd3e37ec480314600d686b71ab6a2597f29fa",
+    "bytes": 3116
+  },
+  "KT": {
+    "path": "assets/teams/KT.png",
+    "sourceName": "kt Rolster",
+    "sourceVariable": "xg",
+    "extraction": "JSON.parse literal",
+    "sha256": "c3eeb5d614a3d3ed0625aa0352212b7c815487805bd1b5283b776269b7243223",
+    "bytes": 40467
+  },
+  "KDF": {
+    "path": "assets/teams/KDF.webp",
+    "sourceName": "Kwangdong_Freecslogo_square.png",
+    "sourceVariable": "Bd",
+    "extraction": "inline object literal",
+    "sha256": "6b2b1d57c39db5a42af6675c680108514a3c191c912833659ad076085229e1da",
+    "bytes": 6070
+  },
+  "LSB": {
+    "path": "assets/teams/LSB.webp",
+    "sourceName": "Liiv_SANDBOXlogo_square.png",
+    "sourceVariable": "md",
+    "extraction": "JSON.parse literal",
+    "sha256": "b66112cfe7e66ceebab5ae17a1cc5646f932facb8099c7181da1e1b11e8c4e67",
+    "bytes": 12228
+  },
+  "NS": {
+    "path": "assets/teams/NS.png",
+    "sourceName": "NONGSHIM RED FORCE",
+    "sourceVariable": "jg",
+    "extraction": "JSON.parse literal",
+    "sha256": "40ce7cd0fc90bde4e646790e35ab1656fe58333e360e5c9d69a9d5e466ab1f53",
+    "bytes": 20021
+  },
+  "BRO": {
+    "path": "assets/teams/BRO.png",
+    "sourceName": "BRO Academy",
+    "sourceVariable": "Zg",
+    "extraction": "JSON.parse literal",
+    "sha256": "a6810e4e256e9d480c08a96250d42d56248e11b11a482f931e019df8682c771d",
+    "bytes": 22786
+  },
+  "HLE": {
+    "path": "assets/teams/HLE.png",
+    "sourceName": "Hanwha Life Esports",
+    "sourceVariable": "Fg",
+    "extraction": "JSON.parse literal",
+    "sha256": "6c44b9ab475660f69aae8b455cd4bb6ef199093a922fa8d5b5c98ffc2f4dd291",
+    "bytes": 61943
+  }
+}

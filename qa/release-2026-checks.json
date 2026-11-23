@@ -1,0 +1,26 @@
+{
+  "release": "2026-draft-phases-and-event-comebacks",
+  "checks": {
+    "nodeSuite": {
+      "tests": 36,
+      "passed": 36
+    },
+    "managementBrowser": "qa/browser-results.json",
+    "draftViewerMobileBrowser": "qa/presentation-results.json",
+    "fullSeasonBrowser": "qa/season-2026-results.json",
+    "draftAndComebackBrowser": "qa/comeback-browser-results.json",
+    "balanceSampling": "qa/comeback-balance-results.json"
+  },
+  "coverage": {
+    "domesticPlayers": 106,
+    "foreignPlayers": 95,
+    "champions": 173,
+    "masteryPairs": 34773,
+    "officialKitSnapshots": 23,
+    "observedMatchDataThrough": "2026-10-18"
+  },
+  "competitionFormat": 2026,
+  "legacySaveProfile": "season-2022",
+  "simulationModel": "event-v2",
+  "existingCompletedMatches": "preserved"
+}
