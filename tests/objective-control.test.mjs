@@ -14,7 +14,7 @@ test('objective bounties need a real deficit, start after 14 minutes plus warnin
 });
 test('only the trailing team gets reachable turret bonuses, paid once and shared across all five players',()=>{
  const s=trailing(),targets=bountyTowerTargets(s,'B');assert.equal(targets.length,3);assert(targets.every(t=>t.defender==='R'&&t.kind==='tower'&&t.index===0));const before=s.gold.B,expected=objectiveBountyAmount(s,'B','tower',0),gold=s.stats.filter(p=>p.team==='B').map(p=>p.gold),result=attackStructures(s,'B',{lane:'top',rng:()=>.5,forceDamage:2700});
- assert.equal(result.gold,750);assert.equal(result.bounty,expected);assert.equal(s.gold.B-before,750+expected);assert(s.stats.filter(p=>p.team==='B').every((p,i)=>p.gold>gold[i]));assert.equal(s.objectiveBounty.claimed.B,expected);assert(bountyTowerTargets(s,'B').some(t=>t.lane==='top'&&t.index===1));
+ assert.equal(result.gold,1050);assert.equal(result.bounty,expected);assert.equal(s.gold.B-before,1050+expected);assert(s.stats.filter(p=>p.team==='B').every((p,i)=>p.gold>gold[i]));assert.equal(s.objectiveBounty.claimed.B,expected);assert(bountyTowerTargets(s,'B').some(t=>t.lane==='top'&&t.index===1));
  const again=attackStructures(s,'B',{lane:'top',rng:()=>.5,forceDamage:1});assert.equal(again.bounty,0);assert.equal(again.gold,0);assert.equal(objectiveBountyAmount(s,'B','inhibitor'),0);assert.equal(objectiveBountyAmount(s,'B','nexus'),0);
 });
 test('objective bonuses scale with deficit, lesser objectives pay less, all payments are capped at 1000',()=>{
@@ -45,7 +45,7 @@ test('major objective result stays readable at x8 while ordinary scenes retain c
 });
 test('v8 replay stays frozen; an upgraded live prefix preserves RNG/history and its mixed replay exactly',()=>{
  const old=v8.simulateMatch(input,matchRandom(93));assert.equal(createHash('sha256').update(JSON.stringify(old)).digest('hex'),'dad6a1396eca5021b2379281ab80a19dbcd81b800331743a98cc622f681a7c0e');assert.deepEqual(replayMatch({...input,model:'event-v8',seed:93}),old);
- const s=v8.createMatchState({...input,model:'event-v8',seed:123},123);v8.advanceMatch(s,{controlledTeam:'B'});v8.advanceMatch(s,{controlledTeam:'B',action:'trade'});const before=JSON.stringify(s.events),rng=s.rng;upgradeMatchState(s);assert.equal(JSON.stringify(s.events),before);assert.equal(s.rng,rng);advanceMatch(s,{auto:true});assert.deepEqual(replayMatch({...input,model:'event-v9',seed:123,upgradeFrom8AtEventCount:JSON.parse(before).length,decisionOverrides:s.decisions}),simulateMatch({...input,model:'event-v9',upgradeFrom8AtEventCount:JSON.parse(before).length,decisionOverrides:s.decisions},matchRandom(123)));
+ const s=v8.createMatchState({...input,model:'event-v8',seed:123},123);v8.advanceMatch(s,{controlledTeam:'B'});v8.advanceMatch(s,{controlledTeam:'B',action:'trade'});const before=JSON.stringify(s.events),rng=s.rng;upgradeMatchState(s);assert.equal(JSON.stringify(s.events),before);assert.equal(s.rng,rng);advanceMatch(s,{auto:true});const replayInput={...input,...s.input,model:'event-v10',seed:123,decisionOverrides:s.decisions};assert.deepEqual(replayMatch(replayInput),simulateMatch(replayInput,matchRandom(123)));
 });
 
 test('minimap uses revealed capture history for camp disappearance, cooldown and soul-to-Elder transition',()=>{

@@ -1,0 +1,238 @@
+{
+  "method": "Equal-strength synthetic five-role teams, seeds 1..400 per version. RNG trajectories diverge when rules change; this is not a matched-outcome causal estimate or LCK statistic.",
+  "scenarios": [
+    {
+      "model": "event-v9",
+      "trials": 400,
+      "trades": 1184,
+      "tradeTowerTakeRate": 0.9239864864864865,
+      "averageTotalTradeIncome": 1178.429054054054,
+      "averageAdditionalResources": null,
+      "maximumAdditionalResources": null,
+      "bothTeamsAtLeastNineTowers": 1,
+      "averageMinutes": 35.0025,
+      "maxMinutes": 52,
+      "incomeReconciliationErrors": 0,
+      "examples": []
+    },
+    {
+      "model": "event-v10",
+      "trials": 400,
+      "trades": 1820,
+      "tradeTowerTakeRate": 0.13131868131868132,
+      "averageTotalTradeIncome": 235.90384615384616,
+      "averageAdditionalResources": 137.3598901098901,
+      "maximumAdditionalResources": 300,
+      "bothTeamsAtLeastNineTowers": 0,
+      "averageMinutes": 40.0625,
+      "maxMinutes": 58,
+      "incomeReconciliationErrors": 0,
+      "examples": [
+        {
+          "seed": 77,
+          "minute": 28.17,
+          "score": {
+            "B": 21,
+            "R": 5
+          },
+          "towers": {
+            "B": 2,
+            "R": 0
+          },
+          "goldLead": 8204,
+          "income": {
+            "B": {
+              "starting": 2500,
+              "passive": 16115,
+              "lane": 11576,
+              "jungle": 3501,
+              "kills": 5007,
+              "assists": 2500,
+              "firstBlood": 0,
+              "shutdown": 0,
+              "structures": 1500,
+              "firstTower": 300,
+              "objectives": 2080,
+              "objectiveBounty": 0,
+              "sideLane": 63,
+              "sideJungle": 97,
+              "previous": 0,
+              "other": 0
+            },
+            "R": {
+              "starting": 2500,
+              "passive": 16115,
+              "lane": 11583,
+              "jungle": 3516,
+              "kills": 1570,
+              "assists": 785,
+              "firstBlood": 100,
+              "shutdown": 600,
+              "structures": 0,
+              "firstTower": 0,
+              "objectives": 60,
+              "objectiveBounty": 0,
+              "sideLane": 126,
+              "sideJungle": 80,
+              "previous": 0,
+              "other": 0
+            }
+          }
+        },
+        {
+          "seed": 77,
+          "minute": 28.25,
+          "score": {
+            "B": 21,
+            "R": 5
+          },
+          "towers": {
+            "B": 2,
+            "R": 0
+          },
+          "goldLead": 9053,
+          "income": {
+            "B": {
+              "starting": 2500,
+              "passive": 16165,
+              "lane": 11615,
+              "jungle": 3513,
+              "kills": 5007,
+              "assists": 2500,
+              "firstBlood": 0,
+              "shutdown": 0,
+              "structures": 1500,
+              "firstTower": 300,
+              "objectives": 2930,
+              "objectiveBounty": 0,
+              "sideLane": 63,
+              "sideJungle": 97,
+              "previous": 0,
+              "other": 0
+            },
+            "R": {
+              "starting": 2500,
+              "passive": 16165,
+              "lane": 11622,
+              "jungle": 3529,
+              "kills": 1570,
+              "assists": 785,
+              "firstBlood": 100,
+              "shutdown": 600,
+              "structures": 0,
+              "firstTower": 0,
+              "objectives": 60,
+              "objectiveBounty": 0,
+              "sideLane": 126,
+              "sideJungle": 80,
+              "previous": 0,
+              "other": 0
+            }
+          }
+        },
+        {
+          "seed": 77,
+          "minute": 28.734,
+          "score": {
+            "B": 21,
+            "R": 5
+          },
+          "towers": {
+            "B": 2,
+            "R": 0
+          },
+          "goldLead": 8617,
+          "income": {
+            "B": {
+              "starting": 2500,
+              "passive": 16460,
+              "lane": 11682,
+              "jungle": 3534,
+              "kills": 5007,
+              "assists": 2500,
+              "firstBlood": 0,
+              "shutdown": 0,
+              "structures": 1500,
+              "firstTower": 300,
+              "objectives": 2930,
+              "objectiveBounty": 0,
+              "sideLane": 63,
+              "sideJungle": 97,
+              "previous": 0,
+              "other": 0
+            },
+            "R": {
+              "starting": 2500,
+              "passive": 16460,
+              "lane": 11861,
+              "jungle": 3604,
+              "kills": 1570,
+              "assists": 785,
+              "firstBlood": 100,
+              "shutdown": 600,
+              "structures": 0,
+              "firstTower": 0,
+              "objectives": 60,
+              "objectiveBounty": 0,
+              "sideLane": 252,
+              "sideJungle": 164,
+              "previous": 0,
+              "other": 0
+            }
+          }
+        },
+        {
+          "seed": 224,
+          "minute": 28.327,
+          "score": {
+            "B": 20,
+            "R": 3
+          },
+          "towers": {
+            "B": 2,
+            "R": 0
+          },
+          "goldLead": 9540,
+          "income": {
+            "B": {
+              "starting": 2500,
+              "passive": 16215,
+              "lane": 11514,
+              "jungle": 3525,
+              "kills": 5572,
+              "assists": 2784,
+              "firstBlood": 100,
+              "shutdown": 0,
+              "structures": 1500,
+              "firstTower": 300,
+              "objectives": 2080,
+              "objectiveBounty": 0,
+              "sideLane": 105,
+              "sideJungle": 0,
+              "previous": 0,
+              "other": 0
+            },
+            "R": {
+              "starting": 2500,
+              "passive": 16215,
+              "lane": 11480,
+              "jungle": 3597,
+              "kills": 940,
+              "assists": 470,
+              "firstBlood": 0,
+              "shutdown": 750,
+              "structures": 0,
+              "firstTower": 0,
+              "objectives": 60,
+              "objectiveBounty": 0,
+              "sideLane": 378,
+              "sideJungle": 265,
+              "previous": 0,
+              "other": 0
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

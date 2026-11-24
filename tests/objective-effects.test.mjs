@@ -48,17 +48,14 @@ test('full scheduler awards correct elemental stacks/soul then Elder exclusively
  }
  const events=s.events.filter(e=>e.objective);assert.equal(events.filter(e=>e.kind==='dragon').length,4);const soul=events.find(e=>e.objective.soul);assert(soul);assert.equal(soul.objective.soulType,s.drakeHistory[2]);const elder=events.find(e=>e.kind==='elder');assert(elder.minute>=soul.minute+6);assert(elder.objectiveState.elder[0][0]>=Math.round((elder.minute+2.5)*60));
  for(let seed=1;seed<=100;seed++){
-  const out=simulateMatch(input,matchRandom(seed));assert.equal(out.model,'event-v9');assert(!out.events.some(e=>e.kind==='herald'||e.location==='herald'));
+  const out=simulateMatch(input,matchRandom(seed));assert.equal(out.model,'event-v10');assert(!out.events.some(e=>e.kind==='herald'||e.location==='herald'));
   const drakes=out.events.filter(e=>e.kind==='dragon');if(drakes.length>=3){assert.equal(new Set(drakes.slice(0,3).map(e=>e.objective.dragonType)).size,3);for(const d of drakes.slice(3))assert.equal(d.objective.dragonType,drakes[2].objective.dragonType);}
   for(const e of out.events.filter(e=>e.objective)){if(['dragon','elder'].includes(e.kind))assert.equal(e.location,'dragon');if(['grubs','baron'].includes(e.kind))assert.equal(e.location,e.kind);}
  }
 });
-test('trade preview is pure, bounded 800–1500G, depends on team/side draft and is awarded exactly once as quoted',()=>{
- const s=createMatchState(input,123);advanceMatch(s,{controlledTeam:'B'});const before=JSON.stringify(s),p=objectivePreview(s);objectivePreview(s);assert.equal(JSON.stringify(s),before);assert(p.tradeGold>=800&&p.tradeGold<=1500);
- advanceMatch(s,{controlledTeam:'B',action:'trade'});const event=s.events.find(e=>e.kind==='trade-push'&&e.tradeGold.B);assert.equal(event.tradeGold.B,p.tradeGold);assert.equal(s.events.find(e=>e.decisions?.B==='trade').objective.team,'R');
- const weak=createMatchState({...input,bluePower:45},13),strong=createMatchState({...input,bluePower:99,compositionBlue:{members:[['Fiora','TOP'],['Jax','BOT']],dps:3,poke:3}},13);weak.macros[0].split=.2;weak.macros[0].vision=.2;strong.macros[0].split=.95;strong.macros[0].vision=.95;
- const poor=objectiveTradeReward(weak,'B',30),good=objectiveTradeReward(strong,'B',30);assert(good>poor);assert(good>=1250);for(const stat of strong.stats.filter(p=>p.team==='B'))stat.k=40;assert.equal(objectiveTradeReward(strong,'B',30),1500);
- for(let seed=1;seed<=30;seed++){const z=createMatchState({...input,bluePower:seed*5,redPower:200-seed},seed);for(const id of z.teams){const n=objectiveTradeReward(z,id,seed*2);assert(n>=800&&n<=1500);}}
+test('trade preview quotes only the 350G resource cap and never promises a tower or fixed total',()=>{
+ const s=createMatchState(input,123);advanceMatch(s,{controlledTeam:'B'});const before=JSON.stringify(s),p=objectivePreview(s);objectivePreview(s);assert.equal(JSON.stringify(s),before);assert.equal(p.tradePolicy,'earned');assert.deepEqual(p.tradeRange,[0,350]);assert.equal(p.tradeGold,undefined);assert.equal(p.tradePlan.B.resourceMaximum,350);
+ advanceMatch(s,{controlledTeam:'B',action:'trade'});const event=s.events.find(e=>e.kind==='trade-push');assert(event);assert(event.sideResources.gold<=350);assert.equal(event.tradeGold.B,event.push.gold+event.sideResources.gold);assert.equal(s.events.find(e=>e.decisions?.B==='trade').objective.team,'R');assert.equal(objectiveTradeReward(s,'B'),350);
 });
 test('both teams deferring same living objective cannot repeatedly farm extra trade rewards',()=>{
  const s=createMatchState(input,17);advanceMatch(s,{controlledTeam:'B'});const length=s.events.length;s.input.decisionOverrides=[[s.pending.id,'R','trade']];advanceMatch(s,{controlledTeam:'B',action:'trade'});const e=s.events[length];assert.equal(e.kind,'trade');assert.deepEqual(e.tradeGold,{});assert(!e.objective);

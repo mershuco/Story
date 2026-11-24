@@ -20,7 +20,7 @@ test('player economy conserves team gold across farm, kills, assists, objective/
 test('buildings require lane order, retain damage, pay once and unlock opponent jungle control',()=>{
  const s=createMatchState(input,2),rng=matchRandom(1);assert.equal(nextBuilding(s,'B','top').index,0);
  const initialVision=visionControl(s,'B','top'),a=attackStructures(s,'B',{lane:'top',rng,forceDamage:1000});assert(!a.structures[0].destroyed);assert.equal(a.gold,0);assert.equal(nextBuilding(s,'B','top').hp,1700);
- const b=attackStructures(s,'B',{lane:'top',rng,forceDamage:1700});assert(b.structures[0].destroyed);assert.equal(b.gold,750);assert.equal(towerCount(s,'B'),1);assert.equal(nextBuilding(s,'B','top').index,1);assert(visionControl(s,'B','top')>initialVision);checkLedger(s);
+ const b=attackStructures(s,'B',{lane:'top',rng,forceDamage:1700});assert(b.structures[0].destroyed);assert.equal(b.gold,1050);assert.equal(towerCount(s,'B'),1);assert.equal(nextBuilding(s,'B','top').index,1);assert(visionControl(s,'B','top')>initialVision);checkLedger(s);
  attackStructures(s,'B',{lane:'top',rng,forceDamage:3200});attackStructures(s,'B',{lane:'top',rng,forceDamage:3600});assert.equal(nextBuilding(s,'B','top').kind,'inhibitor');assert.equal(s.structures.R.nexus,5000);
 });
 test('inhibitor creates five-minute super pressure; nexus is gated by a live inhibitor and both nexus turrets',()=>{
@@ -38,7 +38,7 @@ test('waveclear champions stall real siege damage, death removes their defense, 
  const baron=defender('Anivia');grantTemporaryBuff(baron,'baron','B');const c=attackStructures(baron,'B',{lane:'mid',rng:()=>.5});assert(c.baron);assert(c.damage>b.damage);
 });
 test('trade reward is shown as a real side push with vision and an exact total, without duplicate tower rewards',()=>{
- const s=createMatchState(input,9);advanceMatch(s,{controlledTeam:'B'});const p=objectivePreview(s),length=s.events.length;s.input.decisionOverrides=[[p.id,'R','contest']];advanceMatch(s,{controlledTeam:'B',action:'trade'});const events=s.events.slice(length),push=events.find(e=>e.kind==='trade-push');assert(push);assert(push.push.structures.length);assert.equal(push.tradeGold.B,p.tradeGold);assert(push.rift.wards.some(w=>w.team==='B'));checkLedger(s);assert(!events.find(e=>e.kind===p.kind).tradeGold.B);
+ const s=createMatchState(input,9);advanceMatch(s,{controlledTeam:'B'});const p=objectivePreview(s),length=s.events.length;s.input.decisionOverrides=[[p.id,'R','contest']];advanceMatch(s,{controlledTeam:'B',action:'trade'});const events=s.events.slice(length),push=events.find(e=>e.kind==='trade-push');assert(push);assert(push.push.structures.length);assert(push.sideResources.gold<=350);assert.equal(push.tradeGold.B,push.sideResources.gold+push.push.gold);assert(push.rift.wards.some(w=>w.team==='B'));checkLedger(s);assert(!events.find(e=>e.kind===p.kind).tradeGold.B);
 });
 test('future random fights can change winners; every finished game has a destroyed nexus and legal persistent building history',()=>{
  for(let seed=1;seed<=80;seed++){
