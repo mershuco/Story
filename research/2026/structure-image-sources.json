@@ -1,0 +1,41 @@
+{
+  "checkedOn": "2026-11-25",
+  "rights": "Riot game minimap UI assets served by CommunityDragon, frozen locally. Team color is applied at render time while preserving the original black contours.",
+  "assets": [
+    {
+      "name": "icon_ui_inhibitor_minimap_v2",
+      "file": "dist/assets/structures/icon_ui_inhibitor_minimap_v2.png",
+      "source": "https://raw.communitydragon.org/16.1/game/assets/ux/minimap/icons/icon_ui_inhibitor_minimap_v2.png",
+      "bytes": 1993,
+      "sha256": "d03a5155c27137f5812f0b927ab3c413dccffd17dad1fbc81d5d524dff708db6"
+    },
+    {
+      "name": "icon_ui_nexus_minimap_v2",
+      "file": "dist/assets/structures/icon_ui_nexus_minimap_v2.png",
+      "source": "https://raw.communitydragon.org/16.1/game/assets/ux/minimap/icons/icon_ui_nexus_minimap_v2.png",
+      "bytes": 1202,
+      "sha256": "07f20edbf6a5a477f2fc2edcb49fb4d8dd40052e13d1c180a2ba8d241cccad58"
+    },
+    {
+      "name": "icon_ui_tower_minimap",
+      "file": "dist/assets/structures/icon_ui_tower_minimap.png",
+      "source": "https://raw.communitydragon.org/16.1/game/assets/ux/minimap/icons/icon_ui_tower_minimap.png",
+      "bytes": 962,
+      "sha256": "ea2bfd61e2db0f30ed17bf595f4cdebff6980a12a284e9c770d0c436a7e16aa2"
+    },
+    {
+      "name": "icon_ui_tower_minimap_low",
+      "file": "dist/assets/structures/icon_ui_tower_minimap_low.png",
+      "source": "https://raw.communitydragon.org/16.1/game/assets/ux/minimap/icons/icon_ui_tower_minimap_low.png",
+      "bytes": 779,
+      "sha256": "03bc23248a6998ac2ea2c4751a7438defcb28e2a39be192f62d454a29b990f42"
+    },
+    {
+      "name": "icon_ui_tower_minimap_med",
+      "file": "dist/assets/structures/icon_ui_tower_minimap_med.png",
+      "source": "https://raw.communitydragon.org/16.1/game/assets/ux/minimap/icons/icon_ui_tower_minimap_med.png",
+      "bytes": 1015,
+      "sha256": "07c37b56ab6087cfcf251a330b7d658fb0b40289f9a165881a109a1f7c7afe5e"
+    }
+  ]
+}

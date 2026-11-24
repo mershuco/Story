@@ -1,3 +1,4 @@
+import {playbackIncrement} from './power-play-ui.js';
 import {combatProfileMarkup} from './combat-ui.js';
 import * as E from './engine.js';
 import {buildTimeline} from './timeline.js';
@@ -112,7 +113,8 @@ function startViewer(oneScene=false){
  const frame=timestamp=>{
   if(!ui.viewerPlaying||nav!=='viewer')return;
   const elapsed=ui.viewerLastTimestamp?Math.min(120,timestamp-ui.viewerLastTimestamp):0;ui.viewerLastTimestamp=timestamp;
-  ui.sceneProgress=Math.min(1,ui.sceneProgress+elapsed/3200*ui.viewerSpeed);
+  const currentSet=viewerData().set,currentScene=currentSet?timelineForSet(currentSet)[ui.viewerIndex]:null;
+  ui.sceneProgress=Math.min(1,ui.sceneProgress+playbackIncrement(currentScene,ui.sceneProgress,elapsed,ui.viewerSpeed));
   paintScene(presentationContext());
   if(ui.sceneProgress>=1){const {set}=viewerData();const last=timelineForSet(set).length-1;if(oneScene){stopViewer();render();return;}if(ui.viewerIndex>=last){if(set.live&&!set.pending){E.advanceOwnMatch(state,'auto');save();ui.viewerIndex=last+1;ui.sceneProgress=0;render();}else{stopViewer();render();return;}}else{ui.viewerIndex++;ui.sceneProgress=0;render();}}
   viewerTimer=requestAnimationFrame(frame);

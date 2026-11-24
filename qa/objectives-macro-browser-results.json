@@ -7,7 +7,7 @@
     "contest and trade branch from the same saved crisis and persist actual decisions",
     "390px win-odds dialog, one-decision auto and remaining-set auto preserve the crisis threshold and complete the match",
     "both teams show three LCK-style grub icon slots lit according to captured grubs, with text counters removed",
-    "broadcast HUD uses all six loaded drake images; actual KDA/CS/player gold and opposing-role gaps conserve team gold; Baron minions move, persistent buildings/vision render, 390px layout fits"
+    "broadcast HUD uses all six loaded drake images; actual KDA/CS/player gold and opposing-role gaps conserve team gold; siege minions move, persistent buildings/vision render, 390px layout fits"
   ],
   "errors": []
 }

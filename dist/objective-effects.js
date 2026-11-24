@@ -28,7 +28,7 @@ export function takeDragon(s,owner,rng){
 export function grantTemporaryBuff(s,kind,owner,dead=[]){
  const duration=kind==='baron'?3:2.5;
  s[kind+'Until'][owner]=s.clock+duration;
- s.buffHolders[kind][owner]=s.stats.filter(p=>p.team===owner&&!dead.includes(p.player)).map(p=>p.player);
+ s.buffHolders[kind][owner]=s.stats.filter(p=>p.team===owner&&!dead.includes(p.player)&&!((s.respawnAt?.[p.player]??0)>s.clock)).map(p=>p.player);
 }
 export function loseBuffsOnDeath(s,dead){for(const kind of ['baron','elder'])for(const id of s.teams)s.buffHolders[kind][id]=s.buffHolders[kind][id].filter(pid=>!dead.includes(pid));}
 export function buffCoverage(s,kind,id,minute=s.clock,roles=null){

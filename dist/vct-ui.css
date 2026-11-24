@@ -49,3 +49,33 @@ body{background:var(--bg);font-family:var(--body);overflow:hidden}body[data-scre
 @media(max-width:680px){.score-grub-icons{grid-column:1/4;grid-row:3;gap:3px;min-height:18px}.grub-slot,.grub-slot .objective-icon{width:18px;height:18px}}
 .broadcast-scoreboard>.broadcast-score-team{grid-template-rows:34px 23px;row-gap:4px;align-content:center}
 @media(max-width:680px){.broadcast-scoreboard>.broadcast-score-team{grid-template-rows:25px 20px 18px 18px;row-gap:3px}}
+
+/* Minimap geometry, objective bounty rings and persistent broadcast ownership. */
+.summoners-rift-minimap{filter:brightness(.61) saturate(.7)}
+.rift-building .building-icon{image-rendering:auto}
+.rift-building .building-health,.rift-building .building-health-bg{opacity:0;transition:opacity .2s}
+.rift-building.under-attack .building-health,.rift-building.under-attack .building-health-bg{opacity:1}
+.rift-building.destroyed .building-icon{opacity:.13;filter:grayscale(1)}
+.rift-building.under-attack .building-icon{animation:structure-hit .4s alternate infinite}
+.rift-objective image{filter:drop-shadow(0 1px 2px #000)}
+.rift-objective.not-spawned image{opacity:.2}
+.rift-objective.camp-cleared image{opacity:.06}
+.rift-objective text{font-size:10px;letter-spacing:0;fill:#c3c7b4;paint-order:stroke;stroke:#10170f;stroke-width:3px}
+.minimap-frame{filter:drop-shadow(0 0 2px #d7ba66)}
+.jungle-territory ellipse{opacity:.055!important;stroke-opacity:.2}.jungle-territory text{opacity:.35;font-size:9px}
+.objective-bounty-outline{display:none;fill:none;stroke:#ffe9a3;stroke-width:2.7;filter:drop-shadow(0 0 3px #e3b74a)}
+.has-objective-bounty:not(.destroyed) .objective-bounty-outline{display:block;animation:objective-bounty-glow 1.8s ease-in-out infinite alternate}
+.score-grub-icons .grub-slot .objective-icon{filter:none}.grub-slot.empty .objective-icon{opacity:.18}
+.power-play-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 9px}.power-play-strip:not(:has(.power-play-card:not([hidden]))){display:none}
+.power-play-team{display:flex;gap:8px;flex-wrap:wrap}.power-play-team.red{justify-content:flex-end}
+.power-play-card{display:grid;grid-template-columns:minmax(80px,1fr) 29px auto auto;position:relative;align-items:center;column-gap:10px;min-width:270px;padding:8px 12px 11px;background:linear-gradient(95deg,#261438,#4a2266);border:1px solid #a077b6;border-radius:3px;color:#e8dff0;font-family:var(--mono)}
+.power-play-card.elder{background:linear-gradient(95deg,#112c35,#285360);border-color:#80acb8}.power-play-card[hidden]{display:none}
+.power-owner{display:flex;flex-direction:column;gap:3px}.power-owner b{font-size:15px;color:#fff}.power-owner small{font-size:9px;letter-spacing:.05em;color:#d1bcdf}.power-play-card.elder .power-owner small{color:#bcdae1}.power-time{font-size:23px;font-weight:800;color:#fff}.power-gold{font-size:12px;color:#f0e1b9;white-space:nowrap}.power-gold[data-lead=behind]{color:#dfb3b8}.power-progress{position:absolute;left:0;right:0;bottom:0;height:3px;background:#0b0d14}.power-progress i{display:block;height:100%;background:#ae80dc}.elder .power-progress i{background:#9dd4e5}.power-play-card .objective-icon{width:28px;height:28px}
+.objective-bounty-banner{border:1px solid #ac9454;background:#292618;color:#efdba8;font-size:12px;line-height:1.6;padding:7px 11px;margin-bottom:8px}.objective-bounty-banner[hidden]{display:none}
+.expanded-pool .broadcast-stage{grid-template-columns:minmax(0,1fr);gap:8px;min-height:0;grid-template-rows:minmax(250px,1fr) 66px}
+.expanded-pool .draft-control-room{min-height:0;max-height:none}.expanded-pool .draft-pool{flex:1;min-height:0;display:flex;flex-direction:column}
+.expanded-pool .champ-grid{grid-template-columns:repeat(auto-fill,minmax(70px,1fr));height:auto;max-height:none;min-height:180px;flex:1;overflow:auto}
+.expanded-pool .champ-card{min-height:77px;padding:5px 3px}.expanded-pool .champ-card .champ-img{width:40px;height:40px}.expanded-pool .champ-card strong{font-size:12px}
+.expanded-pool .champion-spotlight{height:66px;min-height:66px;display:flex;align-items:center;padding:6px 10px;gap:12px}.expanded-pool .champion-spotlight:after{display:none}.expanded-pool .spotlight-art{position:static;width:43px;height:54px;object-fit:cover;object-position:top;flex-shrink:0}.expanded-pool .spotlight-caption{position:static;min-width:140px;max-width:40%;z-index:1}.expanded-pool .spotlight-caption>strong{font-size:18px;margin:3px 0}.expanded-pool .spotlight-caption>span{display:none}.expanded-pool .spotlight-caption>small{font-size:9px}.expanded-pool .draft-lock-controls{position:static;margin-left:auto;display:flex;flex-direction:row;gap:7px}.expanded-pool .draft-lock-controls .btn{font-size:12px;padding:7px 12px;white-space:nowrap}
+@keyframes objective-bounty-glow{to{stroke:#fff;filter:drop-shadow(0 0 6px #e7c974)}}
+@media(max-width:680px){.power-play-strip{gap:5px}.power-play-team{gap:4px}.power-play-card{grid-template-columns:1fr 19px auto;gap:5px;min-width:0;width:100%;padding:7px 6px 9px}.power-owner b{font-size:12px}.power-owner small{font-size:7px;letter-spacing:0}.power-play-card .objective-icon{width:19px;height:19px}.power-time{font-size:18px}.power-gold{grid-column:1/4;font-size:10px;text-align:right}.objective-bounty-banner{font-size:10px}.expanded-pool .broadcast-stage{grid-template-rows:minmax(325px,1fr) auto}.expanded-pool .draft-control-room{min-height:325px;max-height:none}.expanded-pool .champ-grid{grid-template-columns:repeat(6,minmax(0,1fr));max-height:425px;min-height:260px}.expanded-pool .champ-card{min-height:70px;padding:4px 1px}.expanded-pool .champ-card .champ-img{width:34px;height:34px}.expanded-pool .champ-card strong{font-size:10px}.expanded-pool .champion-spotlight{height:auto;min-height:64px;flex-wrap:wrap;padding:6px}.expanded-pool .spotlight-caption{min-width:100px;max-width:none}.expanded-pool .spotlight-caption>strong{font-size:16px}.expanded-pool .draft-lock-controls{width:100%;margin-left:0;gap:4px}.expanded-pool .draft-lock-controls .btn{flex:1;font-size:11px;padding:6px 3px}}

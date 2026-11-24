@@ -1,0 +1,7 @@
+{
+  "reviewedOn": "2026-11-25",
+  "source": "https://ddragon.leagueoflegends.com/cdn/16.1.1/img/map/map11.png",
+  "file": "dist/assets/maps/summoners-rift.png",
+  "sha256": "d5cdcf93ee285cb6887648468063105002d669f5e005a6691b763ade61fb74ce",
+  "description": "Official Riot Data Dragon minimap. Locally frozen; live building, bounty and player overlays are rendered separately."
+}

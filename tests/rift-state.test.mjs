@@ -33,7 +33,7 @@ test('vision responds to macro ability and cleared territory, affects local figh
 test('waveclear champions stall real siege damage, death removes their defense, Baron waves resist clearing',()=>{
  const defender=champion=>{const s=createMatchState(input,5);s.clock=30;s.stats.find(p=>p.player==='RMID').champion=champion;return s;},weak=defender('Yuumi'),strong=defender('Anivia');assert(waveclear(strong,'R')>waveclear(weak,'R'));assert(waveclear(strong,'R','mid',['RMID'])<waveclear(strong,'R'));
  const a=attackStructures(weak,'B',{lane:'mid',rng:()=>.5}),b=attackStructures(strong,'B',{lane:'mid',rng:()=>.5});assert(b.damage<a.damage);
- for(const z of [weak,strong]){z.structures.R.lanes.mid.towers=[0,0,0];z.structures.R.lanes.mid.inhibitor=0;z.structures.R.lanes.mid.inhibitorUntil=35;z.structures.R.nexusTowers=[0,0];z.structures.R.nexus=1800;}
+ for(const z of [weak,strong]){z.structures.R.lanes.mid.towers=[0,0,0];z.structures.R.lanes.mid.inhibitor=0;z.structures.R.lanes.mid.inhibitorUntil=35;z.structures.R.nexusTowers=[0,0];z.structures.R.nexus=1800;z.wavePressure.B.mid=1;}
  attackStructures(weak,'B',{lane:'mid',rng:()=>.5});attackStructures(strong,'B',{lane:'mid',rng:()=>.5});assert.equal(weak.structures.R.nexus,0);assert(strong.structures.R.nexus>0,'waveclear must be able to stop a would-be game-ending push');
  const baron=defender('Anivia');grantTemporaryBuff(baron,'baron','B');const c=attackStructures(baron,'B',{lane:'mid',rng:()=>.5});assert(c.baron);assert(c.damage>b.damage);
 });
@@ -45,7 +45,7 @@ test('future random fights can change winners; every finished game has a destroy
   const o=simulateMatch(input,matchRandom(seed)),last=o.events.at(-1),loser=o.winner==='B'?'R':'B';assert.equal(last.rift.structures[loser].nexus,0);assert(o.events.slice(0,-1).some(e=>e.push?.structures.some(b=>b.kind==='nexus'&&b.destroyed)));assert(last.rift.towers[o.winner]>=5);
   for(let i=1;i<o.events.length;i++){const a=o.events[i-1],b=o.events[i];assert(b.second>a.second);for(const id of ['B','R'])assert(b.rift.towers[id]>=a.rift.towers[id]);}
  }
- const s=createMatchState(input,30);s.clock=75;s.nextMacro=75;s.timers={dragon:80,grubs:null,herald:null,baron:81,elder:null};advanceMatch(s,{controlledTeam:'B'});assert(!s.finished);assert.equal(s.winner,null);assert(s.pending);
+ const s=createMatchState(input,30);s.clock=75;s.nextMacro=75;s.timers={dragon:80,grubs:null,herald:null,baron:81,elder:null};advanceMatch(s,{controlledTeam:'B',maxEvents:1});assert(!s.finished);assert.equal(s.winner,null);assert(s.events.at(-1).rift.structures.B.nexus>0&&s.events.at(-1).rift.structures.R.nexus>0);
 });
 test('HUD shows real per-position gold gaps; animation begins with prior snapshot and map positions are symmetric',()=>{
  const set={blue:'B',red:'R',stats:roster},current={rift:{players:roster.map((p,i)=>[500+i*100,20+i,6])}},rows=goldRows(set,current,null,1);assert.equal(rows[0].gold-rows[5].gold,-500);assert.equal(rows[1].cs,21);const start=goldRows(set,current,null,0);assert(start.every(p=>p.gold===500));assert.equal(goldRows(set,{},null,0),null);assert.deepEqual(structurePosition('red','top','tower',0),[240,80]);

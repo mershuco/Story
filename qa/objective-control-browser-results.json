@@ -1,0 +1,9 @@
+{
+  "url": "http://127.0.0.1:4173",
+  "checks": [
+    "recommendation cards and initial recommendation removed; >=160 champions in a full-width grid; desktop/mobile fit",
+    "real Riot minimap and structure/objective images load, purple grub icons, only enemy reachable towers outlined for trailing team; Baron/Elder owner timers persist after reload",
+    "destroyed bounty tower pays actual base+bonus once and moves target outline forward; both ownership cards remain visible at 390px"
+  ],
+  "errors": []
+}
