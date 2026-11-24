@@ -7,7 +7,7 @@ import{buildTimeline}from'../dist/timeline.js';
 const roles=['TOP','JGL','MID','BOT','SUP'],roster=['B','R'].flatMap(team=>roles.map(role=>({team,role,player:team+role,champion:role==='JGL'?'LeeSin':'Annie'}))),base={blue:'B',red:'R',bluePower:80,redPower:80,roster};
 const data=Object.fromEntries(['teams','players','champions','mastery','meta','international','season'].map(k=>[k,JSON.parse(readFileSync(new URL(`../dist/data/season-2026/${k}.json`,import.meta.url)))]));E.configure(data);
 const near=(a,b)=>assert(Math.abs(a-b)<1e-10,`${a} != ${b}`);
-function setup(seed=42){const s=E.newGame('T1',seed),m={id:'objective-test',teams:['T1','GEN'],competition:'CUP',bestOf:1,date:s.date,sets:[],score:[0,0],status:'scheduled'};s.matches.push(m);s.activeDraft=E.completeDraft(s,E.newDraft(s,m));E.autoAssignDraft(s,s.activeDraft);E.confirmDraftAssignments(s.activeDraft);return{s,m};}
+function setup(seed=42,distressed=false){const s=E.newGame('T1',seed),m={id:'objective-test',teams:['T1','GEN'],competition:'CUP',bestOf:1,date:s.date,sets:[],score:[0,0],status:'scheduled'};s.matches.push(m);if(distressed){for(const p of E.lineup(s,'T1'))p.ovr=55;for(const p of E.lineup(s,'GEN'))p.ovr=95;}s.activeDraft=E.completeDraft(s,E.newDraft(s,m));E.autoAssignDraft(s,s.activeDraft);E.confirmDraftAssignments(s.activeDraft);return{s,m};}
 
 test('objective odds respond to fight/gold control, smite skill, champion burst, setup and surviving participants',()=>{
  const input={blue:'B',red:'R',roster,skills:[75,75]};near(objectiveChances({...input,fightChance:.5}).blueChance,.5);assert(objectiveChances({...input,fightChance:.75}).blueChance>.5);assert(objectiveChances({...input,skills:[95,60]}).blueChance>.5);
@@ -42,13 +42,13 @@ test('saved mid-game decisions and RNG resume identically; previews and invalid 
  const result=matchOutcome(s),replayed=replayMatch({...base,seed:271,model:'event-v5',decisionOverrides:result.decisionOverrides});assert.deepEqual(replayed,result);
 });
 test('engine live play commits no winner or series score early, locks rosters, and completes exactly once',()=>{
- const{s,m}=setup();E.startLiveMatch(s);assert.equal(m.sets.length,0);assert.deepEqual(m.score,[0,0]);assert(E.activeMatchSet(s).pending);assert(!E.activeMatchSet(s).winner);
+ const{s,m}=setup(42,true);E.startLiveMatch(s);assert.equal(m.sets.length,0);assert.deepEqual(m.score,[0,0]);assert(E.activeMatchSet(s).pending);assert(!E.activeMatchSet(s).winner);
  for(const mutate of [()=>E.advanceDays(s,1),()=>E.signPlayer(s,'lucid'),()=>E.setStarter(s,'guti'),()=>E.releasePlayer(s,'guti'),()=>E.requestTrade(s,'faker','chovy')])assert.throws(mutate);
  const clone=JSON.parse(JSON.stringify(s));E.advanceOwnMatch(s,'trade');E.advanceOwnMatch(clone,'trade');assert.deepEqual(s,clone);E.advanceOwnMatch(s,'auto',true);assert.equal(s.activeMatch,null);assert.equal(m.sets.length,1);assert.equal(m.status,'done');assert.equal(m.score.reduce((a,b)=>a+b),1);assert.throws(()=>E.advanceOwnMatch(s,'auto',true));assert.equal(m.sets.length,1);
  const timeline=buildTimeline(m.sets[0]);assert.deepEqual(timeline.at(-1).gold,m.sets[0].finalGold);assert.equal(timeline.at(-1).team,m.winner);
 });
 test('automatic completion of a live match is identical to the full automatic path, including final RNG',()=>{
- const {s,m}=setup(68),other=structuredClone(s);E.commitOwnDraft(other);E.startLiveMatch(s);E.advanceOwnMatch(s,'auto',true);assert.deepEqual(m.sets,other.matches[0].sets);assert.equal(s.rng,other.rng);assert.deepEqual(s.players,other.players);
+ const {s,m}=setup(68),other=structuredClone(s);E.commitOwnDraft(other);E.startLiveMatch(s);if(s.activeMatch)E.advanceOwnMatch(s,'auto',true);assert.deepEqual(m.sets,other.matches[0].sets);assert.equal(s.rng,other.rng);assert.deepEqual(s.players,other.players);
 });
 test('macro schedules vary with seed, team personality and draft without changing deterministic replay',()=>{
  const signatures=new Set();for(let seed=1;seed<=24;seed++){const out=simulateMatch(base,matchRandom(seed));signatures.add(out.events.filter(e=>e.kind!=='objective-setup').map(e=>e.kind+':'+e.location).join('|'));assert.deepEqual(out,simulateMatch(base,matchRandom(seed)));}assert(signatures.size>20);
@@ -59,6 +59,6 @@ test('event-v4 archived combat, gold and outcomes replay exactly after live macr
  const old=simulateV4(base,matchRandom(93)),digest=createHash('sha256').update(JSON.stringify(old)).digest('hex');assert.equal(digest,'5b27ff8e2f1d586b2ab9eef0659bce31dfe8a838e3c1e818399a142cb517e8cc');assert.deepEqual(replayMatch({...base,seed:93,model:'event-v4'}),old);
 });
 test('compact saves retain live prefixes and reconstruct completed manual decisions, objectives and gold losslessly',()=>{
- const{s,m}=setup(919);E.startLiveMatch(s);const pending=JSON.parse(E.serializeSave(s));assert.deepEqual(pending.activeMatch.simulation.events,JSON.parse(JSON.stringify(s.activeMatch.simulation.events)));assert.deepEqual(pending.activeMatch.simulation.pending,s.activeMatch.simulation.pending);
+ const{s,m}=setup(919,true);E.startLiveMatch(s);const pending=JSON.parse(E.serializeSave(s));assert.deepEqual(pending.activeMatch.simulation.events,JSON.parse(JSON.stringify(s.activeMatch.simulation.events)));assert.deepEqual(pending.activeMatch.simulation.pending,s.activeMatch.simulation.pending);
  E.advanceOwnMatch(s,'trade');E.advanceOwnMatch(s,'auto',true);const before=JSON.stringify(m.sets[0]),full=buildTimeline(m.sets[0]),saved=JSON.parse(E.serializeSave(s)),set=saved.matches[0].sets[0];assert.equal(JSON.stringify(m.sets[0]),before);assert.deepEqual(set.events,[]);const replay=buildTimeline(set);assert.deepEqual(replay,full);assert.deepEqual(replay.at(-1).grubs,full.at(-1).grubs);assert.deepEqual(replay.at(-1).gold,set.finalGold);assert(set.simulationReplay.decisionOverrides.length>0);
 });

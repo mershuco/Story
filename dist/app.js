@@ -25,7 +25,13 @@ function toast(message,error=false){const el=$('#toast');el.textContent=message;
 function save(){if(!state)return;try{localStorage.setItem('lck-manager-save-v1',E.serializeSave(state));}catch{toast('저장 공간이 부족합니다. 설정에서 세이브를 파일로 내보내세요.',true);}}
 function restore(raw){const s=JSON.parse(raw);if(![1,2].includes(s.version)||!s.teams?.[s.myTeam]||!Array.isArray(s.matches)||!s.players||typeof s.rng!=='number')throw Error('지원하지 않는 세이브 파일입니다.');return s;}
 function activateProfile(id='season-2026'){if(!profiles[id])throw Error('해당 시즌 데이터가 없습니다.');data=profiles[id];E.configure(data);}
-function loadState(s){if(s.activeMatch){s.viewing={matchId:s.activeMatch.matchId,setIndex:s.matches.find(m=>m.id===s.activeMatch.matchId).sets.length};ui.viewerIndex=s.activeMatch.simulation.events.length-1;ui.sceneProgress=1;ui.replay=false;}const id=s.dataProfile??'season-2022';activateProfile(id);E.migrateDraft(s.activeDraft);if(s.activeDraft?.step===20)E.prepareAssignments(s,s.activeDraft);return s;}
+function restoredView(s){return s.activeMatch||ui.restoredLive?'viewer':s.activeDraft?'draft':'home';}
+function loadState(s){
+ const id=s.dataProfile??'season-2022';activateProfile(id);ui.restoredLive=!!s.activeMatch;
+ E.migrateDraft(s.activeDraft);if(s.activeDraft?.step===20)E.prepareAssignments(s,s.activeDraft);
+ if(s.activeMatch){s.viewing={matchId:s.activeMatch.matchId,setIndex:s.matches.find(m=>m.id===s.activeMatch.matchId).sets.length};E.resumeLiveMatch(s);ui.viewerIndex=s.activeMatch?s.activeMatch.simulation.events.length-1:999;ui.sceneProgress=1;ui.replay=false;}
+ return s;
+}
 function download(name,text,type='application/json'){const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function topChampions(p,count=3){return E.currentPool(state).filter(c=>c.roles.includes(p.position)).map(c=>({c,score:E.mastery(state,p.id,c.id),games:E.masteryEvidence(p.id,c.id).games})).sort((a,b)=>b.score-a.score||b.games-a.games).slice(0,count);}
 function heading(title,subtitle='',actions=''){return `<div class="page-heading"><div><div class="eyebrow">CLUB MANAGEMENT / ${state.year}</div><h1>${title}</h1>${subtitle?`<p>${subtitle}</p>`:''}</div>${actions?`<div class="toolbar">${actions}</div>`:''}</div>`;}
@@ -124,7 +130,7 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-act
  switch(action){
  case 'club':selectedClub=id;onBoard();break;
  case 'new-game':state=E.newGame(selectedClub,Math.floor(Math.random()*0xffffffff));save();nav='home';render();break;
- case 'resume':state=loadState(restore(localStorage.getItem('lck-manager-save-v1')));nav=state.activeMatch?'viewer':state.activeDraft?'draft':'home';render();break;
+ case 'resume':state=loadState(restore(localStorage.getItem('lck-manager-save-v1')));save();nav=restoredView(state);render();break;
  case 'menu':ui.menu=!ui.menu;render();break;
  case 'toggle-panel':state[id==='left'?'uiLeftClosed':'uiRightClosed']=!state[id==='left'?'uiLeftClosed':'uiRightClosed'];save();render();break;
  case 'auto-dialog':openModal('자동 진행',`<p class="note">우리 팀 경기 전에 멈추거나 밴픽까지 자동으로 맡길 수 있습니다. 자동 진행과 수동 진행의 보상은 같습니다.</p><div class="stack" style="margin-top:18px">${btn('다음 우리 팀 경기에서 멈춤','auto-next-confirm','','primary')}${btn('7일 진행 · 경기 자동 포함','auto-confirm','data-days="7"')}${btn('30일 진행 · 경기 자동 포함','auto-confirm','data-days="30"')}${btn('시즌 끝까지 자동 진행','auto-confirm','data-days="500"','ghost')}</div>`);break;
@@ -188,14 +194,14 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-act
  case 'viewer-continue':{stopViewer();const {m}=viewerData();if(ui.replay){route('history');break;}if(m.status==='done'){E.advanceDays(state,0);save();route('home');}else{ui.matchId=m.id;route('prepare');}break;}
  case 'match-record':{const m=state.matches.find(m=>m.id===id);state.viewing={matchId:id,setIndex:m.sets.length-1};ui.replay=true;ui.viewerIndex=999;ui.sceneProgress=1;route('viewer');break;}
  case 'slot-save':try{localStorage.setItem('lck-manager-slot-'+id,E.serializeSave(state));toast('슬롯에 저장했습니다.');render();}catch{toast('브라우저 저장 공간이 부족합니다. 파일로 내보내세요.',true);}break;
- case 'slot-load':state=loadState(restore(localStorage.getItem('lck-manager-slot-'+id)));save();nav=state.activeMatch?'viewer':state.activeDraft?'draft':'home';render();toast('슬롯을 불러왔습니다.');break;
+ case 'slot-load':state=loadState(restore(localStorage.getItem('lck-manager-slot-'+id)));save();nav=restoredView(state);render();toast('슬롯을 불러왔습니다.');break;
  case 'export':download(`LCK-${state.myTeam}-${state.date}.json`,E.serializeSave(state));break;
  case 'import':$('#save-file').click();break;
  case 'new-career':save();state=null;activateProfile('season-2026');nav='home';onBoard();break;
  case 'player-csv':{const p=state.players[id];const rows=[`champion,name,score,${data.season.masteryYear}games,${data.season.masteryYear}wins,confidence,lastPlayed`,...data.champions.map(c=>{const x=E.masteryEvidence(id,c.id);return[c.id,c.name,Math.round(E.mastery(state,id,c.id)),x.games,x.wins,x.confidence,x.lastPlayed??''].join(',');})];download(`${p.name}-champion-mastery.csv`,'\ufeff'+rows.join('\n'),'text/csv');break;}
  }
  }catch(error){toast(error.message||'작업을 완료하지 못했습니다.',true);}});
-document.addEventListener('change',async e=>{const el=e.target;try{if(el.dataset.change==='trade-offer'){tradeModal(el.dataset.id,el.value);$('#trade-outgoing')?.focus();}if(el.dataset.change==='program'){state.trainingPlan[Number(el.dataset.index)]=el.value;save();toast('훈련 계획을 저장했습니다.');}if(el.dataset.change==='focus'){state.focus[el.dataset.id]=el.value;save();toast('집중 챔피언을 설정했습니다.');}if(el.dataset.change==='assign-champion'&&el.value){E.assignChampion(state.activeDraft,el.dataset.side,el.value,el.dataset.role);save();render();}if(el.dataset.change==='swap-role'){E.swapAssignments(state.activeDraft,el.dataset.side,el.dataset.role,el.value);save();render();}if(el.id==='mastery-observed'){ui.masteryObserved=el.checked;playerModal(ui.player);}if(el.id==='save-file'&&el.files[0]){state=loadState(restore(await el.files[0].text()));save();nav=state.activeMatch?'viewer':state.activeDraft?'draft':'home';render();toast('세이브 파일을 불러왔습니다.');}}catch(error){toast(error.message,true);}});
+document.addEventListener('change',async e=>{const el=e.target;try{if(el.dataset.change==='trade-offer'){tradeModal(el.dataset.id,el.value);$('#trade-outgoing')?.focus();}if(el.dataset.change==='program'){state.trainingPlan[Number(el.dataset.index)]=el.value;save();toast('훈련 계획을 저장했습니다.');}if(el.dataset.change==='focus'){state.focus[el.dataset.id]=el.value;save();toast('집중 챔피언을 설정했습니다.');}if(el.dataset.change==='assign-champion'&&el.value){E.assignChampion(state.activeDraft,el.dataset.side,el.value,el.dataset.role);save();render();}if(el.dataset.change==='swap-role'){E.swapAssignments(state.activeDraft,el.dataset.side,el.dataset.role,el.value);save();render();}if(el.id==='mastery-observed'){ui.masteryObserved=el.checked;playerModal(ui.player);}if(el.id==='save-file'&&el.files[0]){state=loadState(restore(await el.files[0].text()));save();nav=restoredView(state);render();toast('세이브 파일을 불러왔습니다.');}}catch(error){toast(error.message,true);}});
 function filterInput(id,value,key,callback){ui[key]=value;const pos=$('#'+id)?.selectionStart;callback();const next=$('#'+id);next?.focus();if(next&&pos!==null)try{next.setSelectionRange(pos,pos);}catch{}}
 document.addEventListener('input',e=>{const el=e.target;if(el.id==='market-search')filterInput(el.id,el.value,'marketSearch',render);if(el.id==='codex-search')filterInput(el.id,el.value,'codexSearch',render);if(el.id==='draft-search')filterInput(el.id,el.value,'draftSearch',render);if(el.id==='mastery-search')filterInput(el.id,el.value,'masterySearch',()=>playerModal(ui.player));});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if(e.key==='Tab'&&$('.modal')){const focusables=[...$('.modal').querySelectorAll('button,input,select,a[href]')].filter(el=>!el.disabled);const first=focusables[0],last=focusables.at(-1);if(e.shiftKey&&document.activeElement===first){last.focus();e.preventDefault();}else if(!e.shiftKey&&document.activeElement===last){first.focus();e.preventDefault();}}});
@@ -224,6 +230,6 @@ try {
  profiles['season-2022']={...Object.fromEntries(legacy),draftExamples:common['draft-examples'],teamLogos:common['team-logos'],season:{id:'season-2022',startYear:2022,startDate:'2022-01-03',masteryYear:2021}};
  const current=Object.fromEntries(modern);profiles['season-2026']={...current,draftExamples:common['draft-examples'],teamLogos:current['team-logos']};
  activateProfile('season-2026');
- try{const raw=localStorage.getItem('lck-manager-save-v1');if(raw){state=loadState(restore(raw));nav=state.activeMatch?'viewer':state.activeDraft?'draft':'home';}}catch{}
+ try{const raw=localStorage.getItem('lck-manager-save-v1');if(raw){state=loadState(restore(raw));nav=restoredView(state);if(ui.restoredLive)save();}}catch{}
  render();
 }catch(error){app.innerHTML=`<div class="loading"><h1>LCK MANAGER</h1><p>${esc(error.message)}</p><button class="btn" onclick="location.reload()">다시 불러오기</button></div>`;}

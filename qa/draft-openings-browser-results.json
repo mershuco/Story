@@ -1,0 +1,46 @@
+{
+  "url": "http://127.0.0.1:4173",
+  "checks": [
+    "third-set visible first ban phase leaves two current power picks open; AI counterbans protect its intended targets; plans and RNG survive reload",
+    "human acquires one opened OP and the opponent trades for another through actual pick turns; roles remain unassigned"
+  ],
+  "errors": [],
+  "example": {
+    "opened": [
+      "Orianna",
+      "Poppy"
+    ],
+    "counterbans": [
+      {
+        "champion": "Nocturne",
+        "protects": "Orianna",
+        "reason": "오리아나 확보·활용 보호 · 후방 진입과 주문 방어"
+      },
+      {
+        "champion": "Gwen",
+        "protects": "Poppy",
+        "reason": "뽀삐 확보·활용 보호 · 체력 비례 피해"
+      },
+      {
+        "champion": "Galio",
+        "protects": "Orianna",
+        "reason": "오리아나 확보·활용 보호 · 마법 피해 대응"
+      },
+      {
+        "champion": "Nautilus",
+        "protects": "Poppy",
+        "reason": "뽀삐 확보·활용 보호 · 지원 챔피언 포착·로밍 대응"
+      },
+      {
+        "champion": "Xerath",
+        "protects": "Orianna",
+        "reason": "오리아나 확보·활용 보호 · 장거리 견제로 구체 사거리 밖 압박"
+      },
+      {
+        "champion": "Pyke",
+        "protects": "Poppy",
+        "reason": "뽀삐 확보·활용 보호 · 지원 챔피언 포착·로밍 대응"
+      }
+    ]
+  }
+}

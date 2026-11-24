@@ -1,0 +1,52 @@
+{
+  "draftPolicy": "protected-power-v2",
+  "objectiveChoiceDeficit": 4500,
+  "method": "20 seeded full BO5 draft sequences, both teams automated. Openness reflects current available meta/comfort power picks. Counter relationships are qualitative kit-based game estimates, not matchup win-rate data.",
+  "results": [
+    {
+      "set": 1,
+      "drafts": 20,
+      "openedAtFirstPick": 0,
+      "counterProtectionBans": 0,
+      "intendedTargetsAcquired": 0,
+      "openingBanViolations": 0,
+      "fearlessViolations": 0
+    },
+    {
+      "set": 2,
+      "drafts": 20,
+      "openedAtFirstPick": 40,
+      "counterProtectionBans": 106,
+      "intendedTargetsAcquired": 40,
+      "openingBanViolations": 0,
+      "fearlessViolations": 0
+    },
+    {
+      "set": 3,
+      "drafts": 20,
+      "openedAtFirstPick": 40,
+      "counterProtectionBans": 120,
+      "intendedTargetsAcquired": 38,
+      "openingBanViolations": 0,
+      "fearlessViolations": 0
+    },
+    {
+      "set": 4,
+      "drafts": 20,
+      "openedAtFirstPick": 40,
+      "counterProtectionBans": 120,
+      "intendedTargetsAcquired": 40,
+      "openingBanViolations": 0,
+      "fearlessViolations": 0
+    },
+    {
+      "set": 5,
+      "drafts": 20,
+      "openedAtFirstPick": 40,
+      "counterProtectionBans": 115,
+      "intendedTargetsAcquired": 31,
+      "openingBanViolations": 0,
+      "fearlessViolations": 0
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import {draftCounterThreat} from './draft-matchups.js';
 import {start2026Cup,begin2026International,advance2026Phase,groupPoints} from './rules2026.js';
 import {simulateMatch,SIMULATION_MODEL,battleProbability,createMatchState,advanceMatch,matchOutcome,objectivePreview} from './match-sim.js';
 export {championCombatProfile,championCombat,combatLabels,phaseStrength,fightStage} from './champion-combat.js';
@@ -341,8 +342,8 @@ export function draftAction(s,d,championId) {
  d.history.push({...turn,champion:championId,role:null});d.step++;
  if(d.step===20){d.phase='assignment';d.assignment??={remaining:60,paused:false,expired:false,confirmed:false};}
 }
-function recommendationScore(s,d,c,role,teamId) {
- const t=team(s,teamId),p=getPlayer(s,t.lineup[role]);const meta=metaFor(s).champions.find(z=>z.id===c.id)?.presence??.2;
+function recommendationScore(s,d,c,role,teamId,metaPresence=null) {
+ const t=team(s,teamId),p=getPlayer(s,t.lineup[role]);const meta=metaPresence??metaFor(s).champions.find(z=>z.id===c.id)?.presence??.2;
  const own=d.picks[d.blue===teamId?'blue':'red'];let score=(p?.ovr??75)*.1+mastery(s,p?.id,c.id)*.5+meta*22+(c.roles.includes(role)?16:-35);
  if(!own.some(x=>DB.champMap[x.champion].features.engage)&&c.features.engage)score+=5;
  if(!own.some(x=>DB.champMap[x.champion].features.ap)&&c.features.ap&&role==='MID')score+=4;
@@ -381,7 +382,64 @@ export function recommendations(s,d,limit=3) {
   return{champion:c.id,name:c.name,role,score:best,reason:turn.kind==='ban'?`상대 숙련·현재 메타 대응 · ${ROLE_NAMES[role]} 가능`:`${ROLE_NAMES[role]} 활용 가능 · 최종 배치는 밴픽 종료 후`};
  });return rows.sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name)).slice(0,limit);
 }
-export function autoOne(s,d) {const choices=recommendations(s,d,3);if(!choices.length)throw Error('선택 가능한 챔피언이 없습니다.');const c=choices[Math.floor(random(s)*Math.min(2,choices.length))];draftAction(s,d,c.champion);}
+// A saved late-series opening plan intentionally trades a few power picks.
+// This is drafting policy, never an exception to availability or Fearless rules.
+export function draftOpeningPlan(s,d){
+ if(d.set<2)return {version:1,target:0,openings:[],powerPool:[]};
+ if(d.aiOpeningPlan)return d.aiOpeningPlan;
+ const first=d.firstPickSide??'blue',second=first==='blue'?'red':'blue',meta=new Map(metaFor(s).champions.map(c=>[c.id,c]));
+ const fitCache=new Map(),fit=(id,side)=>{const key=id+':'+side;if(!fitCache.has(key))fitCache.set(key,Math.max(...ROLES.map(r=>recommendationScore(s,d,DB.champMap[id],r,d[side],meta.get(id)?.presence??.2))));return fitCache.get(key);};
+ const rows=legalChampions(s,d).map(c=>({id:c.id,meta:meta.get(c.id)?.presence??0,score:Math.max(fit(c.id,first),fit(c.id,second))}));
+ const observed=rows.filter(c=>c.meta>=.35),ranked=(observed.length>=2?observed:rows).sort((a,b)=>(b.meta*55+b.score*.35)-(a.meta*55+a.score*.35)||a.id.localeCompare(b.id));
+ const pool=ranked.slice(0,6).map(c=>c.id),reserveCount=d.set>=3?2:1,target=Math.min(2,pool.length),openings=[];
+ for(const side of [first,second].slice(0,target)){
+  const options=pool.filter(id=>!openings.includes(id)).sort((a,b)=>fit(b,side)-fit(a,side)||a.localeCompare(b));
+  // Stable variation without consuming match RNG or rerolling on reload.
+  const salt=randomTie(`${d.matchId}:${d.set}:${side}:${s.rng}`),choice=options[salt%Math.min(2,options.length)];
+  if(choice)openings.push(choice);
+ }
+ return d.aiOpeningPlan={version:2,target,reserveCount,openings,powerPool:pool,firstPickSide:first,designated:{[first]:openings[0],[second]:openings[1]??openings[0]},claims:{blue:[],red:[]}};
+}
+function refreshDraftOpenings(s,d,plan){
+ const banned=new Set([...d.bans.blue,...d.bans.red]),taken=new Set([...d.picks.blue,...d.picks.red].map(p=>p.champion)),legal=new Set(legalChampions(s,d).map(c=>c.id));
+ plan.openings=plan.openings.filter(id=>!banned.has(id)&&(taken.has(id)||legal.has(id)));
+ for(const id of plan.powerPool)if(plan.openings.length<plan.target&&!plan.openings.includes(id)&&legal.has(id))plan.openings.push(id);
+ plan.claims??={};plan.designated??={blue:plan.openings[0],red:plan.openings[1]??plan.openings[0]};
+ for(const side of ['blue','red']){
+  const enemyPicks=new Set(d.picks[side==='blue'?'red':'blue'].map(p=>p.champion)),ours=new Set(d.picks[side].map(p=>p.champion));
+  plan.claims[side]=plan.openings.filter(id=>!enemyPicks.has(id)).sort((a,b)=>Number(ours.has(b))-Number(ours.has(a))||Number(b===plan.designated[side])-Number(a===plan.designated[side])).slice(0,plan.reserveCount??(d.set>=3?2:1));
+ }
+ return plan;
+}
+export function autoOne(s,d) {
+ const turn=draftTurn(d);if(!turn)throw Error('밴픽이 끝났습니다.');
+ let choices=recommendations(s,d,d.set>=2?200:3),planned=false,protecting=false;
+ if(d.set>=2){
+  const plan=refreshDraftOpenings(s,d,draftOpeningPlan(s,d)),open=new Set(plan.openings),targets=plan.claims[turn.side];
+  if(turn.kind==='ban'){
+   const alternatives=choices.filter(c=>!open.has(c.champion));
+   if(alternatives.length){
+    const best=alternatives[0].score;
+    const rows=alternatives.map(c=>{
+     let counter={weight:0,reason:'',target:null};
+     if(DB.champMap[c.champion].roles.includes(c.role))for(const [i,id]of targets.entries()){
+      const threat=draftCounterThreat(DB.champMap[id],DB.champMap[c.champion]),weight=threat.weight*(i===0?1:.55);
+      if(weight>counter.weight)counter={...threat,weight,target:id};
+     }
+     return {...c,counter,banScore:c.score+counter.weight*20};
+    }).sort((a,b)=>b.banScore-a.banScore||b.score-a.score);
+    const cover=rows.filter(c=>c.counter.weight>0&&c.score>=best-32);
+    choices=cover.length?cover:rows;protecting=!!cover.length;
+   }
+  }else{
+   const captures=choices.filter(c=>targets.includes(c.champion)&&DB.champMap[c.champion].roles.includes(c.role)&&c.score>=choices[0].score-10).sort((a,b)=>targets.indexOf(a.champion)-targets.indexOf(b.champion)||b.score-a.score);
+   if(captures.length){choices=captures;planned=true;}
+  }
+ }
+ if(!choices.length)throw Error('선택 가능한 챔피언이 없습니다.');
+ const width=planned?1:Math.min(protecting?3:d.set>=2&&turn.kind==='ban'?4:2,choices.length),c=choices[Math.floor(random(s)*width)];draftAction(s,d,c.champion);
+ if(protecting){const h=d.history.at(-1);h.protects=c.counter.target;h.reason=`${DB.champMap[c.counter.target].name} 확보·활용 보호 · ${c.counter.reason}`;}
+}
 export function autoOpponents(s,d) {while(draftTurn(d)&&draftTurn(d).team!==s.myTeam)autoOne(s,d);if(d.step===20)prepareAssignments(s,d);}
 export function completeDraft(s,d) {while(draftTurn(d))autoOne(s,d);prepareAssignments(s,d);return d;}
 export function assignChampion(d,side,champion,role) {
@@ -446,18 +504,32 @@ export function resolveDraft(s,m,d){const input=matchInput(s,m,d);return storeMa
 export function startLiveMatch(s){
  if(s.activeMatch)throw Error('이미 진행 중인 경기가 있습니다.');const d=s.activeDraft;if(!d)throw Error('진행 중인 밴픽이 없습니다.');
  const m=s.matches.find(m=>m.id===d.matchId),input=matchInput(s,m,d),simulation=createMatchState(input,s.rng);
- s.activeMatch={matchId:m.id,draft:structuredClone(d),simulation};s.activeDraft=null;s.viewing={matchId:m.id,setIndex:m.sets.length};advanceMatch(simulation,{controlledTeam:s.myTeam});return activeMatchSet(s);
+ s.activeMatch={matchId:m.id,draft:structuredClone(d),simulation};s.activeDraft=null;s.viewing={matchId:m.id,setIndex:m.sets.length};return advanceOwnMatch(s,null);
 }
 export function activeMatchSet(s){
  const live=s.activeMatch;if(!live)return null;const d=live.draft,z=live.simulation;
- return {live:true,number:d.set,blue:d.blue,red:d.red,patch:d.patch,picks:[...d.picks.blue,...d.picks.red],bans:d.bans,winner:z.winner,stats:z.stats,events:z.events,duration:z.clock,simulationVersion:5,pending:objectivePreview(z)};
+ return {live:true,number:d.set,blue:d.blue,red:d.red,patch:d.patch,picks:[...d.picks.blue,...d.picks.red],bans:d.bans,winner:z.winner,stats:z.stats,events:z.events,duration:z.clock,simulationVersion:5,pending:needsObjectiveChoice(s)?objectivePreview(z):null};
+}
+export const OBJECTIVE_CHOICE_DEFICIT=4500;
+export function needsObjectiveChoice(s){
+ const z=s.activeMatch?.simulation;if(!z?.pending||z.finished)return false;
+ const opponent=z.teams.find(id=>id!==s.myTeam);
+ return z.gold[opponent]-z.gold[s.myTeam]>=OBJECTIVE_CHOICE_DEFICIT;
 }
 export function advanceOwnMatch(s,action='auto',all=false){
  const live=s.activeMatch;if(!live)throw Error('진행 중인 경기가 없습니다.');
+ if(['contest','trade'].includes(action)&&!needsObjectiveChoice(s))throw Error('오브젝트 수동 판단은 4,500G 이상 열세에서 가능합니다.');
  advanceMatch(live.simulation,{controlledTeam:s.myTeam,action,auto:all});
+ // Noncritical objectives use the same automatic coach and RNG path as before.
+ // Only the controller's stopping point changes; archived results remain valid.
+ while(!live.simulation.finished&&!needsObjectiveChoice(s))advanceMatch(live.simulation,{controlledTeam:s.myTeam,action:'auto'});
  if(!live.simulation.finished)return activeMatchSet(s);
  const m=s.matches.find(m=>m.id===live.matchId);s.rng=live.simulation.rng;
  const set=storeMatch(s,m,live.draft,live.simulation.input,matchOutcome(live.simulation));s.activeMatch=null;return set;
+}
+export function resumeLiveMatch(s){
+ if(!s.activeMatch)return null;
+ return needsObjectiveChoice(s)?activeMatchSet(s):advanceOwnMatch(s,'auto');
 }
 export function commitOwnDraft(s) {const d=s.activeDraft;if(!d)throw Error('진행 중인 밴픽이 없습니다.');const m=s.matches.find(m=>m.id===d.matchId);const set=resolveDraft(s,m,d);s.activeDraft=null;s.viewing={matchId:m.id,setIndex:m.sets.length-1};return set;}
 export function simulateSeries(s,m) {for(let guard=0;guard<5&&m.status!=='done';guard++){const d=completeDraft(s,newDraft(s,m));autoAssignDraft(s,d);confirmDraftAssignments(d);resolveDraft(s,m,d);}return m;}
