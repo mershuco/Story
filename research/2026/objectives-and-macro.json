@@ -1,5 +1,5 @@
 {
-  "model": "event-v10",
+  "model": "event-v11",
   "reviewedOn": "2026-11-25",
   "sources": [
     {
@@ -56,7 +56,7 @@
   "jungleSmiteIndex": "clamp(0.8*OVR + 0.2*championMastery - 0.06*fatigue,40,99). Game estimate, not observed player Smite success.",
   "macroModel": "구단별 고정 게임 성향 + 선택 전략 + 밴픽 결투/포킹/진입/성장 + 현재 상황 + 저장된 난수. 실제 구단 성향을 정밀 추정한 자료 아님.",
   "manualProgress": "오브젝트 직전 상대 골드−우리 골드>=4500인 경우만 수동 선택창 표시. 그 외에는 자동 판단으로 진행. 한타·교전 승리 확률과 오브젝트 확보 예상을 별도 표시. 기존 v5 완료 경기의 수동 선택은 원래 기록대로 재생.",
-  "saveCompatibility": "v2~v9 완료 경기 보존. 진행 중 v7~v9은 과거 사건 수를 경계로 v10 전환. 이전 구간의 골드·난수·선택은 동결 복원. v5/v6 진행 세트는 당시 규칙 유지.",
+  "saveCompatibility": "v2~v10 완료 기록 동결. 진행 중 v7~v10은 사건·골드·난수 보존 후 v11로 전환. v5/v6 진행 세트는 이전 규칙 유지.",
   "draftPolicy": "protected-power-v2: 선픽 확보·후픽 교환용 잔여 OP1~2개를 열고 자기 주력의 대응 챔피언을 우선 밴. 2세트 주력1개,3세트 이후 주력·대안2개. 공식 스킬 기전 기반 정성적 게임 판단; 실제 승률표 아님.",
   "draftCounterSource": "dist/draft-matchups.js and frozen Riot Data Dragon 2026 champion spell snapshots",
   "objectiveEffects": "research/2026/objective-effects.md; dist/objective-effects.js",
@@ -87,5 +87,6 @@
   "liveProgress": "UI는 incremental 모드로 장면 진행 요청마다 계산. 재접속은 결과를 추가 계산하거나 다시 추첨하지 않음. 전체 자동 진행만 남은 세트를 일괄 계산.",
   "winCondition": "적 넥서스 HP가 0일 때만 승리. 고정시간 강제승리·확률만으로 종결시키는 경로 제거.",
   "objectiveHud": "용·유충 숫자 텍스트 행 삭제. 용은 종류별 아이콘, 유충은3칸 중 획득 수만큼 보라색 아이콘 표시.",
-  "economyResearch": "research/2026/economy-v10.md"
+  "economyResearch": "research/2026/economy-v10.md",
+  "closingResearch": "research/2026/playback-and-closing-v11.md"
 }

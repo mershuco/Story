@@ -17,7 +17,7 @@ test('viewer reconstruction preserves the result, all KDA totals, saved RNG and 
  const before=JSON.stringify(set),rng=s.rng;const scenes=buildTimeline(set);
  assert.equal(JSON.stringify(set),before);assert.equal(s.rng,rng);assert.deepEqual(scenes,buildTimeline(set));
  const kills=scenes.flatMap(e=>e.kills);for(const p of set.stats){assert.equal(kills.filter(k=>k.killer===p.player).length,p.k);assert.equal(kills.filter(k=>k.victim===p.player).length,p.d);assert.equal(kills.filter(k=>k.assists.includes(p.player)).length,p.a);}
- assert.equal(scenes.at(-1).kind,'nexus');assert.equal(scenes.at(-1).team,set.winner);assert.equal(sceneClock(scenes.at(-1),1),set.duration*60);
+ assert.equal(scenes.at(-1).kind,'nexus');assert.equal(scenes.at(-1).team,set.winner);assert.equal(sceneClock(scenes.at(-1),1),Math.round(set.duration*60));
  for(const scene of scenes)assert.equal(new Set(scene.kills.map(k=>k.victim)).size,scene.kills.length);
 });
 test('ganks, objective rotations and recalls move champions to their corresponding map locations',()=>{

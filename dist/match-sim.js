@@ -1,3 +1,5 @@
+import {deathTimerSeconds} from './death-timer.js';
+import * as legacyV10 from './match-sim-v10.js';
 import {initializeEconomy,killReward,settleDeathBounty,markBusy} from './match-economy.js';
 import * as legacyV9 from './match-sim-v9.js';
 import {initializeBounties,updateBounties,claimObjectiveBounty} from './objective-bounties.js';
@@ -8,11 +10,11 @@ import {phaseStrength} from './champion-combat.js';
 import {macroProfile,objectiveChances,automaticObjectiveDecision,OBJECTIVE_NAMES} from './macro-objectives.js';
 import * as legacyV7 from './match-sim-v7.js';
 import * as legacyV6 from './match-sim-v6.js';
-import {initializeRift,creditPlayer,creditTeam,farmPlayers,tickRift,gainVision,visionFightGap,visionControl,pushLane,attackStructures,pushNarration,riftSnapshot,superPressure,finishingPlan,collectSideResources} from './rift-state.js';
+import {initializeRift,creditPlayer,creditTeam,farmPlayers,tickRift,gainVision,visionFightGap,visionControl,pushLane,attackStructures,pushNarration,riftSnapshot,superPressure,finishingPlan,closingPressurePlan,collectSideResources} from './rift-state.js';
 import * as legacyV5 from './match-sim-v5.js';
 import {initializeObjectives,takeDragon,grantTemporaryBuff,loseBuffsOnDeath,buffCoverage,objectivePower,structurePressure,objectiveSnapshot,DRAKES} from './objective-effects.js';
 export {goldInfluence,battleFactors,battleProbability,matchRandom};
-export const SIMULATION_MODEL='event-v10';
+export const SIMULATION_MODEL='event-v11';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const sigmoid=x=>1/(1+Math.exp(-x));
 const round=n=>Math.round(n*1000)/1000;
@@ -38,7 +40,7 @@ function record(s,{kind,title,location='mid',roles=null,team=null,kills=[],objec
 }
 export function createMatchState(input,seed=0,external){
  const snapshot=structuredClone(input),{blue,red}=snapshot,teams=[blue,red],zeros=()=>Object.fromEntries(teams.map(id=>[id,0]));
- const s={version:10,input:snapshot,rng:seed>>>0,teams,clock:0,stats:snapshot.roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),gold:{[blue]:2500,[red]:2500},score:zeros(),dragons:zeros(),grubs:zeros(),heralds:zeros(),barons:zeros(),elders:zeros(),baronUntil:zeros(),elderUntil:zeros(),momentum:zeros(),minLead:zeros(),events:[],lastLeader:null,leadChanges:0,winner:null,finished:false,pending:null,window:0,decisions:[],soul:null,steps:0};
+ const s={version:11,input:snapshot,rng:seed>>>0,teams,clock:0,stats:snapshot.roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),gold:{[blue]:2500,[red]:2500},score:zeros(),dragons:zeros(),grubs:zeros(),heralds:zeros(),barons:zeros(),elders:zeros(),baronUntil:zeros(),elderUntil:zeros(),momentum:zeros(),minLead:zeros(),events:[],lastLeader:null,leadChanges:0,winner:null,finished:false,pending:null,window:0,decisions:[],soul:null,steps:0};
  s.powerGap=(input.teamStrengthBlue??input.bluePower)-(input.teamStrengthRed??input.redPower);s.championGap=input.bluePower-input.redPower-s.powerGap;
  s.macros=[macroProfile(blue,input.compositionBlue,input.blueStrategy),macroProfile(red,input.compositionRed,input.redStrategy)];
  const rng=()=>draw(s,external),delay=()=>.3+rng()*1.4+(1-(s.macros[0].objective+s.macros[1].objective)/2)*.8;
@@ -57,7 +59,7 @@ function combatEstimate(s,minute,kind,roles=null,execution=0){
  return {probability:factors.probability,matchup,factors,effects,visionGap};
 }
 export function objectivePreview(s){
- if(s.version===9)return legacyV9.objectivePreview(s);if(s.version===5)return legacyV5.objectivePreview(s);if(s.version===6)return legacyV6.objectivePreview(s);if(s.version===7)return legacyV7.objectivePreview(s);if(s.version===8)return legacyV8.objectivePreview(s);
+ if(s.version===10)return legacyV10.objectivePreview(s);if(s.version===9)return legacyV9.objectivePreview(s);if(s.version===5)return legacyV5.objectivePreview(s);if(s.version===6)return legacyV6.objectivePreview(s);if(s.version===7)return legacyV7.objectivePreview(s);if(s.version===8)return legacyV8.objectivePreview(s);
  if(!s.pending)return null;const p=s.pending,[blue,red]=s.teams,c=combatEstimate(s,p.minute,p.kind,p.roles);
  const secure=objectiveChances({blue,red,roster:s.stats,stats:s.stats,roles:p.roles,skills:s.input.smiteSkills??[75,75],fightChance:c.probability,visionGap:visionFightGap(s,['grubs','baron'].includes(p.kind)?'baron':'dragon')/3.6});
  return {...p,tradePolicy:'earned',tradeRange:[0,350],tradeFarmMax:350,redTradeFarmMax:350,tradePlan:Object.fromEntries(s.teams.map(id=>[id,tradePlan(s,id,p.kind)])),objectiveBounty:s.objectiveBounty?.team??null,fightChance:c.probability,secureChance:secure.blueChance,secure,dragons:{...s.dragons},grubs:{...s.grubs},gold:{...s.gold},macros:s.macros.map(m=>m.label),dragonType:s.dragonType,riftType:s.riftType,soul:s.soul,objectiveState:objectiveSnapshot(s),buffPower:c.effects,vision:s.teams.map(id=>Math.round(visionControl(s,id,['grubs','baron'].includes(p.kind)?'baron':'dragon'))),visionFightGap:c.visionGap};
@@ -82,7 +84,7 @@ function battle(s,kind,location,roles,rng){
   let left=reward.assistPool;assists.forEach((pid,i)=>{const amount=i===assists.length-1?left:Math.floor(reward.assistPool/assists.length);left-=amount;creditPlayer(s,pid,amount,{source:'assists'});});
   bounty+=reward.shutdown;
  }
- for(const k of kills){s.deathAt[k.victim]=s.clock;s.respawnAt[k.victim]=s.clock+Math.min(65,15+s.clock*.8)/60;settleDeathBounty(s,byId[k.victim],{base:k.gold.kill,shutdown:k.gold.shutdown},k.gold.assists);}
+ for(const k of kills){s.deathAt[k.victim]=s.clock;s.respawnAt[k.victim]=s.clock+deathTimerSeconds(byId[k.victim].level,s.clock)/60;k.respawnAtSecond=Math.round(s.respawnAt[k.victim]*60);settleDeathBounty(s,byId[k.victim],{base:k.gold.kill,shutdown:k.gold.shutdown},k.gold.assists);}
  markBusy(s,[...pools[blue],...pools[red]],s.clock+.18);loseBuffsOnDeath(s,kills.map(k=>k.victim));s.momentum[winner]++;s.momentum[loser]=0;
  const info={combatTeam:winner,leadBefore:before,blueWinProbability:c.probability,goldWeight:c.factors.goldWeight,compositionGap:c.matchup.gap,teamStrengthGap:s.powerGap,bounty,championPhaseGap:c.matchup.phaseGap,championFormGap:c.matchup.formGap,objectiveBuffGap:c.effects[0].total-c.effects[1].total,visionFightGap:c.visionGap,elderExecutions:kills.filter(k=>k.elderExecute).length};
  if(c.matchup.driver){const p=c.matchup.driver;info.championFormImpact=[p.side,p.champion,p.k,p.d,p.a,Math.round(p.performance*100)/100];}
@@ -136,8 +138,8 @@ function resolveObjective(s,action,controlledTeam,rng){
  if(!s.finished&&p.kind==='baron'&&buffCoverage(s,'baron',main)>0){farming(s,s.clock+.22,rng);resolveCampaign(s,main,rng,{dead:c?.dead??[],uncontested:!c||c.winner===main,baron:true});}
  s.nextMacro=Math.max(s.nextMacro,s.clock+.5);
 }
-function resolvePush(s,id,rng,{lane=null,dead=[],uncontested=false,baron=false,finishAttempt=false,damageScale=1,maxStructures=7,campaign=null}={}){
- lane=pushLane(s,id,rng,lane);const push=attackStructures(s,id,{lane,rng,dead,uncontested,damageScale,maxStructures,roles:campaign?.roles??null});
+function resolvePush(s,id,rng,{lane=null,dead=[],uncontested=false,baron=false,finishAttempt=false,damageScale=1,maxStructures=7,campaign=null,duration=0,consumeWave=true}={}){
+ lane=pushLane(s,id,rng,lane);const push=attackStructures(s,id,{lane,rng,dead,uncontested,damageScale,maxStructures,roles:campaign?.roles??null,consumeWave});if(duration)farming(s,s.clock+duration/60,rng);
  record(s,{kind:finishAttempt?'finish-push':push.blocked?'waveclear':baron?'baron-push':'siege',title:`${name(s,id)} · ${finishAttempt?'넥서스 우선 공성':push.blocked?'미니언 정리에 막힌 공성':baron?'바론 강화 공성':'구조물 압박'}`,location:lane,roles:campaign?.roles??null,team:id,push,finishAttempt,campaign,objective:push.structures.some(x=>x.destroyed)?{kind:push.structures.find(x=>x.destroyed).kind,team:id}:null,text:(campaign?`${campaign.reason==='baron'?'바론 운영':campaign.reason==='teamfight'?'대승 후 운영':'공성 전환'} · ${campaign.index}/${campaign.lanes}개 라인 전환. `:'')+pushNarration(push)});
  if(s.structures[enemy(s,id)].nexus===0)finishMatch(s,id,rng);
  return push;
@@ -148,7 +150,7 @@ function resolveCampaign(s,id,rng,{dead=[],uncontested=false,baron=false,bigWin=
  const maxLanes=enemyDead>=4?1:alive>=4?(baron?(alive===5&&macro(s,id).split>=.7?3:2):bigWin&&enemyDead>=3?2:1):1,preferred=pushLane(s,id,rng,lane),lanes=[preferred,...['top','mid','bot'].filter(l=>l!==preferred).sort((a,b)=>(s.wavePressure?.[id]?.[b]??.6)-(s.wavePressure?.[id]?.[a]??.6))].filter((l,i)=>i===0||(s.wavePressure?.[id]?.[l]??.6)>=.45).slice(0,maxLanes);
  let buildings=baron?4:bigWin?3:1;
  for(let index=0;index<lanes.length&&!s.finished&&buildings>0;index++){
-  const finish=finishingPlan(s);if(finish?.team===id){if(index)farming(s,s.clock+.12,rng);resolvePush(s,id,rng,{lane:finish.lane,finishAttempt:true,baron});return;}
+  const finish=finishingPlan(s);if(finish?.team===id){resolveClosing(s,finish,rng);return;}
   if(index)farming(s,s.clock+(lanes[index-1]!=='mid'&&lanes[index]!=='mid'?.4:.18),rng);
   const pushMinutes=bigWin?.5:baron?.35:.25;farming(s,s.clock+pushMinutes,rng);const currentDead=s.stats.filter(p=>(s.respawnAt[p.player]??0)>s.clock).map(p=>p.player),currentEnemyDead=s.stats.filter(p=>p.team===enemy(s,id)&&currentDead.includes(p.player)).length;
   if(index&&baron&&!buffCoverage(s,'baron',id)&&currentEnemyDead<2)break;const scales=lanes.length===1?[1]:[1,1,1];
@@ -156,6 +158,20 @@ function resolveCampaign(s,id,rng,{dead=[],uncontested=false,baron=false,bigWin=
   buildings-=push.structures.filter(x=>x.destroyed).length;
   if(!baron&&s.stats.filter(p=>p.team===enemy(s,id)&&(s.respawnAt[p.player]??0)>s.clock).length<2)break;
  }
+}
+function resolveClosing(s,plan,rng,{pressure=false}={}){
+ const id=plan.team;s.lastClosingAttempt??={};s.lastClosingAttempt[id]=s.clock;
+ if(plan.travel>0){farming(s,s.clock+plan.travel/60,rng);s.wavePressure[id][plan.lane]=Math.max(.6,s.wavePressure[id][plan.lane]);}
+ const aliveDefenders=s.stats.filter(p=>p.team===enemy(s,id)&&(s.respawnAt[p.player]??0)<=s.clock).length;
+ if(pressure&&aliveDefenders>=2){
+  farming(s,s.clock+.02,rng);const c=battle(s,'siege',plan.lane,null,rng);record(s,{kind:'siege',title:`${name(s,c.winner)} · 경기 마무리 기지 교전`,location:plan.lane,team:c.winner,kills:c.kills,closingFight:true,...c.info});
+  if(c.winner!==id)return;
+ }
+ const finish=finishingPlan(s,{team:id,atLane:plan.lane});
+ if(finish?.team===id){
+  const duration=Math.max(1,finish.seconds-finish.travel),scale=finish.lateScale*duration/15;
+  resolvePush(s,id,rng,{lane:finish.lane,finishAttempt:true,damageScale:scale,duration,consumeWave:false});
+ }else resolvePush(s,id,rng,{lane:plan.lane,damageScale:1.4,duration:15});
 }
 function macroEvent(s,rng){
  const [blue,red]=s.teams,lead=s.gold[blue]-s.gold[red],initiative=sigmoid(s.powerGap*.04+lead/12000+(s.macros[0].aggression-s.macros[1].aggression)*.7+visionFightGap(s)*.08),id=rng()<initiative?blue:red,m=macro(s,id),members=comp(s,id)?.members??[],phase=members.length?members.reduce((n,[ch])=>n+phaseStrength(ch,s.clock),0)/members.length:3,aggression=clamp(m.aggression+(phase-3)*.12,.15,1),baron=buffCoverage(s,'baron',id)>0;
@@ -173,17 +189,19 @@ function macroEvent(s,rng){
 }
 function finishMatch(s,winner,rng){
  if(s.structures[enemy(s,winner)].nexus>0)throw Error('넥서스를 파괴하기 전에는 승자를 정할 수 없습니다.');
- farming(s,Math.ceil(s.clock+.15),rng);s.winner=winner;s.finished=true;s.pending=null;
+ farming(s,round(s.clock+.06),rng);s.winner=winner;s.finished=true;s.pending=null;
  for(const p of s.stats){p.cs=Math.round(p.cs);p.damage=Math.round((p.role==='SUP'?380:p.role==='JGL'?600:820)*s.clock+p.k*340+rng()*2600);}
  record(s,{kind:'nexus',title:'넥서스 파괴',location:winner===s.teams[0]?'baseRed':'baseBlue',team:winner,objective:{kind:'nexus',team:winner}});
 }
 export function advanceMatch(s,{controlledTeam=null,action=null,auto=false,maxEvents=Infinity}={},external){
- if(s.version===9)return legacyV9.advanceMatch(s,{controlledTeam,action,auto,maxEvents},external);if(s.version===5)return legacyV5.advanceMatch(s,{controlledTeam,action,auto},external);if(s.version===6)return legacyV6.advanceMatch(s,{controlledTeam,action,auto,maxEvents},external);if(s.version===7)return legacyV7.advanceMatch(s,{controlledTeam,action,auto,maxEvents},external);if(s.version===8)return legacyV8.advanceMatch(s,{controlledTeam,action,auto,maxEvents},external);
+ if(s.version===10)return legacyV10.advanceMatch(s,{controlledTeam,action,auto,maxEvents},external);if(s.version===9)return legacyV9.advanceMatch(s,{controlledTeam,action,auto,maxEvents},external);if(s.version===5)return legacyV5.advanceMatch(s,{controlledTeam,action,auto},external);if(s.version===6)return legacyV6.advanceMatch(s,{controlledTeam,action,auto,maxEvents},external);if(s.version===7)return legacyV7.advanceMatch(s,{controlledTeam,action,auto,maxEvents},external);if(s.version===8)return legacyV8.advanceMatch(s,{controlledTeam,action,auto,maxEvents},external);
  if(s.finished)return s;if(controlledTeam&&!s.teams.includes(controlledTeam))throw Error('경기 참가 구단이 아닙니다.');if(action&&!['contest','trade','auto'].includes(action))throw Error('유효하지 않은 오브젝트 판단입니다.');
  const rng=()=>draw(s,external),startCount=s.events.length;
+ const immediate=finishingPlan(s);if(s.pending&&immediate){s.pending=null;resolveClosing(s,immediate,rng);if(s.finished||s.events.length-startCount>=maxEvents)return s;}
  if(s.pending){if(controlledTeam&&!auto&&!action)return s;resolveObjective(s,action,controlledTeam,rng);if(s.events.length-startCount>=maxEvents)return s;}
  for(let guard=0;guard<700&&!s.finished;guard++){
-  const finish=finishingPlan(s);if(finish){s.pending=null;farming(s,s.clock+.08,rng);resolvePush(s,finish.team,rng,{lane:finish.lane,finishAttempt:true});if(s.events.length-startCount>=maxEvents)return s;continue;}
+  const finish=finishingPlan(s);if(finish){s.pending=null;resolveClosing(s,finish,rng);if(s.events.length-startCount>=maxEvents)return s;continue;}
+  const pressure=closingPressurePlan(s);if(pressure){resolveClosing(s,pressure,rng,{pressure:true});if(s.events.length-startCount>=maxEvents)return s;continue;}
   const next=nextObjective(s);
   if(next&&next[1]<=s.nextMacro){prepareObjective(s,next[0],next[1],rng);if(controlledTeam&&!auto)return s;resolveObjective(s,null,null,rng);if(s.events.length-startCount>=maxEvents)return s;continue;}
   farming(s,Math.max(s.clock+.2,s.nextMacro),rng);macroEvent(s,rng);s.nextMacro=s.clock+nextGap(s,rng)-(s.events.at(-1)?.kind==='recall'&&buffCoverage(s,'baron',s.events.at(-1).team)>0?4/60:0);s.steps++;if(s.events.length-startCount>=maxEvents)return s;
@@ -191,23 +209,23 @@ export function advanceMatch(s,{controlledTeam=null,action=null,auto=false,maxEv
  if(!s.finished&&!s.pending)throw Error('경기 진행이 안전 한도에 도달했습니다.');return s;
 }
 export function matchOutcome(s){
- if(s.version===9)return legacyV9.matchOutcome(s);if(s.version===5)return legacyV5.matchOutcome(s);if(s.version===6)return legacyV6.matchOutcome(s);if(s.version===7)return legacyV7.matchOutcome(s);if(s.version===8)return legacyV8.matchOutcome(s);
+ if(s.version===10)return legacyV10.matchOutcome(s);if(s.version===9)return legacyV9.matchOutcome(s);if(s.version===5)return legacyV5.matchOutcome(s);if(s.version===6)return legacyV6.matchOutcome(s);if(s.version===7)return legacyV7.matchOutcome(s);if(s.version===8)return legacyV8.matchOutcome(s);
  if(!s.finished)throw Error('경기가 아직 끝나지 않았습니다.');return{winner:s.winner,loser:enemy(s,s.winner),duration:s.clock,events:s.events,stats:s.stats,initialBlueProbability:s.initialBlueProbability,finalGold:{...s.gold},finalObjectives:{dragons:{...s.dragons},grubs:{...s.grubs},heralds:{...s.heralds},barons:{...s.barons},elders:{...s.elders}},comeback:{winnerMaxDeficit:Math.round(-s.minLead[s.winner])||0,leadChanges:s.leadChanges,finalLead:s.gold[s.teams[0]]-s.gold[s.teams[1]]},decisionOverrides:s.decisions,model:SIMULATION_MODEL};
 }
 export function upgradeMatchState(s){
- if(s.version===8)legacyV9.upgradeMatchState(s);if(s.version!==9)return s;
- s.version=10;s.input.model=SIMULATION_MODEL;s.input.upgradeFrom9AtEventCount??=s.events.length;initializeEconomy(s,{migrated:true});
- for(const e of s.events)for(const k of e.kills??[])s.deathAt[k.victim]=e.minute;
- return s;
+ if(s.version===8||s.version===9)legacyV10.upgradeMatchState(s);if(s.version!==10)return s;
+ s.version=11;s.input.model=SIMULATION_MODEL;s.input.upgradeFrom10AtEventCount??=s.events.length;s.lastClosingAttempt={};return s;
 }
 function advancePrefix(engine,s,count,rng){for(let guard=0;s.events.length<count&&guard<1500;guard++)engine.advanceMatch(s,{controlledTeam:s.input.blue,action:s.pending?'auto':null,maxEvents:1},rng);if(s.events.length!==count||s.finished)throw Error('이전 경기 진행 지점을 복원하지 못했습니다.');return s;}
 export function simulateMatch(input,rng){
  let s;
- if(Number.isInteger(input.upgradeFrom9AtEventCount)){
-  if(Number.isInteger(input.upgradeFrom8AtEventCount)){s=advancePrefix(legacyV8,legacyV8.createMatchState(input,0,rng),input.upgradeFrom8AtEventCount,rng);legacyV9.upgradeMatchState(s);}
-  else s=legacyV9.createMatchState(input,0,rng);
-  advancePrefix(legacyV9,s,input.upgradeFrom9AtEventCount,rng);upgradeMatchState(s);
+ if(Number.isInteger(input.upgradeFrom10AtEventCount)){
+  if(Number.isInteger(input.upgradeFrom9AtEventCount)){
+   if(Number.isInteger(input.upgradeFrom8AtEventCount)){s=advancePrefix(legacyV8,legacyV8.createMatchState(input,0,rng),input.upgradeFrom8AtEventCount,rng);legacyV9.upgradeMatchState(s);}else s=legacyV9.createMatchState(input,0,rng);
+   advancePrefix(legacyV9,s,input.upgradeFrom9AtEventCount,rng);legacyV10.upgradeMatchState(s);
+  }else s=legacyV10.createMatchState(input,0,rng);
+  advancePrefix(legacyV10,s,input.upgradeFrom10AtEventCount,rng);upgradeMatchState(s);
  }else s=createMatchState(input,0,rng);
  advanceMatch(s,{auto:true},rng);return matchOutcome(s);
 }
-export function replayMatch(input){return input.model===SIMULATION_MODEL?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}
+export function replayMatch(input){return input.model===SIMULATION_MODEL?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}

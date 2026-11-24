@@ -18,8 +18,4 @@ export function paintPowerPlays(c,set,timeline,index,progress,second){
  }
  const effective=progress>=.8?timeline[index]:timeline[Math.max(0,index-1)],bounty=effective?.rift?.bounty,banner=document.querySelector('[data-bounty-banner]');if(banner){banner.hidden=!bounty?.team;if(bounty?.team)banner.textContent=`오브젝트 현상금 활성 · ${c.teamName(bounty.team)} · 테두리가 표시된 적 포탑 파괴 시 추가 골드`;}
 }
-export function playbackIncrement(scene,progress,elapsed,speed){
- const major=['baron','elder'].includes(scene?.kind)&&scene?.objective?.kind===scene.kind;
- // Retain a readable result for at least four real seconds even at x8.
- return elapsed/(major&&progress>=.76?20000:3200)*(major&&progress>=.76?1:speed);
-}
+export function playbackIncrement(scene,progress,elapsed,speed){return elapsed/3200*speed;}

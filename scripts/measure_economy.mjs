@@ -1,6 +1,6 @@
 // Reproducible synthetic regression, not observed LCK economy statistics.
 import{writeFileSync}from'node:fs';
-import * as previous from '../dist/match-sim-v9.js';import * as current from '../dist/match-sim.js';
+import * as previous from '../dist/match-sim-v9.js';import * as current from '../dist/match-sim-v10.js';
 const roles=['TOP','JGL','MID','BOT','SUP'],roster=['B','R'].flatMap(team=>roles.map(role=>({team,role,player:team+role,champion:role==='JGL'?'LeeSin':'Annie'}))),input={blue:'B',red:'R',bluePower:80,redPower:80,roster};
 const trials=400,scenarios=[];
 for(const engine of [previous,current]){

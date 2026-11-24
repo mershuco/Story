@@ -92,18 +92,28 @@ export function siegeBaseDamage(s,id,{lane='mid',dead=[],uncontested=false,roles
  const lead=s.gold[id]-s.gold[defender],power=clamp(1+lead*goldInfluenceApprox(s.clock)/40000,.55,1.5),scaling=1+Math.max(0,s.clock-24)*.045;
  return {baron,supers,clear,survivors,base:survivors?survivors/5*(1450+(c.dps??1)*260+(c.poke??0)*100+survivors*130)*scaling*power*(1+structurePressure(s,id)+supers*.18)*(1-clear*(baron>.1?.32:.65)):0};
 }
-export function finishingPlan(s){
- const candidates=[];
- for(const id of s.teams)for(const lane of LANES){
-  const enemy=other(s,id),base=s.structures[enemy],l=base.lanes[lane];if((s.wavePressure?.[id]?.[lane]??1)<.25)continue;if(l.towers.filter(h=>h===0).length<2)continue;
-  const remaining=l.towers.reduce((n,h)=>n+h,0)+l.inhibitor+base.nexusTowers.reduce((n,h)=>n+h,0)+base.nexus,estimate=siegeBaseDamage(s,id,{lane}),dead=s.stats.filter(p=>p.team===enemy&&(s.respawnAt?.[p.player]??0)>s.clock).length;
-  if(!estimate.survivors)continue;
-  const vulnerable=remaining<=estimate.base*.8||(dead>=2&&remaining<=estimate.base*1.2)||(dead>=3&&l.towers.every(h=>h===0)&&remaining<=estimate.base*2.2);
-  if(vulnerable)candidates.push({team:id,lane,remaining,damage:estimate.base,score:estimate.base/Math.max(1,remaining)+dead*.1});
- }
- return candidates.sort((a,b)=>b.score-a.score)[0]??null;
+function closingCandidate(s,id,lane,atLane=null){
+ const defender=other(s,id),base=s.structures[defender],l=base.lanes[lane],estimate=siegeBaseDamage(s,id,{lane});if(!estimate.survivors)return null;
+ const waves=s.wavePressure?.[id]?.[lane]??1,arrival=waves<.25?6+(.25-waves)*35:0,advance=atLane===lane?0:l.towers[0]>0?12:l.towers[1]>0?8:l.towers[2]>0?4:0;
+ const remaining=l.towers.reduce((n,h)=>n+h,0)+l.inhibitor+base.nexusTowers.reduce((n,h)=>n+h,0)+base.nexus;
+ const lateScale=1+clamp((s.clock-25)/20,0,.75),damagePerSecond=estimate.base*lateScale*.8*(.65+Math.max(.6,waves)*.35)/15;
+ const respawns=s.stats.filter(p=>p.team===defender&&(s.respawnAt?.[p.player]??0)>s.clock).map(p=>(s.respawnAt[p.player]-s.clock)*60).sort((a,b)=>a-b),dead=respawns.length;
+ const window=dead>=3?respawns[dead-3]-2:dead===2?Math.min(20,respawns[0]-2):12;
+ const travel=arrival+advance,seconds=travel+remaining/Math.max(1,damagePerSecond)+3;
+ return {team:id,lane,remaining,damage:estimate.base,damagePerSecond,lateScale,dead,survivors:estimate.survivors,travel,seconds,window,score:damagePerSecond/Math.max(1,remaining)+dead*.1};
 }
-export function attackStructures(s,id,{lane='mid',rng,dead=[],uncontested=false,trade=false,forceDamage=null,damageScale=1,maxStructures=7,roles=null}={}){
+export function finishingPlan(s,{team=null,atLane=null}={}){
+ return s.teams.filter(id=>!team||id===team).flatMap(id=>LANES.map(lane=>closingCandidate(s,id,lane,atLane))).filter(p=>p&&p.seconds<=p.window).sort((a,b)=>b.score-a.score)[0]??null;
+}
+export function closingPressurePlan(s){
+ if(s.clock<30)return null;
+ return s.teams.flatMap(id=>{
+  if(s.clock-(s.lastClosingAttempt?.[id]??-100)<1)return [];
+  const lead=s.gold[id]-s.gold[other(s,id)],elder=buffCoverage(s,'elder',id)>0;
+  return LANES.map(lane=>closingCandidate(s,id,lane)).filter(p=>p&&p.survivors>=3&&lead>=6000&&(p.dead>=2||elder||laneAccess(s,id,p.lane)>=2&&lead>=9000));
+ }).sort((a,b)=>b.score-a.score)[0]??null;
+}
+export function attackStructures(s,id,{lane='mid',rng,dead=[],uncontested=false,trade=false,forceDamage=null,damageScale=1,maxStructures=7,roles=null,consumeWave=true}={}){
  const defender=other(s,id),{baron,supers,clear,base}=siegeBaseDamage(s,id,{lane,dead,uncontested,roles});
  let damage=forceDamage??base*(.8+rng()*.4)*damageScale*(.65+(s.wavePressure?.[id]?.[lane]??1)*.35);
  if(trade)damage*=.9;if(forceDamage===null&&(s.wavePressure?.[id]?.[lane]??1)<.25)damage=0;damage=Math.max(0,Math.round(damage));const result={team:id,defender,lane,baron:baron>0,superMinions:supers,clear:Math.round(clear*100),damage:0,structures:[],gold:0,bounty:0,vision:[],blocked:false};
@@ -115,7 +125,7 @@ export function attackStructures(s,id,{lane='mid',rng,dead=[],uncontested=false,
   if(hp>0)break;
  }
  if(!result.structures.some(x=>x.destroyed)&&clear>.5){result.blocked=true;gainVision(s,defender,lane,6);}
- if(s.wavePressure?.[id])s.wavePressure[id][lane]=Math.max(.08,s.wavePressure[id][lane]-.65);s.lastPush[id]={lane,minute:s.clock};return result;
+ if(consumeWave&&s.wavePressure?.[id])s.wavePressure[id][lane]=Math.max(.08,s.wavePressure[id][lane]-.65);s.lastPush[id]={lane,minute:s.clock};return result;
 }
 function goldInfluenceApprox(t){return t<=40?1:Math.max(.35,1-(t-40)*.035);}
 export function towerCount(s,id){return 11-s.structures[other(s,id)].nexusTowers.filter(x=>x>0).length-LANES.reduce((n,l)=>n+s.structures[other(s,id)].lanes[l].towers.filter(x=>x>0).length,0);}

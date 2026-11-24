@@ -40,12 +40,12 @@ test('persistent power-play state identifies the objective capturer, not the tea
  const s=createMatchState(input,8);s.clock=25;grantTemporaryBuff(s,'baron','R');const capture={minute:25,second:1500,kind:'baron',combatTeam:'B',objective:{kind:'baron',team:'R',steal:true},gold:{B:40000,R:42000},objectiveState:objectiveSnapshot(s)},later={minute:26,second:1560,kind:'farm',gold:{B:41000,R:45000},objectiveState:objectiveSnapshot(s)},set={blue:'B',red:'R'};
  assert.equal(powerPlayState(set,[capture,later],0,.5,1500).length,0);const card=powerPlayState(set,[capture,later],1,1,1560)[0];assert.equal(card.team,'R');assert.equal(card.kind,'baron');assert.equal(card.seconds,120);assert.equal(card.gold,2000);assert.equal(powerPlayState(set,[capture,later],1,1,1680).length,0);
 });
-test('major objective result stays readable at x8 while ordinary scenes retain chosen playback speed',()=>{
- const scene={kind:'baron',objective:{kind:'baron'}};assert.equal(playbackIncrement(scene,.8,100,8),playbackIncrement(scene,.8,100,1));assert(playbackIncrement({kind:'farm'},.8,100,8)>playbackIncrement(scene,.8,100,8)*20);
+test('major objectives and fights respect the selected speed without a forced hold',()=>{
+ const scene={kind:'baron',objective:{kind:'baron'}};assert.equal(playbackIncrement(scene,.8,100,8),playbackIncrement(scene,.8,100,1)*8);assert.equal(playbackIncrement({kind:'farm'},.8,100,8),playbackIncrement(scene,.8,100,8));
 });
 test('v8 replay stays frozen; an upgraded live prefix preserves RNG/history and its mixed replay exactly',()=>{
  const old=v8.simulateMatch(input,matchRandom(93));assert.equal(createHash('sha256').update(JSON.stringify(old)).digest('hex'),'dad6a1396eca5021b2379281ab80a19dbcd81b800331743a98cc622f681a7c0e');assert.deepEqual(replayMatch({...input,model:'event-v8',seed:93}),old);
- const s=v8.createMatchState({...input,model:'event-v8',seed:123},123);v8.advanceMatch(s,{controlledTeam:'B'});v8.advanceMatch(s,{controlledTeam:'B',action:'trade'});const before=JSON.stringify(s.events),rng=s.rng;upgradeMatchState(s);assert.equal(JSON.stringify(s.events),before);assert.equal(s.rng,rng);advanceMatch(s,{auto:true});const replayInput={...input,...s.input,model:'event-v10',seed:123,decisionOverrides:s.decisions};assert.deepEqual(replayMatch(replayInput),simulateMatch(replayInput,matchRandom(123)));
+ const s=v8.createMatchState({...input,model:'event-v8',seed:123},123);v8.advanceMatch(s,{controlledTeam:'B'});v8.advanceMatch(s,{controlledTeam:'B',action:'trade'});const before=JSON.stringify(s.events),rng=s.rng;upgradeMatchState(s);assert.equal(JSON.stringify(s.events),before);assert.equal(s.rng,rng);advanceMatch(s,{auto:true});const replayInput={...input,...s.input,model:'event-v11',seed:123,decisionOverrides:s.decisions};assert.deepEqual(replayMatch(replayInput),simulateMatch(replayInput,matchRandom(123)));
 });
 
 test('minimap uses revealed capture history for camp disappearance, cooldown and soul-to-Elder transition',()=>{

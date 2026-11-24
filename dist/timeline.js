@@ -31,7 +31,7 @@ function take(queue,amount,roles){
 export function buildTimeline(set,{teamNames={},playerNames={}}={}){
  const rng=seeded(hash(JSON.stringify([set.blue,set.red,set.number,set.winner,set.picks,set.stats])));
  let out,records=set.events;
- if(!set.live&&!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3','event-v4','event-v5','event-v6','event-v7','event-v8','event-v9','event-v10'].includes(set.simulationReplay?.model)){
+ if(!set.live&&!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3','event-v4','event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11'].includes(set.simulationReplay?.model)){
   const replay=replayMatch({...set.simulationReplay,blue:set.blue,red:set.red,number:set.number,roster:set.stats,teamNames});
   if(replay.winner===set.winner&&replay.duration===set.duration&&JSON.stringify(replay.stats)===JSON.stringify(set.stats))records=replay.events;
  }
@@ -111,9 +111,9 @@ export function buildTimeline(set,{teamNames={},playerNames={}}={}){
    }
    if(stillDead){target=[...home];via=[];}
    target=target.map(v=>clamp(v,30,570));const dies=killed.has(stat?.player);
-   const actor={id:stat?.player??key,champion:p.champion,team:p.team,side,role:p.role,from:[...from],to:[...target],path:[from,...via,target],dead:dies||stillDead,alreadyDead:stillDead,respawn,hpFrom:stillDead?0:respawn?80:100,hpTo:dies||stillDead?0:peaceful?100:involvedHere?50+Math.floor(rng()*45):100,involved:involvedHere};
+   const actor={id:stat?.player??key,champion:p.champion,team:p.team,side,role:p.role,from:[...from],to:[...target],path:[from,...via,target],deathUntil:scene.kills.find(k=>k.victim===stat?.player)?.respawnAtSecond??deathUntil[stat?.player]??0,dead:dies||stillDead,alreadyDead:stillDead,respawn,hpFrom:stillDead?0:respawn?80:100,hpTo:dies||stillDead?0:peaceful?100:involvedHere?50+Math.floor(rng()*45):100,involved:involvedHere};
    positions[key]=target;return actor;
-  });for(const victim of killed)deathUntil[victim]=scene.second+Math.min(65,15+scene.minute*.8);dead=killed;
+  });for(const victim of killed)deathUntil[victim]=scene.kills.find(k=>k.victim===victim)?.respawnAtSecond??scene.second+Math.min(65,15+scene.minute*.8);dead=killed;
  }
  return out;
 }

@@ -1,3 +1,4 @@
+import {refreshViewer} from './viewer-layout.js';
 import {playbackIncrement} from './power-play-ui.js';
 import {combatProfileMarkup} from './combat-ui.js';
 import * as E from './engine.js';
@@ -46,6 +47,7 @@ const navItems=[['home','home','대시보드'],['squad','users','선수단'],['t
 function presentationContext(){return {E,data,state,ui,nav,t,esc,btn,badge,icon,img,teamIcon,teamName,role,fmtDate,topChampions,viewerData,timelineForSet};}
 function shell(body){document.documentElement.style.setProperty('--team',t(state.myTeam).color);app.innerHTML=shellMarkup(presentationContext(),body);}
 function render(){
+ if(state&&nav==='viewer'&&document.body.dataset.screen==='viewer'&&refreshViewer(app,viewerView(),()=>paintScene(presentationContext())))return;
  document.body.dataset.screen=state?nav:'select';
  if(!state){onBoard();return;}
  if(nav==='home'){shell(homeView());return;}

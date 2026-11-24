@@ -61,6 +61,6 @@ test('v7 saved replays and in-progress decisions retain their original economy a
 
 test('consecutive siege highlights keep the broadcast clock monotone and recently killed defenders stay dead',()=>{
  const out=simulateMatch(input,matchRandom(9)),set={...out,blue:'B',red:'R',number:1,picks:roster,simulationVersion:7},timeline=buildTimeline(set);let carried=false;
- for(let i=0;i<timeline.length-1;i++){const a=timeline[i],b=timeline[i+1];assert(sceneClock(a,1)<=sceneClock(b,0));if(b.second-a.second<20&&a.kills.length){for(const k of a.kills){const actor=b.actors.find(p=>p.id===k.victim);assert(actor.alreadyDead);carried=true;}}}
+ for(let i=0;i<timeline.length-1;i++){const a=timeline[i],b=timeline[i+1];assert(sceneClock(a,1)<=sceneClock(b,0));if(b.second-a.second<20&&a.kills.length){for(const k of a.kills){const actor=b.actors.find(p=>p.id===k.victim);if((k.respawnAtSecond??a.second+Math.min(65,15+a.minute*.8))>b.second){assert(actor.alreadyDead);carried=true;}}}}
  assert(carried);
 });
