@@ -60,7 +60,7 @@ export function metaFor(s) {
 export function power(s,teamId) {const ps=lineup(s,teamId);return ps.reduce((n,p)=>n+p.ovr-(p.fatigue??0)*.035+(p.morale-70)*.015,0)/Math.max(1,ps.length)+(team(s,teamId).synergy-50)*.025;}
 export function newGame(teamId='T1',seed=123456) {
  const season=DB.season??{id:'season-2022',startYear:2022,startDate:'2022-01-03'};
- const s={version:2,dataProfile:season.id,year:season.startYear,date:season.startDate,rng:seed>>>0,myTeam:teamId,teams:{},players:{},phase:{key:'PRESEASON',title:'프리시즌'},matches:[],nextMatchId:1,activeDraft:null,viewing:null,masteryGains:{},focus:{},trainingPlan:['balanced','champion','scrim','rest','balanced','scrim','rest'],strategy:'balanced',news:[],ledger:[],trophies:[],career:[],international:{},seasonComplete:false,autoMatches:false};
+ const s={version:2,dataProfile:season.id,year:season.startYear,date:season.startDate,rng:seed>>>0,myTeam:teamId,teams:{},players:{},phase:{key:'PRESEASON',title:'프리시즌'},matches:[],nextMatchId:1,activeDraft:null,viewing:null,masteryGains:{},focus:{},trainingPlan:['balanced','champion','scrim','rest','balanced','scrim','rest'],strategy:'balanced',news:[],ledger:[],trophies:[],career:[],international:{},seasonComplete:false,autoMatches:false,trades:[],nextTradeId:1};
  for(const t of DB.teams) s.teams[t.id]={...t,lineup:{},synergy:55,fan:Math.round(t.reputation*1500),coach:1,facility:1};
  for(const p of DB.players) s.players[p.id]={...p,owner:p.team,fatigue:8,morale:80,xp:0,contractEnd:s.year,salary:p.salary??1};
  for(const t of Object.values(s.teams)) for(const role of ROLES) {
@@ -81,9 +81,61 @@ export function spend(s,amount,category,description) {const t=team(s,s.myTeam);i
 export function roster(s,teamId=s.myTeam) {return Object.values(s.players).filter(p=>p.owner===teamId);}
 export function setStarter(s,playerId) {if(s.activeDraft)throw Error('밴픽 중에는 제출한 선수 라인업을 변경할 수 없습니다.');const p=getPlayer(s,playerId);if(!p||p.owner!==s.myTeam||p.contractEnd<s.year)throw Error('등록 가능한 우리 구단 선수가 아닙니다.');team(s,s.myTeam).lineup[p.position]=p.id;news(s,'라인업 변경',`${p.name} 선수를 ${ROLE_NAMES[p.position]} 주전으로 등록했습니다.`);}
 export function extendContract(s,id,years=1) {const p=getPlayer(s,id);if(p.owner!==s.myTeam)throw Error('우리 구단 선수만 재계약할 수 있습니다.');if(p.contractEnd>=s.year+2)throw Error('계약 기간이 충분히 남아 있습니다.');const cost=Math.round(p.salary*.2*10)/10;spend(s,cost,'계약금',`${p.name} ${years}년 연장`);p.contractEnd=Math.max(s.year,p.contractEnd)+years;p.morale=clamp(p.morale+8,0,100);}
+// Transfers are save-local game rules; existing contracts travel with the player.
+export function isInSeason(s) {return !s.seasonComplete&&!['PRESEASON','OFFSEASON'].includes(s.phase.key);}
+export function pendingTrade(s,id) {return (s.trades??[]).find(t=>t.status==='pending'&&(t.outgoing===id||t.incoming===id));}
+function tradePlayers(s,outgoing,incoming,opponent) {
+ const a=getPlayer(s,outgoing),b=getPlayer(s,incoming);
+ if(!a||!b||a.owner!==s.myTeam||!b.owner||b.owner===s.myTeam||!team(s,b.owner)||b.owner!==opponent)throw Error('선수 소속이 변경되어 트레이드를 진행할 수 없습니다.');
+ if(a.foreign||b.foreign)throw Error('트레이드는 LCK·CL 구단 선수만 신청할 수 있습니다.');
+ if(a.position!==b.position)throw Error('같은 포지션 선수끼리 1대1 트레이드를 신청해 주세요.');
+ if(a.contractEnd<s.year||b.contractEnd<s.year)throw Error('계약이 유효한 선수만 트레이드할 수 있습니다.');
+ return {a,b};
+}
+export function tradeEvaluation(s,outgoing,incoming) {
+ const {a,b}=tradePlayers(s,outgoing,incoming,getPlayer(s,incoming)?.owner);
+ const starter=team(s,b.owner).lineup[b.position]===b.id;
+ const value=p=>p.ovr+p.potential*.25-p.salary*.15+Math.min(2,Math.max(0,p.contractEnd-s.year))*.5;
+ const accepted=value(a)+.5>=value(b)+(starter?1.5:0)&&(!starter||a.ovr>=b.ovr-2);
+ return {accepted,reason:accepted?'전력·성장 가능성·연봉·계약 기간을 검토한 결과 교환 가치가 충분합니다.':'상대 구단이 요구하는 교환 가치가 부족합니다. 주전은 즉시 전력 유지 조건도 확인합니다.'};
+}
+export function requestTrade(s,outgoing,incoming) {
+ if(s.activeDraft)throw Error('밴픽을 마친 뒤 트레이드를 신청할 수 있습니다.');
+ const {a,b}=tradePlayers(s,outgoing,incoming,getPlayer(s,incoming)?.owner);
+ if(pendingTrade(s,a.id)||pendingTrade(s,b.id))throw Error('이미 검토 중인 트레이드에 포함된 선수입니다.');
+ s.trades??=[];s.nextTradeId??=Math.max(0,...s.trades.map(t=>Number(t.id)||0))+1;
+ const deal={id:s.nextTradeId++,outgoing:a.id,incoming:b.id,opponent:b.owner,status:'pending',date:s.date,responseDate:isInSeason(s)?dayAdd(s.date,1):s.date,outgoingName:a.name,incomingName:b.name};
+ s.trades.unshift(deal);news(s,'트레이드 신청',`${team(s,b.owner).name}에 ${a.name} ↔ ${b.name} 교환을 신청했습니다. 검토일 ${deal.responseDate}.`);
+ processTrades(s);return deal;
+}
+export function cancelTrade(s,id) {
+ const deal=(s.trades??[]).find(t=>String(t.id)===String(id));
+ if(!deal||deal.status!=='pending')throw Error('취소할 수 있는 트레이드 신청이 아닙니다.');
+ deal.status='cancelled';deal.resolvedDate=s.date;deal.reason='우리 구단이 신청을 철회했습니다.';
+ news(s,'트레이드 철회',`${deal.outgoingName} ↔ ${deal.incomingName} 신청을 취소했습니다.`);
+}
+export function processTrades(s) {
+ if(s.activeDraft)return;
+ for(const deal of s.trades??[]) {
+  if(deal.status!=='pending'||(isInSeason(s)&&deal.responseDate>s.date))continue;
+  deal.resolvedDate=s.date;
+  try {
+   const {a,b}=tradePlayers(s,deal.outgoing,deal.incoming,deal.opponent),review=tradeEvaluation(s,a.id,b.id);
+   deal.reason=review.reason;
+   if(!review.accepted){deal.status='rejected';news(s,'트레이드 거절',`${team(s,deal.opponent).name}: ${deal.outgoingName} ↔ ${deal.incomingName}. ${deal.reason}`);continue;}
+   const ours=team(s,s.myTeam),theirs=team(s,deal.opponent);
+   if(ours.lineup[a.position]===a.id)ours.lineup[a.position]=b.id;
+   if(theirs.lineup[b.position]===b.id)theirs.lineup[b.position]=a.id;
+   a.owner=deal.opponent;b.owner=s.myTeam;deal.status='accepted';
+   news(s,'트레이드 성사',`${deal.outgoingName} ↔ ${deal.incomingName}. 기존 계약·연봉을 승계하고 주전 자리는 교환 선수로 대체했습니다.`);
+  } catch(error) {deal.status='cancelled';deal.reason=error.message;news(s,'트레이드 취소',`${deal.outgoingName} ↔ ${deal.incomingName}. ${deal.reason}`);}
+ }
+}
 export function signPlayer(s,id) {
  if(s.activeDraft)throw Error('밴픽을 마친 뒤 선수단을 변경할 수 있습니다.');
  const p=getPlayer(s,id);if(!p||p.owner===s.myTeam)throw Error('영입 대상이 아닙니다.');if(p.foreign)throw Error('기본 버전 이적시장은 LCK·CL 선수만 지원합니다.');
+ if(p.owner&&isInSeason(s))throw Error('시즌 중 다른 구단 선수는 직접 영입할 수 없습니다. 트레이드를 신청해 주세요.');
+ if(pendingTrade(s,id))throw Error('트레이드 검토 중인 선수입니다. 신청을 취소한 뒤 영입해 주세요.');
  const old=team(s,p.owner);const fee=p.owner?Math.round(p.salary*1.5*10)/10:0;
  if(old?.lineup[p.position]===p.id) {
   const backup=roster(s,old.id).filter(a=>a.position===p.position&&a.id!==p.id&&a.contractEnd>=s.year).sort((a,b)=>b.ovr-a.ovr)[0];
@@ -93,7 +145,7 @@ export function signPlayer(s,id) {
  }
  spend(s,fee+p.salary*.2,'선수 영입',`${p.name} 이적료·계약금`);if(old)old.budget+=fee;p.owner=s.myTeam;p.contractEnd=s.year+1;p.morale=85;news(s,'영입 완료',`${p.name} 선수가 합류했습니다. 연봉 ${p.salary.toFixed(1)}억, 계약 ${p.contractEnd}년까지.`);
 }
-export function releasePlayer(s,id) {if(s.activeDraft)throw Error('밴픽을 마친 뒤 선수단을 변경할 수 있습니다.');const p=getPlayer(s,id);if(p.owner!==s.myTeam)throw Error('우리 구단 선수가 아닙니다.');if(team(s,s.myTeam).lineup[p.position]===id)throw Error('주전 교체 후 방출할 수 있습니다.');spend(s,p.salary*.25,'계약 해지',p.name);p.owner=null;}
+export function releasePlayer(s,id) {if(s.activeDraft)throw Error('밴픽을 마친 뒤 선수단을 변경할 수 있습니다.');const p=getPlayer(s,id);if(p.owner!==s.myTeam)throw Error('우리 구단 선수가 아닙니다.');if(pendingTrade(s,id))throw Error('트레이드 검토 중인 선수는 방출할 수 없습니다.');if(team(s,s.myTeam).lineup[p.position]===id)throw Error('주전 교체 후 방출할 수 있습니다.');spend(s,p.salary*.25,'계약 해지',p.name);p.owner=null;}
 export function upgrade(s,kind) {const t=team(s,s.myTeam);const lv=t[kind];if(lv>=5)throw Error('최대 레벨입니다.');spend(s,5*lv,'시설 투자',kind==='coach'?'코칭 스태프 확충':'훈련 시설 개선');t[kind]++;news(s,'구단 투자',`${kind==='coach'?'코칭':'훈련 시설'} 레벨 ${t[kind]} 달성.`);}
 export function trainDay(s) {
  const d=new Date(s.date+'T12:00:00Z');const index=(d.getUTCDay()+6)%7;const program=s.trainingPlan[index];
@@ -230,12 +282,12 @@ function advancePhase(s) {
  else if(k.startsWith('WORLD_SWISS')){const ws=s.international.swiss;for(const m of ms){ws.records[winner(m)].w++;ws.records[loser(m)].l++;ws.encounters.push([...m.teams].sort().join('|'));}const active=ws.ids.filter(id=>ws.records[id].w<3&&ws.records[id].l<3);if(active.length){ws.round++;swissRound(s);}else{const q=ws.ids.filter(id=>ws.records[id].w===3).sort((a,b)=>ws.records[a].l-ws.records[b].l||power(s,b)-power(s,a));const a=q.filter(id=>ws.records[id].l===0),b=q.filter(id=>ws.records[id].l===2),remaining=q.filter(id=>!a.includes(id)&&!b.slice(0,2).includes(id));const pairs=[[a[0],b[0]],[remaining[0],remaining[1]],[a[1],b[1]],[remaining[2],remaining[3]]];addPhase(s,'WORLD_QF','Worlds · 8강',pairs.map(p=>[p]),5,'WORLDS',{start:anchor(s,'10-28'),spacing:1});}}
  else if(k==='WORLD_QF'){addPhase(s,'WORLD_SF','Worlds · 4강',[[[winner(ms[0]),winner(ms[1])]],[[winner(ms[2]),winner(ms[3])]]],5,'WORLDS',{start:anchor(s,'11-02'),spacing:1});}
  else if(k==='WORLD_SF'){addPhase(s,'WORLD_FINAL','Worlds · 결승',[[ms.map(winner)]],5,'WORLDS',{start:anchor(s,'11-09')});}
- else if(k==='WORLD_FINAL'){s.worldChampion=winner(ms[0]);award(s,'Worlds',s.worldChampion,10);s.phase={key:'OFFSEASON',title:'시즌 결산 · 스토브리그'};s.seasonComplete=true;s.career.push({year:s.year,cup:s.cupChampion,lck:s.worldsSeeds[0],runner:s.worldsSeeds[1],msi:s.msiChampion,worlds:s.worldChampion});news(s,'시즌 종료','재계약과 선수단 정비를 마친 뒤 다음 시즌으로 진행할 수 있습니다.');}
+ else if(k==='WORLD_FINAL'){s.worldChampion=winner(ms[0]);award(s,'Worlds',s.worldChampion,10);s.phase={key:'OFFSEASON',title:'시즌 결산 · 스토브리그'};s.seasonComplete=true;s.career.push({year:s.year,cup:s.cupChampion,lck:s.worldsSeeds[0],runner:s.worldsSeeds[1],msi:s.msiChampion,worlds:s.worldChampion});news(s,'시즌 종료','재계약과 선수단 정비를 마친 뒤 다음 시즌으로 진행할 수 있습니다.');processTrades(s);}
 }
 function matchPools(s,left,right){let result;function walk(index,remaining,pairs){if(index===left.length){result=pairs;return true;}for(const b of remaining)if(team(s,left[index]).region!==team(s,b).region&&walk(index+1,remaining.filter(x=>x!==b),[...pairs,[left[index],b]]))return true;return false;}walk(0,right,[]);if(!result)throw Error('지역 분리 대진 생성에 실패했습니다.');return result;}
 export function drawMsi(s,pools){const permutations=a=>a.length===1?[a]:a.flatMap((x,i)=>permutations(a.filter((_,j)=>j!==i)).map(p=>[x,...p]));for(const p2 of permutations(pools[1]))for(const p4 of permutations(pools[3]))for(const p3 of permutations(pools[2])){const pairs=[[pools[0][0],p4[0]],[p2[0],p3[0]],[pools[0][1],p4[1]],[p2[1],p3[1]]];if([pairs.slice(0,2),pairs.slice(2)].every(half=>new Set(half.flat().map(id=>team(s,id).region)).size===4))return pairs;}throw Error('MSI 지역 분리 브래킷을 생성하지 못했습니다.');}
 export function award(s,name,id,prize) {s.trophies.push({year:s.year,name,team:id});const t=team(s,id);t.budget+=prize;if(id===s.myTeam){s.ledger.unshift({date:s.date,amount:prize,category:'우승 상금',description:name});t.fan+=20000;}news(s,`${name} 우승`,`${t.name}이 트로피를 차지했습니다.`);}
-export function nextSeason(s) {if(!s.seasonComplete)throw Error('시즌이 끝나지 않았습니다.');s.year++;s.date=`${s.year}-${DB.season?.startDate.slice(5)??"01-03"}`;s.phase={key:'PRESEASON',title:'프리시즌'};s.seasonComplete=false;s.activeDraft=null;s.international={};s.regular12=null;s.legend=null;s.rise=null;s.seeds=null;for(const p of Object.values(s.players)){p.fatigue=5;p.morale=75;if(p.owner!==s.myTeam)p.contractEnd=s.year;}news(s,'새 시즌',`${s.year} 시즌. 기본 버전은 ${DB.season?.startYear??2022} 패치 자료와 ${DB.season?.competitionFormat??2025} 대회 틀을 반복합니다. 계약 만료 주전을 확인하세요.`);}
+export function nextSeason(s) {if(!s.seasonComplete)throw Error('시즌이 끝나지 않았습니다.');processTrades(s);s.year++;s.date=`${s.year}-${DB.season?.startDate.slice(5)??"01-03"}`;s.phase={key:'PRESEASON',title:'프리시즌'};s.seasonComplete=false;s.activeDraft=null;s.international={};s.regular12=null;s.legend=null;s.rise=null;s.seeds=null;for(const p of Object.values(s.players)){p.fatigue=5;p.morale=75;if(p.owner!==s.myTeam)p.contractEnd=s.year;}news(s,'새 시즌',`${s.year} 시즌. 기본 버전은 ${DB.season?.startYear??2022} 패치 자료와 ${DB.season?.competitionFormat??2025} 대회 틀을 반복합니다. 계약 만료 주전을 확인하세요.`);}
 export function scheduled(s) {return s.matches.filter(m=>m.status==='scheduled').sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id));}
 export function nextOwnMatch(s) {return scheduled(s).find(m=>m.teams.includes(s.myTeam));}
 export function todayOwnMatch(s) {return scheduled(s).find(m=>m.date<=s.date&&m.teams.includes(s.myTeam));}
@@ -243,6 +295,7 @@ export function advanceDays(s,n=1,autoMatches=false) {
  if(s.activeDraft)throw Error('진행 중인 밴픽을 먼저 마쳐 주세요.');if(s.phase.key==='PRESEASON')throw Error('로스터를 확인한 뒤 시즌을 시작하세요.');if(s.seasonComplete)return {days:0,reason:'season'};
  let days=0;
  for(let guard=0;guard<800&&days<=n;guard++) {
+  processTrades(s);
   let due=scheduled(s).filter(m=>m.date<=s.date);for(const m of due){if(m.teams.includes(s.myTeam)&&!autoMatches)return{days,reason:'match',match:m};simulateSeries(s,m);}
   advancePhase(s);if(s.seasonComplete)return{days,reason:'season'};
   if(days===n)return{days,reason:'days'};s.date=dayAdd(s.date,1);trainDay(s);days++;

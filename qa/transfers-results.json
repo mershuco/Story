@@ -1,0 +1,10 @@
+{
+  "url": "http://127.0.0.1:4173",
+  "flows": [
+    "preseason hire option; season direct hire absent; MID-only explicit selection; pending survives reload; next-day accepted swap updates both starting lineups",
+    "request cancellation releases player; weak offer rejected next day with ownership preserved",
+    "season FA signing remains available after save import",
+    "390px mobile trade form remains usable without page overflow"
+  ],
+  "errors": []
+}
