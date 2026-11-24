@@ -38,6 +38,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
+        id: pages-artifact
         with:
           path: dist
           name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
@@ -58,8 +59,37 @@ jobs:
           done
           echo "::error::Pages artifact metadata did not become available."
           exit 1
+      # Use the uploaded artifact ID directly: the deploy action's artifact-name
+      # lookup can lag behind the REST metadata endpoint after a successful upload.
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/github-script@v9
+        env:
+          PAGES_ARTIFACT_ID: ${{ steps.pages-artifact.outputs.artifact_id }}
         with:
-          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+          retries: 3
+          script: |
+            const repo = context.repo;
+            const artifactId = Number(process.env.PAGES_ARTIFACT_ID);
+            if (!Number.isSafeInteger(artifactId) || artifactId <= 0) {
+              throw new Error('Upload did not return a valid Pages artifact ID.');
+            }
+            const oidcToken = await core.getIDToken();
+            const {data: deployment} = await github.request('POST /repos/{owner}/{repo}/pages/deployments', {
+              ...repo,
+              artifact_id: artifactId,
+              pages_build_version: context.sha,
+              oidc_token: oidcToken
+            });
+            core.setOutput('page_url', deployment.page_url);
+            const deploymentRoute = {...repo, deployment_id: deployment.id};
+            const finalErrors = new Set(['deployment_failed', 'deployment_content_failed', 'deployment_cancelled', 'deployment_lost']);
+            for (let attempt = 0; attempt < 60; attempt++) {
+              const {data: result} = await github.request('GET /repos/{owner}/{repo}/pages/deployments/{deployment_id}', deploymentRoute);
+              core.info(`Pages deployment status: ${result.status}`);
+              if (result.status === 'succeed') return;
+              if (finalErrors.has(result.status)) throw new Error(`Pages deployment ended: ${result.status}`);
+              await new Promise(resolve => setTimeout(resolve, 10000));
+            }
+            await github.request('POST /repos/{owner}/{repo}/pages/deployments/{deployment_id}/cancel', deploymentRoute);
+            throw new Error('Pages deployment timed out after 10 minutes.');

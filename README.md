@@ -10,7 +10,7 @@
 
 공개 GitHub Pages에서 실행하는 독립 정적 웹게임입니다. ChatGPT·GitHub 로그인이나 API키가 필요하지 않습니다. 플레이 기록은 접속한 기기의 브라우저에 저장됩니다.
 
-`main` 브랜치에 커밋을 올리면 `.github/workflows/pages.yml`이 Node 테스트를 실행하고, 성공한 커밋의 `dist/`를 GitHub Pages에 자동 배포합니다. 과거 `gh-pages` 브랜치는 배포 원본으로 사용하지 않습니다. 저장소 Settings → Pages의 배포 소스는 **GitHub Actions**입니다. Actions의 **Test and deploy LCK Manager**에서 수동 실행도 가능합니다.
+`main` 브랜치에 커밋을 올리면 `.github/workflows/pages.yml`이 Node 테스트를 실행하고, 성공한 커밋의 `dist/`를 GitHub Pages에 자동 배포합니다. 배포는 업로드된 아티팩트 ID와 워크플로 OIDC 토큰을 공식 GitHub Pages API에 전달하며 완료 상태까지 확인합니다. 과거 `gh-pages` 브랜치는 배포 원본으로 사용하지 않습니다. 저장소 Settings → Pages의 배포 소스는 **GitHub Actions**입니다. Actions의 **Test and deploy LCK Manager**에서 수동 실행도 가능합니다.
 
 ## 실행
 
