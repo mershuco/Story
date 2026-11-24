@@ -1,6 +1,6 @@
 import {DRAKES} from './objective-effects.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export const objectiveIcon=(type,alt='')=>`<img class="objective-icon" src="./assets/objectives/${esc(type)}.png" alt="${esc(alt||DRAKES[type]?.name||({baron:'바론',elder:'장로',ward:'시야'})[type]||type)}">`;
+export const objectiveIcon=(type,alt='')=>`<img class="objective-icon" src="./assets/objectives/${esc(type)}.png" alt="${esc(alt||DRAKES[type]?.name||({baron:'바론',elder:'장로',ward:'시야',grubs:'공허 유충'})[type]||type)}">`;
 export function structurePosition(side,lane,kind,index=0){
  if(side==='red')lane=lane==='top'?'bot':lane==='bot'?'top':lane;
  const towers={top:[[80,240],[80,365],[80,452]],mid:[[235,365],[170,430],[120,480]],bot:[[360,520],[235,520],[148,520]]};
@@ -8,8 +8,12 @@ export function structurePosition(side,lane,kind,index=0){
  return side==='red'?[600-p[0],600-p[1]]:p;
 }
 export function scoreboard(c,set,m,score,clock){
- const team=side=>{const id=set[side];return `<div class="${side} broadcast-score-team"><div class="score-team-brand">${c.teamIcon?.(id)??''}<strong>${esc(c.teamName(id))}</strong></div><span class="score-towers" title="파괴한 포탑">♜ <b data-towers="${esc(id)}">${set.simulationVersion>=7?0:'—'}</b></span><span class="score-gold" data-team-gold="${esc(id)}">2.5K</span><b class="score-kills" data-team-score="${esc(id)}">0</b><small class="scoreboard-objectives"><span>용 <b data-dragons="${esc(id)}">0</b></span><span>유충 <b data-grubs="${esc(id)}">${set.simulationVersion>=5?0:'—'}</b></span></small><div class="score-drake-icons" data-drake-icons="${esc(id)}" aria-label="${esc(c.teamName(id))} 용 종류"></div></div>`;};
+ const team=side=>{const id=set[side];return `<div class="${side} broadcast-score-team"><div class="score-team-brand">${c.teamIcon?.(id)??''}<strong>${esc(c.teamName(id))}</strong></div><span class="score-towers" title="파괴한 포탑">♜ <b data-towers="${esc(id)}">${set.simulationVersion>=7?0:'—'}</b></span><span class="score-gold" data-team-gold="${esc(id)}">2.5K</span><b class="score-kills" data-team-score="${esc(id)}">0</b><div class="score-grub-icons" data-grub-icons="${esc(id)}" role="img" aria-label="${esc(c.teamName(id))} 유충 획득 현황">${grubIcons(set.simulationVersion>=5?0:null)}</div><div class="score-drake-icons" data-drake-icons="${esc(id)}" aria-label="${esc(c.teamName(id))} 용 종류"></div></div>`;};
  return `<div class="live-scoreboard broadcast-scoreboard">${team('blue')}<div class="live-series"><strong>${score[set.blue]} <i>:</i> ${score[set.red]}</strong><time id="live-clock">${clock}</time><small>GAME ${set.number} · BO${m.bestOf}</small></div>${team('red')}</div>`;
+}
+export function grubIcons(count){
+ const known=Number.isFinite(count),n=known?Math.max(0,Math.min(3,Math.floor(count))):0;
+ return Array.from({length:3},(_,i)=>`<span class="grub-slot ${known&&i<n?'earned':'empty'}" title="${known?(i<n?'획득한 공허 유충':'미획득 공허 유충'):'이전 경기의 유충 기록 없음'}">${objectiveIcon('grubs','')}</span>`).join('');
 }
 export function goldRows(set,scene,prior,progress){
  const current=scene.rift?.players,previous=prior?.rift?.players;if(!current)return null;

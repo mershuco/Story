@@ -2,12 +2,13 @@ import {replayMatch as replayArchived,goldInfluence,battleFactors,battleProbabil
 import {compositionMatchup} from './composition.js';
 import {phaseStrength} from './champion-combat.js';
 import {macroProfile,objectiveChances,automaticObjectiveDecision,OBJECTIVE_NAMES} from './macro-objectives.js';
+import * as legacyV7 from './match-sim-v7.js';
 import * as legacyV6 from './match-sim-v6.js';
 import {initializeRift,creditPlayer,creditTeam,farmPlayers,tickRift,gainVision,visionFightGap,visionControl,pushLane,attackStructures,pushNarration,riftSnapshot,superPressure} from './rift-state.js';
 import * as legacyV5 from './match-sim-v5.js';
 import {initializeObjectives,takeDragon,grantTemporaryBuff,loseBuffsOnDeath,buffCoverage,objectivePower,structurePressure,objectiveSnapshot,DRAKES} from './objective-effects.js';
 export {goldInfluence,battleFactors,battleProbability,matchRandom};
-export const SIMULATION_MODEL='event-v7';
+export const SIMULATION_MODEL='event-v8';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const sigmoid=x=>1/(1+Math.exp(-x));
 const round=n=>Math.round(n*1000)/1000;
@@ -33,7 +34,7 @@ function record(s,{kind,title,location='mid',roles=null,team=null,kills=[],objec
 }
 export function createMatchState(input,seed=0,external){
  const snapshot=structuredClone(input),{blue,red}=snapshot,teams=[blue,red],zeros=()=>Object.fromEntries(teams.map(id=>[id,0]));
- const s={version:7,input:snapshot,rng:seed>>>0,teams,clock:0,stats:snapshot.roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),gold:{[blue]:2500,[red]:2500},score:zeros(),dragons:zeros(),grubs:zeros(),heralds:zeros(),barons:zeros(),elders:zeros(),baronUntil:zeros(),elderUntil:zeros(),momentum:zeros(),minLead:zeros(),events:[],lastLeader:null,leadChanges:0,winner:null,finished:false,pending:null,window:0,decisions:[],soul:null,steps:0};
+ const s={version:8,input:snapshot,rng:seed>>>0,teams,clock:0,stats:snapshot.roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),gold:{[blue]:2500,[red]:2500},score:zeros(),dragons:zeros(),grubs:zeros(),heralds:zeros(),barons:zeros(),elders:zeros(),baronUntil:zeros(),elderUntil:zeros(),momentum:zeros(),minLead:zeros(),events:[],lastLeader:null,leadChanges:0,winner:null,finished:false,pending:null,window:0,decisions:[],soul:null,steps:0};
  s.powerGap=(input.teamStrengthBlue??input.bluePower)-(input.teamStrengthRed??input.redPower);s.championGap=input.bluePower-input.redPower-s.powerGap;
  s.macros=[macroProfile(blue,input.compositionBlue,input.blueStrategy),macroProfile(red,input.compositionRed,input.redStrategy)];
  const rng=()=>draw(s,external),delay=()=>.3+rng()*1.4+(1-(s.macros[0].objective+s.macros[1].objective)/2)*.8;
@@ -52,17 +53,18 @@ function combatEstimate(s,minute,kind,roles=null,execution=0){
  return {probability:factors.probability,matchup,factors,effects,visionGap};
 }
 export function objectivePreview(s){
- if(s.version===5)return legacyV5.objectivePreview(s);if(s.version===6)return legacyV6.objectivePreview(s);
+ if(s.version===5)return legacyV5.objectivePreview(s);if(s.version===6)return legacyV6.objectivePreview(s);if(s.version===7)return legacyV7.objectivePreview(s);
  if(!s.pending)return null;const p=s.pending,[blue,red]=s.teams,c=combatEstimate(s,p.minute,p.kind,p.roles);
  const secure=objectiveChances({blue,red,roster:s.stats,stats:s.stats,roles:p.roles,skills:s.input.smiteSkills??[75,75],fightChance:c.probability,visionGap:visionFightGap(s,['grubs','baron'].includes(p.kind)?'baron':'dragon')/3.6});
- return {...p,fightChance:c.probability,secureChance:secure.blueChance,secure,dragons:{...s.dragons},grubs:{...s.grubs},gold:{...s.gold},macros:s.macros.map(m=>m.label),dragonType:s.dragonType,riftType:s.riftType,soul:s.soul,objectiveState:objectiveSnapshot(s),buffPower:c.effects,vision:s.teams.map(id=>Math.round(visionControl(s,id,['grubs','baron'].includes(p.kind)?'baron':'dragon'))),visionFightGap:c.visionGap,tradeGold:objectiveTradeReward(s,blue,p.minute),redTradeGold:objectiveTradeReward(s,red,p.minute)};
+ return {...p,tradeRange:tradeRewardRange(s),fightChance:c.probability,secureChance:secure.blueChance,secure,dragons:{...s.dragons},grubs:{...s.grubs},gold:{...s.gold},macros:s.macros.map(m=>m.label),dragonType:s.dragonType,riftType:s.riftType,soul:s.soul,objectiveState:objectiveSnapshot(s),buffPower:c.effects,vision:s.teams.map(id=>Math.round(visionControl(s,id,['grubs','baron'].includes(p.kind)?'baron':'dragon'))),visionFightGap:c.visionGap,tradeGold:objectiveTradeReward(s,blue,p.minute),redTradeGold:objectiveTradeReward(s,red,p.minute)};
 }
 function chooseAuto(s,id,preview){const blue=id===s.teams[0];return automaticObjectiveDecision({chance:blue?preview.secureChance:1-preview.secureChance,kind:preview.kind,ownDragons:s.dragons[id],enemyDragons:s.dragons[enemy(s,id)],macro:macro(s,id)});}
+function tradeRewardRange(s){return Number.isInteger(s.input.tradeRewardV8FromWindow)&&(s.pending?.id??s.window)<s.input.tradeRewardV8FromWindow?[1000,2500]:[800,1500];}
 export function objectiveTradeReward(s,id,minute=s.pending?.minute??s.clock){
  const own=macro(s,id),other=macro(s,enemy(s,id)),c=comp(s,id)??{},members=c.members??[],sides=members.filter(([,r])=>r==='TOP'||r==='BOT'),phase=sides.length?sides.reduce((n,[ch])=>n+phaseStrength(ch,minute),0)/sides.length:3;
  const strength=id===s.teams[0]?(s.input.teamStrengthBlue??s.input.bluePower):(s.input.teamStrengthRed??s.input.redPower),form=s.stats.filter(p=>p.team===id&&['TOP','BOT'].includes(p.role)).reduce((n,p)=>n+p.k*.025-p.d*.018,0);
  const quality=clamp((own.split-.2)/.75*.35+own.vision*.15+clamp((strength-50)/45,0,1)*.2+clamp((phase-1)/4,0,1)*.15+clamp(((c.dps??1)+(c.poke??0))/4,0,1)*.15+(own.split-other.split)*.18+form+structurePressure(s,id,minute)*.16,0,1);
- return Math.round((1000+quality*1500)/10)*10;
+ const [minimum,maximum]=tradeRewardRange(s);return Math.round((minimum+quality*(maximum-minimum))/10)*10;
 }
 function battle(s,kind,location,roles,rng){
  s.battleLocation=location;
@@ -154,7 +156,7 @@ function finishMatch(s,winner,rng){
  record(s,{kind:'nexus',title:'넥서스 파괴',location:winner===s.teams[0]?'baseRed':'baseBlue',team:winner,objective:{kind:'nexus',team:winner}});
 }
 export function advanceMatch(s,{controlledTeam=null,action=null,auto=false,maxEvents=Infinity}={},external){
- if(s.version===5)return legacyV5.advanceMatch(s,{controlledTeam,action,auto},external);if(s.version===6)return legacyV6.advanceMatch(s,{controlledTeam,action,auto},external);
+ if(s.version===5)return legacyV5.advanceMatch(s,{controlledTeam,action,auto},external);if(s.version===6)return legacyV6.advanceMatch(s,{controlledTeam,action,auto,maxEvents},external);if(s.version===7)return legacyV7.advanceMatch(s,{controlledTeam,action,auto,maxEvents},external);
  if(s.finished)return s;if(controlledTeam&&!s.teams.includes(controlledTeam))throw Error('경기 참가 구단이 아닙니다.');if(action&&!['contest','trade','auto'].includes(action))throw Error('유효하지 않은 오브젝트 판단입니다.');
  const rng=()=>draw(s,external),startCount=s.events.length;
  if(s.pending){if(controlledTeam&&!auto&&!action)return s;resolveObjective(s,action,controlledTeam,rng);if(s.events.length-startCount>=maxEvents)return s;}
@@ -166,8 +168,8 @@ export function advanceMatch(s,{controlledTeam=null,action=null,auto=false,maxEv
  if(!s.finished&&!s.pending)throw Error('경기 진행이 안전 한도에 도달했습니다.');return s;
 }
 export function matchOutcome(s){
- if(s.version===5)return legacyV5.matchOutcome(s);if(s.version===6)return legacyV6.matchOutcome(s);
+ if(s.version===5)return legacyV5.matchOutcome(s);if(s.version===6)return legacyV6.matchOutcome(s);if(s.version===7)return legacyV7.matchOutcome(s);
  if(!s.finished)throw Error('경기가 아직 끝나지 않았습니다.');return{winner:s.winner,loser:enemy(s,s.winner),duration:s.clock,events:s.events,stats:s.stats,initialBlueProbability:s.initialBlueProbability,finalGold:{...s.gold},finalObjectives:{dragons:{...s.dragons},grubs:{...s.grubs},heralds:{...s.heralds},barons:{...s.barons},elders:{...s.elders}},comeback:{winnerMaxDeficit:Math.round(-s.minLead[s.winner])||0,leadChanges:s.leadChanges,finalLead:s.gold[s.teams[0]]-s.gold[s.teams[1]]},decisionOverrides:s.decisions,model:SIMULATION_MODEL};
 }
 export function simulateMatch(input,rng){const s=createMatchState(input,0,rng);advanceMatch(s,{auto:true},rng);return matchOutcome(s);}
-export function replayMatch(input){return input.model===SIMULATION_MODEL?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}
+export function replayMatch(input){return input.model===SIMULATION_MODEL?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}

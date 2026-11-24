@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {createMatchState,advanceMatch,matchOutcome,simulateMatch,replayMatch,matchRandom,objectivePreview} from '../dist/match-sim.js';
 import * as v6 from '../dist/match-sim-v6.js';
+import * as v7 from '../dist/match-sim-v7.js';
 import {creditTeam,creditPlayer,nextBuilding,attackStructures,towerCount,gainVision,visionControl,visionFightGap,waveclear,superPressure,tickRift} from '../dist/rift-state.js';
 import {grantTemporaryBuff} from '../dist/objective-effects.js';
 import {goldRows,structurePosition} from '../dist/broadcast-hud.js';
@@ -52,6 +53,10 @@ test('HUD shows real per-position gold gaps; animation begins with prior snapsho
 test('v6 archived outcomes, gold and objective bonuses remain unchanged and active saves finish with original rules',()=>{
  const out=v6.simulateMatch(input,matchRandom(93));assert.equal(createHash('sha256').update(JSON.stringify(out)).digest('hex'),'8131379f02fabe367ca1cec344450a46cd4b5cddaf2de9ef26b2696c8782a06a');assert.deepEqual(replayMatch({...input,model:'event-v6',seed:93}),out);
  const s=v6.createMatchState(input,24);v6.advanceMatch(s,{controlledTeam:'B'});const clone=structuredClone(s);advanceMatch(s,{auto:true});v6.advanceMatch(clone,{auto:true});assert.deepEqual(s,clone);assert.deepEqual(matchOutcome(s),v6.matchOutcome(clone));
+});
+test('v7 saved replays and in-progress decisions retain their original economy after the v8 reward reduction',()=>{
+ const out=v7.simulateMatch(input,matchRandom(93));assert.equal(createHash('sha256').update(JSON.stringify(out)).digest('hex'),'c4b44f430b11a73439d37cfccf65792748305d3333951240f1e2b56eabdb316d');assert.deepEqual(replayMatch({...input,model:'event-v7',seed:93}),out);
+ const s=v7.createMatchState(input,123);v7.advanceMatch(s,{controlledTeam:'B'});const clone=structuredClone(s);assert.deepEqual(objectivePreview(s),v7.objectivePreview(clone));advanceMatch(s,{controlledTeam:'B',action:'trade',maxEvents:1});v7.advanceMatch(clone,{controlledTeam:'B',action:'trade',maxEvents:1});assert.deepEqual(s,clone);
 });
 
 test('consecutive siege highlights keep the broadcast clock monotone and recently killed defenders stay dead',()=>{

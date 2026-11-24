@@ -4,7 +4,7 @@ export function objectiveStatus(snapshot,id,side,second,grubs=0){
  if(!snapshot)return '이전 버전 경기 · 종류별 강화 기록 없음';
  const stacks=Object.entries(snapshot.stacks[id]).filter(([,n])=>n).map(([type,n])=>`${DRAKES[type].name} ×${n} (${DRAKES[type].stack})`);
  if(snapshot.soul===id)stacks.push(`${DRAKES[snapshot.rift].name} 영혼 · ${DRAKES[snapshot.rift].soul}`);
- if(grubs)stacks.push(`유충 ${grubs} · 포탑 지속 피해${grubs>=3?' + 진드기 소환':''}`);
+ if(grubs)stacks.push(`유충 강화 · 포탑 지속 피해${grubs>=3?' + 진드기 소환':''}`);
  for(const [kind,label]of [['baron','바론'],['elder','장로']]){
   const [until,holders]=snapshot[kind][side],left=until-second;
   if(holders&&left>0)stacks.push(`${label} ${Math.floor(left/60)}:${String(Math.floor(left%60)).padStart(2,'0')} · ${holders}명 보유`);

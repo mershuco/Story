@@ -25,23 +25,25 @@ with sync_playwright() as p:
  for e in sim['events'][:-1]:
   if e['kind']=='objective-setup':assert e['gold'][opponent]-e['gold'][s['myTeam']]<4500
  q.wait_for_function("document.querySelector('.objective-decision header small')?.textContent.trim().endsWith(document.querySelector('#live-clock').textContent)");text=q.locator('.objective-decision').inner_text();assert '강타 지수' in text and '골드 교환' in text and '확보 예상' in text and '우리 한타·교전 승리 확률' in text and '4,500G' in text;q.screenshot(path=str(ROOT/'2026-objective-decision.png'),full_page=True)
- trade=sim['pending'];quote=q.locator('.objective-odds strong').nth(2).inner_text();assert 1000<=int(quote.replace('+','').replace('G',''))<=2500
+ trade=sim['pending'];quote=q.locator('.objective-odds strong').nth(2).inner_text();assert 800<=int(quote.replace('+','').replace('G',''))<=1500
  assert q.locator('.objective-reward').is_visible();q.locator('.objective-guide summary').click();assert q.locator('.objective-guide-grid article').count()==6;assert '첫 세 용은 서로 다른' in q.locator('.objective-guide').inner_text();assert 'HERALD' not in q.locator('.rift-objective.baron').text_content();q.locator('.objective-guide summary').click()
  initial=s;rng=sim['rng'];pending=sim['pending'];q.reload();q.locator('.objective-decision').wait_for();assert saved(q)['activeMatch']['simulation']['rng']==rng;assert saved(q)['activeMatch']['simulation']['pending']==pending;report['checks'].append('distress fixture uses real UI/simulation: noncritical objectives auto-resolve, manual prompt only at >=4500G deficit, win and capture odds appear, reload preserves RNG')
  q.locator('[data-action=objective-choice][data-choice=trade]').click();assert decision_record(saved(q),'trade')
  after_trade=saved(q)
  if after_trade.get('activeMatch'):
   paid=next(e for e in after_trade['activeMatch']['simulation']['events'][len(initial['activeMatch']['simulation']['events']):] if e.get('tradeGold',{}).get(s['myTeam']))['tradeGold'][s['myTeam']];assert paid==int(quote.replace('+','').replace('G',''))
- report['checks'].append('six drake effects and soul/Elder guide, correct pit labels, 1000–2500G quote and exact trade payout')
+ report['checks'].append('six drake effects and soul/Elder guide, correct pit labels, 800–1500G quote and exact trade payout')
  load(q,initial);q.locator('.objective-decision').wait_for();q.locator('[data-action=objective-choice][data-choice=contest]').click();assert decision_record(saved(q),'contest');report['checks'].append('contest and trade branch from the same saved crisis and persist actual decisions')
  load(q,initial);q.locator('.objective-decision').wait_for();q.set_viewport_size({'width':390,'height':844});q.locator('.objective-decision').scroll_into_view_if_needed();assert q.locator('[data-action=objective-choice][data-choice=auto]').is_visible();assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');q.screenshot(path=str(ROOT/'2026-objective-mobile.png'),full_page=True);q.locator('[data-action=objective-choice][data-choice=auto]').click();after=saved(q)
  if after.get('activeMatch'):
-  z=after['activeMatch']['simulation'];opp=next(id for id in z['teams'] if id!=after['myTeam']);assert z['gold'][opp]-z['gold'][after['myTeam']]>=4500
- load(q,initial);q.locator('.objective-decision').wait_for();q.locator('[data-action=match-auto]').click();s=saved(q);assert s['activeMatch'] is None;m=next(m for m in s['matches'] if m['id']==s['viewing']['matchId']);z=m['sets'][-1];assert z['simulationReplay']['model']=='event-v7';assert len(z['objectiveTotals'])==10;report['checks'].append('390px win-odds dialog, one-decision auto and remaining-set auto preserve the crisis threshold and complete the match')
- q.wait_for_function("document.querySelector('.live-scoreboard [data-grubs]')?.textContent!=='0' || document.querySelector('.live-scoreboard [data-dragons]')?.textContent!=='0'")
+  z=after['activeMatch']['simulation'];opp=next(id for id in z['teams'] if id!=after['myTeam']);assert z['winner'] is None
+  if q.locator('.objective-decision').count():assert z['pending'] and z['gold'][opp]-z['gold'][after['myTeam']]>=4500
+ load(q,initial);q.locator('.objective-decision').wait_for();q.locator('[data-action=match-auto]').click();s=saved(q);assert s['activeMatch'] is None;m=next(m for m in s['matches'] if m['id']==s['viewing']['matchId']);z=m['sets'][-1];assert z['simulationReplay']['model']=='event-v8';assert len(z['objectiveTotals'])==10;report['checks'].append('390px win-odds dialog, one-decision auto and remaining-set auto preserve the crisis threshold and complete the match')
+ q.wait_for_function("document.querySelector('.live-scoreboard .grub-slot.earned') || document.querySelector('.live-scoreboard [data-drake-icons] img')")
+ assert q.locator('[data-grubs],[data-dragons],.side-objectives,.scoreboard-objectives').count()==0
  for side,index in [('blue',0),('red',1)]:
-  team=z[side];assert q.locator(f'.live-scoreboard [data-grubs="{team}"]').inner_text()==str(z['objectiveTotals'][index]);assert q.locator(f'.live-scoreboard [data-dragons="{team}"]').inner_text()==str(z['objectiveTotals'][8+index])
- report['checks'].append('both teams dragon and individual-grub counts remain equal to saved captures');q.set_viewport_size({'width':1440,'height':1100});q.screenshot(path=str(ROOT/'2026-objective-counts.png'),full_page=True);assert q.locator('.objective-decision').count()==0
+  team=z[side];icons=q.locator(f'.live-scoreboard [data-grub-icons="{team}"]');assert icons.locator('.grub-slot').count()==3;assert icons.locator('.grub-slot.earned').count()==z['objectiveTotals'][index];assert icons.inner_text()=='';assert '유충' not in q.locator('.live-scoreboard').inner_text()
+ report['checks'].append('both teams show three LCK-style grub icon slots lit according to captured grubs, with text counters removed');q.set_viewport_size({'width':1440,'height':1100});q.screenshot(path=str(ROOT/'2026-objective-counts.png'),full_page=True);assert q.locator('.objective-decision').count()==0
  # Broadcast state is checked against the actual seeded completed match.
  for side in ['blue','red']:
   team=z[side];assert sum(x['gold'] for x in z['stats'] if x['team']==team)==z['finalGold'][team]
