@@ -501,10 +501,10 @@ function storeMatch(s,m,d,input,outcome){
  return set;
 }
 export function resolveDraft(s,m,d){const input=matchInput(s,m,d);return storeMatch(s,m,d,input,simulateMatch(input,()=>random(s)));}
-export function startLiveMatch(s){
+export function startLiveMatch(s,{incremental=false}={}){
  if(s.activeMatch)throw Error('이미 진행 중인 경기가 있습니다.');const d=s.activeDraft;if(!d)throw Error('진행 중인 밴픽이 없습니다.');
  const m=s.matches.find(m=>m.id===d.matchId),input=matchInput(s,m,d),simulation=createMatchState(input,s.rng);
- s.activeMatch={matchId:m.id,draft:structuredClone(d),simulation};s.activeDraft=null;s.viewing={matchId:m.id,setIndex:m.sets.length};return advanceOwnMatch(s,null);
+ s.activeMatch={matchId:m.id,draft:structuredClone(d),simulation,incremental};s.activeDraft=null;s.viewing={matchId:m.id,setIndex:m.sets.length};return advanceOwnMatch(s,null);
 }
 export function activeMatchSet(s){
  const live=s.activeMatch;if(!live)return null;const d=live.draft,z=live.simulation;
@@ -519,21 +519,22 @@ export function needsObjectiveChoice(s){
 export function advanceOwnMatch(s,action='auto',all=false){
  const live=s.activeMatch;if(!live)throw Error('진행 중인 경기가 없습니다.');
  if(['contest','trade'].includes(action)&&!needsObjectiveChoice(s))throw Error('오브젝트 수동 판단은 4,500G 이상 열세에서 가능합니다.');
- advanceMatch(live.simulation,{controlledTeam:s.myTeam,action,auto:all});
+ const stepped=live.incremental&&live.simulation.version>=7&&!all;
+ advanceMatch(live.simulation,{controlledTeam:s.myTeam,action,auto:all,maxEvents:stepped?1:Infinity});
  // Noncritical objectives use the same automatic coach and RNG path as before.
  // Only the controller's stopping point changes; archived results remain valid.
- while(!live.simulation.finished&&!needsObjectiveChoice(s))advanceMatch(live.simulation,{controlledTeam:s.myTeam,action:'auto'});
+ while(!live.simulation.finished&&!needsObjectiveChoice(s)&&(!stepped||live.simulation.pending))advanceMatch(live.simulation,{controlledTeam:s.myTeam,action:'auto',maxEvents:stepped?1:Infinity});
  if(!live.simulation.finished)return activeMatchSet(s);
  const m=s.matches.find(m=>m.id===live.matchId);s.rng=live.simulation.rng;
  const set=storeMatch(s,m,live.draft,live.simulation.input,matchOutcome(live.simulation));s.activeMatch=null;return set;
 }
 export function resumeLiveMatch(s){
  if(!s.activeMatch)return null;
- return needsObjectiveChoice(s)?activeMatchSet(s):advanceOwnMatch(s,'auto');
+ return s.activeMatch.incremental||needsObjectiveChoice(s)?activeMatchSet(s):advanceOwnMatch(s,'auto');
 }
 export function commitOwnDraft(s) {const d=s.activeDraft;if(!d)throw Error('진행 중인 밴픽이 없습니다.');const m=s.matches.find(m=>m.id===d.matchId);const set=resolveDraft(s,m,d);s.activeDraft=null;s.viewing={matchId:m.id,setIndex:m.sets.length-1};return set;}
 export function simulateSeries(s,m) {for(let guard=0;guard<5&&m.status!=='done';guard++){const d=completeDraft(s,newDraft(s,m));autoAssignDraft(s,d);confirmDraftAssignments(d);resolveDraft(s,m,d);}return m;}
 export function autoOwnSeries(s,matchId) {if(s.activeMatch){if(s.activeMatch.matchId!==matchId)throw Error('진행 중인 다른 경기를 먼저 마쳐 주세요.');advanceOwnMatch(s,'auto',true);}const m=s.matches.find(m=>m.id===matchId);if(!m||!m.teams.includes(s.myTeam)||m.date>s.date)throw Error('진행할 수 없는 경기입니다.');if(s.activeDraft){completeDraft(s,s.activeDraft);autoAssignDraft(s,s.activeDraft);confirmDraftAssignments(s.activeDraft);commitOwnDraft(s);}simulateSeries(s,m);s.viewing={matchId:m.id,setIndex:m.sets.length-1};return m;}
-// Completed v5/v6 logs are reproducible from seed + recorded decisions. Keep live
+// Completed v5/v6/v7 logs are reproducible from seed + recorded decisions. Keep live
 // prefixes intact; never mutate the in-memory match while writing a save.
-export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6'].includes(this.simulationReplay?.model)?[]:value;});}
+export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6','event-v7'].includes(this.simulationReplay?.model)?[]:value;});}

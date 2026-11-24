@@ -42,8 +42,8 @@ with sync_playwright() as pw:
     for player in distress['players'].values():
         if player['owner']=='T1':player['ovr']=45
         elif player['owner'] in [distress['activeDraft']['blue'],distress['activeDraft']['red']]:player['ovr']=99
-    load(q,distress);q.locator('[data-action=commit-draft]').click();q.locator('.rift-svg').wait_for();prefix=save(q)['activeMatch']['simulation']['events'];
-    for _ in range(len(prefix)-1):q.locator('[data-action=viewer-next]').click()
+    distress['rng']=q.evaluate("""async source=>{const E=await import('./engine.js');for(let seed=1;seed<=100;seed++){const s=structuredClone(source);s.rng=seed;E.confirmDraftAssignments(s.activeDraft);E.startLiveMatch(s);if(s.activeMatch)return seed;}throw Error('No crisis fixture');}""",distress)
+    load(q,distress);q.locator('[data-action=commit-draft]').click();q.locator('.rift-svg').wait_for();assert len(save(q)['activeMatch']['simulation']['events'])==2;q.locator('[data-action=viewer-speed][data-speed="8"]').click();q.locator('.objective-decision').wait_for(timeout=30000);prefix=save(q)['activeMatch']['simulation']['events'];q.locator('[data-action=viewer-speed][data-speed="1"]').click();q.locator(f'[data-action=viewer-scene][data-index="{len(prefix)-1}"]').click()
     q.wait_for_timeout(200)
     assert q.locator('.live-rift').get_attribute('data-scene-kind')=='objective-setup';svg=q.locator('.rift-svg').element_handle();actor=q.locator('.champion-token[data-player=oner]');first=actor.get_attribute('transform');q.wait_for_timeout(500);second=actor.get_attribute('transform');assert first!=second;assert svg.evaluate('(el)=>el===document.querySelector(".rift-svg")')
     result['movement']={'from':first,'to':second,'sameSvgElement':True};shot(q,'2026-gank-animation.png');q.locator('[data-action=viewer-play]').click();paused=actor.get_attribute('transform');q.wait_for_timeout(300);assert actor.get_attribute('transform')==paused

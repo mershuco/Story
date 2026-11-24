@@ -1,0 +1,76 @@
+{
+  "checkedOn": "2026-11-24",
+  "rights": "Riot game assets served by CommunityDragon. Unofficial fan game; locally frozen originals, no live hotlink dependency.",
+  "assets": [
+    {
+      "name": "infernal",
+      "source": "https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/dragon_infernal.png",
+      "file": "dist/assets/objectives/infernal.png",
+      "bytes": 2696,
+      "sha256": "1cbdc179f139465b06480780bb739049f5e653a83f70655e718eb6a3fde0b0ad"
+    },
+    {
+      "name": "mountain",
+      "source": "https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/dragon_mountain.png",
+      "file": "dist/assets/objectives/mountain.png",
+      "bytes": 2522,
+      "sha256": "0b154f13184920bb03a92f38e812b386962aa7deb46af2f82d143ad130431352"
+    },
+    {
+      "name": "ocean",
+      "source": "https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/dragon_ocean.png",
+      "file": "dist/assets/objectives/ocean.png",
+      "bytes": 2781,
+      "sha256": "edeef83cc787d503d4039347e01728f9746de03b322c58d2be641568e004311e"
+    },
+    {
+      "name": "cloud",
+      "source": "https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/dragon_cloud.png",
+      "file": "dist/assets/objectives/cloud.png",
+      "bytes": 2822,
+      "sha256": "04d51eefcdec3906475e71eb7f7a6f69bbfde64fd6fe69a8f462837bd714b096"
+    },
+    {
+      "name": "hextech",
+      "source": "https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/dragon_hextech.png",
+      "file": "dist/assets/objectives/hextech.png",
+      "bytes": 2321,
+      "sha256": "bc555144cb6337254c229180aecde8a760f7a94114d4e23a1d0c14f4e2eee96e"
+    },
+    {
+      "name": "chemtech",
+      "source": "https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/dragon_chemtech.png",
+      "file": "dist/assets/objectives/chemtech.png",
+      "bytes": 2766,
+      "sha256": "c67ce233349c75714d4fee9cf6b108fee0756b14a9057e591739cf96a76e2127"
+    },
+    {
+      "name": "elder",
+      "source": "https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/dragon_elder.png",
+      "file": "dist/assets/objectives/elder.png",
+      "bytes": 2857,
+      "sha256": "046b400023b9f5e3b6eda24ecfde326fa55e1a07fc3227d5d579bf12b96137a2"
+    },
+    {
+      "name": "baron",
+      "source": "https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/baron.png",
+      "file": "dist/assets/objectives/baron.png",
+      "bytes": 2888,
+      "sha256": "e1d208f19982f9c1bd6ac380879e4438f55ada15326663e142c38c607d861564"
+    },
+    {
+      "name": "ward",
+      "source": "https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/minimap_ward_green_full.png",
+      "file": "dist/assets/objectives/ward.png",
+      "bytes": 918,
+      "sha256": "57ad7ddbb2244e089f09134fb224105a9fa31a603458116af8ffd67dc690399a"
+    },
+    {
+      "name": "grubs",
+      "source": "https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/grub.png",
+      "file": "dist/assets/objectives/grubs.png",
+      "bytes": 2470,
+      "sha256": "fc227d339710e3f4cc7b829f76b373de3248d8fd6568e2d6b06bc2789b4dadbf"
+    }
+  ]
+}

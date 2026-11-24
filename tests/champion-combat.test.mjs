@@ -75,7 +75,7 @@ test('actual event probabilities use only pre-fight individual KDA and match par
   }
   for(const kill of e.kills){counts[kill.killer].k++;counts[kill.victim].d++;for(const id of kill.assists)counts[id].a++;}
  }
- assert(checked>5);assert(personal>2);assert.deepEqual(out,replayMatch({...input,model:'event-v6',seed:19}));
+ assert(checked>5);assert(personal>2);assert.deepEqual(out,replayMatch({...input,model:'event-v7',seed:19}));
 });
 test('event-v3 replay retains archived composition rules, KDA and gold after the v4 upgrade',()=>{
  const bp=oldProfile(picks(early),map),rp=oldProfile(picks(late),map),input={blue:'B',red:'R',bluePower:80,redPower:80,compositionBlue:bp,compositionRed:rp,roster:[...stats(early,'B'),...stats(late,'R')]};

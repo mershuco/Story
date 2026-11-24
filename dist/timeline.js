@@ -1,3 +1,4 @@
+import {structurePosition} from './broadcast-hud.js';
 import {replayMatch} from './match-sim.js';
 // Deterministic highlight reconstruction. This layer never changes match results or save RNG.
 const ROLES=['TOP','JGL','MID','BOT','SUP'];
@@ -30,7 +31,7 @@ function take(queue,amount,roles){
 export function buildTimeline(set,{teamNames={},playerNames={}}={}){
  const rng=seeded(hash(JSON.stringify([set.blue,set.red,set.number,set.winner,set.picks,set.stats])));
  let out,records=set.events;
- if(!set.live&&!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3','event-v4','event-v5','event-v6'].includes(set.simulationReplay?.model)){
+ if(!set.live&&!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3','event-v4','event-v5','event-v6','event-v7'].includes(set.simulationReplay?.model)){
   const replay=replayMatch({...set.simulationReplay,blue:set.blue,red:set.red,number:set.number,roster:set.stats,teamNames});
   if(replay.winner===set.winner&&replay.duration===set.duration&&JSON.stringify(replay.stats)===JSON.stringify(set.stats))records=replay.events;
  }
@@ -86,17 +87,18 @@ export function buildTimeline(set,{teamNames={},playerNames={}}={}){
  }
  out.push({minute:duration,second:duration*60,kind:'nexus',title:'넥서스 파괴',location:set.winner===set.blue?'baseRed':'baseBlue',team:set.winner,kills:[],objective:{kind:'nexus',team:set.winner},lead:(set.winner===set.blue?1:-1)*(5500+Math.floor(rng()*7000)),score:{...totals},dragons:{...dragons},text:`${teamNames[set.winner]??set.winner}이 넥서스를 파괴하고 ${set.number}세트를 가져갑니다.`});
  }
- let positions=Object.fromEntries(set.picks.map(p=>[p.team+'|'+p.role,BASE[p.team===set.blue?'blue':'red']]));let dead=new Set();
+ let positions=Object.fromEntries(set.picks.map(p=>[p.team+'|'+p.role,BASE[p.team===set.blue?'blue':'red']]));let dead=new Set();const deathUntil={};
+ if(set.simulationVersion>=7)out.forEach((scene,i)=>{scene.endSecond=scene.kind==='nexus'?scene.second:Math.min(scene.decisionSecond??scene.second+18,out[i+1]?.second??Infinity);});
  for(const scene of out){
-  const center=POI[scene.location]??POI.mid;scene.focus={x:center[0],y:center[1],radius:['baron','dragon','herald','grubs','elder','objective-setup'].includes(scene.kind)?65:scene.kind==='opening'?0:85};
+  const building=scene.push?.structures?.[0],center=building?structurePosition(building.defender===set.blue?'blue':'red',building.lane,building.kind,building.index):POI[scene.location]??POI.mid;scene.focus={x:center[0],y:center[1],radius:['baron','dragon','herald','grubs','elder','objective-setup'].includes(scene.kind)?65:scene.kind==='opening'?0:85};
   const killed=new Set(scene.kills.map(k=>k.victim));const involved=new Set(scene.kills.flatMap(k=>[k.killer,k.victim,...k.assists]));
   scene.actors=set.picks.map(p=>{
    const stat=set.stats.find(z=>z.team===p.team&&z.role===p.role);const side=p.team===set.blue?'blue':'red',i=ROLES.indexOf(p.role),key=p.team+'|'+p.role,home=BASE[side],baseLane=LANES[side][p.role];
-   const respawn=dead.has(stat?.player),from=respawn?[...home]:[...(positions[key]??home)];
+   const stillDead=set.simulationVersion>=7&&(deathUntil[stat?.player]??0)>scene.second,respawn=dead.has(stat?.player)&&!stillDead,from=respawn||stillDead?[...home]:[...(positions[key]??home)];
    let target=[...baseLane],via=[];
    const front=p.role==='TOP'||p.role==='JGL',radius=front?38:p.role==='SUP'?62:88;const direction=side==='blue'?1:-1;
-   const peaceful=['farm','trade','split','vision','objective-setup','recall','opening'].includes(scene.kind);
-   const involvedHere=scene.decisions?.[p.team]==='trade'?false:['farm','trade'].includes(scene.kind)?false:scene.kind==='split'?p.role==='TOP':scene.kind==='vision'?p.team===scene.team&&['JGL','SUP'].includes(p.role):scene.roles?scene.roles.includes(p.role):true;
+   const peaceful=['farm','trade','split','vision','objective-setup','recall','opening','trade-push','baron-push','waveclear'].includes(scene.kind);
+   const involvedHere=scene.push?(p.team===scene.push.team?scene.roles?scene.roles.includes(p.role):true:scene.push.clear>20&&['MID','BOT','SUP'].includes(p.role)):scene.decisions?.[p.team]==='trade'?false:['farm','trade'].includes(scene.kind)?false:scene.kind==='split'?p.role==='TOP':scene.kind==='vision'?p.team===scene.team&&['JGL','SUP'].includes(p.role):scene.roles?scene.roles.includes(p.role):true;
    if(scene.kind==='opening')target=baseLane;
    else if(scene.kind==='recall'){target=[home[0]+(i-2)*9,home[1]+(i-2)*6];via=[from,[from[0]+direction*10,from[1]-direction*10],target];}
    else if(scene.kind==='baron-setup') {target=['JGL','SUP','TOP'].includes(p.role)?[center[0]+direction*(i*13-32),center[1]+direction*65]:baseLane;}
@@ -107,10 +109,11 @@ export function buildTimeline(set,{teamNames={},playerNames={}}={}){
     if((scene.kind==='flank'||scene.kind==='teamfight')&&['TOP','SUP'].includes(p.role))via=[[center[0]+direction*110,center[1]+direction*(p.role==='TOP'?-120:115)]];
     if(scene.objective?.steal&&p.team===scene.team&&p.role==='JGL'){via=[[center[0]+direction*90,center[1]-direction*90]];target=[...center];}
    }
+   if(stillDead){target=[...home];via=[];}
    target=target.map(v=>clamp(v,30,570));const dies=killed.has(stat?.player);
-   const actor={id:stat?.player??key,champion:p.champion,team:p.team,side,role:p.role,from:[...from],to:[...target],path:[from,...via,target],dead:dies,respawn,hpFrom:respawn?80:100,hpTo:dies?0:peaceful?100:involvedHere?50+Math.floor(rng()*45):100,involved:involvedHere};
+   const actor={id:stat?.player??key,champion:p.champion,team:p.team,side,role:p.role,from:[...from],to:[...target],path:[from,...via,target],dead:dies||stillDead,alreadyDead:stillDead,respawn,hpFrom:stillDead?0:respawn?80:100,hpTo:dies||stillDead?0:peaceful?100:involvedHere?50+Math.floor(rng()*45):100,involved:involvedHere};
    positions[key]=target;return actor;
-  });dead=killed;
+  });for(const victim of killed)deathUntil[victim]=scene.second+Math.min(65,15+scene.minute*.8);dead=killed;
  }
  return out;
 }
@@ -119,7 +122,7 @@ export function sampleScene(scene,progress){
   const move=clamp(p/.65,0,1),points=actor.path,lengths=points.slice(1).map((b,i)=>Math.hypot(b[0]-points[i][0],b[1]-points[i][1])),total=lengths.reduce((a,b)=>a+b,0);let travelled=move*total,x=points[0][0],y=points[0][1];
   for(let i=0;i<lengths.length;i++){const ratio=lengths[i]?Math.min(1,travelled/lengths[i]):1;x=points[i][0]+(points[i+1][0]-points[i][0])*ratio;y=points[i][1]+(points[i+1][1]-points[i][1])*ratio;if(travelled<=lengths[i])break;travelled-=lengths[i];}
   const hpProgress=clamp((p-.38)/.4,0,1),hp=actor.hpFrom+(actor.hpTo-actor.hpFrom)*hpProgress;
-  return {...actor,x,y,hp,visibleDeath:actor.dead&&p>=.78,recalling:scene.kind==='recall'&&p<.7};
+  return {...actor,x,y,hp,visibleDeath:actor.alreadyDead||(actor.dead&&p>=.78),recalling:scene.kind==='recall'&&p<.7};
  });
 }
-export function sceneClock(scene,progress){if(scene.kind==='objective-setup'&&Number.isFinite(scene.decisionSecond))return scene.second+Math.round(clamp(progress,0,1)*(scene.decisionSecond-scene.second));return scene.kind==='nexus'?scene.second:scene.second+Math.round(clamp(progress,0,1)*Math.min(20,scene.kind==='opening'?10:18));}
+export function sceneClock(scene,progress){if(Number.isFinite(scene.endSecond))return scene.second+Math.round(clamp(progress,0,1)*(scene.endSecond-scene.second));if(scene.kind==='objective-setup'&&Number.isFinite(scene.decisionSecond))return scene.second+Math.round(clamp(progress,0,1)*(scene.decisionSecond-scene.second));return scene.kind==='nexus'?scene.second:scene.second+Math.round(clamp(progress,0,1)*Math.min(20,scene.kind==='opening'?10:18));}

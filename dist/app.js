@@ -114,7 +114,7 @@ function startViewer(oneScene=false){
   const elapsed=ui.viewerLastTimestamp?Math.min(120,timestamp-ui.viewerLastTimestamp):0;ui.viewerLastTimestamp=timestamp;
   ui.sceneProgress=Math.min(1,ui.sceneProgress+elapsed/3200*ui.viewerSpeed);
   paintScene(presentationContext());
-  if(ui.sceneProgress>=1){const {set}=viewerData();const last=timelineForSet(set).length-1;if(ui.viewerIndex>=last||oneScene){stopViewer();render();return;}ui.viewerIndex++;ui.sceneProgress=0;render();}
+  if(ui.sceneProgress>=1){const {set}=viewerData();const last=timelineForSet(set).length-1;if(oneScene){stopViewer();render();return;}if(ui.viewerIndex>=last){if(set.live&&!set.pending){E.advanceOwnMatch(state,'auto');save();ui.viewerIndex=last+1;ui.sceneProgress=0;render();}else{stopViewer();render();return;}}else{ui.viewerIndex++;ui.sceneProgress=0;render();}}
   viewerTimer=requestAnimationFrame(frame);
  };
  viewerTimer=requestAnimationFrame(frame);
@@ -180,13 +180,13 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-act
  case 'draft-auto-rest':await animateDraft(false);break;
  case 'assignment-auto':{const d=state.activeDraft;E.autoAssignDraft(state,d,d.blue===state.myTeam?'blue':'red',false);save();render();break;}
  case 'assignment-pause':{const a=state.activeDraft.assignment;if(a.expired){a.expired=false;a.remaining=60;a.paused=false;}else a.paused=!a.paused;save();render();break;}
- case 'commit-draft':E.confirmDraftAssignments(state.activeDraft);E.startLiveMatch(state);ui.viewerIndex=0;ui.sceneProgress=0;ui.replay=false;nav='viewer';save();render();startViewer();break;
+ case 'commit-draft':E.confirmDraftAssignments(state.activeDraft);E.startLiveMatch(state,{incremental:true});ui.viewerIndex=0;ui.sceneProgress=0;ui.replay=false;nav='viewer';save();render();startViewer();break;
  case 'auto-series':E.autoOwnSeries(state,id);ui.viewerIndex=999;ui.sceneProgress=1;ui.replay=false;nav='viewer';save();render();break;
  case 'resume-match':state.viewing={matchId:state.activeMatch.matchId,setIndex:state.matches.find(m=>m.id===state.activeMatch.matchId).sets.length};ui.replay=false;ui.viewerIndex=E.activeMatchSet(state)?.events.length-1;ui.sceneProgress=1;route('viewer');break;
  case 'objective-choice':{stopViewer();const start=viewerData().set.events.length;E.advanceOwnMatch(state,el.dataset.choice);save();ui.viewerIndex=start;ui.sceneProgress=0;nav='viewer';render();startViewer();break;}
  case 'match-auto':E.advanceOwnMatch(state,'auto',true);save();stopViewer();ui.viewerIndex=999;ui.sceneProgress=1;nav='viewer';render();break;
  case 'viewer-play':if(ui.viewerPlaying)stopViewer();else startViewer();render();break;
- case 'viewer-next':{stopViewer();const {set}=viewerData();ui.viewerIndex=Math.min(ui.viewerIndex+1,timelineForSet(set).length-1);ui.sceneProgress=0;render();startViewer(true);break;}
+ case 'viewer-next':{stopViewer();let {set}=viewerData();if(set.live&&!set.pending&&ui.viewerIndex>=timelineForSet(set).length-1){E.advanceOwnMatch(state,'auto');save();set=viewerData().set;}ui.viewerIndex=Math.min(ui.viewerIndex+1,timelineForSet(set).length-1);ui.sceneProgress=0;render();startViewer(true);break;}
  case 'viewer-speed':ui.viewerSpeed=Number(el.dataset.speed);render();break;
  case 'viewer-scene':stopViewer();ui.viewerIndex=Number(el.dataset.index);ui.sceneProgress=0;render();startViewer(true);break;
  case 'viewer-end':if(viewerData().set.live){E.advanceOwnMatch(state,'auto',true);save();}stopViewer();ui.viewerIndex=timelineForSet(viewerData().set).length-1;ui.sceneProgress=1;render();break;
