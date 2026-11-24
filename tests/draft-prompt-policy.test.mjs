@@ -1,3 +1,4 @@
+import * as legacyV5 from '../dist/match-sim-v5.js';
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import * as E from '../dist/engine.js';
 import {draftCounterThreat} from '../dist/draft-matchups.js';
 import {createMatchState,advanceMatch,matchOutcome,simulateMatch,matchRandom,replayMatch} from '../dist/match-sim.js';
@@ -25,14 +26,14 @@ test('balanced or favored live play skips noncritical objective prompts and stay
 test('old saves paused below threshold migrate forward without a reroll or duplicate score',()=>{
  const s=E.newGame('T1',55),m={id:'legacy-pause',teams:['T1','GEN'],competition:'CUP',bestOf:1,date:s.date,sets:[],score:[0,0],status:'scheduled'};s.matches.push(m);
  const roles=E.ROLES,roster=m.teams.flatMap(team=>roles.map(role=>({team,role,player:s.teams[team].lineup[role],champion:'Annie'}))),input={blue:'T1',red:'GEN',bluePower:95,redPower:55,roster,model:'event-v5',seed:17};
- const sim=createMatchState(input,17);advanceMatch(sim,{controlledTeam:'T1'});assert(sim.pending);assert(!E.needsObjectiveChoice({myTeam:'T1',activeMatch:{simulation:sim}}));
+ const sim=legacyV5.createMatchState(input,17);advanceMatch(sim,{controlledTeam:'T1'});assert(sim.pending);assert(!E.needsObjectiveChoice({myTeam:'T1',activeMatch:{simulation:sim}}));
  const d={set:1,blue:'T1',red:'GEN',patch:'16.1.1',picks:{blue:roster.filter(p=>p.team==='T1'),red:roster.filter(p=>p.team==='GEN')},bans:{blue:[],red:[]},history:[]};s.activeMatch={matchId:m.id,draft:d,simulation:sim};s.viewing={matchId:m.id,setIndex:0};
- const direct=simulateMatch(input,matchRandom(17));E.resumeLiveMatch(s);if(s.activeMatch){assert(E.needsObjectiveChoice(s));E.advanceOwnMatch(s,'auto',true);}
+ const direct=legacyV5.simulateMatch(input,matchRandom(17));E.resumeLiveMatch(s);if(s.activeMatch){assert(E.needsObjectiveChoice(s));E.advanceOwnMatch(s,'auto',true);}
  assert.equal(m.sets.length,1);assert.equal(m.winner,direct.winner);assert.deepEqual(m.sets[0].stats,direct.stats);assert.deepEqual(m.sets[0].finalGold,direct.finalGold);assert.equal(m.score.reduce((a,b)=>a+b),1);
  const before=JSON.stringify(s);E.resumeLiveMatch(s);assert.equal(JSON.stringify(s),before);
 });
 test('prior manual decisions made below the new threshold still replay using the recorded v5 overrides',()=>{
- const roles=E.ROLES,roster=['B','R'].flatMap(team=>roles.map(role=>({team,role,player:team+role,champion:'Annie'}))),input={blue:'B',red:'R',bluePower:80,redPower:80,roster},z=createMatchState(input,123);
+ const roles=E.ROLES,roster=['B','R'].flatMap(team=>roles.map(role=>({team,role,player:team+role,champion:'Annie'}))),input={blue:'B',red:'R',bluePower:80,redPower:80,roster},z=legacyV5.createMatchState(input,123);
  advanceMatch(z,{controlledTeam:'B'});advanceMatch(z,{controlledTeam:'B',action:'trade'});advanceMatch(z,{auto:true});const out=matchOutcome(z);
  assert.deepEqual(replayMatch({...input,model:'event-v5',seed:123,decisionOverrides:out.decisionOverrides}),out);
 });

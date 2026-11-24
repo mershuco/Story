@@ -2,6 +2,7 @@
   "url": "http://127.0.0.1:4173",
   "checks": [
     "distress fixture uses real UI/simulation: noncritical objectives auto-resolve, manual prompt only at >=4500G deficit, win and capture odds appear, reload preserves RNG",
+    "six drake effects and soul/Elder guide, correct pit labels, 1000–2500G quote and exact trade payout",
     "contest and trade branch from the same saved crisis and persist actual decisions",
     "390px win-odds dialog, one-decision auto and remaining-set auto preserve the crisis threshold and complete the match",
     "both teams dragon and individual-grub counts remain equal to saved captures"

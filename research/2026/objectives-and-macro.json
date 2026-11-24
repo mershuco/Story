@@ -1,5 +1,5 @@
 {
-  "model": "event-v5",
+  "model": "event-v6",
   "reviewedOn": "2026-11-24",
   "sources": [
     {
@@ -17,6 +17,26 @@
     {
       "url": "https://developer.riotgames.com/docs/lol/#data-dragon",
       "scope": "보관된2026 공식 챔피언 스킬 설명. 챔피언별 경합 수치는 게임 추정."
+    },
+    {
+      "url": "https://www.leagueoflegends.com/en-gb/news/game-updates/patch-9-23-notes/",
+      "scope": "원소용 순서·영혼·장로 전환"
+    },
+    {
+      "url": "https://www.leagueoflegends.com/en-us/news/game-updates/patch-13-20-notes/",
+      "scope": "중첩 및 영혼의 효과와 후속 수치 변경"
+    },
+    {
+      "url": "https://www.leagueoflegends.com/en-us/news/game-updates/patch-2025-s1-3-notes/",
+      "scope": "바람·화학공학 영혼 후속 변경"
+    },
+    {
+      "url": "https://wiki.leagueoflegends.com/en-us/Hand_of_Baron",
+      "scope": "검색 색인으로 바론180초·4초 귀환 확인; 본문 직접 열기 실패"
+    },
+    {
+      "url": "https://wiki.leagueoflegends.com/en-us/Dragon_Slayer",
+      "scope": "검색 색인으로 장로150초·20% 처형·각 종류 효과 확인; 본문 직접 열기 실패"
     }
   ],
   "objectiveTimersMinutes": {
@@ -24,9 +44,9 @@
     "dragonRespawnMinimum": 5,
     "grubs": 8,
     "grubCountMaximum": 3,
-    "grubAttemptCutoffGameApproximation": 14.5,
-    "herald": 15,
-    "heraldAttemptCutoffGameApproximation": 19.5,
+    "grubAttemptCutoffGameApproximation": 14.75,
+    "herald": null,
+    "heraldAttemptCutoffGameApproximation": null,
     "baron": 20,
     "baronRespawnMinimum": 6,
     "elderAfterSoulMinimum": 6,
@@ -36,7 +56,30 @@
   "jungleSmiteIndex": "clamp(0.8*OVR + 0.2*championMastery - 0.06*fatigue,40,99). Game estimate, not observed player Smite success.",
   "macroModel": "구단별 고정 게임 성향 + 선택 전략 + 밴픽 결투/포킹/진입/성장 + 현재 상황 + 저장된 난수. 실제 구단 성향을 정밀 추정한 자료 아님.",
   "manualProgress": "오브젝트 직전 상대 골드−우리 골드>=4500인 경우만 수동 선택창 표시. 그 외에는 자동 판단으로 진행. 한타·교전 승리 확률과 오브젝트 확보 예상을 별도 표시. 기존 v5 완료 경기의 수동 선택은 원래 기록대로 재생.",
-  "saveCompatibility": "v2/v3/v4 완료 경기 재생은 이전 코드 유지. v5 완료 로그는 seed와 수동 decisionOverrides로 재생하며 진행 중 로그·난수·pending은 그대로 저장.",
+  "saveCompatibility": "v2/v3/v4/v5 완료 경기의 이전 코드 보존. 진행 중 v5 경기도 당시 규칙으로 완료. 새 세트 v6. 완료 v5/v6 로그는 seed/수동선택으로 재생, 진행 중 로그/pending/RNG는 그대로 저장.",
   "draftPolicy": "protected-power-v2: 선픽 확보·후픽 교환용 잔여 OP1~2개를 열고 자기 주력의 대응 챔피언을 우선 밴. 2세트 주력1개,3세트 이후 주력·대안2개. 공식 스킬 기전 기반 정성적 게임 판단; 실제 승률표 아님.",
-  "draftCounterSource": "dist/draft-matchups.js and frozen Riot Data Dragon 2026 champion spell snapshots"
+  "draftCounterSource": "dist/draft-matchups.js and frozen Riot Data Dragon 2026 champion spell snapshots",
+  "objectiveEffects": "research/2026/objective-effects.md; dist/objective-effects.js",
+  "dragonOrder": "첫 세 종류는 중복 없는 무작위. 둘째 처치 후 셋째 종류 결정. 셋째부터 영혼 완성까지 반복. 총4용 영혼은 셋째 종류이며 단 한 팀만 획득.",
+  "temporaryBuffs": {
+    "baronSeconds": 180,
+    "elderSeconds": 150,
+    "elderExecuteThresholdRealLoL": 0.2,
+    "death": "사망한 보유자 강화 소멸; 원소용 중첩·영혼·유충은 유지",
+    "simulation": "실시간 체력/스킬 엔진 대신 교전·처형·공성 계수로 환산"
+  },
+  "customPitRule": "사용자 요청: 바론 둥지 유충·바론, 용 둥지 원소용·장로. 실제 일반 협곡에는 전령도 있으나 게임 새 세트에서 제외.",
+  "tradeGold": {
+    "minimum": 1000,
+    "maximum": 2500,
+    "inputs": [
+      "팀 운영·시야",
+      "상대 사이드 대응",
+      "챔피언 시간대 성장",
+      "TOP/BOT 킬·데스",
+      "지속딜·포킹·공성 강화"
+    ],
+    "quote": "pending 시점에 순수 계산한 견적 그대로 지급",
+    "bothDefer": "양 팀 보류 시 기본 파밍만; 반복 추가 보상 없음"
+  }
 }

@@ -494,7 +494,7 @@ function storeMatch(s,m,d,input,outcome){
  const {blue,red,number,roster,teamNames,...simulationReplay}=input,picks=[...d.picks.blue,...d.picks.red];
  if(outcome.decisionOverrides?.length)simulationReplay.decisionOverrides=outcome.decisionOverrides;
  const {winner:winning,loser:losing,duration,stats}=outcome;
- const set={number:d.set,winner:winning,loser:losing,blue:d.blue,red:d.red,firstPickSide:d.firstPickSide??'blue',firstSelection:d.firstSelection??null,patch:d.patch,duration,picks,bans:d.bans,probability:outcome.initialBlueProbability,stats,simulationVersion:5,simulationReplay,objectiveTotals:[outcome.finalObjectives.grubs[d.blue],outcome.finalObjectives.grubs[d.red],outcome.finalObjectives.heralds[d.blue],outcome.finalObjectives.heralds[d.red],outcome.finalObjectives.barons[d.blue],outcome.finalObjectives.barons[d.red],outcome.finalObjectives.elders[d.blue],outcome.finalObjectives.elders[d.red],outcome.finalObjectives.dragons[d.blue],outcome.finalObjectives.dragons[d.red]],finalGold:outcome.finalGold,comeback:outcome.comeback,events:m.teams.includes(s.myTeam)?outcome.events:[],draftHistory:m.teams.includes(s.myTeam)?d.history:[],reason:`${team(s,winning).abbr} 승리 · 전력·조합·골드 차이를 반영한 교전, 제압 보상, 오브젝트와 공성 결과로 승패 결정`};
+ const set={number:d.set,winner:winning,loser:losing,blue:d.blue,red:d.red,firstPickSide:d.firstPickSide??'blue',firstSelection:d.firstSelection??null,patch:d.patch,duration,picks,bans:d.bans,probability:outcome.initialBlueProbability,stats,simulationVersion:Number(outcome.model.split('v').at(-1)),simulationReplay,objectiveTotals:[outcome.finalObjectives.grubs[d.blue],outcome.finalObjectives.grubs[d.red],outcome.finalObjectives.heralds[d.blue],outcome.finalObjectives.heralds[d.red],outcome.finalObjectives.barons[d.blue],outcome.finalObjectives.barons[d.red],outcome.finalObjectives.elders[d.blue],outcome.finalObjectives.elders[d.red],outcome.finalObjectives.dragons[d.blue],outcome.finalObjectives.dragons[d.red]],finalGold:outcome.finalGold,comeback:outcome.comeback,events:m.teams.includes(s.myTeam)?outcome.events:[],draftHistory:m.teams.includes(s.myTeam)?d.history:[],reason:`${team(s,winning).abbr} 승리 · 전력·조합·골드 차이를 반영한 교전, 제압 보상, 오브젝트와 공성 결과로 승패 결정`};
  m.sets.push(set);m.score[m.teams.indexOf(winning)]++;
  for(const id of m.teams)for(const p of lineup(s,id)){p.fatigue=clamp(p.fatigue+3,0,100);p.morale=clamp(p.morale+(id===winning?2:-2),0,100);p.xp+=.5;const cp=picks.find(x=>x.team===id&&x.role===p.position);if(cp){s.masteryGains[p.id]??={};s.masteryGains[p.id][cp.champion]=Math.min(35,(s.masteryGains[p.id][cp.champion]??0)+.08);}}
  if(m.score.some(n=>n>=Math.ceil(m.bestOf/2))) {m.status='done';m.winner=winning;if(!m.exhibition)team(s,winning).budget+=.25;if(!m.exhibition&&m.teams.includes(s.myTeam)){news(s,winning===s.myTeam?'시리즈 승리':'시리즈 종료',`${m.teams[0]} ${m.score[0]} : ${m.score[1]} ${m.teams[1]}`);team(s,s.myTeam).fan+=winning===s.myTeam?1500:300;}}
@@ -508,7 +508,7 @@ export function startLiveMatch(s){
 }
 export function activeMatchSet(s){
  const live=s.activeMatch;if(!live)return null;const d=live.draft,z=live.simulation;
- return {live:true,number:d.set,blue:d.blue,red:d.red,patch:d.patch,picks:[...d.picks.blue,...d.picks.red],bans:d.bans,winner:z.winner,stats:z.stats,events:z.events,duration:z.clock,simulationVersion:5,pending:needsObjectiveChoice(s)?objectivePreview(z):null};
+ return {live:true,number:d.set,blue:d.blue,red:d.red,patch:d.patch,picks:[...d.picks.blue,...d.picks.red],bans:d.bans,winner:z.winner,stats:z.stats,events:z.events,duration:z.clock,simulationVersion:z.version,pending:needsObjectiveChoice(s)?objectivePreview(z):null};
 }
 export const OBJECTIVE_CHOICE_DEFICIT=4500;
 export function needsObjectiveChoice(s){
@@ -534,6 +534,6 @@ export function resumeLiveMatch(s){
 export function commitOwnDraft(s) {const d=s.activeDraft;if(!d)throw Error('진행 중인 밴픽이 없습니다.');const m=s.matches.find(m=>m.id===d.matchId);const set=resolveDraft(s,m,d);s.activeDraft=null;s.viewing={matchId:m.id,setIndex:m.sets.length-1};return set;}
 export function simulateSeries(s,m) {for(let guard=0;guard<5&&m.status!=='done';guard++){const d=completeDraft(s,newDraft(s,m));autoAssignDraft(s,d);confirmDraftAssignments(d);resolveDraft(s,m,d);}return m;}
 export function autoOwnSeries(s,matchId) {if(s.activeMatch){if(s.activeMatch.matchId!==matchId)throw Error('진행 중인 다른 경기를 먼저 마쳐 주세요.');advanceOwnMatch(s,'auto',true);}const m=s.matches.find(m=>m.id===matchId);if(!m||!m.teams.includes(s.myTeam)||m.date>s.date)throw Error('진행할 수 없는 경기입니다.');if(s.activeDraft){completeDraft(s,s.activeDraft);autoAssignDraft(s,s.activeDraft);confirmDraftAssignments(s.activeDraft);commitOwnDraft(s);}simulateSeries(s,m);s.viewing={matchId:m.id,setIndex:m.sets.length-1};return m;}
-// Completed v5 logs are reproducible from seed + recorded decisions. Keep live
+// Completed v5/v6 logs are reproducible from seed + recorded decisions. Keep live
 // prefixes intact; never mutate the in-memory match while writing a save.
-export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&this.simulationReplay?.model==='event-v5'?[]:value;});}
+export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6'].includes(this.simulationReplay?.model)?[]:value;});}

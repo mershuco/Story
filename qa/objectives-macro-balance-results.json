@@ -1,5 +1,5 @@
 {
-  "model": "event-v5",
+  "model": "event-v6",
   "method": "Synthetic equal-player-strength squads; game-estimated team styles and Smite/burst coefficients. Not observed LCK capture or win rates. Seeds 1..400.",
   "secureTable": [
     {
@@ -98,11 +98,11 @@
   "diversity": {
     "trials": 400,
     "uniqueEventOrders": 400,
-    "blueWinRate": 0.555,
-    "averageMinutes": 37.8925,
-    "splitGrubCamps": 153,
-    "steals": 681,
-    "uncontested": 846
+    "blueWinRate": 0.5575,
+    "averageMinutes": 36.295,
+    "splitGrubCamps": 130,
+    "steals": 521,
+    "uncontested": 831
   },
   "manualExamples": [
     {
@@ -110,18 +110,18 @@
       "firstDragonOwner": "T1",
       "killsInContest": 4,
       "goldAfterObjective": {
-        "T1": 12889,
-        "GEN": 11636
+        "T1": 12893,
+        "GEN": 11603
       },
-      "remainingWinner": "GEN"
+      "remainingWinner": "T1"
     },
     {
       "action": "trade",
       "firstDragonOwner": "GEN",
       "killsInContest": 0,
       "goldAfterObjective": {
-        "T1": 11825,
-        "GEN": 11536
+        "T1": 13243,
+        "GEN": 11503
       },
       "remainingWinner": "T1"
     }
