@@ -47,6 +47,7 @@ const navItems=[['home','home','대시보드'],['squad','users','선수단'],['t
 function presentationContext(){return {E,data,state,ui,nav,t,esc,btn,badge,icon,img,teamIcon,teamName,role,fmtDate,topChampions,viewerData,timelineForSet};}
 function shell(body){document.documentElement.style.setProperty('--team',t(state.myTeam).color);app.innerHTML=shellMarkup(presentationContext(),body);}
 function render(){
+ const draftScroll=nav==='draft'&&document.body.dataset.screen==='draft'?$('.work-sheet')?.scrollTop:null;
  if(state&&nav==='viewer'&&document.body.dataset.screen==='viewer'&&refreshViewer(app,viewerView(),()=>paintScene(presentationContext())))return;
  document.body.dataset.screen=state?nav:'select';
  if(!state){onBoard();return;}
@@ -57,6 +58,7 @@ function render(){
  const sub=['squad','training','champions'].includes(nav)?[['squad','선수단 관리'],['training','훈련 및 전술'],['champions','챔피언 연구실']]:['league','calendar','history'].includes(nav)?[['league','리그 순위'],['calendar','시즌 일정'],['history','경기 기록']]:['finance','settings'].includes(nav)?[['finance','구단 재정'],['training','시설 · 코칭'],['settings','설정 · 저장']]:[];
  const content=nav==='viewer'?viewerView():nav==='draft'||nav==='draft-reference'?draftView():`<div class="content">${(pages[nav]??squadView)()}<div class="footer-note">LCK MANAGER · 비공식 팬 게임 · 능력치·경제·경기 결과는 가상 수치, 숙련은 출전 기록 기반 추정입니다.</div></div>`;
  shell(`<section class="work-sheet ${stages.includes(nav)?'match-sheet':''}"><header class="work-sheet-top"><strong>${labels[nav]??'MATCH CENTER'}</strong><button data-action="nav" data-id="home" aria-label="집무실로 닫기">×</button></header>${sub.length?`<div class="sub-navigation">${sub.map(([id,label])=>`<button data-action="nav" data-id="${id}" class="${id===nav?'active':''}">${label}</button>`).join('')}</div>`:''}${content}</section>`);
+ if(draftScroll!==null&&draftScroll!==undefined&&$('.work-sheet'))$('.work-sheet').scrollTop=draftScroll;
  if(nav==='viewer')requestAnimationFrame(()=>paintScene(presentationContext()));
  if(nav==='draft'&&state.activeDraft&&E.draftTurn(state.activeDraft)?.team&&E.draftTurn(state.activeDraft).team!==state.myTeam&&!ui.draftBusy)queueMicrotask(()=>{if(nav==='draft'&&!ui.draftBusy&&!busy)animateDraft(true).catch(e=>toast(e.message,true));});
 }
@@ -130,7 +132,7 @@ async function animateDraft(opponentOnly=true){
 }
 function draftExamplesModal(){openModal('실제 경기 밴픽 참고',`<p class="note">실제 경기의 픽·밴 순서를 재생합니다. 2022년 일반 드래프트와 커리어의 피어리스 규칙을 구분합니다.</p><div class="stack">${data.draftExamples.examples.map(e=>`<div class="panel"><div class="spread"><div><h3>${esc(e.title)}</h3><span class="small muted">${e.date} · 패치 ${esc(e.sourcePatch)} · ${e.year===2022?'일반 드래프트':'피어리스 1세트'}</span></div>${btn('다시보기','draft-reference',`data-id="${e.id}"`,'primary')}</div></div>`).join('')}</div>`);}
 function route(id){stopViewer();if(id!=='draft-reference')ui.draftReferenceId=null;nav=id;ui.menu=false;render();window.scrollTo({top:0,behavior:'instant'});}
-document.addEventListener('click',async e=>{const el=e.target.closest('[data-action]');if(!el||el.disabled||busy)return;const action=el.dataset.action,id=el.dataset.id;try{
+document.addEventListener('click',async e=>{const el=e.target.closest('[data-action]');if(!el||el.disabled||(busy&&!el.dataset.action.startsWith('draft-meta-')))return;const action=el.dataset.action,id=el.dataset.id;try{
  switch(action){
  case 'club':selectedClub=id;onBoard();break;
  case 'new-game':state=E.newGame(selectedClub,Math.floor(Math.random()*0xffffffff));save();nav='home';render();break;
@@ -164,6 +166,10 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-act
  case 'upgrade':E.upgrade(state,id);save();render();toast('구단 투자를 완료했습니다.');break;
  case 'market-role':ui.marketRole=id;render();break;
  case 'codex-role':ui.codexRole=id;render();break;
+ case 'draft-meta-toggle':ui.draftMetaOpen=ui.draftMetaOpen===false;render();break;
+ case 'draft-meta-mode':ui.draftMetaMode=id;render();break;
+ case 'draft-meta-role':ui.draftMetaRole=id;render();break;
+ case 'draft-meta-available':ui.draftMetaAvailable=!ui.draftMetaAvailable;render();break;
  case 'draft-role':ui.draftRole=id;render();break;
  case 'offer':offerModal(id);break;
  case 'trade-open':tradeModal(id);break;
@@ -227,12 +233,12 @@ try {
  const keys=['teams','players','champions','mastery','meta','international'];
  const [legacy,modern,shared]=await Promise.all([
   Promise.all(keys.map(async k=>[k,await fetchData(k)])),
-  Promise.all([...keys,'season','team-logos'].map(async k=>[k,await fetchData('season-2026/'+k)])),
+  Promise.all([...keys,'season','team-logos','draft-meta'].map(async k=>[k,await fetchData('season-2026/'+k)])),
   Promise.all(['draft-examples','team-logos'].map(async k=>[k,await fetchData(k)]))
  ]);
  const common=Object.fromEntries(shared);
  profiles['season-2022']={...Object.fromEntries(legacy),draftExamples:common['draft-examples'],teamLogos:common['team-logos'],season:{id:'season-2022',startYear:2022,startDate:'2022-01-03',masteryYear:2021}};
- const current=Object.fromEntries(modern);profiles['season-2026']={...current,draftExamples:common['draft-examples'],teamLogos:current['team-logos']};
+ const current=Object.fromEntries(modern);profiles['season-2026']={...current,draftExamples:common['draft-examples'],teamLogos:current['team-logos'],draftMeta:current['draft-meta']};
  activateProfile('season-2026');
  try{const raw=localStorage.getItem('lck-manager-save-v1');if(raw){state=loadState(restore(raw));nav=restoredView(state);if(ui.restoredLive)save();}}catch{}
  render();

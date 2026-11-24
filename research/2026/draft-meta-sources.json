@@ -1,0 +1,157 @@
+{
+  "checkedOn": "2026-11-25",
+  "source": "https://raw.githubusercontent.com/feliperegesde/lol-analytics-2026/337240bbfe1728f154d2cafffd1e6d07ee4242f2/backend/2026_LoL_esports_match_data_from_OraclesElixir.csv",
+  "upstream": "https://oracleselixir.com/tools/downloads",
+  "sourceBytes": 78139651,
+  "sha256": "cf499d20eb3f84667b487fc1e28c5c73d47b3f535f155f8f5156eac7610b29f4",
+  "upstreamCheck": "Downloads page returned403; S3 annual URL returned404. Used the previously reviewed hash-pinned public mirror.",
+  "validGames": 640,
+  "rejectedGames": [],
+  "reports": [
+    {
+      "event": "FST",
+      "patch": "16.5.1",
+      "games": 45,
+      "openingGames": 13,
+      "firstDate": "2026-03-16 13:10:29",
+      "lastDate": "2026-03-22 16:04:39",
+      "partial": false
+    },
+    {
+      "event": "LCK_CUP",
+      "patch": "16.1.1",
+      "games": 51,
+      "openingGames": 20,
+      "firstDate": "2026-01-14 08:13:43",
+      "lastDate": "2026-01-25 13:39:08",
+      "partial": false
+    },
+    {
+      "event": "LCK_CUP",
+      "patch": "16.2.1",
+      "games": 33,
+      "openingGames": 10,
+      "firstDate": "2026-01-28 08:04:54",
+      "lastDate": "2026-02-08 09:55:03",
+      "partial": false
+    },
+    {
+      "event": "LCK_CUP",
+      "patch": "16.3.1",
+      "games": 41,
+      "openingGames": 10,
+      "firstDate": "2026-02-12 08:04:05",
+      "lastDate": "2026-03-01 10:01:17",
+      "partial": false
+    },
+    {
+      "event": "LCK_PLAYOFFS",
+      "patch": "16.16.1",
+      "games": 55,
+      "openingGames": 13,
+      "firstDate": "2026-08-26 08:08:21",
+      "lastDate": "2026-09-13 08:19:05",
+      "partial": false
+    },
+    {
+      "event": "LCK_REG12",
+      "patch": "16.10.1",
+      "games": 49,
+      "openingGames": 20,
+      "firstDate": "2026-05-20 08:05:29",
+      "lastDate": "2026-05-31 11:10:18",
+      "partial": false
+    },
+    {
+      "event": "LCK_REG12",
+      "patch": "16.6.1",
+      "games": 21,
+      "openingGames": 10,
+      "firstDate": "2026-04-01 08:11:43",
+      "lastDate": "2026-04-05 11:13:31",
+      "partial": false
+    },
+    {
+      "event": "LCK_REG12",
+      "patch": "16.7.1",
+      "games": 45,
+      "openingGames": 20,
+      "firstDate": "2026-04-08 08:06:29",
+      "lastDate": "2026-04-19 12:15:21",
+      "partial": false
+    },
+    {
+      "event": "LCK_REG12",
+      "patch": "16.8.1",
+      "games": 44,
+      "openingGames": 20,
+      "firstDate": "2026-04-22 08:04:37",
+      "lastDate": "2026-05-03 11:12:34",
+      "partial": false
+    },
+    {
+      "event": "LCK_REG12",
+      "patch": "16.9.1",
+      "games": 45,
+      "openingGames": 20,
+      "firstDate": "2026-05-06 08:06:15",
+      "lastDate": "2026-05-17 13:04:35",
+      "partial": false
+    },
+    {
+      "event": "LCK_REG34",
+      "patch": "16.14.1",
+      "games": 24,
+      "openingGames": 9,
+      "firstDate": "2026-07-29 08:05:41",
+      "lastDate": "2026-08-02 13:18:02",
+      "partial": false
+    },
+    {
+      "event": "LCK_REG34",
+      "patch": "16.15.1",
+      "games": 49,
+      "openingGames": 20,
+      "firstDate": "2026-08-05 08:04:53",
+      "lastDate": "2026-08-16 12:38:36",
+      "partial": false
+    },
+    {
+      "event": "LCK_REG34",
+      "patch": "16.16.1",
+      "games": 25,
+      "openingGames": 10,
+      "firstDate": "2026-08-19 08:05:49",
+      "lastDate": "2026-08-23 11:57:33",
+      "partial": false
+    },
+    {
+      "event": "LCK_ROAD",
+      "patch": "16.11.1",
+      "games": 20,
+      "openingGames": 5,
+      "firstDate": "2026-06-06 08:12:31",
+      "lastDate": "2026-06-14 10:35:36",
+      "partial": false
+    },
+    {
+      "event": "MSI",
+      "patch": "16.13.1",
+      "games": 71,
+      "openingGames": 20,
+      "firstDate": "2026-06-28 03:10:49",
+      "lastDate": "2026-07-12 11:11:20",
+      "partial": false
+    },
+    {
+      "event": "WORLDS",
+      "patch": "16.20.1",
+      "games": 22,
+      "openingGames": 6,
+      "firstDate": "2026-10-15 18:16:33",
+      "lastDate": "2026-10-18 19:48:36",
+      "partial": true
+    }
+  ],
+  "outputSha256": "4ec00bb70854b169605d1b02d384af09040b363dc1311a203ab439e0e2e5f215"
+}
