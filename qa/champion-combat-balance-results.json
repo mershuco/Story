@@ -1,0 +1,171 @@
+{
+  "model": "event-v4",
+  "method": "Explicit kit-v1 estimates. Equal player strength; controlled probability examples also hold team gold/buffs equal. Full simulations include evolving gold and actual pre-fight KDA; seeds 1..400 each. These are synthetic game results, not real LoL win rates.",
+  "timeline": [
+    {
+      "minute": 8,
+      "kind": "skirmish",
+      "roles": [
+        "TOP",
+        "JGL",
+        "MID"
+      ],
+      "earlyTeamChance": 0.6903617620001418,
+      "phaseGap": 2.2027777777777775,
+      "compositionGap": 5.727222222222221
+    },
+    {
+      "minute": 12,
+      "kind": "teamfight",
+      "earlyTeamChance": 0.5294419894010904,
+      "phaseGap": 0.801111111111111,
+      "compositionGap": 0.8421739618406279
+    },
+    {
+      "minute": 24,
+      "kind": "teamfight",
+      "earlyTeamChance": 0.41288294397920533,
+      "phaseGap": -0.4900000000000003,
+      "compositionGap": -2.514714927048262
+    },
+    {
+      "minute": 40,
+      "kind": "skirmish",
+      "roles": [
+        "TOP",
+        "JGL",
+        "MID"
+      ],
+      "earlyTeamChance": 0.4059288459665484,
+      "phaseGap": -1.046212121212121,
+      "compositionGap": -2.7201515151515143
+    },
+    {
+      "minute": 45,
+      "kind": "teamfight",
+      "earlyTeamChance": 0.289050497374996,
+      "phaseGap": -2.2399999999999998,
+      "compositionGap": -7.064714927048261
+    }
+  ],
+  "kdaExamples": [
+    {
+      "name": "neutral",
+      "minute": 24,
+      "champion": "Draven",
+      "k": 0,
+      "d": 0,
+      "a": 0,
+      "equalGoldChance": 0.5,
+      "personalFormGap": 0
+    },
+    {
+      "name": "fedCarry",
+      "minute": 24,
+      "champion": "Draven",
+      "k": 6,
+      "d": 0,
+      "a": 2,
+      "equalGoldChance": 0.5228232655467845,
+      "personalFormGap": 0.13050935403543013
+    },
+    {
+      "name": "behindCarry",
+      "minute": 24,
+      "champion": "Draven",
+      "k": 0,
+      "d": 5,
+      "a": 1,
+      "equalGoldChance": 0.47826054467819257,
+      "personalFormGap": -0.12430382714147317
+    },
+    {
+      "name": "fedSupport",
+      "minute": 24,
+      "champion": "Lulu",
+      "k": 6,
+      "d": 0,
+      "a": 2,
+      "equalGoldChance": 0.5076134949249808,
+      "personalFormGap": 0.043509048180539175
+    },
+    {
+      "name": "behindSupport",
+      "minute": 24,
+      "champion": "Lulu",
+      "k": 0,
+      "d": 5,
+      "a": 1,
+      "equalGoldChance": 0.49701815174813346,
+      "personalFormGap": -0.0170393348748789
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "earlyVsScaling",
+      "blue": [
+        "Renekton",
+        "LeeSin",
+        "Leblanc",
+        "Draven",
+        "Pyke"
+      ],
+      "red": [
+        "Kayle",
+        "Kindred",
+        "Kassadin",
+        "Jinx",
+        "Sona"
+      ],
+      "trials": 400,
+      "blueWins": 205,
+      "blueWinRate": 0.5125,
+      "comebacks6000": 18,
+      "averageMinutes": 32.3725
+    },
+    {
+      "name": "duelVsTeamfight",
+      "blue": [
+        "Fiora",
+        "MasterYi",
+        "Zed",
+        "Vayne",
+        "Pyke"
+      ],
+      "red": [
+        "Ornn",
+        "Sejuani",
+        "Orianna",
+        "Jinx",
+        "Lulu"
+      ],
+      "trials": 400,
+      "blueWins": 98,
+      "blueWinRate": 0.245,
+      "comebacks6000": 10,
+      "averageMinutes": 32.04
+    },
+    {
+      "name": "mirror",
+      "blue": [
+        "Ornn",
+        "Sejuani",
+        "Orianna",
+        "Jinx",
+        "Lulu"
+      ],
+      "red": [
+        "Ornn",
+        "Sejuani",
+        "Orianna",
+        "Jinx",
+        "Lulu"
+      ],
+      "trials": 400,
+      "blueWins": 212,
+      "blueWinRate": 0.53,
+      "comebacks6000": 9,
+      "averageMinutes": 32.86
+    }
+  ]
+}

@@ -19,7 +19,7 @@ function compositionMarkup(c,d){
  const {E,state:s,esc}=c;if(!E.assignmentsReady(d))return '<p class="composition-pending">다섯 포지션을 모두 배치하면 조합과 시간대별 상성을 분석합니다.</p>';
  const report=E.draftComposition(d),ours=d.blue===s.myTeam?'blue':'red',enemy=ours==='blue'?'red':'blue';
  const chance=p=>Math.round((ours==='blue'?p:1-p)*100);
- return `<section class="composition-report" aria-label="챔피언 조합 분석"><header><strong>챔피언 조합 분석</strong><span>조합만 비교한 한타 예상 · 20분 ${chance(report.blueChance20)}% · 45분 ${chance(report.blueChance45)}%</span></header><p class="small muted">동일 전력·골드·버프를 가정한 우리 팀의 조합 상성입니다. 실제 교전 확률에는 선수와 골드 상황이 추가됩니다.</p><div>${[ours,enemy].map((side,i)=>`<article><strong>${i?'상대':'우리'} · ${esc(s.teams[d[side]].abbr)}</strong><span>${report[side+'Labels'].map(esc).join(' · ')}</span></article>`).join('')}</div></section>`;
+ return `<section class="composition-report" aria-label="챔피언 조합 분석"><header><strong>챔피언 조합 분석</strong><span>조합만 비교한 한타 예상 · 20분 ${chance(report.blueChance20)}% · 45분 ${chance(report.blueChance45)}%</span></header><p class="small muted">동일 전력·골드·버프를 가정한 우리 팀의 조합 상성입니다. 현재 전과는 0/0/0으로 가정합니다. 실제 교전에는 참가 포지션·선수·골드와 챔피언별 킬·데스·어시스트가 추가됩니다.</p><div class="combat-scenarios">${report.scenarios.map(x=>`<article><span>${esc(x.label)} · ${x.minute}분</span><strong>${chance(x.blueChance)}%</strong></article>`).join('')}</div><div>${[ours,enemy].map((side,i)=>`<article><strong>${i?'상대':'우리'} · ${esc(s.teams[d[side]].abbr)}</strong><span>${report[side+'Labels'].map(esc).join(' · ')}</span></article>`).join('')}</div></section>`;
 }
 function assignmentMarkup(c,d){
  const {E,state:s,esc,img,btn}=c,side=d.blue===s.myTeam?'blue':'red',picks=d.picks[side],clock=d.assignment;

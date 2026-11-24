@@ -1,0 +1,2613 @@
+{
+  "profileVersion": "kit-v1",
+  "reviewedOn": "2026-11-24",
+  "anchorsMinutes": [
+    5,
+    14,
+    24,
+    34,
+    45
+  ],
+  "ratingScale": [
+    1,
+    5
+  ],
+  "method": "Explicit per-champion qualitative kit interpretation. No measured time-specific LCK win-rate calibration. Frozen 2026 source snapshots; patch-specific balance, actual builds, stacks and levels are not fully simulated.",
+  "champions": [
+    {
+      "id": "Aatrox",
+      "name": "아트록스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Aatrox.json",
+      "abilities": [
+        "사신 태세",
+        "다르킨의 검",
+        "지옥사슬",
+        "파멸의 돌진",
+        "세계의 종결자"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Ahri",
+      "name": "아리",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Ahri.json",
+      "abilities": [
+        "정기 흡수",
+        "현혹의 구슬",
+        "여우불",
+        "매혹",
+        "혼령 질주"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Akali",
+      "name": "아칼리",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Akali.json",
+      "abilities": [
+        "암살자의 표식",
+        "오연투척검",
+        "황혼의 장막",
+        "표창곡예",
+        "무결처형"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Akshan",
+      "name": "아크샨",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Akshan.json",
+      "abilities": [
+        "비열한 싸움",
+        "복수의 부메랑",
+        "악당 처단",
+        "영웅의 비상",
+        "인과응보"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Alistar",
+      "name": "알리스타",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Alistar.json",
+      "abilities": [
+        "승리의 포효",
+        "분쇄",
+        "박치기",
+        "짓밟기",
+        "꺾을 수 없는 의지"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Ambessa",
+      "name": "암베사",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Ambessa.json",
+      "abilities": [
+        "용사냥개의 발걸음",
+        "교활한 휩쓸기 / 파멸의 일격",
+        "배척",
+        "찢어 가르기",
+        "공개 처형"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Amumu",
+      "name": "아무무",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Amumu.json",
+      "abilities": [
+        "저주의 손길",
+        "붕대 던지기",
+        "절망",
+        "짜증내기",
+        "슬픈 미라의 저주"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Anivia",
+      "name": "애니비아",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Anivia.json",
+      "abilities": [
+        "환생",
+        "냉기 폭발",
+        "결정화",
+        "동상",
+        "얼음 폭풍"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Annie",
+      "name": "애니",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Annie.json",
+      "abilities": [
+        "방화광",
+        "붕괴",
+        "소각",
+        "용암 방패",
+        "소환: 티버"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Aphelios",
+      "name": "아펠리오스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Aphelios.json",
+      "abilities": [
+        "암살자와 예언자",
+        "무기 스킬",
+        "위상 변화",
+        "무기 교체 시스템",
+        "월광포화"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Ashe",
+      "name": "애쉬",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Ashe.json",
+      "abilities": [
+        "서리 화살",
+        "궁사의 집중",
+        "일제 사격",
+        "매 날리기",
+        "마법의 수정화살"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "AurelionSol",
+      "name": "아우렐리온 솔",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/AurelionSol.json",
+      "abilities": [
+        "우주의 창조자",
+        "빛의 숨결",
+        "별의 비행",
+        "특이점",
+        "유성 / 천상 강림"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Aurora",
+      "name": "오로라",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Aurora.json",
+      "abilities": [
+        "영혼 방호술",
+        "이중 저주",
+        "장막 너머로",
+        "마법의 문",
+        "세계의 경계"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Azir",
+      "name": "아지르",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Azir.json",
+      "abilities": [
+        "슈리마의 유산",
+        "사막의 맹습",
+        "일어나라!",
+        "신기루",
+        "황제의 진영"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Bard",
+      "name": "바드",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Bard.json",
+      "abilities": [
+        "방랑자의 부름",
+        "우주의 결속",
+        "수호자의 성소",
+        "신비한 차원문",
+        "운명의 소용돌이"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Belveth",
+      "name": "벨베스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Belveth.json",
+      "abilities": [
+        "연보랏빛 죽음 ",
+        "공허 쇄도",
+        "위와 아래",
+        "여제의 소용돌이",
+        "끝없는 연회"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Blitzcrank",
+      "name": "블리츠크랭크",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Blitzcrank.json",
+      "abilities": [
+        "마나 보호막",
+        "로켓 손",
+        "폭주",
+        "강철 주먹",
+        "정전기장"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Brand",
+      "name": "브랜드",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Brand.json",
+      "abilities": [
+        "불길",
+        "불태우기",
+        "화염 기둥",
+        "발화",
+        "파멸의 불덩이"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Braum",
+      "name": "브라움",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Braum.json",
+      "abilities": [
+        "뇌진탕 펀치",
+        "동상",
+        "내가 지킨다",
+        "불굴",
+        "빙하 균열"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Briar",
+      "name": "브라이어",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Briar.json",
+      "abilities": [
+        "진홍빛 저주",
+        "짜릿한 돌격",
+        "핏빛 광분 / 식욕 폭발",
+        "오싹한 비명",
+        "불가항력적 죽음"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Caitlyn",
+      "name": "케이틀린",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Caitlyn.json",
+      "abilities": [
+        "헤드샷",
+        "필트오버 피스메이커",
+        "요들잡이 덫",
+        "90구경 투망",
+        "비장의 한 발"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Camille",
+      "name": "카밀",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Camille.json",
+      "abilities": [
+        "적응형 방어 체계",
+        "정확성 프로토콜",
+        "전술적 휩쓸기",
+        "갈고리 발사",
+        "마법공학 최후통첩"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Cassiopeia",
+      "name": "카시오페아",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Cassiopeia.json",
+      "abilities": [
+        "독사의 품격",
+        "맹독 폭발",
+        "독기의 늪",
+        "쌍독니",
+        "석화의 응시"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Chogath",
+      "name": "초가스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Chogath.json",
+      "abilities": [
+        "육식",
+        "파열",
+        "흉포한 울부짖음",
+        "날카로운 가시",
+        "포식"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Corki",
+      "name": "코르키",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Corki.json",
+      "abilities": [
+        "마법공학 탄약",
+        "인광탄",
+        "발키리",
+        "개틀링 건",
+        "미사일 폭격"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Darius",
+      "name": "다리우스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Darius.json",
+      "abilities": [
+        "과다출혈",
+        "학살",
+        "마비의 일격",
+        "포획",
+        "녹서스의 단두대"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Diana",
+      "name": "다이애나",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Diana.json",
+      "abilities": [
+        "서늘한 달빛 검",
+        "초승달 검기",
+        "은빛 가호",
+        "월광 쇄도",
+        "달빛 낙하"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Draven",
+      "name": "드레이븐",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Draven.json",
+      "abilities": [
+        "드레이븐의 리그",
+        "회전 도끼",
+        "광기의 피",
+        "비켜서라",
+        "죽음의 소용돌이"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "DrMundo",
+      "name": "문도 박사",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/DrMundo.json",
+      "abilities": [
+        "가고 싶은 데로 간다",
+        "오염된 뼈톱",
+        "심장 전기 충격",
+        "둔기에 의한 외상",
+        "최대 투여량"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Ekko",
+      "name": "에코",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Ekko.json",
+      "abilities": [
+        "Z 드라이브 공진",
+        "시간의 톱니바퀴",
+        "평행 시간 교차",
+        "시간 도약",
+        "시공간 붕괴"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Elise",
+      "name": "엘리스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Elise.json",
+      "abilities": [
+        "거미 여왕",
+        "신경독 / 독이빨",
+        "위험한 새끼 거미 / 광란의 질주",
+        "고치 / 줄타기",
+        "거미 형태"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Evelynn",
+      "name": "이블린",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Evelynn.json",
+      "abilities": [
+        "악의 장막",
+        "증오의 가시",
+        "황홀한 저주",
+        "채찍유린",
+        "최후의 포옹"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Ezreal",
+      "name": "이즈리얼",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Ezreal.json",
+      "abilities": [
+        "끓어오르는 주문의 힘",
+        "신비한 화살",
+        "정수의 흐름",
+        "비전 이동",
+        "정조준 일격"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Fiddlesticks",
+      "name": "피들스틱",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Fiddlesticks.json",
+      "abilities": [
+        "무해한 허수아비",
+        "공포",
+        "풍작",
+        "수확",
+        "까마귀 폭풍"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Fiora",
+      "name": "피오라",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Fiora.json",
+      "abilities": [
+        "치명적인 검무",
+        "찌르기",
+        "응수",
+        "대가의 검술",
+        "대결투"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Fizz",
+      "name": "피즈",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Fizz.json",
+      "abilities": [
+        "영리한 싸움꾼",
+        "성게 찌르기",
+        "심해석 삼지창",
+        "장난치기 / 재간둥이",
+        "미끼 뿌리기"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Galio",
+      "name": "갈리오",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Galio.json",
+      "abilities": [
+        "석상의 강타",
+        "전장의 돌풍",
+        "듀란드의 방패",
+        "정의의 주먹",
+        "영웅출현"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Gangplank",
+      "name": "갱플랭크",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Gangplank.json",
+      "abilities": [
+        "불의 심판",
+        "혀어어어업상",
+        "괴혈병 치료",
+        "화약통",
+        "포탄 세례"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Garen",
+      "name": "가렌",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Garen.json",
+      "abilities": [
+        "인내심",
+        "결정타",
+        "용기",
+        "심판",
+        "데마시아의 정의"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Gnar",
+      "name": "나르",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Gnar.json",
+      "abilities": [
+        "분노 유전자",
+        "부메랑 던지기 / 돌덩이 던지기",
+        "슝슝 / 쿵쾅",
+        "폴짝 / 우지끈",
+        "나르!"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Gragas",
+      "name": "그라가스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Gragas.json",
+      "abilities": [
+        "서비스 시간",
+        "술통 굴리기",
+        "취중 분노",
+        "몸통 박치기",
+        "술통 폭발"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Graves",
+      "name": "그레이브즈",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Graves.json",
+      "abilities": [
+        "새로운 운명",
+        "화약 역류",
+        "연막탄",
+        "빨리 뽑기",
+        "무고한 희생자"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Gwen",
+      "name": "그웬",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Gwen.json",
+      "abilities": [
+        "가위 난도질",
+        "싹둑싹둑!",
+        "신성한 안개",
+        "돌격가위",
+        "바느질"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Hecarim",
+      "name": "헤카림",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Hecarim.json",
+      "abilities": [
+        "출정",
+        "회오리 베기",
+        "공포의 망령",
+        "파멸의 돌격",
+        "그림자의 맹습"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Heimerdinger",
+      "name": "하이머딩거",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Heimerdinger.json",
+      "abilities": [
+        "마법공학 전문가",
+        "H-28 G 진화형 포탑",
+        "마법공학 초소형 로켓",
+        "CH-2 전자폭풍 수류탄",
+        "업그레이드!!!"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Hwei",
+      "name": "흐웨이",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Hwei.json",
+      "abilities": [
+        "몽상가의 서명",
+        "주제: 참사",
+        "주제: 평온",
+        "주제: 고통",
+        "절망의 소용돌이"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Illaoi",
+      "name": "일라오이",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Illaoi.json",
+      "abilities": [
+        "고대신의 예언자",
+        "촉수 강타",
+        "혹독한 가르침",
+        "영혼의 시험",
+        "믿음의 도약"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Irelia",
+      "name": "이렐리아",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Irelia.json",
+      "abilities": [
+        "아이오니아의 열정",
+        "칼날 쇄도",
+        "저항의 춤",
+        "쌍검협무",
+        "선봉진격검"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Ivern",
+      "name": "아이번",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Ivern.json",
+      "abilities": [
+        "숲의 친구",
+        "덩굴뿌리",
+        "수풀 가꾸기",
+        "보호의 씨앗",
+        "데이지!"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Janna",
+      "name": "잔나",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Janna.json",
+      "abilities": [
+        "순풍",
+        "울부짖는 돌풍",
+        "서풍",
+        "폭풍의 눈",
+        "계절풍"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "JarvanIV",
+      "name": "자르반 4세",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/JarvanIV.json",
+      "abilities": [
+        "전장의 군가",
+        "용의 일격",
+        "황금빛 방패",
+        "데마시아의 깃발",
+        "대격변"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Jax",
+      "name": "잭스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Jax.json",
+      "abilities": [
+        "가차없는 맹공",
+        "도약 공격",
+        "무기 강화",
+        "반격",
+        "무기의 달인"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Jayce",
+      "name": "제이스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Jayce.json",
+      "abilities": [
+        "마법공학 축전기",
+        "하늘로! / 전격 폭발",
+        "전류 역장 / 초전하",
+        "천둥 강타 / 가속 관문",
+        "머큐리 캐논 / 머큐리 해머"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Jhin",
+      "name": "진",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Jhin.json",
+      "abilities": [
+        "속삭임",
+        "춤추는 유탄",
+        "살상연희",
+        "강제 관람",
+        "커튼 콜"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Jinx",
+      "name": "징크스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Jinx.json",
+      "abilities": [
+        "신난다!",
+        "휘릭휘릭!",
+        "빠직!",
+        "와작와작 뻥!",
+        "초강력 초토화 로켓!"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Kaisa",
+      "name": "카이사",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Kaisa.json",
+      "abilities": [
+        "두 번째 피부",
+        "이케시아 폭우",
+        "공허추적자",
+        "고속 충전",
+        "사냥본능"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Kalista",
+      "name": "칼리스타",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Kalista.json",
+      "abilities": [
+        "전투 태세",
+        "꿰뚫는 창",
+        "감시하는 혼",
+        "뽑아 찢기",
+        "운명의 부름"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Karma",
+      "name": "카르마",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Karma.json",
+      "abilities": [
+        "열정 응집",
+        "내면의 열정",
+        "굳은 결의",
+        "고무",
+        "만트라"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Karthus",
+      "name": "카서스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Karthus.json",
+      "abilities": [
+        "죽음 극복",
+        "황폐화",
+        "고통의 벽",
+        "부패",
+        "진혼곡"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Kassadin",
+      "name": "카사딘",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Kassadin.json",
+      "abilities": [
+        "공허석",
+        "무의 구체",
+        "황천의 검",
+        "힘의 파동",
+        "균열 이동"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Katarina",
+      "name": "카타리나",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Katarina.json",
+      "abilities": [
+        "탐욕",
+        "단검 투척",
+        "준비",
+        "순보",
+        "죽음의 연꽃"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Kayle",
+      "name": "케일",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Kayle.json",
+      "abilities": [
+        "거룩한 승천",
+        "광휘의 일격",
+        "천상의 축복",
+        "화염주문검",
+        "신성한 심판"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Kayn",
+      "name": "케인",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Kayn.json",
+      "abilities": [
+        "다르킨의 낫",
+        "살상돌격",
+        "몰아치는 낫",
+        "그림자의 길",
+        "그림자의 지배"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Kennen",
+      "name": "케넨",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Kennen.json",
+      "abilities": [
+        "폭풍의 표식",
+        "천둥의 표창",
+        "전류 방출",
+        "번개 질주",
+        "날카로운 소용돌이"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Khazix",
+      "name": "카직스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Khazix.json",
+      "abilities": [
+        "보이지 않는 위협",
+        "공포 감지",
+        "공허의 가시",
+        "도약",
+        "공허의 습격"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Kindred",
+      "name": "킨드레드",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Kindred.json",
+      "abilities": [
+        "킨드레드의 표식",
+        "화살 세례",
+        "늑대의 광기",
+        "차오르는 공포",
+        "양의 안식처"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Kled",
+      "name": "클레드",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Kled.json",
+      "abilities": [
+        "겁쟁이 도마뱀 스칼",
+        "덫날리기",
+        "버럭버럭",
+        "이랴!",
+        "돌겨어어억!!!"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "KogMaw",
+      "name": "코그모",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/KogMaw.json",
+      "abilities": [
+        "이케시아식 마무리",
+        "부식성 침",
+        "생체마법 폭격",
+        "공허의 분비물",
+        "살아있는 곡사포"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "KSante",
+      "name": "크산테",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/KSante.json",
+      "abilities": [
+        "불굴의 본능",
+        "엔토포 타격",
+        "길을 여는 자",
+        "발놀림",
+        "총공세"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Leblanc",
+      "name": "르블랑",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Leblanc.json",
+      "abilities": [
+        "거울 환영",
+        "악의의 인장",
+        "왜곡",
+        "환영 사슬",
+        "모방"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "LeeSin",
+      "name": "리 신",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/LeeSin.json",
+      "abilities": [
+        "질풍격",
+        "음파 / 공명의 일격",
+        "방호 / 강철의 의지",
+        "폭풍/무력화",
+        "용의 분노"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Leona",
+      "name": "레오나",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Leona.json",
+      "abilities": [
+        "햇빛",
+        "여명의 방패",
+        "일식",
+        "천공의 검",
+        "흑점 폭발"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Lillia",
+      "name": "릴리아",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Lillia.json",
+      "abilities": [
+        "꿈나무 지팡이",
+        "뾰로롱 강타",
+        "이익! 쿵!",
+        "데굴데굴 씨앗",
+        "감미로운 자장가"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Lissandra",
+      "name": "리산드라",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Lissandra.json",
+      "abilities": [
+        "냉기의 지배",
+        "얼음 파편",
+        "서릿발",
+        "얼음갈퀴 길",
+        "얼음 무덤"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Locke",
+      "name": "로크",
+      "kitVersion": "16.13.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.13.1/data/ko_KR/champion/Locke.json",
+      "abilities": [
+        "은빛 말뚝",
+        "의식용 대못",
+        "영혼 점화",
+        "잿빛 추격",
+        "연옥"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "limited_new_champion"
+    },
+    {
+      "id": "Lucian",
+      "name": "루시안",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Lucian.json",
+      "abilities": [
+        "빛의 사수",
+        "꿰뚫는 빛",
+        "타는 불길",
+        "끈질긴 추격",
+        "빛의 심판"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Lulu",
+      "name": "룰루",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Lulu.json",
+      "abilities": [
+        "요정 친구 픽스",
+        "반짝반짝 창",
+        "변덕쟁이",
+        "도와줘, 픽스!",
+        "급성장"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Lux",
+      "name": "럭스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Lux.json",
+      "abilities": [
+        "광채",
+        "빛의 속박",
+        "프리즘 보호막",
+        "광휘의 특이점",
+        "최후의 섬광"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Malphite",
+      "name": "말파이트",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Malphite.json",
+      "abilities": [
+        "화강암 방패",
+        "지진의 파편",
+        "천둥소리",
+        "지면 강타",
+        "멈출 수 없는 힘"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Malzahar",
+      "name": "말자하",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Malzahar.json",
+      "abilities": [
+        "공허 태세",
+        "공허의 부름",
+        "공허의 무리",
+        "재앙의 환상",
+        "황천의 손아귀"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Maokai",
+      "name": "마오카이",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Maokai.json",
+      "abilities": [
+        "마법 흡수",
+        "덤불 주먹",
+        "뒤틀린 전진",
+        "묘목 던지기",
+        "대자연의 마수"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "MasterYi",
+      "name": "마스터 이",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/MasterYi.json",
+      "abilities": [
+        "2연속 공격",
+        "일격 필살",
+        "명상",
+        "우주류 검술",
+        "최후의 전사"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Mel",
+      "name": "멜",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Mel.json",
+      "abilities": [
+        "이글거리는 광휘",
+        "빛의 세례",
+        "반박",
+        "태양 올가미",
+        "황금 일식"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Milio",
+      "name": "밀리오",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Milio.json",
+      "abilities": [
+        "타오르는 힘",
+        "초특급 불꽃 킥",
+        "아늑한 모닥불",
+        "따스한 포옹",
+        "생명의 온기"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "MissFortune",
+      "name": "미스 포츈",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/MissFortune.json",
+      "abilities": [
+        "사랑의 한 방",
+        "한 발에 두 놈",
+        "활보",
+        "총알은 비를 타고",
+        "쌍권총 난사"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "MonkeyKing",
+      "name": "오공",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/MonkeyKing.json",
+      "abilities": [
+        "바위 피부",
+        "파쇄격",
+        "분신 전사",
+        "근두운 급습",
+        "회전격"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Mordekaiser",
+      "name": "모데카이저",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Mordekaiser.json",
+      "abilities": [
+        "암흑 탄생",
+        "말살",
+        "불멸",
+        "죽음의 손아귀",
+        "죽음의 세계"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Morgana",
+      "name": "모르가나",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Morgana.json",
+      "abilities": [
+        "영혼 흡수",
+        "어둠의 속박",
+        "고통의 그림자",
+        "칠흑의 방패",
+        "영혼의 족쇄"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Naafiri",
+      "name": "나피리",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Naafiri.json",
+      "abilities": [
+        "늘어나는 무리",
+        "다르킨 단검",
+        "무리의 부름",
+        "적출",
+        "사냥개의 추적"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Nami",
+      "name": "나미",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Nami.json",
+      "abilities": [
+        "밀려오는 파도",
+        "물의 감옥",
+        "밀물 썰물",
+        "파도 소환사의 축복",
+        "해일"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Nasus",
+      "name": "나서스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Nasus.json",
+      "abilities": [
+        "영혼의 포식자",
+        "흡수의 일격",
+        "쇠약",
+        "영혼의 불길",
+        "사막의 분노"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Nautilus",
+      "name": "노틸러스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Nautilus.json",
+      "abilities": [
+        "강력한 일격",
+        "닻줄 견인",
+        "타이탄의 분노",
+        "역조",
+        "폭뢰"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Neeko",
+      "name": "니코",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Neeko.json",
+      "abilities": [
+        "태고의 마력",
+        "꽃망울 폭발",
+        "형상 분리",
+        "칭칭올가미",
+        "만개"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Nidalee",
+      "name": "니달리",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Nidalee.json",
+      "abilities": [
+        "수풀 배회",
+        "창 투척 / 숨통 끊기",
+        "매복 덫 / 급습",
+        "태고의 생명력 / 할퀴기",
+        "쿠거의 상"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Nilah",
+      "name": "닐라",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Nilah.json",
+      "abilities": [
+        "영원한 기쁨",
+        "무형의 검",
+        "승리의 장막",
+        "급류",
+        "환희"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Nocturne",
+      "name": "녹턴",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Nocturne.json",
+      "abilities": [
+        "그림자 칼날",
+        "황혼의 인도자",
+        "어둠의 장막",
+        "말할 수 없는 공포",
+        "피해망상"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Nunu",
+      "name": "누누와 윌럼프",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Nunu.json",
+      "abilities": [
+        "프렐요드의 부름",
+        "잡아먹기",
+        "데굴데굴 눈덩이!",
+        "눈덩이 팡팡팡",
+        "절대 영도"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Olaf",
+      "name": "올라프",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Olaf.json",
+      "abilities": [
+        "광전사의 분노",
+        "역류",
+        "버티기",
+        "무모한 강타",
+        "라그나로크"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Orianna",
+      "name": "오리아나",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Orianna.json",
+      "abilities": [
+        "시계태엽 감기",
+        "명령: 공격",
+        "명령: 불협화음",
+        "명령: 보호",
+        "명령: 충격파"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Ornn",
+      "name": "오른",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Ornn.json",
+      "abilities": [
+        "간이 대장간",
+        "용암 균열",
+        "불꽃 풀무질",
+        "화염 돌진",
+        "대장장이 신의 부름"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Pantheon",
+      "name": "판테온",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Pantheon.json",
+      "abilities": [
+        "필멸자의 의지",
+        "혜성의 창",
+        "방호의 도약",
+        "방패 돌격",
+        "거대 유성"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Poppy",
+      "name": "뽀삐",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Poppy.json",
+      "abilities": [
+        "강철의 외교관",
+        "망치 강타",
+        "굳건한 태세",
+        "용감한 돌진",
+        "수호자의 심판"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Pyke",
+      "name": "파이크",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Pyke.json",
+      "abilities": [
+        "가라앉은 자들의 축복",
+        "뼈 작살",
+        "유령 잠수",
+        "망자의 물살",
+        "깊은 바다의 처형"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Qiyana",
+      "name": "키아나",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Qiyana.json",
+      "abilities": [
+        "왕가의 특권",
+        "원소의 분노 / 이쉬탈의 칼날",
+        "대지창조",
+        "대담무쌍",
+        "여왕의 진가"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Quinn",
+      "name": "퀸",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Quinn.json",
+      "abilities": [
+        "매사냥",
+        "실명 공격",
+        "예리한 감각",
+        "공중제비",
+        "후방 지원"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Rakan",
+      "name": "라칸",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Rakan.json",
+      "abilities": [
+        "요술 망토",
+        "빛나는 깃털",
+        "화려한 등장",
+        "전쟁무도",
+        "매혹의 질주"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Rammus",
+      "name": "람머스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Rammus.json",
+      "abilities": [
+        "가시박힌 껍질",
+        "대회전",
+        "몸 말아 웅크리기",
+        "광란의 도발",
+        "지진 폭격"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "RekSai",
+      "name": "렉사이",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/RekSai.json",
+      "abilities": [
+        "제르사이의 분노",
+        "여왕의 진노 / 먹잇감 추적",
+        "매복 / 돌출",
+        "성난 이빨 / 땅굴 파기",
+        "공허의 돌진"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Rell",
+      "name": "렐",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Rell.json",
+      "abilities": [
+        "갑옷 파쇄",
+        "파열의 일격",
+        "철마술: 붕괴",
+        "전속력",
+        "자기 폭풍"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Renata",
+      "name": "레나타 글라스크",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Renata.json",
+      "abilities": [
+        "영향력",
+        "악수",
+        "긴급 구제",
+        "충성 고객 우대",
+        "적대적 인수"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Renekton",
+      "name": "레넥톤",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Renekton.json",
+      "abilities": [
+        "분노의 지배",
+        "양떼 도륙",
+        "무자비한 포식자",
+        "자르고 토막내기",
+        "강신"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Rengar",
+      "name": "렝가",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Rengar.json",
+      "abilities": [
+        "보이지 않는 포식자",
+        "포악함",
+        "전투의 포효",
+        "올가미 투척",
+        "사냥의 전율"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Riven",
+      "name": "리븐",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Riven.json",
+      "abilities": [
+        "룬 검",
+        "부러진 날개",
+        "기 폭발",
+        "용맹",
+        "추방자의 검"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Rumble",
+      "name": "럼블",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Rumble.json",
+      "abilities": [
+        "고철장 거인",
+        "화염방사기",
+        "고철 방패",
+        "전기 작살",
+        "이퀄라이저 미사일"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Ryze",
+      "name": "라이즈",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Ryze.json",
+      "abilities": [
+        "비전 연마",
+        "과부하",
+        "룬 감옥",
+        "주문 전이",
+        "공간 왜곡"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Samira",
+      "name": "사미라",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Samira.json",
+      "abilities": [
+        "무모한 충동",
+        "천부적 재능",
+        "원형 검무",
+        "거침없는 질주",
+        "지옥불 난사"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Sejuani",
+      "name": "세주아니",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Sejuani.json",
+      "abilities": [
+        "혹한의 분노",
+        "혹한의 맹습",
+        "혹한의 서릿발",
+        "만년 서리",
+        "빙하 감옥"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Senna",
+      "name": "세나",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Senna.json",
+      "abilities": [
+        "면죄",
+        "꿰뚫는 어둠",
+        "마지막 포옹",
+        "검은 안개의 저주",
+        "여명의 그림자"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Seraphine",
+      "name": "세라핀",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Seraphine.json",
+      "abilities": [
+        "무대 장악",
+        "고음",
+        "소리 장막",
+        "비트 발사",
+        "앙코르"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Sett",
+      "name": "세트",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Sett.json",
+      "abilities": [
+        "투기장의 투지",
+        "주먹다짐",
+        "강펀치",
+        "안면 강타",
+        "대미 장식"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Shaco",
+      "name": "샤코",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Shaco.json",
+      "abilities": [
+        "암습",
+        "속임수",
+        "깜짝 상자",
+        "양날 독",
+        "환각"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Shen",
+      "name": "쉔",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Shen.json",
+      "abilities": [
+        "기 보호막",
+        "황혼 강습",
+        "의지의 결계",
+        "그림자 돌진",
+        "단결된 의지"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Shyvana",
+      "name": "쉬바나",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Shyvana.json",
+      "abilities": [
+        "용족의 분노",
+        "두 번 물어뜯기",
+        "연소",
+        "화염 숨결",
+        "용의 강림"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Singed",
+      "name": "신지드",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Singed.json",
+      "abilities": [
+        "독성 급류",
+        "맹독의 자취",
+        "초강력 접착제",
+        "던져넘기기",
+        "광기의 물약"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Sion",
+      "name": "사이온",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Sion.json",
+      "abilities": [
+        "영광스러운 죽음",
+        "대량 학살 강타",
+        "영혼의 용광로",
+        "학살자의 포효",
+        "멈출 수 없는 맹공"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Sivir",
+      "name": "시비르",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Sivir.json",
+      "abilities": [
+        "재빠른 발놀림",
+        "부메랑 검",
+        "튕기는 부메랑",
+        "주문 방어막",
+        "사냥 개시"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Skarner",
+      "name": "스카너",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Skarner.json",
+      "abilities": [
+        "진동의 가닥",
+        "부서진 대지/지반 돌출",
+        "대지의 수호자",
+        "이쉬탈의 격돌",
+        "꿰뚫기"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Smolder",
+      "name": "스몰더",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Smolder.json",
+      "abilities": [
+        "용 훈련",
+        "초강력 화염 숨결",
+        "에취!",
+        "펄럭펄럭",
+        "엄마아아아!"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Sona",
+      "name": "소나",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Sona.json",
+      "abilities": [
+        "파워 코드",
+        "용맹의 찬가",
+        "인내의 아리아",
+        "기민함의 노래",
+        "크레센도"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Soraka",
+      "name": "소라카",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Soraka.json",
+      "abilities": [
+        "구원",
+        "별부름",
+        "은하의 마력",
+        "별의 균형",
+        "기원"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Swain",
+      "name": "스웨인",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Swain.json",
+      "abilities": [
+        "굶주린 새떼",
+        "죽음의 손길",
+        "제국의 눈",
+        "속박명령",
+        "악의 승천"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Sylas",
+      "name": "사일러스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Sylas.json",
+      "abilities": [
+        "페트리사이트 폭발",
+        "사슬 후려치기",
+        "국왕시해자",
+        "도주 / 억압",
+        "강탈"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Syndra",
+      "name": "신드라",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Syndra.json",
+      "abilities": [
+        "초월",
+        "어둠 구체",
+        "의지의 힘",
+        "적군 와해",
+        "풀려난 힘"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "TahmKench",
+      "name": "탐 켄치",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/TahmKench.json",
+      "abilities": [
+        "절대 미각",
+        "혀 채찍",
+        "심연 잠수",
+        "두꺼운 피부",
+        "집어삼키기"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Taliyah",
+      "name": "탈리야",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Taliyah.json",
+      "abilities": [
+        "바위타기",
+        "파편 난사",
+        "지각변동",
+        "대지의 파동",
+        "바위술사의 벽"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Talon",
+      "name": "탈론",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Talon.json",
+      "abilities": [
+        "검의 최후",
+        "녹서스식 외교",
+        "갈퀴손",
+        "암살자의 길",
+        "그림자 공격"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Taric",
+      "name": "타릭",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Taric.json",
+      "abilities": [
+        "담대함",
+        "별빛 손길",
+        "수호의 고리",
+        "황홀한 강타",
+        "우주의 광휘"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Teemo",
+      "name": "티모",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Teemo.json",
+      "abilities": [
+        "유격 전투",
+        "실명 다트",
+        "신속한 이동",
+        "맹독 다트",
+        "유독성 함정"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Thresh",
+      "name": "쓰레쉬",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Thresh.json",
+      "abilities": [
+        "지옥살이",
+        "사형 선고",
+        "어둠의 통로",
+        "사슬 채찍",
+        "영혼 감옥"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Tristana",
+      "name": "트리스타나",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Tristana.json",
+      "abilities": [
+        "정조준",
+        "속사",
+        "로켓 점프",
+        "폭발 화약",
+        "대구경 탄환"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Trundle",
+      "name": "트런들",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Trundle.json",
+      "abilities": [
+        "헌납",
+        "깨물기",
+        "얼음 왕국",
+        "얼음 기둥",
+        "진압"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Tryndamere",
+      "name": "트린다미어",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Tryndamere.json",
+      "abilities": [
+        "격노",
+        "피의 갈망",
+        "조롱의 외침",
+        "회전 베기",
+        "불사의 분노"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "TwistedFate",
+      "name": "트위스티드 페이트",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/TwistedFate.json",
+      "abilities": [
+        "사기 주사위",
+        "와일드 카드",
+        "카드 뽑기",
+        "속임수 덱",
+        "운명"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Twitch",
+      "name": "트위치",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Twitch.json",
+      "abilities": [
+        "맹독",
+        "매복",
+        "독약 병",
+        "오염",
+        "무차별 난사"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Udyr",
+      "name": "우디르",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Udyr.json",
+      "abilities": [
+        "가교",
+        "야생 발톱",
+        "강철 갑옷",
+        "불길 쇄도",
+        "날개 돋친 폭풍"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Urgot",
+      "name": "우르곳",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Urgot.json",
+      "abilities": [
+        "화염의 메아리",
+        "부식성 폭약",
+        "심판의 원",
+        "경멸",
+        "불사의 공포"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Varus",
+      "name": "바루스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Varus.json",
+      "abilities": [
+        "죽지 않는 복수심",
+        "꿰뚫는 화살",
+        "역병 화살",
+        "퍼붓는 화살",
+        "부패의 사슬"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Vayne",
+      "name": "베인",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Vayne.json",
+      "abilities": [
+        "어둠 사냥꾼",
+        "구르기",
+        "은화살",
+        "선고",
+        "결전의 시간"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Veigar",
+      "name": "베이가",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Veigar.json",
+      "abilities": [
+        "극악무도",
+        "사악한 일격",
+        "암흑 물질",
+        "사건의 지평선",
+        "태초의 폭발"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Velkoz",
+      "name": "벨코즈",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Velkoz.json",
+      "abilities": [
+        "유기물 분해",
+        "플라즈마 분열",
+        "공허 균열",
+        "지각 붕괴",
+        "생물 분해 광선"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Vex",
+      "name": "벡스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Vex.json",
+      "abilities": [
+        "파멸과 우울",
+        "안개 화살",
+        "거리 두기",
+        "커지는 어둠",
+        "그림자 파동"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Vi",
+      "name": "바이",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Vi.json",
+      "abilities": [
+        "폭발 보호막",
+        "금고 부수기",
+        "찌그러뜨리기",
+        "끈질긴 힘",
+        "정지 명령"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Viego",
+      "name": "비에고",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Viego.json",
+      "abilities": [
+        "군주의 지배",
+        "몰락한 왕의 검",
+        "망령의 나락",
+        "안개의 길",
+        "심장 파괴자"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Viktor",
+      "name": "빅토르",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Viktor.json",
+      "abilities": [
+        "영광스러운 진화",
+        "힘의 흡수",
+        "중력장",
+        "마법공학 광선",
+        "아케인 폭풍"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Vladimir",
+      "name": "블라디미르",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Vladimir.json",
+      "abilities": [
+        "핏빛 계약",
+        "수혈",
+        "피의 웅덩이",
+        "선혈의 파도",
+        "혈사병"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Volibear",
+      "name": "볼리베어",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Volibear.json",
+      "abilities": [
+        "무자비한 폭풍",
+        "번개 강타",
+        "광란의 상처",
+        "천공 분열",
+        "폭풍을 부르는 자"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Warwick",
+      "name": "워윅",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Warwick.json",
+      "abilities": [
+        "끝없는 허기",
+        "야수의 송곳니",
+        "피의 사냥",
+        "원시의 포효",
+        "무한의 구속"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Xayah",
+      "name": "자야",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Xayah.json",
+      "abilities": [
+        "관통상",
+        "깃털 연타",
+        "죽음의 깃",
+        "깃부르미",
+        "저항의 비상"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Xerath",
+      "name": "제라스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Xerath.json",
+      "abilities": [
+        "마나 쇄도",
+        "비전 파동",
+        "파멸의 눈",
+        "충격 구체",
+        "비전 의식"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "XinZhao",
+      "name": "신 짜오",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/XinZhao.json",
+      "abilities": [
+        "결심",
+        "삼조격",
+        "풍전참뢰",
+        "무쌍돌격",
+        "현월수호"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Yasuo",
+      "name": "야스오",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Yasuo.json",
+      "abilities": [
+        "낭인의 길",
+        "강철 폭풍",
+        "바람 장막",
+        "질풍검",
+        "최후의 숨결"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Yone",
+      "name": "요네",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Yone.json",
+      "abilities": [
+        "사냥꾼의 길",
+        "필멸의 검",
+        "영혼 가르기",
+        "영혼해방",
+        "운명봉인"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Yorick",
+      "name": "요릭",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Yorick.json",
+      "abilities": [
+        "영혼의 길잡이",
+        "최후의 의식",
+        "망자의 진",
+        "애도의 안개",
+        "군도의 장송곡"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Yunara",
+      "name": "유나라",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Yunara.json",
+      "abilities": [
+        "최초의 땅의 맹세",
+        "영혼 단련",
+        "심판의 궤적 | 파멸의 궤적",
+        "칸메이의 발자취 | 닿지 않는 그림자",
+        "자기 초월"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Yuumi",
+      "name": "유미",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Yuumi.json",
+      "abilities": [
+        "야옹이 친구",
+        "사르르탄",
+        "너랑 유미랑!",
+        "슈우우웅",
+        "대단원"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Zaahen",
+      "name": "자헨",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Zaahen.json",
+      "abilities": [
+        "전쟁 단련",
+        "다르킨의 글레이브",
+        "공포의 귀환",
+        "찬란한 쇄도",
+        "단호한 판결"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Zac",
+      "name": "자크",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Zac.json",
+      "abilities": [
+        "세포 분열",
+        "탄성 주먹",
+        "불안정 물질",
+        "새총 발사",
+        "바운스!"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Zed",
+      "name": "제드",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Zed.json",
+      "abilities": [
+        "약자 멸시",
+        "예리한 표창",
+        "살아있는 그림자",
+        "그림자 베기",
+        "죽음의 표식"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Zeri",
+      "name": "제리",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Zeri.json",
+      "abilities": [
+        "살아있는 배터리",
+        "집중 사격",
+        "초강력 레이저",
+        "스파크 돌진",
+        "번개 방출"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Ziggs",
+      "name": "직스",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Ziggs.json",
+      "abilities": [
+        "짧은 도화선",
+        "반동 폭탄",
+        "휴대용 폭약",
+        "마법공학 지뢰밭",
+        "지옥 화염 폭탄"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Zilean",
+      "name": "질리언",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Zilean.json",
+      "abilities": [
+        "시간의 유리병",
+        "시한 폭탄",
+        "되감기",
+        "시간 왜곡",
+        "시간 역행"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Zoe",
+      "name": "조이",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Zoe.json",
+      "abilities": [
+        "반짝반짝!",
+        "통통별",
+        "주문도둑",
+        "헤롱헤롱쿨쿨방울",
+        "차원 넘기"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    },
+    {
+      "id": "Zyra",
+      "name": "자이라",
+      "kitVersion": "16.1.1",
+      "officialSource": "https://ddragon.leagueoflegends.com/cdn/16.1.1/data/ko_KR/champion/Zyra.json",
+      "abilities": [
+        "가시 정원",
+        "치명적인 가시",
+        "맹렬한 성장",
+        "휘감는 뿌리",
+        "올가미 덩굴"
+      ],
+      "classification": "kit_based_game_estimate",
+      "confidence": "qualitative_kit_inference"
+    }
+  ]
+}

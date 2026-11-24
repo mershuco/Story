@@ -1,0 +1,11 @@
+{
+  "url": "http://127.0.0.1:4173",
+  "checks": [
+    "all 173 champion analyses export with Korean names, ratings, notes and official source URLs",
+    "Kayle and Lee Sin have different five-stage curves, context ratings and champion-specific KDA explanations",
+    "assigned draft shows four participant/time-specific chances and survives reload",
+    "live fight displays current timing, participants and the recorded pre-fight champion KDA impact",
+    "390px mobile champion analysis is readable without page overflow; utility survives poor KDA"
+  ],
+  "errors": []
+}

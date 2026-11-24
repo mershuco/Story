@@ -39,14 +39,14 @@ test('engageanswerspoke,protectionanswersdive,andscalingchangesmidvslategamefigh
  const protectedTeam=profile(['Ornn','Sejuani','Azir','Jinx','Lulu']),dive=profile(['Camille','Nocturne','Akali','Kaisa','Pyke']);assert(compositionMatchup(protectedTeam,dive,30).gap>0);
 });
 test('profileassemblyandmatchups donotdependonpickorder ormapcolor',()=>{
- const picks=['Ornn','Sejuani','Orianna','Jinx','Lulu'].map((champion,i)=>({champion,role:roles[i]})),a=compositionProfile(picks,map),b=compositionProfile([...picks].reverse(),map);for(const key of Object.keys(a))approx(a[key],b[key]);
+ const picks=['Ornn','Sejuani','Orianna','Jinx','Lulu'].map((champion,i)=>({champion,role:roles[i]})),a=compositionProfile(picks,map),b=compositionProfile([...picks].reverse(),map);for(const key of Object.keys(a)){if(key==='members')assert.deepEqual(a[key],b[key]);else approx(a[key],b[key]);}
  const other=profile(['Renekton','Elise','Leblanc','Lucian','Pyke']);approx(compositionMatchup(a,other,45).gap,-compositionMatchup(other,a,45).gap);
 });
 test('eventv2seedreplayskeepoldoutcomesandgoldtracesaftereventv3balancechanges',()=>{
  const old=simulateV2(base,matchRandom(93)),saved={...old,blue:'B',red:'R',number:1,simulationVersion:2,picks:roster.map(({player,...p})=>p),events:[],simulationReplay:{...base,model:'event-v2',seed:93}};
  const replay=replayMatch({...base,model:'event-v2',seed:93});assert.deepEqual(replay,old);const timeline=buildTimeline(saved);assert.deepEqual(timeline.map(s=>s.lead),old.events.map(e=>e.lead));assert.deepEqual(timeline.at(-1).gold,old.finalGold);assert.equal(timeline.at(-1).team,old.winner);
 });
-test('eventv3recordsactualadjustedchancesandcanreconstructallthreeeffectswithoutchangingstate',()=>{
- const params={...base,teamStrengthBlue:84,teamStrengthRed:80,compositionBlue:profile(['Ornn','Sejuani','Orianna','Jinx','Lulu']),compositionRed:profile(['Jayce','Nidalee','Zoe','Ezreal','Karma'])},result=simulateMatch(params,matchRandom(8));assert.equal(result.model,'event-v3');
- const replay=replayMatch({...params,model:'event-v3',seed:8});assert.deepEqual(replay,result);for(const e of result.events.filter(e=>e.combatTeam)){assert(Number.isFinite(e.blueWinProbability));assert.equal(e.goldWeight,goldInfluence(e.minute));assert(Number.isFinite(e.compositionGap));assert.equal(e.teamStrengthGap,4);}
+test('eventv4recordsactualadjustedchancesandcanreconstructallthreeeffectswithoutchangingstate',()=>{
+ const params={...base,teamStrengthBlue:84,teamStrengthRed:80,compositionBlue:profile(['Ornn','Sejuani','Orianna','Jinx','Lulu']),compositionRed:profile(['Jayce','Nidalee','Zoe','Ezreal','Karma'])},result=simulateMatch(params,matchRandom(8));assert.equal(result.model,'event-v4');
+ const replay=replayMatch({...params,model:'event-v4',seed:8});assert.deepEqual(replay,result);for(const e of result.events.filter(e=>e.combatTeam)){assert(Number.isFinite(e.blueWinProbability));assert.equal(e.goldWeight,goldInfluence(e.minute));assert(Number.isFinite(e.compositionGap));assert.equal(e.teamStrengthGap,4);}
 });

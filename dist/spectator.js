@@ -41,7 +41,16 @@ export function paintScene(c){
  if(advantage){const ahead=lead>=0?set.blue:set.red;advantage.textContent=Math.abs(lead)<100?'골드 동률':`${c.state.teams[ahead]?.abbr??ahead} +${(Math.abs(lead)/1000).toFixed(1)}K 골드`;advantage.dataset.side=Math.abs(lead)<100?'even':lead>0?'blue':'red';}
  if(swing){const resolved=progress>=.8;swing.textContent=resolved&&scene.kind==='nexus'?set.comeback?.winnerMaxDeficit>=3000?`최대 ${(set.comeback.winnerMaxDeficit/1000).toFixed(1)}K 열세를 극복한 승리`:'넥서스 파괴로 경기 종료':resolved&&scene.comeback?'골드 역전!':resolved&&scene.objective?.steal?'바론 스틸!':resolved&&scene.bounty?`제압·오브젝트 보상 +${(scene.bounty/1000).toFixed(1)}K`:Number.isFinite(scene.blueWinProbability)?`이번 교전 예상 · BLUE ${Math.round(scene.blueWinProbability*100)}% / RED ${Math.round((1-scene.blueWinProbability)*100)}%`:'다음 교전과 오브젝트를 준비합니다.';}
  const battleContext=document.querySelector('#live-battle-context');
- if(battleContext){battleContext.hidden=!Number.isFinite(scene.goldWeight);const comp=scene.compositionGap??0;const label=Math.abs(comp)<.25?'조합 상성 대등':`${c.state.teams[comp>0?set.blue:set.red]?.abbr??''} 조합 우세`;battleContext.textContent=`${scene.goldWeight<1?`장기전 · 골드 영향 ${Math.round(scene.goldWeight*100)}%`:'골드 차이 기본 반영'} · ${label}`;}
+ if(battleContext){
+  battleContext.hidden=!Number.isFinite(scene.goldWeight);const comp=scene.compositionGap??0;
+  const label=Math.abs(comp)<.25?'조합 상성 대등':`${c.state.teams[comp>0?set.blue:set.red]?.abbr??''} 조합 우세`;
+  const context=scene.kind==='siege'?'공성전':scene.kind==='baron-setup'?'바론 시야 싸움':scene.roles?`${scene.roles.includes('TOP')?'상체':'하체'} ${scene.roles.length}:${scene.roles.length}`:'5:5 한타';
+  const phase=Number.isFinite(scene.championPhaseGap)?` · ${c.E.fightStage(scene.minute)} ${context} · 성장·교전 특성 반영`:'';
+  let personal='';
+  if(scene.championFormImpact){const [side,id,k,d,a]=scene.championFormImpact,p=c.E.championCombat(id,scene.minute,scene.kind,{k,d,a});personal=` · ${c.state.teams[set[side]]?.abbr??side} ${c.E.database().champMap[id]?.name??id} 교전 직전 ${k}/${d}/${a}: ${p.label}`;}
+  battleContext.textContent=`${scene.goldWeight<1?`장기전 · 골드 영향 ${Math.round(scene.goldWeight*100)}%`:'골드 차이 기본 반영'} · ${label}${phase}${personal}`;
+ }
+
  for(const p of set.stats){const el=document.querySelector(`[data-live-player="${CSS.escape(p.player)}"] .live-kda`);if(el)el.textContent=`${kills.filter(k=>k.killer===p.player).length} / ${kills.filter(k=>k.victim===p.player).length} / ${kills.filter(k=>k.assists.includes(p.player)).length}`;}
  const feed=dom.querySelector('.rift-killfeed');const key=kills.length+'|'+index;if(feed.dataset.key!==key){feed.dataset.key=key;feed.innerHTML=kills.slice(-4).reverse().map(k=>`<div class="kill-entry ${k.team===set.blue?'blue':'red'}"><img src="./assets/champions/${k.killerChampion}.png" alt=""> <strong>${esc(c.state.players[k.killer]?.name??'')}</strong><span>처치</span><img src="./assets/champions/${k.victimChampion}.png" alt=""><strong>${esc(c.state.players[k.victim]?.name??'')}</strong></div>`).join('');}
  const narration=document.querySelector('#scene-narration'),text=sceneNarration(scene,progress);if(narration&&narration.textContent!==text)narration.textContent=text;

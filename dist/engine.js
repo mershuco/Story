@@ -1,5 +1,6 @@
 import {start2026Cup,begin2026International,advance2026Phase,groupPoints} from './rules2026.js';
 import {simulateMatch,SIMULATION_MODEL,battleProbability} from './match-sim.js';
+export {championCombatProfile,championCombat,combatLabels,phaseStrength,fightStage} from './champion-combat.js';
 import {compositionProfile,compositionMatchup,compositionLabels} from './composition.js';
 export const ROLES = ['TOP','JGL','MID','BOT','SUP'];
 export const ROLE_NAMES = {TOP:'탑',JGL:'정글',MID:'미드',BOT:'원딜',SUP:'서포터'};
@@ -414,8 +415,9 @@ function compositionPower(s,teamId,picks) {
 }
 export function draftComposition(d){
  const blue=compositionProfile(d.picks.blue,DB.champMap),red=compositionProfile(d.picks.red,DB.champMap);
- const comparison=minute=>battleProbability({minute,compositionGap:compositionMatchup(blue,red,minute).gap});
- return {blue,red,blueLabels:compositionLabels(blue),redLabels:compositionLabels(red),blueChance20:comparison(20),blueChance45:comparison(45)};
+ const comparison=(minute,kind='teamfight',roles=null)=>battleProbability({minute,compositionGap:compositionMatchup(blue,red,minute,kind,{roles}).gap});
+ const scenarios=[{label:'초반 상체 3:3',minute:8,kind:'skirmish',roles:['TOP','JGL','MID']},{label:'초반 5:5 한타',minute:12,kind:'teamfight'},{label:'후반 상체 3:3',minute:40,kind:'skirmish',roles:['TOP','JGL','MID']},{label:'극후반 5:5 한타',minute:45,kind:'teamfight'}].map(x=>({...x,blueChance:comparison(x.minute,x.kind,x.roles)}));
+ return {blue,red,blueLabels:compositionLabels(blue),redLabels:compositionLabels(red),blueChance20:comparison(20),blueChance45:comparison(45),scenarios};
 }
 export function resolveDraft(s,m,d) {
  if(d.step!==20)throw Error('밴픽을 끝내야 경기를 시작할 수 있습니다.');
@@ -431,7 +433,7 @@ export function resolveDraft(s,m,d) {
   roster:picks.map(p=>({...p,player:team(s,p.team).lineup[p.role]})),
   teamNames:{[d.blue]:team(s,d.blue).abbr,[d.red]:team(s,d.red).abbr}},()=>random(s));
  const {winner:winning,loser:losing,duration,stats}=outcome;
- const set={number:d.set,winner:winning,loser:losing,blue:d.blue,red:d.red,firstPickSide:d.firstPickSide??'blue',firstSelection:d.firstSelection??null,patch:d.patch,duration,picks,bans:d.bans,probability:outcome.initialBlueProbability,stats,simulationVersion:3,simulationReplay,finalGold:outcome.finalGold,comeback:outcome.comeback,events:m.teams.includes(s.myTeam)?outcome.events:[],draftHistory:m.teams.includes(s.myTeam)?d.history:[],reason:`${team(s,winning).abbr} 승리 · 전력·조합·골드 차이를 반영한 교전, 제압 보상, 오브젝트와 공성 결과로 승패 결정`};
+ const set={number:d.set,winner:winning,loser:losing,blue:d.blue,red:d.red,firstPickSide:d.firstPickSide??'blue',firstSelection:d.firstSelection??null,patch:d.patch,duration,picks,bans:d.bans,probability:outcome.initialBlueProbability,stats,simulationVersion:4,simulationReplay,finalGold:outcome.finalGold,comeback:outcome.comeback,events:m.teams.includes(s.myTeam)?outcome.events:[],draftHistory:m.teams.includes(s.myTeam)?d.history:[],reason:`${team(s,winning).abbr} 승리 · 전력·조합·골드 차이를 반영한 교전, 제압 보상, 오브젝트와 공성 결과로 승패 결정`};
  m.sets.push(set);m.score[m.teams.indexOf(winning)]++;
  for(const id of m.teams)for(const p of lineup(s,id)){p.fatigue=clamp(p.fatigue+3,0,100);p.morale=clamp(p.morale+(id===winning?2:-2),0,100);p.xp+=.5;const cp=picks.find(x=>x.team===id&&x.role===p.position);if(cp){s.masteryGains[p.id]??={};s.masteryGains[p.id][cp.champion]=Math.min(35,(s.masteryGains[p.id][cp.champion]??0)+.08);}}
  if(m.score.some(n=>n>=Math.ceil(m.bestOf/2))) {m.status='done';m.winner=winning;if(!m.exhibition)team(s,winning).budget+=.25;if(!m.exhibition&&m.teams.includes(s.myTeam)){news(s,winning===s.myTeam?'시리즈 승리':'시리즈 종료',`${m.teams[0]} ${m.score[0]} : ${m.score[1]} ${m.teams[1]}`);team(s,s.myTeam).fan+=winning===s.myTeam?1500:300;}}

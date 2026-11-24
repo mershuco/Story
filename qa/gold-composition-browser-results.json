@@ -2,12 +2,12 @@
   "errors": [],
   "checks": [
     "assignedchampionsgetrole-awarecompositionadvice,20vs45minuteestimates,andreloadstability",
-    "event-v3savedlategamematchshowstime-decayedgoldweightandcompositioncontext"
+    "event-v4savedlategamematchshowstime-decayedgoldweightandcompositioncontext"
   ],
   "lateGameExample": {
-    "seed": 68,
+    "seed": 81,
     "minute": 42,
     "goldWeight": 0.74,
-    "model": "event-v3"
+    "model": "event-v4"
   }
 }

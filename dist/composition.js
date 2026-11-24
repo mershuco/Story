@@ -1,3 +1,4 @@
+import {teamChampionCombat,phaseStrength} from './champion-combat.js';
 // Game estimates of team composition, not official champion win-rate statistics.
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const set=s=>new Set(s.split(' '));
@@ -21,16 +22,27 @@ export function compositionProfile(picks,champMap){
   const ratio=['Kaisa','Corki','Jax','Yone','Varus','Volibear','Warwick'].includes(id)?.5:f.ap||has('Mage')?.85:has('Tank')?.45:.1;
   magic+=ratio*w;total+=w;
  }
+ p.members=picks.filter(p=>champMap[p.champion]).map(p=>[p.champion,p.role]).sort((a,b)=>a[1].localeCompare(b[1])||a[0].localeCompare(b[0]));
  p.magicShare=total?magic/total:.45;p.damageBalance=clamp(1-Math.abs(p.magicShare-.45)/.45,0,1);return p;
 }
 export function compositionQuality(p,minute=20,kind='teamfight'){
- const late=clamp((minute-12)/28,0,1),front=clamp(p.frontline,0,2),engage=clamp(p.engage,0,1.5),peel=clamp(p.peel,0,1.5),dps=clamp(p.dps,0,1.8);
- return .7*p.damageBalance+.55*front+.5*engage+.45*peel+.55*dps+.25*clamp(p.cc,0,2)+.22*peel*dps+.5*p.scaling*late+.3*p.tempo*(1-late)-.12*p.scaling*(1-late)+(kind==='siege'?.4*p.poke:0);
+ const front=clamp(p.frontline,0,2),engage=clamp(p.engage,0,1.5),peel=clamp(p.peel,0,1.5),dps=clamp(p.dps,0,1.8);
+ return .7*p.damageBalance+.55*front+.5*engage+.45*peel+.55*dps+.25*clamp(p.cc,0,2)+.22*peel*dps+(kind==='siege'?.4*p.poke:0);
 }
-export function compositionMatchup(blue,red,minute=20,kind='teamfight'){
- if(!blue||!red)return {gap:0,blueScore:0,redScore:0};
+export function compositionMatchup(blue,red,minute=20,kind='teamfight',{blueStats=[],redStats=[],roles=null}={}){
+ if(!blue||!red)return {gap:0,blueScore:0,redScore:0,phaseGap:0,formGap:0,driver:null};
  const versus=(own,enemy)=>.28*Math.min(own.engage,2)*Math.min(enemy.poke,2)+.3*Math.min(own.peel,2)*Math.min(enemy.dive,2)+.25*Math.min(own.poke,2)*clamp(1.5-enemy.frontline,0,1.5)+.32*Math.min(own.frontline,2)*(1-enemy.damageBalance);
- const a=compositionQuality(blue,minute,kind)+versus(blue,red),b=compositionQuality(red,minute,kind)+versus(red,blue),context=['gank','dive','skirmish'].includes(kind)?.6:1;
- return {gap:(a-b)*context,blueScore:a,redScore:b};
+ // Small fights use the champions actually present; an absent late-game carry
+ // must not decide a top-side 3v3 through the full team's composition bonuses.
+ const small=roles?.length<5||['gank','dive','skirmish'].includes(kind);
+ const structureA=small?0:compositionQuality(blue,minute,kind)+versus(blue,red),structureB=small?0:compositionQuality(red,minute,kind)+versus(red,blue);
+ const a=teamChampionCombat(blue.members,minute,kind,blueStats,roles),b=teamChampionCombat(red.members,minute,kind,redStats,roles);
+ const phaseGap=a.neutral-b.neutral,formGap=a.performance-b.performance;
+ const drivers=[...a.players.map(p=>({...p,side:'blue'})),...b.players.map(p=>({...p,side:'red'}))].sort((a,b)=>Math.abs(b.performance)-Math.abs(a.performance)||a.champion.localeCompare(b.champion));
+ const driver=drivers.find(p=>Math.abs(p.performance)>=.08)??null;
+ return {gap:structureA-structureB+phaseGap*2.6+formGap*5,blueScore:structureA+a.neutral*2.6+a.performance*5,redScore:structureB+b.neutral*2.6+b.performance*5,phaseGap,formGap,driver};
 }
-export function compositionLabels(p){return [p.frontline>=1.2?'전방 안정':'전방 부족',p.engage>=1?'진입 가능':'진입 부족',p.peel>=1?'딜러 보호':'보호 부족',p.dps>=1?'지속딜 확보':'지속딜 부족',p.damageBalance>=.6?'피해 유형 균형':'피해 유형 편중',p.scaling>=2?'후반 성장형':p.tempo>=2?'초반 주도형':'균형 성장',...(p.poke>=2?['포킹 특화']:[])];}
+export function compositionLabels(p){
+ const delta=p.members?.length?p.members.reduce((sum,[id])=>sum+phaseStrength(id,45)-phaseStrength(id,8),0)/p.members.length:0;
+ return [p.frontline>=1.2?'전방 안정':'전방 부족',p.engage>=1?'진입 가능':'진입 부족',p.peel>=1?'딜러 보호':'보호 부족',p.dps>=1?'지속딜 확보':'지속딜 부족',p.damageBalance>=.6?'피해 유형 균형':'피해 유형 편중',delta>=.7?'후반 성장형':delta<=-.7?'초반 주도형':'균형 성장',...(p.poke>=2?['포킹 특화']:[])];
+}
