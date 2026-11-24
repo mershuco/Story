@@ -7,7 +7,7 @@ report={'url':os.environ.get('LCK_TEST_URL','http://127.0.0.1:4173'),'checks':[]
 def saved(q):return json.loads(q.evaluate("localStorage.getItem('lck-manager-save-v1')"))
 def load(q,s):q.evaluate("s=>sessionStorage.setItem('_qa_next_save',JSON.stringify(s))",s);q.reload(wait_until='domcontentloaded')
 def decision_record(s,action):
- if s.get('activeMatch'):return any(e.get('decisions',{}).get(s['myTeam'])==action for e in s['activeMatch']['simulation']['events'])
+ if s.get('activeMatch'):return any(x[1:]==[s['myTeam'],action] for x in s['activeMatch']['simulation']['decisions'])
  m=next(m for m in s['matches'] if m['id']==s['viewing']['matchId']);return any(x[1:]==[s['myTeam'],action] for x in m['sets'][-1]['simulationReplay'].get('decisionOverrides',[]))
 def settled(q):q.locator('.objective-decision,.live-results').first.wait_for()
 with sync_playwright() as p:
@@ -31,7 +31,7 @@ with sync_playwright() as p:
  q.locator('[data-action=objective-choice][data-choice=trade]').click();assert decision_record(saved(q),'trade')
  after_trade=saved(q)
  if after_trade.get('activeMatch'):
-  paid=next(e for e in after_trade['activeMatch']['simulation']['events'] if e.get('tradeGold',{}).get(s['myTeam']))['tradeGold'][s['myTeam']];assert paid==int(quote.replace('+','').replace('G',''))
+  paid=next(e for e in after_trade['activeMatch']['simulation']['events'][len(initial['activeMatch']['simulation']['events']):] if e.get('tradeGold',{}).get(s['myTeam']))['tradeGold'][s['myTeam']];assert paid==int(quote.replace('+','').replace('G',''))
  report['checks'].append('six drake effects and soul/Elder guide, correct pit labels, 1000–2500G quote and exact trade payout')
  load(q,initial);q.locator('.objective-decision').wait_for();q.locator('[data-action=objective-choice][data-choice=contest]').click();assert decision_record(saved(q),'contest');report['checks'].append('contest and trade branch from the same saved crisis and persist actual decisions')
  load(q,initial);q.locator('.objective-decision').wait_for();q.set_viewport_size({'width':390,'height':844});q.locator('.objective-decision').scroll_into_view_if_needed();assert q.locator('[data-action=objective-choice][data-choice=auto]').is_visible();assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');q.screenshot(path=str(ROOT/'2026-objective-mobile.png'),full_page=True);q.locator('[data-action=objective-choice][data-choice=auto]').click();after=saved(q)
