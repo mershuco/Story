@@ -1,0 +1,40 @@
+{
+  "model": "event-v5",
+  "reviewedOn": "2026-11-24",
+  "sources": [
+    {
+      "url": "https://www.leagueoflegends.com/en-gb/news/game-updates/patch-26-1-notes/",
+      "scope": "일반 소환사의 협곡 중립 몬스터·강타·유충·전령·바론 변경. Swiftplay의 유충 삭제·12분 바론 규칙은 적용하지 않음."
+    },
+    {
+      "url": "https://www.leagueoflegends.com/en-us/news/game-updates/patch-25-09-notes/",
+      "scope": "유충8분 등장 및 한 번의3개체 캠프 변경"
+    },
+    {
+      "url": "https://www.leagueoflegends.com/en-sg/news/dev/dev-2026-season-one-gameplay-preview/",
+      "scope": "2026 바론20분 복귀와 사이드·공성 전략 강조"
+    },
+    {
+      "url": "https://developer.riotgames.com/docs/lol/#data-dragon",
+      "scope": "보관된2026 공식 챔피언 스킬 설명. 챔피언별 경합 수치는 게임 추정."
+    }
+  ],
+  "objectiveTimersMinutes": {
+    "firstDragon": 5,
+    "dragonRespawnMinimum": 5,
+    "grubs": 8,
+    "grubCountMaximum": 3,
+    "grubAttemptCutoffGameApproximation": 14.5,
+    "herald": 15,
+    "heraldAttemptCutoffGameApproximation": 19.5,
+    "baron": 20,
+    "baronRespawnMinimum": 6,
+    "elderAfterSoulMinimum": 6,
+    "elderRespawnMinimum": 6
+  },
+  "captureModel": "교전 승률 + 정글러 생존·강타 지수 + 참가 챔피언의 마무리·준비 상태. 안전 확보와 선마무리 경합을 구분. 게임 확률이며 실제 강타 피해·핑·서버 틱·쿨다운·모든 중첩을 재현하지 않음.",
+  "jungleSmiteIndex": "clamp(0.8*OVR + 0.2*championMastery - 0.06*fatigue,40,99). Game estimate, not observed player Smite success.",
+  "macroModel": "구단별 고정 게임 성향 + 선택 전략 + 밴픽 결투/포킹/진입/성장 + 현재 상황 + 저장된 난수. 실제 구단 성향을 정밀 추정한 자료 아님.",
+  "manualProgress": "미확정 경기의 오브젝트 직전에 정지. 선택 후 다음 구간 계산. 자동·교전·포기 선택을 모두 지원.",
+  "saveCompatibility": "v2/v3/v4 완료 경기 재생은 이전 코드 유지. v5 완료 로그는 seed와 수동 decisionOverrides로 재생하며 진행 중 로그·난수·pending은 그대로 저장."
+}

@@ -46,7 +46,7 @@ test('eventv2seedreplayskeepoldoutcomesandgoldtracesaftereventv3balancechanges',
  const old=simulateV2(base,matchRandom(93)),saved={...old,blue:'B',red:'R',number:1,simulationVersion:2,picks:roster.map(({player,...p})=>p),events:[],simulationReplay:{...base,model:'event-v2',seed:93}};
  const replay=replayMatch({...base,model:'event-v2',seed:93});assert.deepEqual(replay,old);const timeline=buildTimeline(saved);assert.deepEqual(timeline.map(s=>s.lead),old.events.map(e=>e.lead));assert.deepEqual(timeline.at(-1).gold,old.finalGold);assert.equal(timeline.at(-1).team,old.winner);
 });
-test('eventv4recordsactualadjustedchancesandcanreconstructallthreeeffectswithoutchangingstate',()=>{
- const params={...base,teamStrengthBlue:84,teamStrengthRed:80,compositionBlue:profile(['Ornn','Sejuani','Orianna','Jinx','Lulu']),compositionRed:profile(['Jayce','Nidalee','Zoe','Ezreal','Karma'])},result=simulateMatch(params,matchRandom(8));assert.equal(result.model,'event-v4');
- const replay=replayMatch({...params,model:'event-v4',seed:8});assert.deepEqual(replay,result);for(const e of result.events.filter(e=>e.combatTeam)){assert(Number.isFinite(e.blueWinProbability));assert.equal(e.goldWeight,goldInfluence(e.minute));assert(Number.isFinite(e.compositionGap));assert.equal(e.teamStrengthGap,4);}
+test('eventv5recordsactualadjustedchancesandcanreconstructallthreeeffectswithoutchangingstate',()=>{
+ const params={...base,teamStrengthBlue:84,teamStrengthRed:80,compositionBlue:profile(['Ornn','Sejuani','Orianna','Jinx','Lulu']),compositionRed:profile(['Jayce','Nidalee','Zoe','Ezreal','Karma'])},result=simulateMatch(params,matchRandom(8));assert.equal(result.model,'event-v5');
+ const replay=replayMatch({...params,model:'event-v5',seed:8});assert.deepEqual(replay,result);for(const e of result.events.filter(e=>e.combatTeam)){assert(Number.isFinite(e.blueWinProbability));assert.equal(e.goldWeight,goldInfluence(e.minute));assert(Number.isFinite(e.compositionGap));assert.equal(e.teamStrengthGap,4);}
 });

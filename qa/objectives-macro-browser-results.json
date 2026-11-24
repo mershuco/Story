@@ -1,0 +1,10 @@
+{
+  "url": "http://127.0.0.1:4173",
+  "checks": [
+    "real UI draft starts live match with no precomputed winner; first objective pauses, scouts smite/secure tools, and survives reload without reroll",
+    "trade and contest choices actually alter objective decisions, events and gold",
+    "390px choice dialog, one-decision auto and remaining-set auto complete and persist the live match",
+    "both teams dragon and individual-grub scoreboard counts equal the actual saved captures"
+  ],
+  "errors": []
+}

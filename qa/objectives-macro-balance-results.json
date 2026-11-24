@@ -1,0 +1,129 @@
+{
+  "model": "event-v5",
+  "method": "Synthetic equal-player-strength squads; game-estimated team styles and Smite/burst coefficients. Not observed LCK capture or win rates. Seeds 1..400.",
+  "secureTable": [
+    {
+      "fightChance": 0.25,
+      "skills": [
+        75,
+        75
+      ],
+      "blueCaptureEstimate": 0.26345394834751407
+    },
+    {
+      "fightChance": 0.25,
+      "skills": [
+        95,
+        65
+      ],
+      "blueCaptureEstimate": 0.3193136866941712
+    },
+    {
+      "fightChance": 0.5,
+      "skills": [
+        75,
+        75
+      ],
+      "blueCaptureEstimate": 0.47344387267848576
+    },
+    {
+      "fightChance": 0.5,
+      "skills": [
+        95,
+        65
+      ],
+      "blueCaptureEstimate": 0.5289264829359248
+    },
+    {
+      "fightChance": 0.75,
+      "skills": [
+        75,
+        75
+      ],
+      "blueCaptureEstimate": 0.6834337970094575
+    },
+    {
+      "fightChance": 0.75,
+      "skills": [
+        95,
+        65
+      ],
+      "blueCaptureEstimate": 0.7385392791776785
+    }
+  ],
+  "championTable": [
+    {
+      "champion": "Xayah",
+      "evenFightCaptureEstimate": 0.5330490644445433
+    },
+    {
+      "champion": "Kalista",
+      "evenFightCaptureEstimate": 0.5699044795972635
+    },
+    {
+      "champion": "Pantheon",
+      "evenFightCaptureEstimate": 0.5147843492755049
+    },
+    {
+      "champion": "Chogath",
+      "evenFightCaptureEstimate": 0.58103949611562
+    },
+    {
+      "champion": "Nunu",
+      "evenFightCaptureEstimate": 0.5699044795972635
+    }
+  ],
+  "macroExamples": {
+    "T1": {
+      "label": "교전·측면 운영",
+      "aggression": 0.75,
+      "objective": 0.7300000000000001,
+      "split": 0.5800000000000001,
+      "vision": 0.78,
+      "scaling": 0.6,
+      "poke": 0,
+      "engage": 0.6666666666666666
+    },
+    "GEN": {
+      "label": "시야·통제·성장",
+      "aggression": 0.48,
+      "objective": 0.95,
+      "split": 0.55,
+      "vision": 0.9,
+      "scaling": 0.6,
+      "poke": 0,
+      "engage": 0.6666666666666666
+    }
+  },
+  "diversity": {
+    "trials": 400,
+    "uniqueEventOrders": 400,
+    "blueWinRate": 0.555,
+    "averageMinutes": 37.8925,
+    "splitGrubCamps": 153,
+    "steals": 681,
+    "uncontested": 846
+  },
+  "manualExamples": [
+    {
+      "action": "contest",
+      "firstDragonOwner": "T1",
+      "killsInContest": 4,
+      "goldAfterObjective": {
+        "T1": 12889,
+        "GEN": 11636
+      },
+      "remainingWinner": "GEN"
+    },
+    {
+      "action": "trade",
+      "firstDragonOwner": "GEN",
+      "killsInContest": 0,
+      "goldAfterObjective": {
+        "T1": 11825,
+        "GEN": 11536
+      },
+      "remainingWinner": "T1"
+    }
+  ]
+}
