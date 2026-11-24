@@ -1,4 +1,4 @@
-import {simulateMatch,matchRandom} from './match-sim.js';
+import {replayMatch} from './match-sim.js';
 // Deterministic highlight reconstruction. This layer never changes match results or save RNG.
 const ROLES=['TOP','JGL','MID','BOT','SUP'];
 const BASE={blue:[63,537],red:[537,63]};
@@ -30,8 +30,8 @@ function take(queue,amount,roles){
 export function buildTimeline(set,{teamNames={},playerNames={}}={}){
  const rng=seeded(hash(JSON.stringify([set.blue,set.red,set.number,set.winner,set.picks,set.stats])));
  let out,records=set.events;
- if(!records?.some(e=>e.kind==='nexus')&&set.simulationReplay?.model==='event-v2'){
-  const replay=simulateMatch({...set.simulationReplay,blue:set.blue,red:set.red,number:set.number,roster:set.stats,teamNames},matchRandom(set.simulationReplay.seed));
+ if(!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3'].includes(set.simulationReplay?.model)){
+  const replay=replayMatch({...set.simulationReplay,blue:set.blue,red:set.red,number:set.number,roster:set.stats,teamNames});
   if(replay.winner===set.winner&&replay.duration===set.duration&&JSON.stringify(replay.stats)===JSON.stringify(set.stats))records=replay.events;
  }
  if(set.simulationVersion>=2&&records?.some(e=>e.kind==='nexus')){

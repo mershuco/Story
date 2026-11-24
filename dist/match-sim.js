@@ -1,3 +1,5 @@
+import {simulateMatch as simulateMatchV2} from './match-sim-v2.js';
+import {compositionMatchup} from './composition.js';
 // Event-by-event simulation. No winner is chosen before the fights are played.
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const sigmoid=x=>1/(1+Math.exp(-x));
@@ -16,9 +18,24 @@ const plans=[
  [51,'teamfight','마지막 전면 교전','mid'],[54,'baron','장기전 바론','baron'],
  [57,'teamfight','최후의 한타','mid']
 ];
-export function battleProbability({powerGap=0,lead=0,minute=0,scaleGap=0,buffGap=0,execution=0,strategyGap=0}={}){
- const late=clamp((minute-12)/22,0,1);
- return clamp(sigmoid((clamp(powerGap,-20,20)*.7+clamp(lead/2300,-6,6)+scaleGap*late+buffGap+execution+strategyGap)/9),.1,.9);
+export const SIMULATION_MODEL='event-v3';
+export function goldInfluence(minute=0){
+ if(minute<=35)return 1;
+ if(minute<40)return 1-(minute-35)*.04;
+ return Math.max(.35,.8-(minute-40)*.03);
+}
+export function battleFactors({powerGap=0,teamStrengthGap=powerGap,championGap=0,lead=0,minute=0,compositionGap=0,scaleGap=0,buffGap=0,execution=0,strategyGap=0}={}){
+ const strength=clamp(teamStrengthGap,-20,20),late=clamp((minute-12)/22,0,1),weight=goldInfluence(minute);
+ const factors={gold:clamp(lead,-30000,30000)/6000*Math.log(3)*weight,strength:strength*.045,
+  control:strength*.025*Math.min(Math.abs(lead)/6000,1.5),champion:clamp(championGap*.07,-.6,.6),
+  composition:clamp(compositionGap*.14,-.9,.9)+scaleGap*late/9,buffs:buffGap/9,execution:execution/9,strategy:strategyGap/9};
+ return {...factors,goldWeight:weight,probability:clamp(sigmoid(Object.values(factors).reduce((a,b)=>a+b,0)),.02,.98)};
+}
+export function battleProbability(options={}){return battleFactors(options).probability;}
+export function replayMatch(input){
+ if(input.model==='event-v2')return simulateMatchV2(input,matchRandom(input.seed));
+ if(input.model===SIMULATION_MODEL)return simulateMatch(input,matchRandom(input.seed));
+ throw Error('지원하지 않는 경기 시뮬레이션 버전입니다.');
 }
 export function matchRandom(seed){let state=seed>>>0;return()=>{let t=state=(state+0x6D2B79F5)>>>0;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
 function shuffled(a,rng){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
@@ -29,8 +46,10 @@ export function simulateMatch(input,rng){
  const stats=roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),statMap=Object.fromEntries(stats.map(p=>[p.player,p]));
  const gold={[blue]:2500,[red]:2500},dragons={[blue]:0,[red]:0},score={[blue]:0,[red]:0},baronUntil={[blue]:0,[red]:0},momentum={[blue]:0,[red]:0};
  const events=[],minLead={[blue]:0,[red]:0};let previousMinute=0,winner=null,lastLeader=null,leadChanges=0;
- const powerGap=bluePower-redPower,scaleGap=((input.scaleBlue??0)-(input.scaleRed??0))*.9;
- const initialBlueProbability=battleProbability({powerGap});
+ const powerGap=(input.teamStrengthBlue??bluePower)-(input.teamStrengthRed??redPower),championGap=(bluePower-redPower)-powerGap;
+ const scaleGap=input.compositionBlue&&input.compositionRed?0:((input.scaleBlue??0)-(input.scaleRed??0))*.9;
+ const initialMatchup=compositionMatchup(input.compositionBlue,input.compositionRed,0);
+ const initialBlueProbability=battleProbability({powerGap,championGap,compositionGap:initialMatchup.gap});
  function farming(minute){
   const delta=minute-previousMinute,lead=gold[blue]-gold[red],base=delta*(1260+rng()*160);
   const drift=clamp(powerGap*5+(rng()-.5)*250-lead*.004,-420,420)*delta;
@@ -54,9 +73,10 @@ export function simulateMatch(input,rng){
   const execution=(rng()-rng())*3.5;
   const buffGap=(baronUntil[blue]>=minute?1.1:0)-(baronUntil[red]>=minute?1.1:0)+(dragons[blue]>=4?1.6:0)-(dragons[red]>=4?1.6:0);
   const strategy=(id,strategy)=>(strategy==='early'?clamp((18-minute)/12,-.4,1)*1.4:strategy==='late'?clamp((minute-16)/18,-.5,1)*1.4:0);
-  const probability=battleProbability({powerGap,lead:leadBefore,minute,scaleGap,buffGap,execution,strategyGap:strategy(blue,input.blueStrategy)-strategy(red,input.redStrategy)});
+  const matchup=compositionMatchup(input.compositionBlue,input.compositionRed,minute,kind);
+  const factors=battleFactors({powerGap,championGap,lead:leadBefore,minute,compositionGap:matchup.gap,scaleGap,buffGap,execution,strategyGap:strategy(blue,input.blueStrategy)-strategy(red,input.redStrategy)}),probability=factors.probability;
   const fightWinner=rng()<probability?blue:red,fightLoser=other(fightWinner);
-  if(kind==='baron-setup'){record(spec,[],null,fightWinner,{blueWinProbability:probability});continue;}
+  if(kind==='baron-setup'){record(spec,[],null,fightWinner,{blueWinProbability:probability,goldWeight:factors.goldWeight,compositionGap:matchup.gap});continue;}
   momentum[fightWinner]++;momentum[fightLoser]=0;
   const pools=Object.fromEntries(teams.map(id=>[id,roster.filter(p=>p.team===id&&(!roles||roles.includes(p.role)))]));
   const maxKills=roles?Math.min(2,pools[fightLoser].length):minute<15?3:5;
@@ -73,7 +93,8 @@ export function simulateMatch(input,rng){
   }
   let objective=null;
   if(['dragon','herald','baron','siege'].includes(kind)){
-   const steal=kind==='baron'&&rng()<.12,owner=steal?fightLoser:fightWinner,objectiveKind=kind==='siege'?'tower':kind,deficit=gold[other(owner)]-gold[owner];
+   const stealChance=clamp(.12+(fightLoser===blue?powerGap:-powerGap)*.004,.04,.22);
+   const steal=kind==='baron'&&rng()<stealChance,owner=steal?fightLoser:fightWinner,objectiveKind=kind==='siege'?'tower':kind,deficit=gold[other(owner)]-gold[owner];
    const objectiveBounty=deficit>3000?Math.round(clamp((deficit-3000)*.1,0,800)):0;
    gold[owner]+=({dragon:300,herald:600,baron:1500,tower:1250}[objectiveKind])+objectiveBounty;bounty+=objectiveBounty;
    objective={kind:objectiveKind,team:owner,steal};
@@ -83,11 +104,11 @@ export function simulateMatch(input,rng){
   const team=objective?.team??fightWinner;
   let title=objective?.steal?'바론 스틸':objective?.soul?'드래곤 영혼 확보':spec[2];
   if((fightWinner===blue?leadBefore:-leadBefore)<-2500&&!objective?.steal)title='열세 팀의 반격 · '+title;
-  record([minute,kind,title,spec[3],roles],kills,objective,team,{combatTeam:fightWinner,leadBefore,blueWinProbability:probability,bounty});
+  record([minute,kind,title,spec[3],roles],kills,objective,team,{combatTeam:fightWinner,leadBefore,blueWinProbability:probability,goldWeight:factors.goldWeight,compositionGap:matchup.gap,teamStrengthGap:powerGap,bounty});
   if(minute>=26&&['siege','flank','teamfight','baron'].includes(kind)){
    const attackLead=fightWinner===blue?gold[blue]-gold[red]:gold[red]-gold[blue],buff=baronUntil[fightWinner]>=minute;
    const canPush=winnerKills>=3||buff||attackLead>=4500||minute>=42;
-   const finishChance=clamp(.12+(minute-26)*.027+winnerKills*.045+momentum[fightWinner]*.025+attackLead/40000+(buff?.14:0),.04,.9);
+   const finishChance=clamp(.12+(minute-26)*.027+winnerKills*.045+momentum[fightWinner]*.025+attackLead*goldInfluence(minute)/40000+(buff?.14:0),.04,.9);
    // At the last late-game fight, its actual winner closes the game. No
    // preselected winner, gold sign rewrite, or separate winner roll is used.
    if((canPush&&rng()<finishChance)||index===plans.length-1){
@@ -98,5 +119,5 @@ export function simulateMatch(input,rng){
  }
  const duration=events.at(-1).minute;
  for(const p of stats){p.cs=p.role==='SUP'?Math.round(25+duration*.6+rng()*18):Math.round(duration*(p.role==='JGL'?5.8:7.6)+(rng()-.5)*35);p.damage=Math.round((p.role==='SUP'?380:p.role==='JGL'?600:820)*duration+p.k*340+rng()*2600);}
- return {winner,loser:other(winner),duration,events,stats,initialBlueProbability,finalGold:{...gold},comeback:{winnerMaxDeficit:Math.round(-minLead[winner]),leadChanges,finalLead:gold[blue]-gold[red]},model:'event-v2'};
+ return {winner,loser:other(winner),duration,events,stats,initialBlueProbability,finalGold:{...gold},comeback:{winnerMaxDeficit:Math.round(-minLead[winner]),leadChanges,finalLead:gold[blue]-gold[red]},model:SIMULATION_MODEL};
 }

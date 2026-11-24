@@ -1,62 +1,135 @@
 {
-  "model": "event-v2",
+  "model": "event-v3",
+  "probabilityTable": [
+    {
+      "lead": 0,
+      "at20": 0.5,
+      "at40": 0.5,
+      "at50": 0.5
+    },
+    {
+      "lead": 1000,
+      "at20": 0.5456480488238098,
+      "at40": 0.5365550698687034,
+      "at50": 0.5228717830860504
+    },
+    {
+      "lead": 3000,
+      "at20": 0.6339745962155614,
+      "at40": 0.6081267572685931,
+      "at50": 0.5682348688308035
+    },
+    {
+      "lead": 5000,
+      "at20": 0.7141264037070777,
+      "at40": 0.6753335112129679,
+      "at50": 0.6124814933510679
+    },
+    {
+      "lead": 6000,
+      "at20": 0.7499999999999999,
+      "at40": 0.7065921139768863,
+      "at50": 0.6339745962155614
+    },
+    {
+      "lead": 10000,
+      "at20": 0.8618832502903921,
+      "at40": 0.8122682232128668,
+      "at50": 0.7141264037070777
+    },
+    {
+      "lead": 12000,
+      "at20": 0.8999999999999999,
+      "at40": 0.8529313603914378,
+      "at50": 0.7499999999999999
+    },
+    {
+      "lead": 15000,
+      "at20": 0.9397171187267773,
+      "at40": 0.8999999999999999,
+      "at50": 0.7979072094689398
+    },
+    {
+      "lead": 18000,
+      "at20": 0.9642857142857143,
+      "at40": 0.9331846029956322,
+      "at50": 0.8386095222035911
+    }
+  ],
+  "strengthTable": [
+    {
+      "powerGap": -8,
+      "behind6000": 0.15994836864386858,
+      "ahead6000": 0.631489541704467
+    },
+    {
+      "powerGap": 0,
+      "behind6000": 0.25000000000000006,
+      "ahead6000": 0.7499999999999999
+    },
+    {
+      "powerGap": 8,
+      "behind6000": 0.3685104582955329,
+      "ahead6000": 0.8400516313561314
+    }
+  ],
   "method": "Synthetic five-role squads;seeds1..2000 ineachpowergap scenario. Game-balance calibration,notofficialLoL orrealLCKwinrates.",
   "scenarios": [
     {
       "powerGap": 0,
       "trials": 2000,
-      "blueWins": 1006,
-      "redWins": 994,
-      "winnerTrailed3000": 584,
-      "winnerTrailed6000": 109,
-      "leadChanges": 2933,
-      "baronSteals": 347,
-      "largestWinningDeficit": 13333,
-      "blueWinRate": 0.503,
-      "comeback6000Rate": 0.0545,
-      "averageMinutes": 33.491
+      "blueWins": 1007,
+      "redWins": 993,
+      "winnerTrailed3000": 411,
+      "winnerTrailed6000": 71,
+      "leadChanges": 2403,
+      "baronSteals": 328,
+      "largestWinningDeficit": 9698,
+      "blueWinRate": 0.5035,
+      "comeback6000Rate": 0.0355,
+      "averageMinutes": 32.793
     },
     {
       "powerGap": 8,
       "trials": 2000,
-      "blueWins": 1560,
-      "redWins": 440,
-      "winnerTrailed3000": 389,
-      "winnerTrailed6000": 117,
-      "leadChanges": 1844,
-      "baronSteals": 323,
-      "largestWinningDeficit": 11340,
-      "blueWinRate": 0.78,
-      "comeback6000Rate": 0.0585,
-      "averageMinutes": 32.7975
+      "blueWins": 1598,
+      "redWins": 402,
+      "winnerTrailed3000": 276,
+      "winnerTrailed6000": 58,
+      "leadChanges": 1774,
+      "baronSteals": 281,
+      "largestWinningDeficit": 11811,
+      "blueWinRate": 0.799,
+      "comeback6000Rate": 0.029,
+      "averageMinutes": 32.063
     },
     {
       "powerGap": -8,
       "trials": 2000,
-      "blueWins": 445,
-      "redWins": 1555,
-      "winnerTrailed3000": 403,
-      "winnerTrailed6000": 107,
-      "leadChanges": 1855,
-      "baronSteals": 317,
-      "largestWinningDeficit": 13264,
-      "blueWinRate": 0.2225,
-      "comeback6000Rate": 0.0535,
-      "averageMinutes": 32.807
+      "blueWins": 405,
+      "redWins": 1595,
+      "winnerTrailed3000": 301,
+      "winnerTrailed6000": 57,
+      "leadChanges": 1793,
+      "baronSteals": 269,
+      "largestWinningDeficit": 10787,
+      "blueWinRate": 0.2025,
+      "comeback6000Rate": 0.0285,
+      "averageMinutes": 32.0135
     },
     {
       "powerGap": 15,
       "trials": 2000,
-      "blueWins": 1808,
-      "redWins": 192,
-      "winnerTrailed3000": 192,
-      "winnerTrailed6000": 117,
-      "leadChanges": 634,
-      "baronSteals": 289,
-      "largestWinningDeficit": 12153,
-      "blueWinRate": 0.904,
-      "comeback6000Rate": 0.0585,
-      "averageMinutes": 31.674
+      "blueWins": 1886,
+      "redWins": 114,
+      "winnerTrailed3000": 112,
+      "winnerTrailed6000": 37,
+      "leadChanges": 917,
+      "baronSteals": 178,
+      "largestWinningDeficit": 10795,
+      "blueWinRate": 0.943,
+      "comeback6000Rate": 0.0185,
+      "averageMinutes": 30.9495
     }
   ]
 }
