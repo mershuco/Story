@@ -6,10 +6,31 @@ ROOT=Path(__file__).resolve().parent
 report={'url':os.environ.get('LCK_TEST_URL','http://127.0.0.1:4173'),'checks':[],'errors':[]}
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage']);q=b.new_page(viewport={'width':1440,'height':1100},ignore_https_errors=True);q.set_default_timeout(30000);q.on('pageerror',lambda e:report['errors'].append(str(e)))
- q.add_init_script("const s=sessionStorage.getItem('_meta_save');if(s){localStorage.setItem('lck-manager-save-v1',s);sessionStorage.removeItem('_meta_save');}");q.goto(report['url']);q.locator('[data-action=new-game]').click();q.locator('[data-action=start-season]').click();q.locator('[data-action=next-match]').first.click();q.locator('[data-action=prepare]').first.click();q.locator('[data-action=begin-draft]').click();q.locator('.draft-meta-panel').wait_for();assert q.locator('[data-meta-lane]').count()==5;assert 'LCK CUP' in q.locator('.draft-meta-panel h2').inner_text();assert q.locator('.champ-card').count()>=160;assert q.locator('.recommendations,.recommendation').count()==0
+ q.add_init_script("const s=sessionStorage.getItem('_meta_save');if(s){localStorage.setItem('lck-manager-save-v1',s);sessionStorage.removeItem('_meta_save');}");q.goto(report['url']);q.locator('[data-action=new-game]').click();q.locator('[data-action=start-season]').click();q.locator('[data-action=next-match]').first.click();q.locator('[data-action=prepare]').first.click();q.locator('[data-action=begin-draft]').click();q.locator('.draft-meta-panel').wait_for();assert q.locator('[data-meta-lane]').count()==0;assert q.locator('#draft-synergy-body').count()==0;q.locator('[data-action=draft-meta-toggle]').click();assert q.locator('[data-meta-lane]').count()==5;assert 'LCK CUP' in q.locator('.draft-meta-panel h2').inner_text();assert q.locator('.champ-card').count()>=160;assert q.locator('.recommendations,.recommendation').count()==0
  def saved():return json.loads(q.evaluate("localStorage.getItem('lck-manager-save-v1')"))
- def load(s):q.evaluate("s=>sessionStorage.setItem('_meta_save',JSON.stringify(s))",s);q.reload();q.locator('.draft-meta-panel').wait_for();q.wait_for_function("document.querySelector('.draft-turn b')?.textContent!=='LOCKING'")
- before=saved();q.locator('[data-action=draft-meta-role][data-id=JGL]').click();assert q.locator('[data-meta-lane]').count()==1;assert q.locator('[data-meta-lane=JGL] [data-meta-champion=Jayce]').count()==1
+ def load(s):q.evaluate("s=>sessionStorage.setItem('_meta_save',JSON.stringify(s))",s);q.reload();q.locator('.draft-meta-panel').wait_for();q.locator('[data-action=draft-meta-toggle]').click();q.wait_for_function("document.querySelector('.draft-turn b')?.textContent!=='LOCKING'")
+ before=saved()
+ meta=q.locator('.draft-meta-panel');synergy=q.locator('.draft-synergy-panel')
+ assert meta.bounding_box()['y']<synergy.bounding_box()['y']
+ q.locator('[data-action=draft-meta-synergy-toggle]').click()
+ q.locator('[data-change=draft-synergy-champion]').select_option('Milio')
+ pair=synergy.locator('[data-synergy-key="Lucian+Milio"]')
+ assert '빛의 사수' in pair.inner_text() and '4세트' in pair.inner_text()
+ pair.locator('[data-action=draft-pick][data-id=Lucian]').click()
+ confirm=pair.locator('[data-action=draft-lock]')
+ assert confirm.is_enabled() and confirm.inner_text()=='밴' and saved()==before
+ photo=pair.locator('[data-id=Lucian] .champ-img').bounding_box()
+ assert confirm.bounding_box()['y']>=photo['y']+photo['height']-1
+ q.locator('[data-action=draft-meta-synergy-mode][data-id=observed]').click()
+ assert 'LCK CUP' in synergy.locator('.meta-evidence').inner_text()
+ assert synergy.locator('[data-synergy-key="Lucian+Milio"]').count()==1
+ q.locator('[data-change=draft-synergy-champion]').select_option('')
+ q.locator('[data-action=draft-meta-synergy-page]').last.click()
+ assert '2 /' in synergy.locator('.synergy-pagination').inner_text()
+ q.locator('[data-action=draft-meta-synergy-toggle]').click()
+ assert q.locator('#draft-synergy-body').count()==0 and q.locator('[data-meta-lane]').count()==5
+ report['checks'].append('both panels start closed; independent toggles, current Cup pair records, champion filter, full pagination and pair-local confirmation')
+ q.locator('[data-action=draft-meta-role][data-id=JGL]').click();assert q.locator('[data-meta-lane]').count()==1;assert q.locator('[data-meta-lane=JGL] [data-meta-champion=Jayce]').count()==1
  q.locator('[data-action=draft-meta-mode][data-id=prior]').click();assert '게임 날짜 이전' in q.locator('.meta-evidence').inner_text();assert saved()==before
  q.locator('[data-action=draft-meta-mode][data-id=event]').click();q.locator('[data-action=draft-meta-role][data-id=all]').click();assert q.locator('.broadcast-stage').bounding_box()['y']+q.locator('.broadcast-stage').bounding_box()['height']<=q.locator('.broadcast-strip').bounding_box()['y'];q.screenshot(path=str(ROOT/'2026-draft-meta-cup.png'),full_page=True)
  initial=q.locator('[data-meta-lane=TOP] .meta-champions .meta-champion').evaluate_all('(xs)=>xs.map(x=>x.dataset.id)');card=q.locator('.meta-champions .meta-champion:not([disabled])').first;cid=card.get_attribute('data-id');card.click();assert saved()==before;assert q.locator('[data-action=draft-lock]').is_enabled();q.locator('[data-action=draft-lock]').click();q.wait_for_function("!document.querySelector('.draft-turn')?.textContent.includes('LOCKING')");s=saved();assert any(h['champion']==cid for h in s['activeDraft']['history']);assert all(pick['role'] is None for side in ['blue','red'] for pick in s['activeDraft']['picks'][side]);assert q.locator(f'.meta-champion[data-id="{cid}"]').first.is_disabled();assert q.locator(f'.meta-champions .meta-champion[data-id="{cid}"]').count()==0;remaining=q.locator('[data-meta-lane=TOP] .meta-champions .meta-champion').evaluate_all('(xs)=>xs.map(x=>x.dataset.id)');assert len(remaining)==4 and set(remaining)-set(initial)
@@ -30,5 +51,5 @@ with sync_playwright() as p:
  report['checks'].append('exhausted observed support pool: 12 legal alternatives refill, explicitly labeled estimated without invented pick/win statistics')
  q.locator('[data-action=draft-meta-role][data-id=all]').click()
  # Every meta list remains reachable at phone width without widening the page.
- q.set_viewport_size({'width':390,'height':844});assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');assert q.locator('.meta-lanes').evaluate('(e)=>e.scrollWidth>e.clientWidth');q.locator('[data-action=draft-meta-role][data-id=SUP]').click();assert q.locator('[data-meta-lane]').count()==1;assert q.locator('[data-action=draft-meta-role][data-id=SUP]').get_attribute('aria-pressed')=='true';assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');q.screenshot(path=str(ROOT/'2026-draft-meta-mobile.png'),full_page=True);report['checks'].append('390px: horizontally scrollable five-role board and single-role view fit the page; metadata and coverage remain readable')
+ q.set_viewport_size({'width':390,'height':844});assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');assert q.locator('.meta-lanes').evaluate('(e)=>e.scrollWidth>e.clientWidth');q.locator('[data-action=draft-meta-role][data-id=SUP]').click();assert q.locator('[data-meta-lane]').count()==1;assert q.locator('[data-action=draft-meta-role][data-id=SUP]').get_attribute('aria-pressed')=='true';assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');q.locator('[data-action=draft-meta-synergy-toggle]').click();q.locator('[data-change=draft-synergy-champion]').select_option('Ashe');assert q.locator('[data-synergy-key="Ashe+Seraphine"]').count()==1;assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');q.screenshot(path=str(ROOT/'2026-draft-meta-mobile.png'),full_page=True);report['checks'].append('390px: horizontally scrollable five-role board and single-role view fit the page; metadata and coverage remain readable')
  assert not report['errors'],report['errors'];Path(os.environ.get('LCK_TEST_REPORT',str(ROOT/'draft-meta-browser-results.json'))).write_text(json.dumps(report,ensure_ascii=False,indent=2));print(json.dumps(report,ensure_ascii=False));b.close()

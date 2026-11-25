@@ -14,7 +14,7 @@ import {initializeRift,creditPlayer,creditTeam,farmPlayers,tickRift,gainVision,v
 import * as legacyV5 from './match-sim-v5.js';
 import {initializeObjectives,takeDragon,grantTemporaryBuff,loseBuffsOnDeath,buffCoverage,objectivePower,structurePressure,objectiveSnapshot,DRAKES} from './objective-effects.js';
 export {goldInfluence,battleFactors,battleProbability,matchRandom};
-export const SIMULATION_MODEL='event-v11';
+export const SIMULATION_MODEL='event-v12';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const sigmoid=x=>1/(1+Math.exp(-x));
 const round=n=>Math.round(n*1000)/1000;
@@ -36,21 +36,30 @@ function record(s,{kind,title,location='mid',roles=null,team=null,kills=[],objec
  s.minLead[blue]=Math.min(s.minLead[blue],lead);s.minLead[red]=Math.min(s.minLead[red],-lead)||0;
  const e={minute:s.clock,second:Math.round(s.clock*60),kind,type:kind==='opening'?'start':kind==='nexus'?'end':'event',title:comeback&&kind!=='nexus'?'골드 역전 · '+title:title,location,...(roles?{roles}:{}),team,kills,objective,lead,gold:{...s.gold},score:{...s.score},dragons:{...s.dragons},grubs:{...s.grubs},comeback,objectiveState:objectiveSnapshot(s),rift:riftSnapshot(s),...extra};
  e.text=extra.text??(kind==='opening'?'양 팀이 라인과 정글 동선을 선택합니다.':kind==='objective-setup'?`${OBJECTIVE_NAMES[s.pending?.kind]??'오브젝트'} 앞에서 교전 또는 자원 교환을 준비합니다.`:kind==='recall'?'선수들이 귀환해 정비하고 다음 동선을 선택합니다.':kind==='nexus'?`${name(s,team)}이 넥서스를 파괴합니다.`:objective?`${name(s,team)}이 ${OBJECTIVE_NAMES[objective.kind]??'포탑'}${objective.count?` ${objective.count}마리`:''}${objective.steal?'을 스틸합니다.':'을 확보합니다.'}`:kills.length?`${name(s,team)}이 교전에서 ${kills.filter(k=>s.stats.find(p=>p.player===k.killer)?.team===team).length}킬을 만들었습니다.`:`${name(s,team)}이 ${kind==='split'?'사이드 압박':kind==='vision'?'시야와 진입로 통제':'라인·정글 자원 확보'}로 운영합니다.`);
+ if(e.championSynergies?.length)e.text+=' 조합 연계 · '+e.championSynergies.map(combo=>name(s,combo.team)+' '+combo.label).join(' / ')+'.';
  if(e.bounty)e.text+=` 제압·오브젝트 보상 ${e.bounty}G.`;s.events.push(e);return e;
 }
 export function createMatchState(input,seed=0,external){
  const snapshot=structuredClone(input),{blue,red}=snapshot,teams=[blue,red],zeros=()=>Object.fromEntries(teams.map(id=>[id,0]));
- const s={version:11,input:snapshot,rng:seed>>>0,teams,clock:0,stats:snapshot.roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),gold:{[blue]:2500,[red]:2500},score:zeros(),dragons:zeros(),grubs:zeros(),heralds:zeros(),barons:zeros(),elders:zeros(),baronUntil:zeros(),elderUntil:zeros(),momentum:zeros(),minLead:zeros(),events:[],lastLeader:null,leadChanges:0,winner:null,finished:false,pending:null,window:0,decisions:[],soul:null,steps:0};
+ const version=input.model==='event-v11'?11:12;
+ const s={version,input:snapshot,rng:seed>>>0,teams,clock:0,stats:snapshot.roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),gold:{[blue]:2500,[red]:2500},score:zeros(),dragons:zeros(),grubs:zeros(),heralds:zeros(),barons:zeros(),elders:zeros(),baronUntil:zeros(),elderUntil:zeros(),momentum:zeros(),minLead:zeros(),events:[],lastLeader:null,leadChanges:0,winner:null,finished:false,pending:null,window:0,decisions:[],soul:null,steps:0};
  s.powerGap=(input.teamStrengthBlue??input.bluePower)-(input.teamStrengthRed??input.redPower);s.championGap=input.bluePower-input.redPower-s.powerGap;
  s.macros=[macroProfile(blue,input.compositionBlue,input.blueStrategy),macroProfile(red,input.compositionRed,input.redStrategy)];
  const rng=()=>draw(s,external),delay=()=>.3+rng()*1.4+(1-(s.macros[0].objective+s.macros[1].objective)/2)*.8;
  s.timers={dragon:5+delay(),grubs:input.objectiveEra===2022?null:8+delay(),herald:null,baron:20+delay(),elder:null};s.nextMacro=2.4+rng()*1.3;
  initializeObjectives(s,rng);initializeRift(s);initializeBounties(s);s.respawnAt={};initializeEconomy(s);
- const matchup=compositionMatchup(input.compositionBlue,input.compositionRed,0);s.initialBlueProbability=battleProbability({powerGap:s.powerGap,championGap:s.championGap,compositionGap:matchup.gap});
+ const matchup=compositionMatchup(input.compositionBlue,input.compositionRed,0,'teamfight',{synergies:version>=12});s.initialBlueProbability=battleProbability({powerGap:s.powerGap,championGap:s.championGap,compositionGap:matchup.gap});
  record(s,{kind:'opening',title:'라인 배치'});return s;
 }
 function combatEstimate(s,minute,kind,roles=null,execution=0){
- const [blue,red]=s.teams,lead=s.gold[blue]-s.gold[red],matchup=compositionMatchup(comp(s,blue),comp(s,red),minute,kind,{blueStats:s.stats.filter(p=>p.team===blue),redStats:s.stats.filter(p=>p.team===red),roles});
+ const [blue,red]=s.teams,lead=s.gold[blue]-s.gold[red];
+ const blueStats=s.stats.filter(p=>p.team===blue),redStats=s.stats.filter(p=>p.team===red);
+ const options={blueStats,redStats,roles,synergies:s.version>=12};
+ if(options.synergies){
+  const absent=players=>players.filter(p=>(s.respawnAt[p.player]??0)>minute).map(p=>p.champion);
+  options.blueAbsent=absent(blueStats);options.redAbsent=absent(redStats);
+ }
+ const matchup=compositionMatchup(comp(s,blue),comp(s,red),minute,kind,options);
  const strategy=(plan)=>plan==='early'?clamp((18-minute)/12,-.4,1)*1.4:plan==='late'?clamp((minute-16)/18,-.5,1)*1.4:0;
  const effects=[objectivePower(s,blue,minute,kind,roles),objectivePower(s,red,minute,kind,roles)],buffGap=effects[0].total-effects[1].total;
  const scaleGap=comp(s,blue)&&comp(s,red)?0:((s.input.scaleBlue??0)-(s.input.scaleRed??0))*.9;
@@ -88,6 +97,13 @@ function battle(s,kind,location,roles,rng){
  markBusy(s,[...pools[blue],...pools[red]],s.clock+.18);loseBuffsOnDeath(s,kills.map(k=>k.victim));s.momentum[winner]++;s.momentum[loser]=0;
  const info={combatTeam:winner,leadBefore:before,blueWinProbability:c.probability,goldWeight:c.factors.goldWeight,compositionGap:c.matchup.gap,teamStrengthGap:s.powerGap,bounty,championPhaseGap:c.matchup.phaseGap,championFormGap:c.matchup.formGap,objectiveBuffGap:c.effects[0].total-c.effects[1].total,visionFightGap:c.visionGap,elderExecutions:kills.filter(k=>k.elderExecute).length};
  if(c.matchup.driver){const p=c.matchup.driver;info.championFormImpact=[p.side,p.champion,p.k,p.d,p.a,Math.round(p.performance*100)/100];}
+ if(s.version>=12){
+  const strongest=[
+   [blue,c.matchup.blueCombos?.matches[0]],
+   [red,c.matchup.redCombos?.matches[0]]
+  ].filter(([,combo])=>combo).map(([team,combo])=>({team,key:combo.key,label:combo.label}));
+  if(strongest.length)info.championSynergies=strongest;
+ }
  return {winner,loser,kills,bounty,winnerKills:wins,dead:kills.map(k=>k.victim),info};
 }
 function objectiveRoles(s,kind){if(!['grubs','herald'].includes(kind))return null;return(s.macros[0].vision+s.macros[1].vision)/2>.72?['TOP','JGL','MID','SUP']:['TOP','JGL','MID'];}
@@ -210,11 +226,11 @@ export function advanceMatch(s,{controlledTeam=null,action=null,auto=false,maxEv
 }
 export function matchOutcome(s){
  if(s.version===10)return legacyV10.matchOutcome(s);if(s.version===9)return legacyV9.matchOutcome(s);if(s.version===5)return legacyV5.matchOutcome(s);if(s.version===6)return legacyV6.matchOutcome(s);if(s.version===7)return legacyV7.matchOutcome(s);if(s.version===8)return legacyV8.matchOutcome(s);
- if(!s.finished)throw Error('경기가 아직 끝나지 않았습니다.');return{winner:s.winner,loser:enemy(s,s.winner),duration:s.clock,events:s.events,stats:s.stats,initialBlueProbability:s.initialBlueProbability,finalGold:{...s.gold},finalObjectives:{dragons:{...s.dragons},grubs:{...s.grubs},heralds:{...s.heralds},barons:{...s.barons},elders:{...s.elders}},comeback:{winnerMaxDeficit:Math.round(-s.minLead[s.winner])||0,leadChanges:s.leadChanges,finalLead:s.gold[s.teams[0]]-s.gold[s.teams[1]]},decisionOverrides:s.decisions,model:SIMULATION_MODEL};
+ if(!s.finished)throw Error('경기가 아직 끝나지 않았습니다.');return{winner:s.winner,loser:enemy(s,s.winner),duration:s.clock,events:s.events,stats:s.stats,initialBlueProbability:s.initialBlueProbability,finalGold:{...s.gold},finalObjectives:{dragons:{...s.dragons},grubs:{...s.grubs},heralds:{...s.heralds},barons:{...s.barons},elders:{...s.elders}},comeback:{winnerMaxDeficit:Math.round(-s.minLead[s.winner])||0,leadChanges:s.leadChanges,finalLead:s.gold[s.teams[0]]-s.gold[s.teams[1]]},decisionOverrides:s.decisions,model:s.version===11?'event-v11':SIMULATION_MODEL};
 }
 export function upgradeMatchState(s){
  if(s.version===8||s.version===9)legacyV10.upgradeMatchState(s);if(s.version!==10)return s;
- s.version=11;s.input.model=SIMULATION_MODEL;s.input.upgradeFrom10AtEventCount??=s.events.length;s.lastClosingAttempt={};return s;
+ s.version=11;s.input.model='event-v11';s.input.upgradeFrom10AtEventCount??=s.events.length;s.lastClosingAttempt={};return s;
 }
 function advancePrefix(engine,s,count,rng){for(let guard=0;s.events.length<count&&guard<1500;guard++)engine.advanceMatch(s,{controlledTeam:s.input.blue,action:s.pending?'auto':null,maxEvents:1},rng);if(s.events.length!==count||s.finished)throw Error('이전 경기 진행 지점을 복원하지 못했습니다.');return s;}
 export function simulateMatch(input,rng){
@@ -228,4 +244,4 @@ export function simulateMatch(input,rng){
  }else s=createMatchState(input,0,rng);
  advanceMatch(s,{auto:true},rng);return matchOutcome(s);
 }
-export function replayMatch(input){return input.model===SIMULATION_MODEL?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}
+export function replayMatch(input){return (input.model===SIMULATION_MODEL||input.model==='event-v11')?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}

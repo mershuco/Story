@@ -29,6 +29,7 @@ function restore(raw){const s=JSON.parse(raw);if(![1,2].includes(s.version)||!s.
 function activateProfile(id='season-2026'){if(!profiles[id])throw Error('해당 시즌 데이터가 없습니다.');data=profiles[id];E.configure(data);}
 function restoredView(s){return s.activeMatch||ui.restoredLive?'viewer':s.activeDraft?'draft':'home';}
 function loadState(s){
+ ui.draftPanelKey=null;
  const id=s.dataProfile??'season-2022';activateProfile(id);E.migrateSeasonFormat(s);ui.restoredLive=!!s.activeMatch;
  E.migrateDraft(s.activeDraft);if(s.activeDraft?.step===20)E.prepareAssignments(s,s.activeDraft);
  if(s.activeMatch){s.viewing={matchId:s.activeMatch.matchId,setIndex:s.matches.find(m=>m.id===s.activeMatch.matchId).sets.length};E.resumeLiveMatch(s);ui.viewerIndex=s.activeMatch?s.activeMatch.simulation.events.length-1:999;ui.sceneProgress=1;ui.replay=false;}
@@ -47,6 +48,11 @@ const navItems=[['home','home','대시보드'],['squad','users','선수단'],['t
 function presentationContext(){return {E,data,state,ui,nav,t,esc,btn,badge,icon,img,teamIcon,teamName,role,fmtDate,topChampions,viewerData,timelineForSet};}
 function shell(body){document.documentElement.style.setProperty('--team',t(state.myTeam).color);app.innerHTML=shellMarkup(presentationContext(),body);}
 function render(){
+ const draft=state?.activeDraft;
+ const panelKey=draft?`${draft.matchId}:${draft.set}`:null;
+ if(panelKey!==ui.draftPanelKey){
+  Object.assign(ui,{draftPanelKey:panelKey,draftMetaOpen:false,draftSynergyOpen:false,draftSynergyChampion:'',draftSynergyMode:'skills',draftSynergyPage:0});
+ }
  const draftPoolScroll=nav==='draft'?$('.draft-pool .champ-grid')?.scrollTop:null,metaLeft=nav==='draft'?$('.meta-lanes')?.scrollLeft:null;
  const draftScroll=nav==='draft'&&document.body.dataset.screen==='draft'?$('.work-sheet')?.scrollTop:null;
  if(state&&nav==='viewer'&&document.body.dataset.screen==='viewer'&&refreshViewer(app,viewerView(),()=>paintScene(presentationContext())))return;
@@ -169,8 +175,11 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-act
  case 'upgrade':E.upgrade(state,id);save();render();toast('구단 투자를 완료했습니다.');break;
  case 'market-role':ui.marketRole=id;render();break;
  case 'codex-role':ui.codexRole=id;render();break;
- case 'draft-meta-toggle':ui.draftMetaOpen=ui.draftMetaOpen===false;render();break;
- case 'draft-meta-mode':ui.draftMetaMode=id;render();break;
+ case 'draft-meta-toggle':ui.draftMetaOpen=!ui.draftMetaOpen;render();break;
+ case 'draft-meta-synergy-toggle':ui.draftSynergyOpen=!ui.draftSynergyOpen;render();break;
+ case 'draft-meta-synergy-mode':ui.draftSynergyMode=id;ui.draftSynergyPage=0;render();break;
+ case 'draft-meta-synergy-page':ui.draftSynergyPage=Number(id);render();break;
+ case 'draft-meta-mode':ui.draftMetaMode=id;ui.draftSynergyPage=0;render();break;
  case 'draft-meta-role':ui.draftMetaRole=id;render();break;
  case 'draft-meta-available':ui.draftMetaAvailable=!ui.draftMetaAvailable;render();break;
  case 'draft-role':ui.draftRole=id;render();break;
@@ -214,7 +223,7 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-act
  case 'player-csv':{const p=state.players[id];const rows=[`champion,name,score,${data.season.masteryYear}games,${data.season.masteryYear}wins,confidence,lastPlayed`,...data.champions.map(c=>{const x=E.masteryEvidence(id,c.id);return[c.id,c.name,Math.round(E.mastery(state,id,c.id)),x.games,x.wins,x.confidence,x.lastPlayed??''].join(',');})];download(`${p.name}-champion-mastery.csv`,'\ufeff'+rows.join('\n'),'text/csv');break;}
  }
  }catch(error){toast(error.message||'작업을 완료하지 못했습니다.',true);}});
-document.addEventListener('change',async e=>{const el=e.target;try{if(el.dataset.change==='trade-offer'){tradeModal(el.dataset.id,el.value);$('#trade-outgoing')?.focus();}if(el.dataset.change==='program'){state.trainingPlan[Number(el.dataset.index)]=el.value;save();toast('훈련 계획을 저장했습니다.');}if(el.dataset.change==='focus'){state.focus[el.dataset.id]=el.value;save();toast('집중 챔피언을 설정했습니다.');}if(el.dataset.change==='assign-champion'&&el.value){E.assignChampion(state.activeDraft,el.dataset.side,el.value,el.dataset.role);save();render();}if(el.dataset.change==='swap-role'){E.swapAssignments(state.activeDraft,el.dataset.side,el.dataset.role,el.value);save();render();}if(el.id==='mastery-observed'){ui.masteryObserved=el.checked;playerModal(ui.player);}if(el.id==='save-file'&&el.files[0]){state=loadState(restore(await el.files[0].text()));save();nav=restoredView(state);render();toast('세이브 파일을 불러왔습니다.');}}catch(error){toast(error.message,true);}});
+document.addEventListener('change',async e=>{const el=e.target;try{if(el.dataset.change==='draft-synergy-champion'){ui.draftSynergyChampion=el.value;ui.draftSynergyPage=0;render();$('[data-change=draft-synergy-champion]')?.focus({preventScroll:true});}if(el.dataset.change==='trade-offer'){tradeModal(el.dataset.id,el.value);$('#trade-outgoing')?.focus();}if(el.dataset.change==='program'){state.trainingPlan[Number(el.dataset.index)]=el.value;save();toast('훈련 계획을 저장했습니다.');}if(el.dataset.change==='focus'){state.focus[el.dataset.id]=el.value;save();toast('집중 챔피언을 설정했습니다.');}if(el.dataset.change==='assign-champion'&&el.value){E.assignChampion(state.activeDraft,el.dataset.side,el.value,el.dataset.role);save();render();}if(el.dataset.change==='swap-role'){E.swapAssignments(state.activeDraft,el.dataset.side,el.dataset.role,el.value);save();render();}if(el.id==='mastery-observed'){ui.masteryObserved=el.checked;playerModal(ui.player);}if(el.id==='save-file'&&el.files[0]){state=loadState(restore(await el.files[0].text()));save();nav=restoredView(state);render();toast('세이브 파일을 불러왔습니다.');}}catch(error){toast(error.message,true);}});
 function filterInput(id,value,key,callback){ui[key]=value;const pos=$('#'+id)?.selectionStart;callback();const next=$('#'+id);next?.focus();if(next&&pos!==null)try{next.setSelectionRange(pos,pos);}catch{}}
 document.addEventListener('input',e=>{const el=e.target;if(el.id==='market-search')filterInput(el.id,el.value,'marketSearch',render);if(el.id==='codex-search')filterInput(el.id,el.value,'codexSearch',render);if(el.id==='draft-search')filterInput(el.id,el.value,'draftSearch',render);if(el.id==='mastery-search')filterInput(el.id,el.value,'masterySearch',()=>playerModal(ui.player));});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if(e.key==='Tab'&&$('.modal')){const focusables=[...$('.modal').querySelectorAll('button,input,select,a[href]')].filter(el=>!el.disabled);const first=focusables[0],last=focusables.at(-1);if(e.shiftKey&&document.activeElement===first){last.focus();e.preventDefault();}else if(!e.shiftKey&&document.activeElement===last){first.focus();e.preventDefault();}}});

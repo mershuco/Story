@@ -1,3 +1,4 @@
+import {activeChampionSynergies} from './champion-synergy.js';
 import {teamChampionCombat,phaseStrength} from './champion-combat.js';
 // Game estimates of team composition, not official champion win-rate statistics.
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -29,7 +30,7 @@ export function compositionQuality(p,minute=20,kind='teamfight'){
  const front=clamp(p.frontline,0,2),engage=clamp(p.engage,0,1.5),peel=clamp(p.peel,0,1.5),dps=clamp(p.dps,0,1.8);
  return .7*p.damageBalance+.55*front+.5*engage+.45*peel+.55*dps+.25*clamp(p.cc,0,2)+.22*peel*dps+(kind==='siege'?.4*p.poke:0);
 }
-export function compositionMatchup(blue,red,minute=20,kind='teamfight',{blueStats=[],redStats=[],roles=null}={}){
+export function compositionMatchup(blue,red,minute=20,kind='teamfight',{blueStats=[],redStats=[],roles=null,synergies=false,blueAbsent=[],redAbsent=[]}={}){
  if(!blue||!red)return {gap:0,blueScore:0,redScore:0,phaseGap:0,formGap:0,driver:null};
  const versus=(own,enemy)=>.28*Math.min(own.engage,2)*Math.min(enemy.poke,2)+.3*Math.min(own.peel,2)*Math.min(enemy.dive,2)+.25*Math.min(own.poke,2)*clamp(1.5-enemy.frontline,0,1.5)+.32*Math.min(own.frontline,2)*(1-enemy.damageBalance);
  // Small fights use the champions actually present; an absent late-game carry
@@ -40,7 +41,13 @@ export function compositionMatchup(blue,red,minute=20,kind='teamfight',{blueStat
  const phaseGap=a.neutral-b.neutral,formGap=a.performance-b.performance;
  const drivers=[...a.players.map(p=>({...p,side:'blue'})),...b.players.map(p=>({...p,side:'red'}))].sort((a,b)=>Math.abs(b.performance)-Math.abs(a.performance)||a.champion.localeCompare(b.champion));
  const driver=drivers.find(p=>Math.abs(p.performance)>=.08)??null;
- return {gap:structureA-structureB+phaseGap*2.6+formGap*5,blueScore:structureA+a.neutral*2.6+a.performance*5,redScore:structureB+b.neutral*2.6+b.performance*5,phaseGap,formGap,driver};
+ const blueScore=structureA+a.neutral*2.6+a.performance*5,redScore=structureB+b.neutral*2.6+b.performance*5;
+ const gap=structureA-structureB+phaseGap*2.6+formGap*5;
+ if(!synergies)return {gap,blueScore,redScore,phaseGap,formGap,driver};
+ const blueCombos=activeChampionSynergies(blue.members,minute,kind,{roles,absent:blueAbsent});
+ const redCombos=activeChampionSynergies(red.members,minute,kind,{roles,absent:redAbsent});
+ return {gap:gap+blueCombos.score-redCombos.score,blueScore:blueScore+blueCombos.score,
+  redScore:redScore+redCombos.score,phaseGap,formGap,driver,blueCombos,redCombos};
 }
 export function compositionLabels(p){
  const delta=p.members?.length?p.members.reduce((sum,[id])=>sum+phaseStrength(id,45)-phaseStrength(id,8),0)/p.members.length:0;

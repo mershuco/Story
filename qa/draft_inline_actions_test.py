@@ -9,7 +9,7 @@ with sync_playwright() as p:
  q.add_init_script("const s=sessionStorage.getItem('_inline_save');if(s){localStorage.setItem('lck-manager-save-v1',s);sessionStorage.removeItem('_inline_save');}")
  q.goto(report['url']);q.locator('[data-action=new-game]').click();q.locator('[data-action=start-season]').click();q.locator('[data-action=next-match]').first.click();q.locator('[data-action=prepare]').first.click();q.locator('[data-action=begin-draft]').click();q.locator('.draft-meta-panel').wait_for()
  def saved():return json.loads(q.evaluate("localStorage.getItem('lck-manager-save-v1')"))
- def load(s):q.evaluate("s=>sessionStorage.setItem('_inline_save',JSON.stringify(s))",s);q.reload();q.locator('.draft-meta-panel').wait_for()
+ def load(s):q.evaluate("s=>sessionStorage.setItem('_inline_save',JSON.stringify(s))",s);q.reload();q.locator('.draft-meta-panel').wait_for();q.locator('[data-action=draft-meta-toggle]').click()
  def verify(label,ancestor):
   assert q.locator('[data-action=draft-lock]').count()==1
   button=q.locator('[data-action=draft-lock]');assert button.inner_text()==label;assert q.locator('.champion-spotlight [data-action=draft-lock]').count()==0

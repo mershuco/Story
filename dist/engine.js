@@ -473,7 +473,7 @@ function compositionPower(s,teamId,picks) {
 }
 export function draftComposition(d){
  const blue=compositionProfile(d.picks.blue,DB.champMap),red=compositionProfile(d.picks.red,DB.champMap);
- const comparison=(minute,kind='teamfight',roles=null)=>battleProbability({minute,compositionGap:compositionMatchup(blue,red,minute,kind,{roles}).gap});
+ const comparison=(minute,kind='teamfight',roles=null)=>battleProbability({minute,compositionGap:compositionMatchup(blue,red,minute,kind,{roles,synergies:true}).gap});
  const scenarios=[{label:'초반 상체 3:3',minute:8,kind:'skirmish',roles:['TOP','JGL','MID']},{label:'초반 5:5 한타',minute:12,kind:'teamfight'},{label:'후반 상체 3:3',minute:40,kind:'skirmish',roles:['TOP','JGL','MID']},{label:'극후반 5:5 한타',minute:45,kind:'teamfight'}].map(x=>({...x,blueChance:comparison(x.minute,x.kind,x.roles)}));
  return {blue,red,blueLabels:compositionLabels(blue),redLabels:compositionLabels(red),blueChance20:comparison(20),blueChance45:comparison(45),scenarios};
 }
@@ -538,8 +538,8 @@ export function resumeLiveMatch(s){
 export function commitOwnDraft(s) {const d=s.activeDraft;if(!d)throw Error('진행 중인 밴픽이 없습니다.');const m=s.matches.find(m=>m.id===d.matchId);const set=resolveDraft(s,m,d);s.activeDraft=null;s.viewing={matchId:m.id,setIndex:m.sets.length-1};return set;}
 export function simulateSeries(s,m) {for(let guard=0;guard<5&&m.status!=='done';guard++){const d=completeDraft(s,newDraft(s,m));autoAssignDraft(s,d);confirmDraftAssignments(d);resolveDraft(s,m,d);}return m;}
 export function autoOwnSeries(s,matchId) {if(s.activeMatch){if(s.activeMatch.matchId!==matchId)throw Error('진행 중인 다른 경기를 먼저 마쳐 주세요.');advanceOwnMatch(s,'auto',true);}const m=s.matches.find(m=>m.id===matchId);if(!m||!m.teams.includes(s.myTeam)||m.date>s.date)throw Error('진행할 수 없는 경기입니다.');if(s.activeDraft){completeDraft(s,s.activeDraft);autoAssignDraft(s,s.activeDraft);confirmDraftAssignments(s.activeDraft);commitOwnDraft(s);}simulateSeries(s,m);s.viewing={matchId:m.id,setIndex:m.sets.length-1};return m;}
-// Completed v5/v6/v7 logs are reproducible from seed + recorded decisions. Keep live
+// Completed modern logs are reproducible from seed + recorded decisions. Keep live
 // prefixes intact; never mutate the in-memory match while writing a save.
-export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11'].includes(this.simulationReplay?.model)?[]:value;});}
+export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12'].includes(this.simulationReplay?.model)?[]:value;});}
 
 export function migrateSeasonFormat(s){return DB.season?.competitionFormat===2026?migrate2026SecondHalf(s):false;}
