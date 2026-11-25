@@ -9,3 +9,33 @@ export function refreshViewer(app,markup,paint){
  host.scrollTop=top;host.scrollLeft=left;const timeline=view.querySelector('.scene-timeline');if(timeline)timeline.scrollLeft=timelineLeft;
  return true;
 }
+
+// Budget from the visible browser viewport, including Safari toolbar changes.
+let observedScreen,observer,frame;
+function queueViewerFit(){if(!frame)frame=requestAnimationFrame(()=>{frame=null;fitViewer();});}
+function fitViewer(){
+ const screen=document.querySelector('.spectator-screen'),host=screen?.closest('.match-sheet');if(!screen||!host)return;
+ const root=screen.parentElement,style=getComputedStyle(root),rect=host.getBoundingClientRect();
+ const viewport=window.visualViewport,visibleBottom=viewport?viewport.offsetTop+viewport.height:innerHeight;
+ const height=Math.max(180,Math.min(host.clientHeight,visibleBottom-rect.top-2)-parseFloat(style.paddingTop)-parseFloat(style.paddingBottom));
+ screen.style.height=height+'px';
+ const board=screen.querySelector('.spectator-layout'),mobile=matchMedia('(max-width:680px)').matches;
+ const fixed=[...screen.children].filter(el=>el!==board).reduce((n,el)=>n+el.getBoundingClientRect().height,0);
+ const gap=parseFloat(getComputedStyle(screen).gap)||0,gaps=([...screen.children].filter(el=>getComputedStyle(el).display!=='none').length-1)*gap;
+ const side=mobile?0:screen.querySelector('.spectator-team').getBoundingClientRect().width;
+ const roster=mobile?parseFloat(getComputedStyle(screen).getPropertyValue('--roster-height'))+gap:0;
+ const size=Math.floor(Math.max(100,Math.min(screen.clientWidth-(mobile?0:side*2+16),height-fixed-gaps-roster)));
+ screen.style.setProperty('--map-size',size+'px');screen.style.setProperty('--board-height',(size+roster)+'px');
+ screen.classList.toggle('is-short',size<370);screen.dataset.fitted='true';
+}
+export function observeViewerLayout(){
+ const screen=document.querySelector('.spectator-screen');if(!screen||screen===observedScreen)return;
+ observedScreen=screen;observer?.disconnect();observer=new ResizeObserver(queueViewerFit);
+ observer.observe(screen.closest('.match-sheet'));
+ for(const el of screen.children)if(!el.classList.contains('spectator-layout'))observer.observe(el);
+ fitViewer();
+}
+if(typeof window!=='undefined'){
+ window.addEventListener('resize',queueViewerFit);window.visualViewport?.addEventListener('resize',queueViewerFit);
+ document.fonts?.ready.then(queueViewerFit);
+}

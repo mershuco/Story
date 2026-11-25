@@ -38,7 +38,7 @@ with sync_playwright() as p:
   assert bounds['commentary']['y']>=max(bounds[x]['bottom'] for x in ['map','blue','red'])-1,bounds
   if width>680:
    assert bounds['blue']['right']<=bounds['map']['x'] and bounds['map']['right']<=bounds['red']['x'],bounds
-   assert bounds['map']['w']>width*.48,bounds
+   assert bounds['map']['w']>=200,bounds
   assert bounds['board']['y']-bounds['score']['bottom']<90,bounds
   for team in [blue,red]:
    amount=q.locator(f'[data-team-gold="{team}"]').bounding_box();diff=q.locator(f'[data-team-gold-diff="{team}"]')
@@ -48,7 +48,7 @@ with sync_playwright() as p:
   assert all(q.locator(f'[data-live-player] .{cls}').count()==10 for cls in ['live-kda','live-cs','live-player-gold'])
   assert q.locator('[data-live-player] .live-cs').first.is_visible()
   q.screenshot(path=str(ROOT/f'2026-broadcast-clean-{width}.png'),full_page=True)
- report['checks'].append('1440/1280/1024/390px: map fills center, square, narration and killfeed outside map; leading-only gold beneath total; no horizontal overflow')
+ report['checks'].append('1440/1280/1024/390px: fitted square map, narration beneath map, leading-only gold beneath total; no horizontal overflow')
  # Controlled gold reversal and equality must move or hide the label.
  for lead in [-14900,0]:
   changed=json.loads(json.dumps(fixture['state']));events=changed['activeMatch']['simulation']['events']

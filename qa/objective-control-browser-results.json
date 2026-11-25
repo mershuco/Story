@@ -3,7 +3,7 @@
   "checks": [
     "recommendation cards and initial recommendation removed; >=160 champions in a full-width grid; desktop/mobile fit",
     "real Riot minimap and structure/objective images load, purple grub icons, only enemy reachable towers outlined for trailing team; Baron/Elder owner timers persist after reload",
-    "1440/1280/1024/390px: map fills center, square, narration and killfeed outside map; leading-only gold beneath total; no horizontal overflow",
+    "1440/1280/1024/390px: fitted square map, narration beneath map, leading-only gold beneath total; no horizontal overflow",
     "destroyed bounty tower pays actual base+bonus once and moves target outline forward; both ownership cards remain visible at 390px; removed descriptive panels and leader-only +14.9k gold display verified"
   ],
   "errors": []

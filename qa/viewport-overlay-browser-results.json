@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:4173",
+  "checks": [
+    "1440x900: header, all 10 players, narration, playback and timeline fit; map dialog and all actions stay inside the map; kill portraits remain 20px",
+    "1280x720: header, all 10 players, narration, playback and timeline fit; map dialog and all actions stay inside the map; kill portraits remain 20px",
+    "1024x768: header, all 10 players, narration, playback and timeline fit; map dialog and all actions stay inside the map; kill portraits remain 20px",
+    "1024x650: header, all 10 players, narration, playback and timeline fit; map dialog and all actions stay inside the map; kill portraits remain 20px",
+    "1180x640: header, all 10 players, narration, playback and timeline fit; map dialog and all actions stay inside the map; kill portraits remain 20px",
+    "390x844: header, all 10 players, narration, playback and timeline fit; map dialog and all actions stay inside the map; kill portraits remain 20px",
+    "390x700: header, all 10 players, narration, playback and timeline fit; map dialog and all actions stay inside the map; kill portraits remain 20px",
+    "reload preserves pending RNG; details scroll independently, action buttons remain usable and trade dismisses the overlay",
+    "completed set keeps continuation and timeline in the first screen, detailed archived stats stay below"
+  ],
+  "errors": []
+}
