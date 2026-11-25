@@ -38,7 +38,7 @@ with sync_playwright() as p:
  if after.get('activeMatch'):
   z=after['activeMatch']['simulation'];opp=next(id for id in z['teams'] if id!=after['myTeam']);assert z['winner'] is None
   if q.locator('.objective-decision').count():assert z['pending'] and z['gold'][opp]-z['gold'][after['myTeam']]>=4500
- load(q,initial);q.locator('.objective-decision').wait_for();q.locator('[data-action=match-auto]').click();s=saved(q);assert s['activeMatch'] is None;m=next(m for m in s['matches'] if m['id']==s['viewing']['matchId']);z=m['sets'][-1];assert z['simulationReplay']['model']=='event-v12';assert len(z['objectiveTotals'])==10;report['checks'].append('390px win-odds dialog, one-decision auto and remaining-set auto preserve the crisis threshold and complete the match')
+ load(q,initial);q.locator('.objective-decision').wait_for();q.locator('[data-action=match-auto]').click();s=saved(q);assert s['activeMatch'] is None;m=next(m for m in s['matches'] if m['id']==s['viewing']['matchId']);z=m['sets'][-1];assert z['simulationReplay']['model']=='event-v13';assert len(z['objectiveTotals'])==10;report['checks'].append('390px win-odds dialog, one-decision auto and remaining-set auto preserve the crisis threshold and complete the match')
  q.wait_for_function("document.querySelector('.live-scoreboard .grub-slot.earned') || document.querySelector('.live-scoreboard [data-drake-icons] img')")
  assert q.locator('[data-grubs],[data-dragons],.side-objectives,.scoreboard-objectives').count()==0
  for side,index in [('blue',0),('red',1)]:

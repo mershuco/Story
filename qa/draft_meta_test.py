@@ -16,6 +16,7 @@ with sync_playwright() as p:
  q.locator('[data-change=draft-synergy-champion]').select_option('Milio')
  pair=synergy.locator('[data-synergy-key="Lucian+Milio"]')
  assert '빛의 사수' in pair.inner_text() and '4세트' in pair.inner_text()
+ assert '4~15분 · 바텀 교전·용' in pair.locator('.synergy-spike').inner_text()
  pair.locator('[data-action=draft-pick][data-id=Lucian]').click()
  confirm=pair.locator('[data-action=draft-lock]')
  assert confirm.is_enabled() and confirm.inner_text()=='밴' and saved()==before

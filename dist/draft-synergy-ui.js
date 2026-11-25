@@ -1,3 +1,4 @@
+import {synergySpikeLabel} from './champion-synergy.js';
 import {draftConfirmMarkup} from './draft-confirm.js';
 import {draftSynergies} from './draft-synergies.js';
 
@@ -37,7 +38,7 @@ export function draftSynergyMarkup(c, d, view) {
   return `<article class="synergy-card" data-synergy-key="${pair.key}">
    <div class="synergy-champions">${pair.champions.map(id=>champion(id,origin)).join('')}</div>
    <div class="synergy-explanation"><strong>${esc(pair.skill?.label??'같은 팀 출전 기록')}</strong>
-   ${pair.skill?`<p>${esc(pair.skill.description)}</p>`:''}
+   ${pair.skill?`<p>${esc(pair.skill.description)}</p><p class="synergy-spike">강한 구간 · ${esc(synergySpikeLabel(pair.skill))}</p>`:''}
    <small>${esc(view.label)} ${pair.games}세트 · ${pair.wins}승${pair.have===2?' · 조합 완성':pair.have===1?' · 한 챔피언 확보':''}</small></div>
   </article>`;
  };

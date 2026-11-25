@@ -59,13 +59,33 @@ test('requested synergies activate with both champions and the right fight timin
  const comp=[['Camille','TOP'],['Vi','JGL'],['Galio','MID'],['Yasuo','BOT'],['Rell','SUP']];
  const result=activeChampionSynergies(comp,30,'teamfight');
  assert(result.matches.length>3);
- assert.equal(result.score,2.2);
+ assert.equal(result.score,3.3);
  assert.deepEqual(activeChampionSynergies([...comp].reverse(),30,'teamfight'),result);
+});
+
+test('each duo gains additional fight odds only during its timing and fight context', () => {
+ const cases = [
+  { pair:[['Lucian','BOT'],['Milio','SUP']], time:8, late:24, kind:'skirmish', other:'baron', roles:['BOT','SUP','JGL'] },
+  { pair:[['Ahri','MID'],['Vi','JGL']], time:12, late:37, kind:'gank', other:'siege', roles },
+  { pair:[['Camille','TOP'],['Galio','MID']], time:20, late:40, kind:'teamfight', other:'gank', roles },
+  { pair:[['Ashe','BOT'],['Seraphine','SUP']], time:18, late:36, kind:'dragon', other:'siege', roles },
+  { pair:[['Jinx','BOT'],['Lulu','SUP']], time:31, late:15, kind:'teamfight', other:'gank', roles }
+ ];
+ for (const {pair,time,late,kind,other,roles:availableRoles} of cases) {
+  const members = [...pair,...availableRoles.filter(r=>!pair.some(([,role])=>role===r)).map(r=>['unknown-'+r,r])];
+  const extra = (minute,fight,options={}) =>
+   activeChampionSynergies(members,minute,fight,{roles:availableRoles,...options}).score -
+   activeChampionSynergies(members,minute,fight,{roles:availableRoles,...options,spikes:false}).score;
+  assert(extra(time,kind)>.7,pair);
+  assert.equal(extra(late,kind),0);
+  assert.equal(extra(time,other),0);
+  assert.equal(extra(time,kind,{absent:[pair[0][0]]}),0);
+ }
 });
 
 test('new match odds and recorded combat use the bonuses, with exact old replay compatibility', () => {
  const current=createMatchState({...input,model:SIMULATION_MODEL},17);
- const legacy=createMatchState({...input,model:'event-v11'},17);
+ const legacy=createMatchState({...input,model:'event-v12'},17);
  for(const state of [current,legacy]){
   state.clock=10;
   state.pending={kind:'dragon',minute:10,roles:['JGL','MID','BOT','SUP']};
@@ -77,9 +97,12 @@ test('new match odds and recorded combat use the bonuses, with exact old replay 
  const old=replayMatch({...input,model:'event-v11'});
  assert.equal(createHash('sha256').update(JSON.stringify(old)).digest('hex'),
   'cd162f32593d563b92b2c2a87bd35db85c8f0e08f81485f3de3405656e1a1967');
+ const oldSynergies=replayMatch({...input,model:'event-v12'});
+ assert.equal(createHash('sha256').update(JSON.stringify(oldSynergies)).digest('hex'),
+  'b3b04d5405c782b643360f3bc079ed84837db849cb962870450b8a8a5ee6f275');
  const result=replayMatch({...input,model:SIMULATION_MODEL});
- assert.equal(result.model,'event-v12');
+ assert.equal(result.model,'event-v13');
  assert(result.events.some(event=>event.championSynergies?.some(combo=>combo.key===synergyKey('Ahri','Vi'))));
- assert(result.events.some(event=>event.championSynergies?.length&&event.text.includes('조합 연계')));
+ assert(result.events.some(event=>event.championSynergies?.some(combo=>combo.powerSpike)&&event.text.includes('강한 구간')));
  assert.deepEqual(replayMatch({...input,model:SIMULATION_MODEL}),result);
 });

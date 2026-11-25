@@ -81,18 +81,74 @@ function timing(synergy, minute, kind, pairRoles, participantCount) {
  }
 }
 
-export function activeChampionSynergies(members, minute, kind, { roles = null, absent = [] } = {}) {
+// Minutes approximate the game's spell and item progression for each interaction.
+const spikeProfiles = {
+ lane: {start:4,end:15,context:'bottom',strength:1, label:'바텀 교전·용'},
+ laneControl: {start:7,end:25,context:'bottomControl',strength:.95,label:'바텀 교전·오브젝트'},
+ protect: {start:26,end:Infinity,context:'full',strength:1,label:'후반 한타'},
+ pick: {start:5,end:17,context:'catch',strength:.90,label:'갱킹·소규모 교전·용'},
+ pickUltimate: {start:8,end:24,context:'catch',strength:1.05,label:'갱킹·소규모 교전·용'},
+ bond: {start:8,end:23,context:'pact',strength:.95,label:'바텀 교전·오브젝트'},
+ engage: {start:15,end:32,context:'full',strength:1,label:'한타·오브젝트'},
+ poke: {start:12,end:28,context:'setup',strength:.85,label:'오브젝트 교전·공성'},
+ follow: {start:12,end:29,context:'full',strength:.85,label:'한타·오브젝트'}
+};
+const pairSpikes = {
+ 'Camille+Galio': {start:12,end:28,strength:1.1},
+ 'Ashe+Seraphine': {start:8,end:25,strength:1.05},
+ 'Rakan+Xayah': {start:11,end:27,strength:1.05},
+ 'JarvanIV+Rumble': {start:10,end:27,strength:1.1},
+ 'Milio+Smolder': {start:30,end:Infinity,strength:1.08},
+ 'Nocturne+Shen': {start:8,end:22,context:'catch',label:'갱킹·소규모 교전·용'}
+};
+
+function spikeProfile(synergy) {
+ const base = spikeProfiles[synergy.style];
+ return pairSpikes[synergy.key] ? {...base,...pairSpikes[synergy.key]} : base;
+}
+
+export function synergySpikeLabel(synergy) {
+ const {start,end,label} = spikeProfile(synergy);
+ const window = Number.isFinite(end) ? `${start}~${end}분` : `${start}분 이후`;
+ return `${window} · ${label}`;
+}
+
+function spikeBonus(synergy, minute, kind, pairRoles, participantCount) {
+ const profile = spikeProfile(synergy);
+ const small = smallFights.has(kind) || participantCount < 4;
+ const bottom = pairRoles.includes('BOT') && pairRoles.includes('SUP');
+ const objective = objectives.has(kind);
+ let relevant;
+ switch (profile.context) {
+  case 'bottom': relevant = bottom && ((small && !objective) || kind === 'dragon'); break;
+  case 'bottomControl': relevant = (bottom && small) || objective; break;
+  case 'catch': relevant = (small && !objective) || kind === 'dragon'; break;
+  case 'pact': relevant = bottom && (small || objective); break;
+  case 'setup': relevant = objective || kind === 'siege'; break;
+  default: relevant = !small;
+ }
+ if (!relevant) return 0;
+ const ramp = clamp((minute - profile.start + 2) / 2, 0, 1);
+ const fade = clamp((profile.end + 5 - minute) / 5, 0, 1);
+ return synergy.strength * profile.strength * ramp * fade;
+}
+
+export function activeChampionSynergies(members, minute, kind, { roles = null, absent = [], spikes = true } = {}) {
  const active = (members ?? []).filter(([id, role]) => (!roles || roles.includes(role)) && !absent.includes(id));
  const matches = [];
  for (let i = 0; i < active.length; i++) {
   for (let j = i + 1; j < active.length; j++) {
    const synergy = pairs.get(synergyKey(active[i][0], active[j][0]));
    if (!synergy) continue;
-   const score = synergy.strength * timing(synergy, minute, kind, [active[i][1], active[j][1]], active.length);
-   if (score > 0) matches.push({ ...synergy, score });
+   const pairRoles = [active[i][1], active[j][1]];
+   const base = synergy.strength * timing(synergy, minute, kind, pairRoles, active.length);
+   const spike = spikes ? spikeBonus(synergy, minute, kind, pairRoles, active.length) : 0;
+   if (base + spike > 0) matches.push({ ...synergy, score: base + spike, spike });
   }
  }
  matches.sort((a, b) => b.score - a.score || a.key.localeCompare(b.key));
- const score = Math.min(2.2, matches.reduce((total, match, index) => total + match.score * (index ? .45 : 1), 0));
+ const spikeTotal = matches.reduce((total, match, index) => total + match.spike * (index ? .45 : 1), 0);
+ const cap = Math.min(3.3, 2.2 + spikeTotal);
+ const score = Math.min(cap, matches.reduce((total, match, index) => total + match.score * (index ? .45 : 1), 0));
  return { score, matches };
 }
