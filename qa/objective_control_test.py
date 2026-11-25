@@ -33,7 +33,7 @@ with sync_playwright() as p:
  for width,height in [(1440,1100),(1280,800),(1024,768),(390,844)]:
   q.set_viewport_size({'width':width,'height':height});q.locator('.match-sheet').evaluate('(e)=>e.scrollTop=0')
   bounds=q.evaluate("""()=>{const r=s=>{const e=document.querySelector(s),b=e.getBoundingClientRect();return {x:b.x,y:b.y,w:b.width,h:b.height,right:b.right,bottom:b.bottom};};return {map:r('.live-rift'),center:r('.rift-center'),blue:r('.spectator-team.blue'),red:r('.spectator-team.red'),commentary:r('.broadcast-commentary'),score:r('.broadcast-scoreboard'),board:r('.spectator-layout')};}""")
-  assert abs(bounds['map']['w']-bounds['center']['w'])<=1,bounds
+  if width>680:assert abs(bounds['map']['w']-bounds['center']['w'])<=1,bounds
   assert abs(bounds['map']['w']-bounds['map']['h'])<=1,bounds
   assert bounds['commentary']['y']>=max(bounds[x]['bottom'] for x in ['map','blue','red'])-1,bounds
   if width>680:

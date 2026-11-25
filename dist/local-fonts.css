@@ -201,3 +201,78 @@
 .meta-choice .draft-inline-lock{left:4px;right:auto;bottom:3px;width:36px;font-size:10px;min-height:20px;padding:1px 2px}
 .meta-choice:has(.draft-inline-lock) .meta-champion{padding-bottom:25px}
 .meta-advice{color:#b9d7a7!important}
+
+.rift-side { display: contents; }
+
+@media (max-width: 680px) and (orientation: portrait) {
+ .spectator-screen .rift-center {
+  display: grid;
+  grid-template-columns: var(--map-size) minmax(0, 1fr);
+  column-gap: 6px;
+  width: 100%;
+  align-items: start;
+ }
+ .spectator-screen .rift-side {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 100%;
+  min-width: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+ }
+ .spectator-screen .rift-killfeed {
+  position: static;
+  max-width: none;
+  width: 100%;
+  min-height: 0;
+  align-items: stretch;
+  gap: 3px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  pointer-events: auto;
+  scrollbar-width: thin;
+ }
+ .spectator-screen .kill-entry {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto 20px minmax(0, 1fr);
+  gap: 3px;
+  padding: 3px;
+  max-width: none;
+ }
+ .spectator-screen .kill-entry strong { font-size: 10px; }
+ .spectator-screen .kill-entry > span { font-size: 9px; }
+ .spectator-screen .rift-side .power-play-strip {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 3px;
+  height: auto;
+  min-height: 0;
+ }
+ .spectator-screen .rift-side .power-play-strip:not(:has(.power-play-card:not([hidden]))),
+ .spectator-screen .rift-side .power-play-team:not(:has(.power-play-card:not([hidden]))) {
+  display: none;
+ }
+ .spectator-screen .rift-side .power-play-team {
+  flex-direction: column;
+  height: auto;
+  gap: 3px;
+ }
+ .spectator-screen .rift-side .power-play-team .power-play-card {
+  flex: 0 0 auto;
+  grid-template-columns: minmax(0, 1fr) 16px auto;
+  height: 30px;
+  padding: 2px 4px 4px;
+ }
+ .spectator-screen .rift-side .power-owner { gap: 0; }
+ .spectator-screen .rift-side .power-owner b { font-size: 10px; }
+ .spectator-screen .rift-side .power-owner small { display: block; font-size: 7px; }
+ .spectator-screen .rift-side .objective-icon { width: 16px; height: 16px; }
+ .spectator-screen .rift-side .power-time { font-size: 15px; }
+ .spectator-screen .rift-decision-overlay {
+  inset: 0;
+  width: 100%;
+  transform: none;
+ }
+}

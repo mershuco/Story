@@ -22,7 +22,15 @@ with sync_playwright() as p:
   report.setdefault('geometry',[]).append({'viewport':[width,height],'mapMin':min(widths),'mapMax':max(widths),'mapTopMin':min(positions),'mapTopMax':max(positions),'sampleCount':len(widths)})
   # Speed changes preserve scroll after removing the detail panels.
   q.locator('[data-action=viewer-play]').click();before=q.locator('.match-sheet').evaluate('(el)=>el.scrollTop');q.locator('[data-action=viewer-speed][data-speed="4"]').evaluate('(el)=>el.click()');assert abs(q.locator('.match-sheet').evaluate('(el)=>el.scrollTop')-before)<=1
-  assert q.locator('.kill-entry').count()>0;assert q.locator('.live-rift .rift-killfeed').count()==1;feed=q.locator('.rift-killfeed').bounding_box();rift=q.locator('.live-rift').bounding_box();assert rift['y']<=feed['y']<rift['y']+40;assert feed['x']>=rift['x']
+  assert q.locator('.kill-entry').count()>0
+  feed=q.locator('.rift-killfeed').bounding_box();rift=q.locator('.live-rift').bounding_box()
+  assert rift['y']<=feed['y']<rift['y']+40
+  if width<height and width<=680:
+   assert feed['x']>=rift['x']+rift['width']
+   assert abs(rift['x']-q.locator('.spectator-layout').bounding_box()['x'])<=1
+   assert feed['x']+feed['width']<=q.locator('.spectator-layout').bounding_box()['x']+q.locator('.spectator-layout').bounding_box()['width']+1
+  else:
+   assert feed['x']>=rift['x'] and feed['x']+feed['width']<=rift['x']+rift['width']
   red=q.locator('.broadcast-score-team.red').bounding_box();grubs=q.locator('.broadcast-score-team.red .score-grub-icons').bounding_box();assert grubs['x']+grubs['width']>=red['x']+red['width']-20,{'width':width,'red':red,'grubs':grubs,'styles':q.locator('.broadcast-score-team.red').evaluate('(e)=>({direction:getComputedStyle(e).direction,columns:getComputedStyle(e).gridTemplateColumns})')}
   assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');q.screenshot(path=str(ROOT/f'2026-playback-scroll-{width}.png'),full_page=True);q.locator('.match-sheet').evaluate('(el)=>el.scrollTop=0');q.screenshot(path=str(ROOT/f'2026-playback-header-{width}.png'),full_page=True)
   report['checks'].append(f'{width}px: continuous x8 Baron playback advances >=3 highlights in 1.35s; map width and top stay constant across scene transitions, same scroll container without unwanted scroll; speed changes preserve scroll; red grubs align right')
@@ -47,7 +55,11 @@ with sync_playwright() as p:
     side='blue' if index==3 else 'red'
     assert q.locator(f'[data-power-play="{side}:baron"]').is_visible() and q.locator(f'[data-power-play="{side}:elder"]').is_visible()
     boxes=q.locator(f'.power-play-team.{side} .power-play-card:not([hidden])').evaluate_all('(xs)=>xs.map(x=>{const b=x.getBoundingClientRect();return {y:b.y,bottom:b.bottom};})')
-    assert abs(boxes[0]['y']-boxes[1]['y'])<=1 and abs(boxes[0]['bottom']-boxes[1]['bottom'])<=1,boxes
+    if width<height and width<=680:
+     assert boxes[1]['y']>=boxes[0]['bottom'],boxes
+     assert q.locator(f'.rift-side .power-play-team.{side} .power-play-card:not([hidden])').count()==2
+    else:
+     assert abs(boxes[0]['y']-boxes[1]['y'])<=1 and abs(boxes[0]['bottom']-boxes[1]['bottom'])<=1,boxes
   points=q.evaluate("()=>{clearInterval(window._lateTimer);return window._lateSamples;}");widths=[x['w'] for x in points];tops=[x['y'] for x in points]
   assert max(widths)-min(widths)<=1 and max(tops)-min(tops)<=1,{'viewport':width,'widths':sorted(set(widths)),'tops':sorted(set(tops))}
   assert q.locator('.scene-timeline').bounding_box()['y']+q.locator('.scene-timeline').bounding_box()['height']<=height
