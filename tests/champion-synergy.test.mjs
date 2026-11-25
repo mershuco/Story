@@ -17,20 +17,53 @@ const red = picks(['Gnar','Viego','Viktor','Ashe','Seraphine'],'R');
 const input = {blue:'B', red:'R', bluePower:80, redPower:80, roster:[...blue,...red], seed:17,
  compositionBlue:compositionProfile(blue,champMap), compositionRed:compositionProfile(red,champMap)};
 
-test('all observed allied pairs are counted once per team, with current-event filters and legal pick ordering', () => {
+test('all observed allied pairs are counted once per team, for historical evidence', () => {
  const observed = observedSynergies(records);
  assert.equal(observed.size,3212);
  assert.equal([...observed.values()].reduce((total,pair)=>total+pair.games,0),records.length*20);
  for (const [a,b,count] of [['Ahri','Vi',23],['Lucian','Milio',75],['Camille','Galio',8],['Ashe','Seraphine',76]]) {
   assert.equal(observed.get(synergyKey(a,b)).games,count);
  }
- const cup = records.filter(game=>game.event==='LCK_CUP');
- const lane = draftSynergies(cup,{champion:'Milio',picked:['Milio'],available:id=>id==='Lucian'});
- assert.equal(lane[0].key,synergyKey('Lucian','Milio'));
- assert.equal(lane[0].games,4);
- assert(lane.slice(1).every(pair=>!pair.playable));
- assert.equal(draftSynergies(cup,{mode:'observed',champion:'Ahri'}).some(pair=>pair.key===synergyKey('Ahri','Vi')),false);
  assert(CHAMPION_SYNERGIES.every(combo=>combo.champions.every(id=>champMap[id])));
+});
+
+test('draft recommendations require a skill interaction and current meta roles, regardless of co-pick count', () => {
+ const cup = {records:records.filter(game=>game.event==='LCK_CUP'), patch:'16.1.1'};
+ const playoffs = {records:records.filter(game=>game.event==='LCK_PLAYOFFS'), patch:'16.16.1'};
+ const opening = draftSynergies(cup);
+ assert.equal(opening.games,51);
+ assert.equal(opening.patchSample,true);
+ assert(opening.rows.length<=12);
+ assert(opening.rows.every(row=>row.roles[0]!==row.roles[1]&&row.description));
+ assert(opening.rows.some(row=>row.key==='JarvanIV+Rumble'&&row.games===0));
+ assert(!opening.rows.some(row=>row.key==='Lucian+Milio'));
+ assert(!opening.rows.some(row=>row.key==='Rengar+Ivern'));
+
+ const later = draftSynergies(playoffs);
+ for (const key of ['Ahri+Vi','Lucian+Milio','Camille+Galio','Ashe+Seraphine']) {
+  assert(later.rows.some(row=>row.key===key),key);
+ }
+ const focus = draftSynergies(playoffs,{picked:['Milio'],available:id=>id==='Lucian'});
+ assert.deepEqual(focus.rows.map(row=>row.key),['Lucian+Milio']);
+ const window = draftSynergies({...cup,records:cup.records.slice(0,7)});
+ assert.equal(window.sufficient,false);
+ assert.deepEqual(window.rows,[]);
+ const fallback = draftSynergies({...cup,patch:'16.4.1'});
+ assert.equal(fallback.patchSample,false);
+ assert.equal(fallback.games,125);
+});
+
+test('co-play and wins change the reference counts without changing the recommendation ranking', () => {
+ const cup = records.filter(game=>game.event==='LCK_CUP');
+ const before = draftSynergies({records:cup,patch:'16.1.1'});
+ // Swapping the teams' supported roles preserves pick/ban and role meta, but changes pair records.
+ const changed = cup.map(game=>{
+  const [blue,red]=game.lineups;
+  return {...game,lineups:[[...blue.slice(0,3),...red.slice(3)],[...red.slice(0,3),...blue.slice(3)]]};
+ });
+ const after = draftSynergies({records:changed,patch:'16.1.1'});
+ assert.deepEqual(before.rows.map(row=>row.key),after.rows.map(row=>row.key));
+ assert(before.rows.some((row,index)=>row.games!==after.rows[index].games));
 });
 
 test('requested synergies activate with both champions and the right fight timing, with a cap on stacking', () => {
