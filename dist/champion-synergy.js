@@ -55,6 +55,7 @@ add('Rumble', 'JarvanIV', '대격변 → 이퀄라이저', '자르반의 지형�
 add('Smolder', 'Milio', '사거리·성장 딜러 보호', '밀리오의 사거리와 보호가 스몰더의 강화 공격과 이탈을 돕습니다.', 'protect', .88);
 
 export const CHAMPION_SYNERGIES = [...pairs.values()];
+export const championSynergy = key => pairs.get(key);
 
 const smallFights = new Set(['gank', 'dive', 'skirmish', 'flank']);
 const objectives = new Set(['dragon', 'grubs', 'herald', 'baron', 'elder']);

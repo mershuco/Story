@@ -297,6 +297,6 @@
 .synergy-explanation strong { color: #ddc889; }
 .synergy-explanation p { margin: 3px 0; color: #ced7df; }
 .synergy-explanation small { color: #a0afba; }
-.synergy-champion .meta-champion .synergy-role { margin-left: auto; color: #b6c7dd; }
+.synergy-pagination { justify-content: center; }
 .draft-synergy-panel .meta-controls label { display: flex; align-items: center; gap: 5px; font-size: 12px; }
 .draft-synergy-panel select { max-width: 148px; min-height: 31px; padding: 3px 6px; }

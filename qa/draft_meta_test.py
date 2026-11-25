@@ -13,42 +13,39 @@ with sync_playwright() as p:
  meta=q.locator('.draft-meta-panel');synergy=q.locator('.draft-synergy-panel')
  assert meta.bounding_box()['y']<synergy.bounding_box()['y']
  q.locator('[data-action=draft-meta-synergy-toggle]').click()
- q.locator('[data-change=draft-synergy-champion]').select_option('Braum')
- pair=synergy.locator('[data-synergy-key="Braum+Lucian"]')
- assert '뇌진탕 펀치' in pair.inner_text() and '8세트' in pair.inner_text()
- assert set(pair.locator('.synergy-role').all_text_contents())=={'원딜','서포터'}
+ q.locator('[data-change=draft-synergy-champion]').select_option('Milio')
+ pair=synergy.locator('[data-synergy-key="Lucian+Milio"]')
+ assert '빛의 사수' in pair.inner_text() and '4세트' in pair.inner_text()
  pair.locator('[data-action=draft-pick][data-id=Lucian]').click()
  confirm=pair.locator('[data-action=draft-lock]')
  assert confirm.is_enabled() and confirm.inner_text()=='밴' and saved()==before
  photo=pair.locator('[data-id=Lucian] .champ-img').bounding_box()
  assert confirm.bounding_box()['y']>=photo['y']+photo['height']-1
+ q.locator('[data-change=draft-synergy-champion]').select_option('Vi')
+ assert synergy.locator('[data-synergy-key="Ahri+Vi"]').count()==0
+ assert '1세트' in synergy.locator('[data-synergy-key="Orianna+Vi"]').inner_text()
+ q.locator('[data-change=draft-synergy-champion]').select_option('Milio')
+ q.locator('[data-action=draft-meta-synergy-mode][data-id=observed]').click()
  assert 'LCK CUP' in synergy.locator('.meta-evidence').inner_text()
- assert '26.01' in synergy.locator('.meta-evidence').inner_text()
+ assert synergy.locator('[data-synergy-key="Lucian+Milio"]').count()==1
  q.locator('[data-change=draft-synergy-champion]').select_option('')
- assert 0<synergy.locator('.synergy-card').count()<=12
- assert synergy.locator('[data-synergy-key="Rengar+Ivern"]').count()==0
- assert synergy.locator('[data-synergy-key="JarvanIV+Rumble"]').count()==1
+ q.locator('[data-action=draft-meta-synergy-page]').last.click()
+ assert '2 /' in synergy.locator('.synergy-pagination').inner_text()
  q.locator('[data-action=draft-meta-synergy-toggle]').click()
  assert q.locator('#draft-synergy-body').count()==0 and q.locator('[data-meta-lane]').count()==5
- report['checks'].append('both panels start closed; independent toggles, role- and patch-specific Cup shortlist, champion filter and pair-local confirmation')
+ report['checks'].append('both panels start closed; independent toggles, current Cup pair records, zero-appearance exclusion and one-off inclusion, champion filter, full pagination and pair-local confirmation')
  q.locator('[data-action=draft-meta-role][data-id=JGL]').click();assert q.locator('[data-meta-lane]').count()==1;assert q.locator('[data-meta-lane=JGL] [data-meta-champion=Jayce]').count()==1
- q.locator('[data-action=draft-meta-mode][data-id=prior]').click();assert '게임 날짜 이전' in q.locator('.draft-meta-panel .meta-evidence').inner_text();assert saved()==before
+ q.locator('[data-action=draft-meta-mode][data-id=prior]').click();assert '게임 날짜 이전' in q.locator('.meta-evidence').inner_text();assert saved()==before
  q.locator('[data-action=draft-meta-mode][data-id=event]').click();q.locator('[data-action=draft-meta-role][data-id=all]').click();assert q.locator('.broadcast-stage').bounding_box()['y']+q.locator('.broadcast-stage').bounding_box()['height']<=q.locator('.broadcast-strip').bounding_box()['y'];q.screenshot(path=str(ROOT/'2026-draft-meta-cup.png'),full_page=True)
  initial=q.locator('[data-meta-lane=TOP] .meta-champions .meta-champion').evaluate_all('(xs)=>xs.map(x=>x.dataset.id)');card=q.locator('.meta-champions .meta-champion:not([disabled])').first;cid=card.get_attribute('data-id');card.click();assert saved()==before;assert q.locator('[data-action=draft-lock]').is_enabled();q.locator('[data-action=draft-lock]').click();q.wait_for_function("!document.querySelector('.draft-turn')?.textContent.includes('LOCKING')");s=saved();assert any(h['champion']==cid for h in s['activeDraft']['history']);assert all(pick['role'] is None for side in ['blue','red'] for pick in s['activeDraft']['picks'][side]);assert q.locator(f'.meta-champion[data-id="{cid}"]').first.is_disabled();assert q.locator(f'.meta-champions .meta-champion[data-id="{cid}"]').count()==0;remaining=q.locator('[data-meta-lane=TOP] .meta-champions .meta-champion').evaluate_all('(xs)=>xs.map(x=>x.dataset.id)');assert len(remaining)==4 and set(remaining)-set(initial)
  q.locator('[data-action=draft-meta-available]').click();assert q.locator(f'.meta-champion[data-id="{cid}"]').count()==0;assert saved()==s;q.locator('[data-action=draft-meta-toggle]').click();assert q.locator('.meta-lanes').count()==0;assert q.locator('.champ-card').count()>=160;q.locator('[data-action=draft-meta-toggle]').click();report['checks'].append('real Cup draft: five role views, prior/event switching without RNG changes, selection/confirmation, banned card moves to collapsed history and next ranked legal card refills four slots; available-only filter; picks remain position-free and full pool remains wide')
  q.locator('[data-action=draft-auto-rest]').click();q.locator('.assignment-room').wait_for();assert q.locator('.draft-meta-panel').count()==0;q.locator('[data-action=assignment-auto]').click();assert q.locator('[data-action=commit-draft]').is_enabled();report['checks'].append('remaining draft auto-completes; the meta panel leaves the assignment screen and manual final role confirmation remains available')
  fixtures=q.evaluate("""async()=>{const E=await import('./engine.js');return [['CUP','CUP_PO1','2026-02-12'],['REGULAR','REG12','2026-04-01'],['ROAD','ROAD_TOP','2026-06-12'],['FST','FST26_G1','2026-03-16'],['MSI','MSI_QF','2026-07-03'],['REGULAR','REG35','2026-08-05'],['SEASON_PO','SEASON26_PO1','2026-09-03'],['WORLDS','WORLD26_PI1','2026-10-16']].map(([competition,phase,date],i)=>{const s=E.newGame('T1',90+i);s.date=date;s.phase={key:phase,title:phase};const m={id:'meta-'+i,teams:['T1','GEN'],competition,phase,date,sets:[],score:[0,0],bestOf:3,status:'scheduled'};s.matches.push(m);E.startOwnDraft(s,m.id,'blue',false);return {competition,phase,state:s};});}""")
- lists={}
  for f in fixtures:
-  load(f['state']);assert '동일 대회 전체' in q.locator('.draft-meta-panel .meta-evidence').inner_text();assert q.locator('[data-meta-lane]').count()==5
-  q.locator('[data-action=draft-meta-synergy-toggle]').click()
-  lists[f['phase']]=synergy.locator('.synergy-card').evaluate_all('(cards)=>cards.map(card=>card.dataset.synergyKey)')
-  assert len(lists[f['phase']])<=12
+  load(f['state']);assert '동일 대회 전체' in q.locator('.meta-evidence').inner_text();assert q.locator('[data-meta-lane]').count()==5
   if f['competition']=='MSI':
    assert q.locator('[data-meta-lane=SUP] .meta-champion').first.get_attribute('data-id')=='Camille';q.screenshot(path=str(ROOT/'2026-draft-meta-msi.png'),full_page=True)
-  if f['competition']=='WORLDS':assert '일부 기록(10/18까지)' in q.locator('.draft-meta-panel .meta-evidence').inner_text();assert q.locator('.is-op').count()==0
- assert lists['CUP_PO1']!=lists['SEASON26_PO1']
- assert 'Lucian+Milio' in lists['SEASON26_PO1']
+  if f['competition']=='WORLDS':assert '일부 기록(10/18까지)' in q.locator('.meta-evidence').inner_text();assert q.locator('.is-op').count()==0
  report['checks'].append('dated competition fixtures: Cup patch change, LCK 1–2/3–5 (observed 3–4), Road, First Stand, MSI, playoffs, Worlds; MSI support Camille and partial Worlds coverage verified')
  # Exhaust every observed support in a saved draft; estimated legal alternatives refill.
  depleted=q.evaluate("""async()=>{const {draftMetaView}=await import('./draft-meta.js'),E=await import('./engine.js'),s=JSON.parse(localStorage.getItem('lck-manager-save-v1')),d=s.activeDraft,m=s.matches.find(m=>m.id===d.matchId),v=draftMetaView(E.database(),{date:s.date,competition:m.competition,phase:m.phase,patch:d.patch});d.used=[...new Set([...d.used,...v.roles.SUP.map(c=>c.id)])];return s;}""")
@@ -58,5 +55,5 @@ with sync_playwright() as p:
  report['checks'].append('exhausted observed support pool: 12 legal alternatives refill, explicitly labeled estimated without invented pick/win statistics')
  q.locator('[data-action=draft-meta-role][data-id=all]').click()
  # Every meta list remains reachable at phone width without widening the page.
- q.set_viewport_size({'width':390,'height':844});assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');assert q.locator('.meta-lanes').evaluate('(e)=>e.scrollWidth>e.clientWidth');q.locator('[data-action=draft-meta-role][data-id=SUP]').click();assert q.locator('[data-meta-lane]').count()==1;assert q.locator('[data-action=draft-meta-role][data-id=SUP]').get_attribute('aria-pressed')=='true';assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');load(fixtures[-1]['state']);q.locator('[data-action=draft-meta-synergy-toggle]').click();q.locator('[data-change=draft-synergy-champion]').select_option('Ashe');assert q.locator('[data-synergy-key="Ashe+Seraphine"]').count()==1;assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');q.screenshot(path=str(ROOT/'2026-draft-meta-mobile.png'),full_page=True);report['checks'].append('390px: horizontally scrollable five-role board and single-role view fit the page; metadata and coverage remain readable')
+ q.set_viewport_size({'width':390,'height':844});assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');assert q.locator('.meta-lanes').evaluate('(e)=>e.scrollWidth>e.clientWidth');q.locator('[data-action=draft-meta-role][data-id=SUP]').click();assert q.locator('[data-meta-lane]').count()==1;assert q.locator('[data-action=draft-meta-role][data-id=SUP]').get_attribute('aria-pressed')=='true';assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');q.locator('[data-action=draft-meta-synergy-toggle]').click();q.locator('[data-change=draft-synergy-champion]').select_option('Ashe');assert q.locator('[data-synergy-key="Ashe+Seraphine"]').count()==1;assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');q.screenshot(path=str(ROOT/'2026-draft-meta-mobile.png'),full_page=True);report['checks'].append('390px: horizontally scrollable five-role board and single-role view fit the page; metadata and coverage remain readable')
  assert not report['errors'],report['errors'];Path(os.environ.get('LCK_TEST_REPORT',str(ROOT/'draft-meta-browser-results.json'))).write_text(json.dumps(report,ensure_ascii=False,indent=2));print(json.dumps(report,ensure_ascii=False));b.close()
