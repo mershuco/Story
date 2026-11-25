@@ -4,6 +4,9 @@ export function refreshViewer(app,markup,paint){
  const top=host.scrollTop,left=host.scrollLeft,timelineLeft=old.querySelector('.scene-timeline')?.scrollLeft??0;
  const opened=[...old.querySelectorAll('details[open]')].map(el=>el.className);
  const next=document.createElement('template');next.innerHTML=markup;const view=next.content.firstElementChild;
+ // Retain the fitted geometry before inserting the next scene.
+ const previousScreen=old.querySelector('.spectator-screen'),nextScreen=view.querySelector('.spectator-screen');
+ if(previousScreen&&nextScreen){nextScreen.style.cssText=previousScreen.style.cssText;nextScreen.classList.toggle('is-short',previousScreen.classList.contains('is-short'));}
  for(const details of view.querySelectorAll('details'))details.open=opened.includes(details.className);
  old.replaceWith(view);paint();
  host.scrollTop=top;host.scrollLeft=left;const timeline=view.querySelector('.scene-timeline');if(timeline)timeline.scrollLeft=timelineLeft;
@@ -11,7 +14,7 @@ export function refreshViewer(app,markup,paint){
 }
 
 // Budget from the visible browser viewport, including Safari toolbar changes.
-let observedScreen,observer,frame;
+let observedScreen,observedHost,observer,frame;
 function queueViewerFit(){if(!frame)frame=requestAnimationFrame(()=>{frame=null;fitViewer();});}
 function fitViewer(){
  const screen=document.querySelector('.spectator-screen'),host=screen?.closest('.match-sheet');if(!screen||!host)return;
@@ -30,9 +33,9 @@ function fitViewer(){
 }
 export function observeViewerLayout(){
  const screen=document.querySelector('.spectator-screen');if(!screen||screen===observedScreen)return;
- observedScreen=screen;observer?.disconnect();observer=new ResizeObserver(queueViewerFit);
- observer.observe(screen.closest('.match-sheet'));
- for(const el of screen.children)if(!el.classList.contains('spectator-layout'))observer.observe(el);
+ observedScreen=screen;const host=screen.closest('.match-sheet');
+ // Scene content changes within fixed slots; only the viewport changes geometry.
+ if(host!==observedHost){observedHost=host;observer?.disconnect();observer=new ResizeObserver(queueViewerFit);observer.observe(host);}
  fitViewer();
 }
 if(typeof window!=='undefined'){

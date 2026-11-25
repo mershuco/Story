@@ -1,8 +1,82 @@
 {
   "url": "http://127.0.0.1:4173",
   "checks": [
-    "1440px: continuous x8 Baron playback advances >=3 highlights in 1.35s; same scroll container, fitted view has no unwanted scroll; speed changes preserve scroll; red grubs align right",
-    "390px: continuous x8 Baron playback advances >=3 highlights in 1.35s; same scroll container, fitted view has no unwanted scroll; speed changes preserve scroll; red grubs align right"
+    "1440px: continuous x8 Baron playback advances >=3 highlights in 1.35s; map width and top stay constant across scene transitions, same scroll container without unwanted scroll; speed changes preserve scroll; red grubs align right",
+    "1024px: continuous x8 Baron playback advances >=3 highlights in 1.35s; map width and top stay constant across scene transitions, same scroll container without unwanted scroll; speed changes preserve scroll; red grubs align right",
+    "390px: continuous x8 Baron playback advances >=3 highlights in 1.35s; map width and top stay constant across scene transitions, same scroll container without unwanted scroll; speed changes preserve scroll; red grubs align right",
+    "1440px controlled 40-minute snapshots: adding/removing Baron and Elder on both sides, double buffs, alternating bounty visibility and long/short narration preserve map size and position",
+    "1024px controlled 40-minute snapshots: adding/removing Baron and Elder on both sides, double buffs, alternating bounty visibility and long/short narration preserve map size and position",
+    "390px controlled 40-minute snapshots: adding/removing Baron and Elder on both sides, double buffs, alternating bounty visibility and long/short narration preserve map size and position"
   ],
-  "errors": []
+  "errors": [],
+  "geometry": [
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "mapMin": 557,
+      "mapMax": 557,
+      "mapTopMin": 184.59375,
+      "mapTopMax": 184.59375,
+      "sampleCount": 74
+    },
+    {
+      "viewport": [
+        1024,
+        650
+      ],
+      "mapMin": 307,
+      "mapMax": 307,
+      "mapTopMin": 184.59375,
+      "mapTopMax": 184.59375,
+      "sampleCount": 76
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "mapMin": 306,
+      "mapMax": 306,
+      "mapTopMin": 181,
+      "mapTopMax": 181,
+      "sampleCount": 79
+    }
+  ],
+  "lateGeometry": [
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "mapMin": 557,
+      "mapMax": 557,
+      "mapTopMin": 184.59375,
+      "mapTopMax": 184.59375,
+      "sampleCount": 3052
+    },
+    {
+      "viewport": [
+        1024,
+        650
+      ],
+      "mapMin": 307,
+      "mapMax": 307,
+      "mapTopMin": 184.59375,
+      "mapTopMax": 184.59375,
+      "sampleCount": 2771
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "mapMin": 306,
+      "mapMax": 306,
+      "mapTopMin": 181,
+      "mapTopMax": 181,
+      "sampleCount": 3000
+    }
+  ]
 }

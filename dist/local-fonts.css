@@ -161,3 +161,32 @@
  .spectator-screen .player-economy,.spectator-screen.is-short .player-economy{line-height:10px;margin-top:0}
  .spectator-screen .player-gold-line,.spectator-screen.is-short .player-gold-line{font-size:8px;line-height:10px;margin-top:0}
 }
+
+/* Reserve broadcast slots so buffs, bounty text and narration never zoom the map. */
+.spectator-screen .power-play-strip,.spectator-screen .power-play-strip:not(:has(.power-play-card:not([hidden]))){display:grid;height:42px;min-height:42px}
+.spectator-screen .power-play-team{height:42px;min-width:0;flex-wrap:nowrap;align-items:stretch;gap:4px}
+.spectator-screen .power-play-card{height:42px;min-width:0;flex:0 1 210px;max-width:100%}
+.spectator-screen .power-owner{min-width:0}
+.spectator-screen .power-owner b,.spectator-screen .power-owner small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.spectator-screen .power-play-team:has(.baron:not([hidden])):has(.elder:not([hidden])) .power-play-card{grid-template-columns:minmax(0,1fr) 16px auto;gap:3px;padding-inline:5px}
+.spectator-screen .power-play-team:has(.baron:not([hidden])):has(.elder:not([hidden])) .power-owner b{font-size:11px}
+.spectator-screen .power-play-team:has(.baron:not([hidden])):has(.elder:not([hidden])) .objective-icon{width:16px;height:16px}
+.spectator-screen .power-play-team:has(.baron:not([hidden])):has(.elder:not([hidden])) .power-time{font-size:16px}
+.spectator-screen .broadcast-commentary{height:42px;min-height:42px}
+.spectator-screen .scene-narration{height:100%;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.spectator-screen .objective-bounty-banner{height:20px;min-height:20px;overflow:hidden;white-space:nowrap}
+.spectator-screen .objective-bounty-banner[hidden]{display:block;visibility:hidden}
+.spectator-screen .live-playback{height:28px;min-height:28px;flex-wrap:nowrap}
+@media(max-width:680px){
+ .spectator-screen .objective-bounty-banner{height:32px;min-height:32px;font-size:9px;line-height:13px;white-space:normal}
+ .spectator-screen .live-playback{height:27px;min-height:27px}
+ .spectator-screen .power-play-team:has(.baron:not([hidden])):has(.elder:not([hidden])) .power-play-card{padding-inline:3px;gap:2px;grid-template-columns:minmax(0,1fr) 14px auto}
+ .spectator-screen .power-play-team:has(.baron:not([hidden])):has(.elder:not([hidden])) .power-owner b{font-size:10px}
+ .spectator-screen .power-play-team:has(.baron:not([hidden])):has(.elder:not([hidden])) .power-owner small{display:none}
+ .spectator-screen .power-play-team:has(.baron:not([hidden])):has(.elder:not([hidden])) .objective-icon{width:14px;height:14px}
+ .spectator-screen .power-play-team:has(.baron:not([hidden])):has(.elder:not([hidden])) .power-time{font-size:14px}
+}
+@media(max-width:680px){
+ .spectator-screen .objective-bounty-banner{height:20px;min-height:20px;white-space:nowrap;text-overflow:ellipsis}
+ .spectator-screen .rift-decision-overlay{width:calc(100vw - 32px);left:50%;right:auto;transform:translateX(-50%)}
+}
