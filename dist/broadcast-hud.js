@@ -8,7 +8,7 @@ export function structurePosition(side,lane,kind,index=0){
  return side==='red'?[600-p[0],600-p[1]]:p;
 }
 export function scoreboard(c,set,m,score,clock){
- const team=side=>{const id=set[side];return `<div class="${side} broadcast-score-team"><div class="score-team-brand">${c.teamIcon?.(id)??''}<strong>${esc(c.teamName(id))}</strong></div><span class="score-towers" title="파괴한 포탑">♜ <b data-towers="${esc(id)}">${set.simulationVersion>=7?0:'—'}</b></span><span class="score-gold" data-team-gold="${esc(id)}">2.5K</span><b class="score-kills" data-team-score="${esc(id)}">0</b><div class="score-grub-icons" data-grub-icons="${esc(id)}" role="img" aria-label="${esc(c.teamName(id))} 유충 획득 현황">${grubIcons(set.simulationVersion>=5?0:null)}</div><div class="score-drake-icons" data-drake-icons="${esc(id)}" aria-label="${esc(c.teamName(id))} 용 종류"></div></div>`;};
+ const team=side=>{const id=set[side];return `<div class="${side} broadcast-score-team"><div class="score-team-brand">${c.teamIcon?.(id)??''}<strong>${esc(c.teamName(id))}</strong></div><span class="score-towers" title="파괴한 포탑">♜ <b data-towers="${esc(id)}">${set.simulationVersion>=7?0:'—'}</b></span><span class="score-gold-stack"><span class="score-gold" data-team-gold="${esc(id)}">2.5K</span><small class="score-gold-diff" data-team-gold-diff="${esc(id)}" hidden></small></span><b class="score-kills" data-team-score="${esc(id)}">0</b><div class="score-grub-icons" data-grub-icons="${esc(id)}" role="img" aria-label="${esc(c.teamName(id))} 유충 획득 현황">${grubIcons(set.simulationVersion>=5?0:null)}</div><div class="score-drake-icons" data-drake-icons="${esc(id)}" aria-label="${esc(c.teamName(id))} 용 종류"></div></div>`;};
  return `<div class="live-scoreboard broadcast-scoreboard">${team('blue')}<div class="live-series"><strong>${score[set.blue]} <i>:</i> ${score[set.red]}</strong><time id="live-clock">${clock}</time><small>GAME ${set.number} · BO${m.bestOf}</small></div>${team('red')}</div>`;
 }
 export function grubIcons(count){
@@ -49,4 +49,9 @@ export function paintMap(dom,set,scene,prior,progress,second){
  const push=scene.push,side=push?.team===set.blue?'blue':'red',b=push?.structures?.[0],pos=b?structurePosition(b.defender===set.blue?'blue':'red',b.lane,b.kind,b.index):null;
  for(const el of dom.querySelectorAll('[data-minion]')){const i=Number(el.dataset.minion);el.setAttribute('opacity',push&&pos&&progress>.1?'1':'0');if(!pos)continue;const home=side==='blue'?[63,537]:[537,63],t=Math.max(0,Math.min(1,progress*1.45-i*.025)),points=push.lane==='mid'?[home,pos]:[home,push.lane==='top'?[80,80]:[520,520],pos],lengths=points.slice(1).map((p,j)=>Math.hypot(p[0]-points[j][0],p[1]-points[j][1]));let distance=t*lengths.reduce((a,b)=>a+b,0),at=home;for(let j=0;j<lengths.length;j++){const f=Math.min(1,distance/Math.max(1,lengths[j]));at=[points[j][0]+(points[j+1][0]-points[j][0])*f,points[j][1]+(points[j+1][1]-points[j][1])*f];if(distance<=lengths[j])break;distance-=lengths[j];}el.setAttribute('transform',`translate(${at[0]+(i%3-1)*9} ${at[1]+Math.floor(i/3)*10})`);el.dataset.side=side;el.classList.toggle('empowered',!!push.baron);el.classList.toggle('super',i===6&&push.superMinions>0);}
  const impact=dom.querySelector('.structure-impact');if(impact&&pos){impact.setAttribute('transform',`translate(${pos[0]} ${pos[1]})`);impact.setAttribute('opacity',progress>.45&&progress<.93?'1':'0');impact.querySelector('text').textContent=progress>=.8&&push.gold?`+${push.gold}G`:push.blocked?'미니언 정리':`-${Math.round(push.damage*progress)}`;}
+}
+
+export function goldLeadLabels(lead){
+ const n=Math.abs(Math.round(lead)),text=n<50?`+${n}G`:`+${(n/1000).toFixed(1)}k`;
+ return {blue:lead>0?text:'',red:lead<0?text:''};
 }

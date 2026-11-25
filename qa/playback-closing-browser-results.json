@@ -1,8 +1,8 @@
 {
   "url": "http://127.0.0.1:4173",
   "checks": [
-    "1440px: continuous x8 Baron playback advances >=3 highlights in 1.35s; same scroll container and scrollTop; open details persist; red grubs align right",
-    "390px: continuous x8 Baron playback advances >=3 highlights in 1.35s; same scroll container and scrollTop; open details persist; red grubs align right"
+    "1440px: continuous x8 Baron playback advances >=3 highlights in 1.35s; same scroll container and scrollTop; speed changes preserve scroll; red grubs align right",
+    "390px: continuous x8 Baron playback advances >=3 highlights in 1.35s; same scroll container and scrollTop; speed changes preserve scroll; red grubs align right"
   ],
   "errors": []
 }

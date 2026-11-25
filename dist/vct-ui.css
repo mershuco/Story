@@ -94,3 +94,45 @@ body{background:var(--bg);font-family:var(--body);overflow:hidden}body[data-scre
 @media(max-width:680px){.draft-meta-panel>header{padding:9px;align-items:flex-start}.draft-meta-panel h2{font-size:13px}.draft-meta-panel h2 small{display:block;margin:4px 0 0}.meta-controls{padding:8px;gap:7px}.meta-roles{flex-wrap:wrap}.meta-evidence,.meta-footnote{padding:0 8px;font-size:10px}.single-lane .meta-champions{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 .broadcast-draft:has(.draft-meta-panel){height:auto;min-height:100%}.broadcast-draft:has(.draft-meta-panel) .broadcast-stage{flex:0 0 auto;grid-template-rows:auto auto;min-height:0}.broadcast-draft:has(.draft-meta-panel) .champ-grid{height:425px;max-height:425px;min-height:260px;flex:0 1 auto}
+
+/* Broadcast: keep the full map clear and the gold lead under the leading total. */
+.broadcast-scoreboard>.broadcast-score-team{grid-template-rows:42px 23px}
+.score-gold-stack{display:flex;flex-direction:column;align-items:center;justify-content:center;align-self:center;min-width:0;direction:ltr;line-height:1.1}
+.score-gold-diff{display:block;color:#ffd9ac;background:#663c28;font:700 11px var(--mono);padding:1px 5px;margin-top:2px;border-radius:2px;white-space:nowrap}
+.score-gold-diff[hidden]{display:none}
+.spectator-layout{display:grid;grid-template-columns:clamp(150px,16%,220px) minmax(0,1fr) clamp(150px,16%,220px);gap:10px;align-items:stretch}
+.rift-center{grid-column:2;grid-row:1;width:100%;min-width:0}
+.live-rift{width:100%;min-width:0;max-width:none;aspect-ratio:1}
+.spectator-team{grid-row:1;display:flex;flex-direction:column;min-width:0}
+.spectator-team.blue{grid-column:1}.spectator-team.red{grid-column:3}
+.spectator-team>h2{flex:0 0 auto;padding:8px}
+.spectator-player{flex:1;align-items:center;padding:7px 6px;gap:6px}
+.spectator-player>.champ-img{width:32px;height:32px;flex-shrink:0}
+.player-economy{display:grid;grid-template-columns:auto auto;gap:2px 5px;white-space:normal}
+.player-economy .live-kda{grid-column:1/-1;white-space:nowrap}
+.player-economy .live-level,.player-economy .live-cs{white-space:nowrap;font-size:10px}
+.player-gold-line{flex-wrap:wrap;gap:2px 5px;font-size:10px}
+.broadcast-commentary{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px;margin-top:14px;align-items:start}
+.broadcast-commentary:has(.rift-killfeed:empty){grid-template-columns:1fr}
+.scene-narration{width:100%;max-width:none;margin-top:0;min-width:0}
+.rift-killfeed{position:static;inset:auto;display:grid;grid-template-columns:1fr 1fr;gap:5px;max-width:none;width:100%;min-width:0;align-items:stretch}
+.rift-killfeed:empty{display:none}
+.kill-entry{max-width:none;min-width:0;gap:4px;padding:4px}
+.kill-entry img{width:20px;height:20px;flex-shrink:0}
+.kill-entry>strong{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px}
+.kill-entry>span{white-space:nowrap;font-size:10px}
+.power-play-strip{margin:8px 0}
+.power-play-card{grid-template-columns:minmax(75px,1fr) 24px auto;min-width:210px;padding:5px 9px 8px;column-gap:8px}
+.power-play-card .objective-icon{width:24px;height:24px}.power-play-card .power-time{font-size:24px}
+.meta-used-list{margin-top:8px;font-size:10px;color:#a6aab4}.meta-used-list>summary{cursor:pointer;padding:4px 0}.meta-used-list .meta-champion{width:100%;margin-top:4px}
+@media(max-width:1100px){.broadcast-commentary{grid-template-columns:1fr}.rift-killfeed{grid-template-columns:repeat(2,minmax(0,1fr))}.spectator-player strong{font-size:12px}.spectator-player{padding:6px 4px;gap:4px}.spectator-player>.champ-img{width:28px;height:28px}}
+@media(max-width:680px){
+ .broadcast-scoreboard>.broadcast-score-team{grid-template-rows:25px 32px 18px 18px}
+ .score-gold-stack{grid-column:2;grid-row:2}.score-gold-diff{font-size:10px;padding:1px 3px}
+ .spectator-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px}
+ .rift-center{grid-column:1/-1;grid-row:1}.spectator-team.blue{grid-column:1;grid-row:2}.spectator-team.red{grid-column:2;grid-row:2}
+ .spectator-player{padding:7px 5px;gap:5px}.spectator-player>.champ-img{width:28px;height:28px}
+ .power-play-card{min-width:0;width:100%;grid-template-columns:minmax(0,1fr) 19px auto;padding:5px 6px 8px;gap:5px}
+ .power-play-card .objective-icon{width:19px;height:19px}.power-play-card .power-time{font-size:20px}
+ .broadcast-commentary{gap:8px;margin-top:10px}.rift-killfeed{grid-template-columns:1fr}.kill-entry>strong{font-size:11px}.scene-narration{margin-top:0}
+}

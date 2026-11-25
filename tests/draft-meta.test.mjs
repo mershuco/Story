@@ -25,3 +25,27 @@ test('actual flex positions do not depend on hardcoded champion roles and no fut
 test('viewing tournament history never changes the state, RNG, draft roles, or opening AI priors',()=>{
  const s=E.newGame('T1',91),m={id:'meta-readonly',teams:['T1','GEN'],competition:'CUP',date:s.date,sets:[],score:[0,0],bestOf:3};const d=E.newDraft(s,m),before=JSON.stringify({s,d}),prior=E.metaFor(s);for(const mode of['event','prior'])draftMetaView(data,{date:s.date,competition:m.competition,patch:d.patch,mode});assert.equal(JSON.stringify({s,d}),before);assert.deepEqual(E.metaFor(s),prior);assert.equal(d.picks.blue.length+d.picks.red.length,0);
 });
+
+test('spent opening OP cards are replaced by the next observed picks, including lower presence picks',async()=>{
+ const {draftMetaCandidates}=await import('../dist/draft-meta.js');
+ const view=draftMetaView(data,{date:'2026-01-14',competition:'CUP',patch:'16.1.1'}),rows=view.roles.JGL;
+ assert(rows.length>4);assert(Object.values(view.roles).flat().some(c=>c.priority==='후순위 픽'));
+ const blocked=new Set(rows.slice(0,4).map(c=>c.id)),next=draftMetaCandidates(view,'JGL',{champions:data.champions,available:id=>!blocked.has(id)});
+ assert.deepEqual(next.map(c=>c.id),rows.slice(4,8).map(c=>c.id));assert(next.every(c=>!c.estimated));
+});
+test('exhausted tournament pool refills with legal role candidates and clearly labeled estimates',async()=>{
+ const {draftMetaCandidates}=await import('../dist/draft-meta.js');
+ const view=draftMetaView(data,{date:'2026-07-03',competition:'MSI',patch:'16.13.1'}),blocked=new Set(view.roles.SUP.map(c=>c.id));
+ const legal=id=>!blocked.has(id)&&!!data.champMap[id].available['16.13.1'];
+ const expected=data.champions.filter(c=>c.roles.includes('SUP')&&legal(c.id)).map(c=>c.id).sort();
+ const rows=draftMetaCandidates(view,'SUP',{champions:data.champions,available:legal,rank:id=>id===expected.at(-1)?99:1});
+ assert.equal(rows.length,4);assert.equal(rows[0].id,expected.at(-1));
+ for(const row of rows){assert(row.estimated);assert.equal(row.priority,'대체 픽');assert.equal(row.picks,null);assert.equal(row.wins,null);assert.equal(row.presence,null);assert(legal(row.id));}
+ assert.deepEqual(draftMetaCandidates(view,'SUP',{champions:data.champions,available:()=>false}),[]);
+});
+test('refilling references does not mutate draft state or bypass fearless and ban exclusions',async()=>{
+ const {draftMetaCandidates}=await import('../dist/draft-meta.js');const s=E.newGame('T1',91),m={id:'refill',teams:['T1','GEN'],competition:'CUP',date:s.date,sets:[],score:[0,0],bestOf:3},d=E.newDraft(s,m);
+ E.draftAction(s,d,E.legalChampions(s,d)[0].id);d.used.push(...E.legalChampions(s,d).slice(0,15).map(c=>c.id));const before=JSON.stringify({s,d}),view=draftMetaView(data,{date:s.date,competition:'CUP',patch:d.patch});
+ for(const role of META_ROLES){const rows=draftMetaCandidates(view,role,{champions:data.champions,available:id=>!E.draftUnavailableReason(s,d,id),rank:id=>E.mastery(s,s.teams[s.myTeam].lineup[role],id)});assert(rows.every(c=>!E.draftUnavailableReason(s,d,c.id)));}
+ assert.equal(JSON.stringify({s,d}),before);
+});

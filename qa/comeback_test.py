@@ -17,9 +17,9 @@ with sync_playwright() as p:
  load(q,comeback['state']);q.locator('.vct-shell').wait_for();q.locator('[data-action=menu]').click();q.locator('.vct-quick-menu [data-id=history]').click();q.locator('[data-action=match-record][data-id="2026-qa-comeback"]').click();q.locator('.rift-svg').wait_for()
  game=comeback['set'];expected={t:f'{v/1000:.1f}K' for t,v in game['finalGold'].items()}
  for team,gold in expected.items():q.wait_for_function("([id,expected])=>document.querySelector('[data-team-gold=\"'+id+'\"]').textContent===expected",arg=[team,gold])
- assert '열세를 극복한 승리' in q.locator('#live-swing').inner_text();q.screenshot(path=str(ROOT/'2026-comeback-result.png'),full_page=True)
+ assert q.locator('[data-team-gold-diff]:visible').count()==1;q.screenshot(path=str(ROOT/'2026-comeback-result.png'),full_page=True)
  target=next(i for i,e in enumerate(game['events']) if e['comeback'] and e['kind']!='nexus');q.locator(f'[data-action=viewer-scene][data-index="{target}"]').click();q.wait_for_function("document.querySelector('[data-action=viewer-play]').textContent==='재생'")
- q.wait_for_function("document.querySelector('#live-swing')?.textContent==='골드 역전!'");scene=game['events'][target]
+ scene=game['events'][target];richer=max(scene['gold'],key=scene['gold'].get);q.wait_for_function("id=>!document.querySelector('[data-team-gold-diff=\"'+id+'\"]').hidden",arg=richer)
  for team,value in scene['gold'].items():assert q.locator(f'[data-team-gold="{team}"]').inner_text()==f'{value/1000:.1f}K'
  q.screenshot(path=str(ROOT/'2026-comeback-swing.png'),full_page=True)
  # Reconstruct the same result without a stored eventlog, as for anAIgame.

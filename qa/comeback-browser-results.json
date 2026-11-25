@@ -6,13 +6,13 @@
     "compactseedreplaymatchesstoredgoldandresult"
   ],
   "example": {
-    "seed": 93,
+    "seed": 49,
     "winner": "GEN",
-    "winnerMaxDeficit": 6612,
-    "leadChanges": 3,
+    "winnerMaxDeficit": 8358,
+    "leadChanges": 1,
     "finalGold": {
-      "T1": 63848,
-      "GEN": 63117
+      "T1": 63421,
+      "GEN": 68080
     }
   }
 }

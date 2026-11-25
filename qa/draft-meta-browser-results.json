@@ -1,9 +1,10 @@
 {
   "url": "http://127.0.0.1:4173",
   "checks": [
-    "real Cup draft: five role views, prior/event switching without RNG changes, selection/confirmation, banned state and available-only filter; picks remain position-free and full pool remains wide",
+    "real Cup draft: five role views, prior/event switching without RNG changes, selection/confirmation, banned card moves to collapsed history and next ranked legal card refills four slots; available-only filter; picks remain position-free and full pool remains wide",
     "remaining draft auto-completes; the meta panel leaves the assignment screen and manual final role confirmation remains available",
     "dated competition fixtures: Cup patch change, LCK 1–2/3–4, Road, First Stand, MSI, playoffs, Worlds; MSI support Camille and partial Worlds coverage verified",
+    "exhausted observed support pool: 12 legal alternatives refill, explicitly labeled estimated without invented pick/win statistics",
     "390px: horizontally scrollable five-role board and single-role view fit the page; metadata and coverage remain readable"
   ],
   "errors": []
