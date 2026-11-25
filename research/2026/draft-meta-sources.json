@@ -6,6 +6,10 @@
   "sha256": "cf499d20eb3f84667b487fc1e28c5c73d47b3f535f155f8f5156eac7610b29f4",
   "upstreamCheck": "Downloads page returned403; S3 annual URL returned404. Used the previously reviewed hash-pinned public mirror.",
   "validGames": 640,
+  "lckGames": 502,
+  "lckFirstDate": "2026-01-14 08:13:43",
+  "lckLastDate": "2026-09-13 08:19:05",
+  "lckCoverage": "All complete LCK sets in the pinned CSV; official season completeness has not been independently reconciled.",
   "rejectedGames": [],
   "reports": [
     {
@@ -153,5 +157,5 @@
       "partial": true
     }
   ],
-  "outputSha256": "4ec00bb70854b169605d1b02d384af09040b363dc1311a203ab439e0e2e5f215"
+  "outputSha256": "579cfe9f4603b460228f8a94b5f04bf42a2459cbfceafa0d12b2af41cda3ab0a"
 }

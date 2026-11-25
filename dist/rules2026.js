@@ -8,7 +8,7 @@ const unique=a=>[...new Set(a)];
 function phase(s,key,title,pairs,dates,competition,bestOf=5,description=''){
  E.addPhase(s,key,title,[pairs],bestOf,competition,{start:E.anchor(s,dates[0]),description});
  const matches=s.matches.filter(m=>ownYear(s,m)&&m.phase===key);
- matches.forEach((m,i)=>{const date=`${s.year}-${dates[Math.min(i,dates.length-1)]}`;m.date=date>s.date?date:E.dayAdd(s.date,1);m.firstSelectionRights=['CUP_PIF','CUP26_L1','CUP26_UF','SEASON26_L1','SEASON26_UF'].includes(key)?m.teams[Math.floor(E.random(s)*2)]:m.teams[0];});return matches;
+ matches.forEach((m,i)=>{const nominal=`${s.year}-${dates[Math.min(i,dates.length-1)]}`,date=competition==='SEASON_PO'&&s.secondHalfRounds===3?E.dayAdd(nominal,14):nominal;m.date=date>s.date?date:E.dayAdd(s.date,1);m.firstSelectionRights=['CUP_PIF','CUP26_L1','CUP26_UF','SEASON26_L1','SEASON26_UF'].includes(key)?m.teams[Math.floor(E.random(s)*2)]:m.teams[0];});return matches;
 }
 function shuffled(s,values){const a=[...values];for(let i=a.length-1;i>0;i--){const j=Math.floor(E.random(s)*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 export function start2026Cup(s,groups){
@@ -50,9 +50,10 @@ function start2026Regular(s){
  });phase(s,'REG12','LCK 정규 1·2라운드',pairs,dates,'REGULAR',3,'10팀 더블 라운드 로빈 · 팀당18시리즈. 상위6팀 Road to MSI 진출.');
 }
 function start2026SecondHalf(s){
- s.legend=s.regular12.slice(0,5);s.rise=s.regular12.slice(5);const a=E.roundRobin(s.legend,2),b=E.roundRobin(s.rise,2),pairs=a.flatMap((r,i)=>[...r,...b[i]]);
+ s.secondHalfRounds=3;s.legend=s.regular12.slice(0,5);s.rise=s.regular12.slice(5);const a=E.roundRobin(s.legend,3),b=E.roundRobin(s.rise,3),pairs=a.flatMap((r,i)=>[...r,...b[i]]);
  const dates=pairs.map((_,i)=>{const day=Math.floor(i/2);return E.dayAdd(`${s.year}-07-29`,Math.floor(day/5)*7+day%5).slice(5);});
- phase(s,'REG34','LCK 정규 3·4라운드',pairs,dates,'REGULAR',3,'Legend / Rise 그룹 내2회전 · 팀당8시리즈. 전반기 성적 누적, 정규 시즌 총26시리즈.');
+ phase(s,'REG35','LCK 정규 3~5라운드',pairs,dates,'REGULAR',3,'아시안게임 일정 없음 · Legend / Rise 그룹 내3회전 · 팀당12시리즈. 전반기 성적 누적, 정규 시즌 총30시리즈.');
+ s.matches.filter(m=>ownYear(s,m)&&m.phase==='REG35').forEach((m,i)=>m.round=`${3+Math.floor(i/20)}라운드`);
 }
 function coachChoice(s,ids){return [...ids].sort((a,b)=>E.power(s,a)-E.power(s,b))[0];}
 export function cupGroupWinner(s,tables=s.cupGroups.map(g=>E.standings(s,g,'CUP','CUP_GROUP'))){
@@ -138,7 +139,7 @@ export function advance2026Phase(s,ms){
  else if(k==='MSI_FINAL'){
   s.msiChampion=W(ms[0]);E.award(s,'MSI',s.msiChampion,6);const all=s.matches.filter(m=>ownYear(s,m)&&m.competition==='MSI').reverse();const rank=unique([W(ms[0]),L(ms[0]),...all.flatMap(m=>[m.winner,...m.teams])].filter(Boolean).map(id=>E.team(s,id).region));s.international.msiRegionRanking=rank;s.international.extraWorldRegions=rank.slice(0,2);start2026SecondHalf(s);
  }
- else if(k==='REG34'){s.legendFinal=E.standings(s,s.legend,'REGULAR').map(r=>r.id);s.riseFinal=E.standings(s,s.rise,'REGULAR').map(r=>r.id);s.seeds=s.legendFinal.slice(0,4);phase(s,'SEASON26_PI5','LCK 시즌 · 플레이인 5시드전',[[s.legendFinal[4],s.riseFinal[0]]],['08-26'],'SEASON_PO');}
+ else if(k==='REG34'||k==='REG35'){s.legendFinal=E.standings(s,s.legend,'REGULAR').map(r=>r.id);s.riseFinal=E.standings(s,s.rise,'REGULAR').map(r=>r.id);s.seeds=s.legendFinal.slice(0,4);phase(s,'SEASON26_PI5','LCK 시즌 · 플레이인 5시드전',[[s.legendFinal[4],s.riseFinal[0]]],['08-26'],'SEASON_PO');}
  else if(k==='SEASON26_PI5'){s.seeds.push(W(ms[0]));s.seasonPiLoser=L(ms[0]);phase(s,'SEASON26_PIL','LCK 시즌 · 플레이인 패자전',[[s.riseFinal[1],s.riseFinal[2]]],['08-27'],'SEASON_PO');}
  else if(k==='SEASON26_PIL')phase(s,'SEASON26_PI6','LCK 시즌 · 플레이인 6시드전',[[s.seasonPiLoser,W(ms[0])]],['08-28'],'SEASON_PO');
  else if(k==='SEASON26_PI6'){s.seeds.push(W(ms[0]));const chosen=coachChoice(s,s.seeds.slice(4)),other=s.seeds.slice(4).find(id=>id!==chosen);phase(s,'SEASON_PO1','LCK 플레이오프 · 상위 1R',[[s.seeds[2],chosen],[s.seeds[3],other]],['08-29','08-30'],'SEASON_PO');}
@@ -164,4 +165,17 @@ export function advance2026Phase(s,ms){
  else if(k==='WORLD_SF')phase(s,'WORLD_FINAL','Worlds · 결승',[ms.map(W)],['11-14'],'WORLDS');
  else return false;
  return true;
+}
+
+// Add the third group cycle to an unfinished legacy second half, preserving IDs/results/RNG.
+export function migrate2026SecondHalf(s){
+ if(s.phase?.key!=='REG34'||s.secondHalfRounds===3||!s.legend?.length||!s.rise?.length)return false;
+ const old=s.matches.filter(m=>ownYear(s,m)&&m.phase==='REG34');
+ if(old.length!==40)return false;
+ for(const [i,m] of old.entries()){m.phase='REG35';m.round=`${3+Math.floor(i/20)}라운드`;}
+ s.secondHalfRounds=3;const a=E.roundRobin(s.legend,3),b=E.roundRobin(s.rise,3),extra=a.flatMap((r,i)=>[...r,...b[i]]).slice(40);
+ const earliest=E.dayAdd(s.date,1),dates=extra.map((_,i)=>{const day=20+Math.floor(i/2),date=E.dayAdd(`${s.year}-07-29`,Math.floor(day/5)*7+day%5);return (date>earliest?date:E.dayAdd(earliest,Math.floor(i/2))).slice(5);});
+ E.addPhase(s,'REG35','LCK 정규 3~5라운드',[extra],3,'REGULAR',{start:earliest,description:'아시안게임 없이 그룹 내3회전, 전반기 누적 팀당30시리즈.'});
+ const added=s.matches.filter(m=>ownYear(s,m)&&m.phase==='REG35'&&!old.includes(m));
+ added.forEach((m,i)=>{m.round='5라운드';m.date=`${s.year}-${dates[i]}`;m.firstSelectionRights=m.teams[0];});return true;
 }

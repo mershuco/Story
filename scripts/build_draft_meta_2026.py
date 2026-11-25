@@ -1,4 +1,4 @@
-"""Tournament/patch reference data. Presentation only; never an AI prior."""
+"""Tournament reference and complete observed LCK set evidence for draft advice."""
 import argparse,collections,csv,hashlib,json,re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -30,7 +30,7 @@ def build(path):
   bans={aliases.get(norm(t.get('ban'+str(i),''))) for t in teams for i in range(1,6)}-{None}
   if any(c is None for c,_,_ in picks) or len({c for c,_,_ in picks})!=10 or bans&{c for c,_,_ in picks}:rejected.append(gid);continue
   major,minor=r['patch'].split('.')[:2];patch=f'{int(major)}.{int(minor)}.1'
-  valid.append({'event':event(r),'patch':patch,'date':r['date'],'first':r['game']=='1','picks':picks,'bans':bans})
+  valid.append({'event':event(r),'patch':patch,'date':r['date'],'first':r['game']=='1','picks':picks,'bans':bans,'id':gid,'set':int(r['game']),'lineups':[[[aliases[norm(p['champion'])],ROLES[p['position']],p['playername'],int(float(p['result']))] for p in players if p['side']==side] for side in ['Blue','Red']]})
  grouped=collections.defaultdict(list)
  for g in valid:grouped[(g['event'],g['patch'])].append(g)
  reports=[]
@@ -44,9 +44,12 @@ def build(path):
     stats[cid]['bans']+=1
     if g['first']:stats[cid]['openingBans']+=1
   reports.append({'event':eid,'label':LABELS[eid],'patch':patch,'games':len(gs),'openingGames':sum(g['first'] for g in gs),'firstDate':min(g['date'] for g in gs),'lastDate':max(g['date'] for g in gs),'partial':eid=='WORLDS','champions':[{'id':cid,**c} for cid,c in sorted(stats.items())]})
- payload={'year':2026,'source':SOURCE,'sourceHash':digest,'observedThrough':'2026-10-18','method':'Retrospective tournament/patch records. OP priority uses game-1 pick+ban presence; role exposure uses all sets. Does not enter AI recommendations or match simulation.','reports':reports}
+ lck=[g for g in valid if g['event'].startswith('LCK_')];lck.sort(key=lambda g:(g['date'],g['id']))
+ lck_evidence={'games':len(lck),'firstDate':min(g['date'] for g in lck),'lastDate':max(g['date'] for g in lck),'coverage':'All complete LCK sets in the pinned CSV; official season completeness has not been independently reconciled.'}
+ records=[{k:(sorted(g[k]) if k=='bans' else g[k]) for k in ['id','event','patch','date','set','bans','lineups']} for g in sorted(valid,key=lambda g:(g['date'],g['id']))]
+ payload={'records':records,'lck':lck_evidence,'year':2026,'source':SOURCE,'sourceHash':digest,'observedThrough':'2026-10-18','method':'Retrospective tournament/patch records. OP priority uses game-1 pick+ban presence; role exposure uses all sets. All observed sets support context-aware human advice strictly within the selected tournament/stage; does not change opponent AI or match simulation.','reports':reports}
  out=ROOT/'dist/data/season-2026/draft-meta.json';out.write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'\n')
- evidence={'checkedOn':'2026-11-25','source':SOURCE,'upstream':'https://oracleselixir.com/tools/downloads','sourceBytes':len(raw),'sha256':digest,'upstreamCheck':'Downloads page returned403; S3 annual URL returned404. Used the previously reviewed hash-pinned public mirror.','validGames':len(valid),'rejectedGames':rejected,'reports':[dict((k,r[k]) for k in ['event','patch','games','openingGames','firstDate','lastDate','partial']) for r in reports],'outputSha256':hashlib.sha256(out.read_bytes()).hexdigest()}
+ evidence={'checkedOn':'2026-11-25','source':SOURCE,'upstream':'https://oracleselixir.com/tools/downloads','sourceBytes':len(raw),'sha256':digest,'upstreamCheck':'Downloads page returned403; S3 annual URL returned404. Used the previously reviewed hash-pinned public mirror.','validGames':len(valid),'lckGames':len(lck),'lckFirstDate':lck_evidence['firstDate'],'lckLastDate':lck_evidence['lastDate'],'lckCoverage':lck_evidence['coverage'],'rejectedGames':rejected,'reports':[dict((k,r[k]) for k in ['event','patch','games','openingGames','firstDate','lastDate','partial']) for r in reports],'outputSha256':hashlib.sha256(out.read_bytes()).hexdigest()}
  (ROOT/'research/2026/draft-meta-sources.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n')
  print(json.dumps({'validGames':len(valid),'reports':len(reports),'bytes':out.stat().st_size,'rejected':len(rejected),'events':sorted({r['event'] for r in reports})}))
 if __name__=='__main__':

@@ -1,0 +1,9 @@
+{
+  "url": "http://127.0.0.1:4173",
+  "checks": [
+    "desktop: selecting a scrolled pool champion keeps grid position and RNG; exactly one Ban button sits under its portrait; confirmation commits once and no footer confirmation remains",
+    "meta card: Pick button appears under the selected portrait, commits through the real draft action, and does not assign a position",
+    "390px: portrait-local pick button fits; moving selection from pool to tournament advice moves the unique confirmation button without nested buttons or page overflow"
+  ],
+  "errors": []
+}

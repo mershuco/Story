@@ -1,5 +1,5 @@
 import {draftCounterThreat} from './draft-matchups.js';
-import {start2026Cup,begin2026International,advance2026Phase,groupPoints} from './rules2026.js';
+import {start2026Cup,begin2026International,advance2026Phase,groupPoints,migrate2026SecondHalf} from './rules2026.js';
 import {simulateMatch,SIMULATION_MODEL,battleProbability,createMatchState,advanceMatch,matchOutcome,objectivePreview,upgradeMatchState} from './match-sim.js';
 export {championCombatProfile,championCombat,combatLabels,phaseStrength,fightStage} from './champion-combat.js';
 import {compositionProfile,compositionMatchup,compositionLabels} from './composition.js';
@@ -541,3 +541,5 @@ export function autoOwnSeries(s,matchId) {if(s.activeMatch){if(s.activeMatch.mat
 // Completed v5/v6/v7 logs are reproducible from seed + recorded decisions. Keep live
 // prefixes intact; never mutate the in-memory match while writing a save.
 export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11'].includes(this.simulationReplay?.model)?[]:value;});}
+
+export function migrateSeasonFormat(s){return DB.season?.competitionFormat===2026?migrate2026SecondHalf(s):false;}

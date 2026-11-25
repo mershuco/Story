@@ -45,7 +45,7 @@ test('coach evaluates all120 final role matchings and saved drafts preserve pick
  const clone=JSON.parse(JSON.stringify(d));E.autoAssignDraft(s,clone,'blue',false);assert.deepEqual(clone.picks,d.picks);E.confirmDraftAssignments(d);E.resolveDraft(s,m,d);const next=E.newDraft(s,m);assert.equal(next.used.length,10);assert(E.legalChampions(s,next).every(c=>!next.used.includes(c.id)));
 });
 test('2026 fullseason and next season retain competition progression without reverting to2022 players or contracts',()=>{
- const s=E.newGame('HLE',2026);E.startSeason(s);assert.equal(E.advanceDays(s,450,true).reason,'season');assert.equal(s.date,'2026-11-14');assert.equal(s.career.length,1);assert.equal(s.matches.filter(m=>m.competition==='REGULAR').length,130);assert.equal(s.matches.filter(m=>m.competition==='FST').length,13);assert.equal(s.international.fstParticipants.length,8);assert.equal(s.international.msiParticipants.length,11);assert.equal(s.matches.filter(m=>m.competition==='MSI').length,20);assert.equal(s.international.worldsParticipants.length,19);assert.equal(s.matches.filter(m=>m.phase.startsWith('WORLD26_PI')).length,6);assert.equal(s.matches.filter(m=>m.competition==='SEASON_PO').length,13);assert.equal(s.matches.filter(m=>m.phase==='SEASON_FINAL')[0].date,'2026-09-13');assert.equal(s.matches.filter(m=>m.phase==='CUP_FINAL')[0].date,'2026-03-01');assert(E.standings(s,data.teams.map(t=>t.id),'REGULAR').every(r=>r.played===26));
+ const s=E.newGame('HLE',2026);E.startSeason(s);assert.equal(E.advanceDays(s,450,true).reason,'season');assert.equal(s.date,'2026-11-14');assert.equal(s.career.length,1);assert.equal(s.matches.filter(m=>m.competition==='REGULAR').length,150);assert.equal(s.matches.filter(m=>m.competition==='FST').length,13);assert.equal(s.international.fstParticipants.length,8);assert.equal(s.international.msiParticipants.length,11);assert.equal(s.matches.filter(m=>m.competition==='MSI').length,20);assert.equal(s.international.worldsParticipants.length,19);assert.equal(s.matches.filter(m=>m.phase.startsWith('WORLD26_PI')).length,6);assert.equal(s.matches.filter(m=>m.competition==='SEASON_PO').length,13);assert.equal(s.matches.filter(m=>m.phase==='SEASON_FINAL')[0].date,'2026-09-27');assert.equal(s.matches.filter(m=>m.phase==='CUP_FINAL')[0].date,'2026-03-01');assert(E.standings(s,data.teams.map(t=>t.id),'REGULAR').every(r=>r.played===30));
  E.nextSeason(s);assert.equal(s.date,'2027-01-08');assert.equal(s.dataProfile,'season-2026');assert.equal(E.patchAt(s.date),'16.1.1');for(const p of E.lineup(s,'HLE'))E.extendContract(s,p.id);E.startSeason(s);assert.equal(E.standings(s,['HLE'],'REGULAR')[0].played,0);assert.equal(s.teams.T1.lineup.BOT,'peyz');
 });
 
@@ -93,4 +93,14 @@ test('MSI11team playin qualifiesonly1 and thehighest eligible2seedregion receive
  for(let shift=0;shift<3;shift++){
   const s=E.newGame('T1',800+shift),rank=[...all.slice(shift),...all.slice(0,shift)];s.date='2026-06-27';s.msiSeeds=['T1','GEN'];s.international.fstRanking=rank.map(r=>Object.values(s.teams).find(t=>t.region===r).id);begin2026International(s,'MSI');assert.equal(s.international.msiParticipants.length,11);assert.equal(s.international.msiDirect.length,7);assert.equal(s.international.msiByeRegion,rank.find(r=>r!=='CBLOL'));E.advanceDays(s,5,true);assert.equal(s.matches.filter(m=>m.phase.startsWith('MSI26_PI')).length,6);assert.equal(s.msiBracketTeams.length,8);assert.equal(s.matches.filter(m=>m.phase==='MSI_QF').length,4);
  }
+});
+
+test('legacy unfinished second half gains round five once without altering existing fixtures, results or RNG',async()=>{
+ const {migrate2026SecondHalf}=await import('../dist/rules2026.js'),s=E.newGame('T1',99);s.date='2026-08-06';s.legend=data.teams.slice(0,5).map(t=>t.id);s.rise=data.teams.slice(5).map(t=>t.id);
+ const a=E.roundRobin(s.legend,2),b=E.roundRobin(s.rise,2);E.addPhase(s,'REG34','LCK 정규 3·4라운드',[a.flatMap((r,i)=>[...r,...b[i]])],3,'REGULAR',{start:'2026-07-29'});
+ for(const [i,m] of s.matches.entries()){m.date=E.dayAdd('2026-07-29',Math.floor(i/2));if(i<5){m.status='done';m.winner=m.teams[0];m.score=[2,0];}}
+ const old=structuredClone(s.matches),rng=s.rng;assert(migrate2026SecondHalf(s));assert.equal(s.rng,rng);assert.equal(s.matches.length,60);assert.equal(s.phase.key,'REG35');
+ for(const [i,m] of old.entries())assert.deepEqual({...s.matches[i],phase:m.phase,round:m.round},m);
+ assert(s.matches.slice(40).every(m=>m.round==='5라운드'&&m.date>s.date));assert.equal(migrate2026SecondHalf(s),false);assert.equal(s.matches.length,60);
+ const counts=new Map();for(const m of s.matches){const key=m.teams.slice().sort().join('|');counts.set(key,(counts.get(key)??0)+1);}assert([...counts.values()].every(n=>n===3));
 });

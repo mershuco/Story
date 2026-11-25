@@ -89,5 +89,15 @@
     "FST": "16.5.1",
     "MSI": "16.13.1",
     "WLDs": "16.20.1"
+  },
+  "formatVariant": {
+    "secondHalfRounds": [
+      3,
+      4,
+      5
+    ],
+    "asianGamesBreak": false,
+    "regularSeriesPerTeam": 30,
+    "note": "User-requested 2026 roster/meta with a third post-MSI group cycle."
   }
 }
