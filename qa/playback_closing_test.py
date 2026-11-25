@@ -37,7 +37,7 @@ with sync_playwright() as p:
    z.events.push({minute:z.clock,second:Math.round(z.clock*60),kind,type:'event',title:i%2?'긴 해설':'후반 상황',location:kind==='baron'?'baron':kind==='elder'?'dragon':'mid',team,kills:[],objective:['baron','elder'].includes(kind)?{kind,team}:null,text:i%2?'양 팀이 사이드 라인을 정리하며 바론과 장로 교전 이후 다음 공성을 준비합니다. '.repeat(12):'다음 교전을 준비합니다.',lead:z.gold[blue]-z.gold[red],gold:{...z.gold},score:{...z.score},dragons:{...z.dragons},grubs:{...z.grubs},objectiveState:O.objectiveSnapshot(z),rift});
   }return s;
  }""",fixture['state'])
- q.evaluate("s=>sessionStorage.setItem('_playback_save',JSON.stringify(s))",late);q.reload();q.locator('.rift-svg').wait_for();q.locator('[data-action=viewer-speed][data-speed=8]').click()
+ q.evaluate("s=>sessionStorage.setItem('_playback_save',JSON.stringify(s))",late);q.reload();q.locator('.rift-svg').wait_for();q.locator('[data-action=viewer-speed][data-speed="8"]').click()
  for width,height in [(1440,900),(1024,650),(390,844)]:
   q.set_viewport_size({'width':width,'height':height});q.wait_for_timeout(100)
   q.evaluate("""()=>{window._lateSamples=[];window._lateTimer=setInterval(()=>{const b=document.querySelector('.live-rift').getBoundingClientRect();window._lateSamples.push({w:b.width,y:b.y});},8);}""")

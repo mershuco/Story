@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:4173",
+  "url": "https://mershuco.github.io/Story/",
   "checks": [
     "1440px: continuous x8 Baron playback advances >=3 highlights in 1.35s; map width and top stay constant across scene transitions, same scroll container without unwanted scroll; speed changes preserve scroll; red grubs align right",
     "1024px: continuous x8 Baron playback advances >=3 highlights in 1.35s; map width and top stay constant across scene transitions, same scroll container without unwanted scroll; speed changes preserve scroll; red grubs align right",
@@ -19,7 +19,7 @@
       "mapMax": 557,
       "mapTopMin": 184.59375,
       "mapTopMax": 184.59375,
-      "sampleCount": 74
+      "sampleCount": 84
     },
     {
       "viewport": [
@@ -30,7 +30,7 @@
       "mapMax": 307,
       "mapTopMin": 184.59375,
       "mapTopMax": 184.59375,
-      "sampleCount": 76
+      "sampleCount": 83
     },
     {
       "viewport": [
@@ -41,7 +41,7 @@
       "mapMax": 306,
       "mapTopMin": 181,
       "mapTopMax": 181,
-      "sampleCount": 79
+      "sampleCount": 84
     }
   ],
   "lateGeometry": [
@@ -54,7 +54,7 @@
       "mapMax": 557,
       "mapTopMin": 184.59375,
       "mapTopMax": 184.59375,
-      "sampleCount": 3052
+      "sampleCount": 447
     },
     {
       "viewport": [
@@ -65,7 +65,7 @@
       "mapMax": 307,
       "mapTopMin": 184.59375,
       "mapTopMax": 184.59375,
-      "sampleCount": 2771
+      "sampleCount": 435
     },
     {
       "viewport": [
@@ -76,7 +76,7 @@
       "mapMax": 306,
       "mapTopMin": 181,
       "mapTopMax": 181,
-      "sampleCount": 3000
+      "sampleCount": 435
     }
   ]
 }
