@@ -52,7 +52,8 @@ export function team(s,id) {return s.teams[id];}
 export function lineup(s,teamId) {return ROLES.map(r=>getPlayer(s,team(s,teamId).lineup[r])).filter(Boolean);}
 export function mastery(s,playerId,championId) {
  const evidence=DB.mastery?.players?.[playerId]?.champions?.[championId];
- return clamp((evidence?.score??48)+(s.masteryGains[playerId]?.[championId]??0),0,99);
+ const verified=DB.masteryRecords?.players?.[playerId]?.[championId]?.findLast(([day])=>day<s.date);
+ return clamp((verified?.[1]??evidence?.score??48)+(s.masteryGains[playerId]?.[championId]??0),0,99);
 }
 export function masteryEvidence(playerId,championId) {return DB.mastery?.players?.[playerId]?.champions?.[championId]??{games:0,wins:0,source:'estimated',confidence:'unobserved'};}
 export function metaFor(s) {

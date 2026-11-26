@@ -18166,18 +18166,18 @@ daystar,Daystar,LSB,MID,Zoe,69,3,2,low_sample,oe_2025_observed_simulation,2025-0
 daystar,Daystar,LSB,MID,Zyra,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Aatrox,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Ahri,80,9,1,medium_exposure,oe_2025_observed_simulation,2025-09-05 09:49:14,"{""MID"": 9}"
-calix,Calix,NS,MID,Akali,73,5,1,medium_exposure,oe_2025_observed_simulation,2025-09-07 06:09:43,"{""MID"": 5}"
+calix,Calix,NS,MID,Akali,75,6,1,medium_exposure,oe_2025_observed_simulation,2025-10-06 10:20:33,"{""MID"": 6}"
 calix,Calix,NS,MID,Akshan,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Alistar,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Ambessa,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Amumu,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Anivia,48,0,0,unknown,estimated_unobserved,,{}
-calix,Calix,NS,MID,Annie,73,5,0,medium_exposure,oe_2025_observed_simulation,2025-09-07 07:08:30,"{""MID"": 5}"
+calix,Calix,NS,MID,Annie,72,5,0,medium_exposure,oe_2025_observed_simulation,2025-09-07 07:08:30,"{""MID"": 5}"
 calix,Calix,NS,MID,Aphelios,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Ashe,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,AurelionSol,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Aurora,48,0,0,unknown,estimated_unobserved,,{}
-calix,Calix,NS,MID,Azir,87,17,7,high_exposure,oe_2025_observed_simulation,2025-08-14 08:58:22,"{""MID"": 17}"
+calix,Calix,NS,MID,Azir,87,18,8,high_exposure,oe_2025_observed_simulation,2025-10-09 10:55:13,"{""MID"": 18}"
 calix,Calix,NS,MID,Bard,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Belveth,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Blitzcrank,48,0,0,unknown,estimated_unobserved,,{}
@@ -18186,7 +18186,7 @@ calix,Calix,NS,MID,Braum,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Briar,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Caitlyn,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Camille,48,0,0,unknown,estimated_unobserved,,{}
-calix,Calix,NS,MID,Cassiopeia,48,0,0,unknown,estimated_unobserved,,{}
+calix,Calix,NS,MID,Cassiopeia,59,1,0,low_sample,oe_2025_observed_simulation,2025-10-06 11:33:46,"{""MID"": 1}"
 calix,Calix,NS,MID,Chogath,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Corki,77,7,2,medium_exposure,oe_2025_observed_simulation,2025-08-09 10:06:29,"{""MID"": 7}"
 calix,Calix,NS,MID,Darius,48,0,0,unknown,estimated_unobserved,,{}
@@ -18200,7 +18200,7 @@ calix,Calix,NS,MID,Ezreal,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Fiddlesticks,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Fiora,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Fizz,48,0,0,unknown,estimated_unobserved,,{}
-calix,Calix,NS,MID,Galio,78,7,3,medium_exposure,oe_2025_observed_simulation,2025-09-03 11:26:43,"{""MID"": 7}"
+calix,Calix,NS,MID,Galio,80,8,3,medium_exposure,oe_2025_observed_simulation,2025-10-11 11:06:47,"{""MID"": 8}"
 calix,Calix,NS,MID,Gangplank,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Garen,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Gnar,48,0,0,unknown,estimated_unobserved,,{}
@@ -18233,7 +18233,7 @@ calix,Calix,NS,MID,Khazix,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Kindred,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Kled,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,KogMaw,48,0,0,unknown,estimated_unobserved,,{}
-calix,Calix,NS,MID,Leblanc,48,0,0,unknown,estimated_unobserved,,{}
+calix,Calix,NS,MID,Leblanc,60,1,1,low_sample,oe_2025_observed_simulation,2025-10-07 12:20:17,"{""MID"": 1}"
 calix,Calix,NS,MID,LeeSin,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Leona,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Lillia,48,0,0,unknown,estimated_unobserved,,{}
@@ -18262,7 +18262,7 @@ calix,Calix,NS,MID,Nilah,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Nocturne,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Nunu,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Olaf,48,0,0,unknown,estimated_unobserved,,{}
-calix,Calix,NS,MID,Orianna,81,10,1,medium_exposure,oe_2025_observed_simulation,2025-09-05 08:07:35,"{""MID"": 10}"
+calix,Calix,NS,MID,Orianna,86,14,5,medium_exposure,oe_2025_observed_simulation,2025-10-10 08:18:02,"{""MID"": 14}"
 calix,Calix,NS,MID,Ornn,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Pantheon,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Poppy,48,0,0,unknown,estimated_unobserved,,{}
@@ -18274,11 +18274,11 @@ calix,Calix,NS,MID,Rammus,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,RekSai,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Rell,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Renata,48,0,0,unknown,estimated_unobserved,,{}
-calix,Calix,NS,MID,Renekton,48,0,0,unknown,estimated_unobserved,,{}
+calix,Calix,NS,MID,Renekton,59,1,0,low_sample,oe_2025_observed_simulation,2025-10-10 07:12:30,"{""MID"": 1}"
 calix,Calix,NS,MID,Rengar,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Riven,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Rumble,48,0,0,unknown,estimated_unobserved,,{}
-calix,Calix,NS,MID,Ryze,85,12,5,medium_exposure,oe_2025_observed_simulation,2025-09-05 08:58:24,"{""MID"": 12}"
+calix,Calix,NS,MID,Ryze,86,13,5,medium_exposure,oe_2025_observed_simulation,2025-10-10 12:00:09,"{""MID"": 13}"
 calix,Calix,NS,MID,Samira,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Sejuani,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Senna,48,0,0,unknown,estimated_unobserved,,{}
@@ -18298,7 +18298,7 @@ calix,Calix,NS,MID,Swain,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Sylas,74,6,2,medium_exposure,oe_2025_observed_simulation,2025-06-01 08:07:40,"{""MID"": 6}"
 calix,Calix,NS,MID,Syndra,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,TahmKench,48,0,0,unknown,estimated_unobserved,,{}
-calix,Calix,NS,MID,Taliyah,83,10,5,medium_exposure,oe_2025_observed_simulation,2025-08-22 08:55:45,"{""MID"": 10}"
+calix,Calix,NS,MID,Taliyah,87,13,6,medium_exposure,oe_2025_observed_simulation,2025-10-11 11:53:20,"{""MID"": 13}"
 calix,Calix,NS,MID,Talon,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Taric,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Teemo,48,0,0,unknown,estimated_unobserved,,{}
@@ -18325,7 +18325,7 @@ calix,Calix,NS,MID,Xayah,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Xerath,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,XinZhao,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Yasuo,48,0,0,unknown,estimated_unobserved,,{}
-calix,Calix,NS,MID,Yone,84,11,4,medium_exposure,oe_2025_observed_simulation,2025-09-07 08:06:08,"{""MID"": 11}"
+calix,Calix,NS,MID,Yone,83,11,4,medium_exposure,oe_2025_observed_simulation,2025-09-07 08:06:08,"{""MID"": 11}"
 calix,Calix,NS,MID,Yorick,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Yunara,48,0,0,unknown,estimated_unobserved,,{}
 calix,Calix,NS,MID,Yuumi,48,0,0,unknown,estimated_unobserved,,{}

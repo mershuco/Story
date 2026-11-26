@@ -26,7 +26,9 @@ RESERVES=[('Ghost','SUP','KT'),('Peter','SUP','KDF'),('Vincenzo','JGL','DRX'),('
 # unrelated Hanwha academy homonym has a different ID and remains excluded.
 LEGACY_IDS={'doran':['oe:player:a1f3b2bb3f36e5113237f92d76dc4c8'],
             'taeyoon':['oe:player:952237fce714ed1eca8ded17523bee9'],
-            'mihawk':['oe:player:14f5ba672bc5fd0b3f28a6b0eb3043b']}
+            'mihawk':['oe:player:14f5ba672bc5fd0b3f28a6b0eb3043b'],
+            'calix':['oe:player:c9441d0e78cf438ef0b372dc74010e3']}
+PLAYER_ALIASES={'hanssamd':'samd','sanghyeon':'kabbie','bonnie':'pangsu','hype':'kingkong','kice':'rebel','dispel':'blessing'}
 FOREIGN=[('BLG','Bilibili Gaming','LPL'),('AL',"Anyone's Legend",'LPL'),('TES','Top Esports','LPL'),('JDG','JD Gaming','LPL'),
  ('G2','G2 Esports','LEC'),('MKOI','Movistar KOI','LEC'),('FNC','Fnatic','LEC'),('KC','Karmine Corp','LEC'),
  ('FLY','FlyQuest','LCS'),('TL','Team Liquid','LCS'),('C9','Cloud9','LCS'),('LYON','LYON','LCS'),('PNG','paiN Gaming','CBLOL'),('FUR','FURIA','CBLOL'),('LOS','LØS','CBLOL'),
@@ -38,6 +40,10 @@ def patch(s):
  try:a,b=s.split('.')[:2];return f'{int(a)}.{int(b)}.1'
  except:return 'unknown'
 def fresh():return {'games':0,'wins':0,'lastPlayed':None,'roleGames':collections.Counter(),'leagues':collections.Counter(),'kills':0,'deaths':0,'assists':0}
+
+def mastery_score(games, wins, player_games, days_since_played):
+ return round(max(50,min(96,50+min(34,9*math.log2(1+games))+min(7,24*games/player_games)
+                      +8*((wins+5)/(games+10)-.5)-min(6,max(0,days_since_played-90)/60))))
 
 def main():
  ap=argparse.ArgumentParser();ap.add_argument('--input-dir',type=Path,required=True);args=ap.parse_args();OUT.mkdir(parents=True,exist_ok=True);RESEARCH.mkdir(parents=True,exist_ok=True)
@@ -103,13 +109,12 @@ def main():
  for p in allplayers:knownids[p['id']].update(p['oePlayerIds'])
  for pid,ids in LEGACY_IDS.items():knownids[pid].update(ids)
  # Only identity mapping may use2026 observations; 2025 performance is still isolated.
- alias={'hanssamd':'samd','sanghyeon':'kabbie','bonnie':'pangsu','hype':'kingkong','kice':'rebel','dispel':'blessing'}
  exposure={2025:collections.defaultdict(lambda:collections.defaultdict(fresh)),2026:collections.defaultdict(lambda:collections.defaultdict(fresh))};totals=collections.defaultdict(fresh);rejected=collections.Counter()
  for year in [2025,2026]:
   with (args.input_dir/f'{year}_LoL_esports_match_data_from_OraclesElixir.csv').open(encoding='utf-8-sig',newline='') as handle:
    for r in csv.DictReader(handle):
     if r['position'] not in ROLES:continue
-    pid=N(r['playername']);pid=alias.get(pid,pid) if pid not in pmap else pid
+    pid=N(r['playername']);pid=PLAYER_ALIASES.get(pid,pid) if pid not in pmap else pid
     if pid not in pmap:continue
     if knownids[pid] and r['playerid'] not in knownids[pid]:rejected[(pid,r['playername'],r['teamname'])]+=1;continue
     if not knownids[pid] and r['league'] not in ['LCK','LCKC','LCK CL','KeSPA','KeSPA Cup','LAS']:continue
@@ -135,7 +140,7 @@ def main():
   for c in champion_names:
    e=exposure[2025][pid].get(c['id'])
    if e:
-    g=e['games'];days=(ASOF-datetime.fromisoformat(e['lastPlayed'])).days;score=round(max(50,min(96,50+min(34,9*math.log2(1+g))+min(7,24*g/total)+8*((e['wins']+5)/(g+10)-.5)-min(6,max(0,days-90)/60))))
+    g=e['games'];days=(ASOF-datetime.fromisoformat(e['lastPlayed'])).days;score=mastery_score(g,e['wins'],total,days)
     entries[c['id']]={'score':score,'games':g,'wins':e['wins'],'confidence':'high_exposure' if g>=15 else 'medium_exposure' if g>=5 else 'low_sample','source':'oe_2025_observed_simulation','lastPlayed':e['lastPlayed'],'roleGames':dict(e['roleGames'])}
    else:entries[c['id']]={'score':48,'games':0,'wins':0,'confidence':'unknown','source':'estimated_unobserved','lastPlayed':None,'roleGames':{}}
   mastery_players[pid]={'name':p['name'],'position':p['position'],'team':p['team'],'observed2025Games':total,'observed2025Champions':len(exposure[2025][pid]),'champions':entries,'retrospective2026':{c:{k:dict(v) if isinstance(v,collections.Counter) else v for k,v in e.items()} for c,e in exposure[2026][pid].items()}}

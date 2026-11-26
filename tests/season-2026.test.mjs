@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import * as E from '../dist/engine.js';
 const data=Object.fromEntries(['teams','players','champions','mastery','meta','international','season'].map(k=>[k,JSON.parse(readFileSync(new URL(`../dist/data/season-2026/${k}.json`,import.meta.url)))]));
+data.masteryRecords=JSON.parse(readFileSync(new URL('../dist/data/season-2026/mastery-records.json',import.meta.url)));
 E.configure(data);
 const setup=()=>{const s=E.newGame('T1',2026),m={id:'qa-2026',teams:['T1','GEN'],competition:'CUP',bestOf:5,date:s.date,sets:[],score:[0,0],status:'scheduled'};return{s,m,d:E.newDraft(s,m)};};
 test('2026 opening rosters use verified starters, contemporary brands and2025-only opening evidence',()=>{
@@ -12,6 +13,28 @@ test('2026 opening rosters use verified starters, contemporary brands and2025-on
  assert.equal(s.teams.T1.lineup.BOT,'peyz');assert.equal(s.teams.HLE.lineup.BOT,'gumayusi');assert.equal(s.teams.KT.lineup.SUP,'pollu');assert.equal(s.teams.KDF.lineup.SUP,'life');assert.equal(s.teams.DRX.lineup.JGL,'willer');assert.equal(s.teams.BRO.lineup.MID,'roamer');assert.equal(s.teams.KDF.abbr,'DNS');assert.equal(s.teams.LSB.abbr,'BFX');assert.equal(s.teams.DRX.abbr,'KRX');
  for(const p of Object.values(data.mastery.players)){assert.equal(Object.keys(p.champions).length,data.champions.length);for(const x of Object.values(p.champions))if(x.games)assert(x.lastPlayed<'2026-01-01');else assert.equal(x.score,48);}
  E.startSeason(s);assert.deepEqual(s.cupGroups.map(g=>g[0]),['GEN','HLE']);assert.equal(s.matches[0].date,'2026-01-14');
+});
+test('verified mastery applies small multikill bonuses and only uses pro results before the career date',()=>{
+ const {coverage,players}=data.masteryRecords;
+ assert.deepEqual(Object.keys(players).sort(),Object.keys(data.mastery.players).sort());
+ assert.equal(coverage.worlds.sets,98);
+ assert.equal(coverage.worlds.additionalSets,76);
+ assert.equal(coverage.worlds.additionalAppearances,654);
+ for(const [id,champions] of Object.entries(players))for(const [champion,updates] of Object.entries(champions)){
+  const base=data.mastery.players[id].champions[champion].score;
+  assert(updates.every(([day,score],i)=>score>=48&&score<=99&&(!i||day>updates[i-1][0])));
+  assert(updates.filter(([day])=>day<'2026-01-01').every(([,score])=>score>base&&score<=base+3));
+ }
+ const s=E.newGame();
+ assert.equal(E.masteryEvidence('viper','Yunara').score,81);
+ assert.equal(E.mastery(s,'viper','Yunara'),82);
+ assert.equal(E.mastery(s,'faker','Azir'),88);
+ s.date='2026-01-18';assert.equal(E.mastery(s,'pop9','Vi'),48);
+ s.date='2026-01-19';assert.equal(E.mastery(s,'pop9','Vi'),51);
+ s.date='2026-11-14';assert.equal(E.mastery(s,'chovy','Syndra'),79);
+ s.date='2026-11-15';assert.equal(E.mastery(s,'chovy','Syndra'),80);
+ s.masteryGains.chovy={Syndra:25};assert.equal(E.mastery(s,'chovy','Syndra'),99);
+ assert.equal(E.mastery(s,'unlinked-player','Azir'),48);
 });
 test('2026 patch schedule, champion releases, datedkits and weeklymeta never use later observations',()=>{
  assert.equal(E.patchAt('2026-01-08'),'16.1.1');assert.equal(E.patchAt('2026-01-21'),'16.1.1');assert.equal(E.patchAt('2026-01-22'),'16.2.1');assert.equal(E.patchAt('2026-09-09'),'16.17.1');assert.equal(E.patchAt('2026-09-10'),'16.18.1');assert.equal(E.patchAt('2026-11-23'),'16.23.1');assert.equal(E.patchAt('2026-11-14','WORLDS'),'16.20.1');assert.equal(E.patchLabel('16.1.1'),'26.01');
