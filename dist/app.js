@@ -50,11 +50,13 @@ function shell(body){document.documentElement.style.setProperty('--team',t(state
 function render(){
  const draft=state?.activeDraft;
  const panelKey=draft?`${draft.matchId}:${draft.set}`:null;
+ const sameDraft=nav==='draft'&&document.body.dataset.screen==='draft'&&panelKey===ui.draftPanelKey;
+ const draftSelectionScroll=sameDraft?$('.draft-selection')?.scrollTop:null;
+ const draftScroll=sameDraft?$('.work-sheet')?.scrollTop:null;
+ const metaLeft=sameDraft?$('.meta-lanes')?.scrollLeft:null;
  if(panelKey!==ui.draftPanelKey){
   Object.assign(ui,{draftPanelKey:panelKey,draftMetaOpen:false,draftSynergyOpen:false,draftSynergyChampion:'',draftSynergyMode:'skills',draftSynergyPage:0});
  }
- const draftPoolScroll=nav==='draft'?$('.draft-pool .champ-grid')?.scrollTop:null,metaLeft=nav==='draft'?$('.meta-lanes')?.scrollLeft:null;
- const draftScroll=nav==='draft'&&document.body.dataset.screen==='draft'?$('.work-sheet')?.scrollTop:null;
  if(state&&nav==='viewer'&&document.body.dataset.screen==='viewer'&&refreshViewer(app,viewerView(),()=>paintScene(presentationContext())))return;
  document.body.dataset.screen=state?nav:'select';
  if(!state){onBoard();return;}
@@ -65,8 +67,8 @@ function render(){
  const sub=['squad','training','champions'].includes(nav)?[['squad','선수단 관리'],['training','훈련 및 전술'],['champions','챔피언 연구실']]:['league','calendar','history'].includes(nav)?[['league','리그 순위'],['calendar','시즌 일정'],['history','경기 기록']]:['finance','settings'].includes(nav)?[['finance','구단 재정'],['training','시설 · 코칭'],['settings','설정 · 저장']]:[];
  const content=nav==='viewer'?viewerView():nav==='draft'||nav==='draft-reference'?draftView():`<div class="content">${(pages[nav]??squadView)()}<div class="footer-note">LCK MANAGER · 비공식 팬 게임 · 능력치·경제·경기 결과는 가상 수치, 숙련은 출전 기록 기반 추정입니다.</div></div>`;
  shell(`<section class="work-sheet ${stages.includes(nav)?'match-sheet':''}"><header class="work-sheet-top"><strong>${labels[nav]??'MATCH CENTER'}</strong><button data-action="nav" data-id="home" aria-label="집무실로 닫기">×</button></header>${sub.length?`<div class="sub-navigation">${sub.map(([id,label])=>`<button data-action="nav" data-id="${id}" class="${id===nav?'active':''}">${label}</button>`).join('')}</div>`:''}${content}</section>`);
- if(draftScroll!==null&&draftScroll!==undefined&&$('.work-sheet'))$('.work-sheet').scrollTop=draftScroll;
- if(draftPoolScroll!=null&&$('.draft-pool .champ-grid'))$('.draft-pool .champ-grid').scrollTop=draftPoolScroll;
+ if(draftScroll!=null&&$('.work-sheet'))$('.work-sheet').scrollTop=draftScroll;
+ if(draftSelectionScroll!=null&&$('.draft-selection'))$('.draft-selection').scrollTop=draftSelectionScroll;
  if(metaLeft!=null&&$('.meta-lanes'))$('.meta-lanes').scrollLeft=metaLeft;
  if(nav==='viewer')requestAnimationFrame(()=>paintScene(presentationContext()));
  if(nav==='draft'&&state.activeDraft&&E.draftTurn(state.activeDraft)?.team&&E.draftTurn(state.activeDraft).team!==state.myTeam&&!ui.draftBusy)queueMicrotask(()=>{if(nav==='draft'&&!ui.draftBusy&&!busy)animateDraft(true).catch(e=>toast(e.message,true));});
