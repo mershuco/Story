@@ -1,0 +1,101 @@
+{
+  "source": "https://oracleselixir.com/tools/downloads",
+  "sha256": "cf499d20eb3f84667b487fc1e28c5c73d47b3f535f155f8f5156eac7610b29f4",
+  "asOf": "2026-09-13",
+  "lckSets": 502,
+  "playersWithStyleData": 201,
+  "priorYearPlayers": [
+    "calix"
+  ],
+  "majorPlayerSets": 25740,
+  "earlyKillsPerGame": 7.584,
+  "blowoutSets": 255,
+  "similarProductionPairs": {
+    "TOP": [
+      12,
+      796
+    ],
+    "MID": [
+      33,
+      1349
+    ]
+  },
+  "roleStats": {
+    "TOP": {
+      "medianCS15": 141.0,
+      "medianAbsoluteGoldDiff15": 551.0,
+      "medianAbsoluteCSDiff15": 13.0,
+      "earlyKillsPerPlayer": 0.495,
+      "medianCSPM": 8.6,
+      "medianDPM": 606,
+      "DPMQuartiles": [
+        477,
+        606,
+        763
+      ],
+      "over20kShare": 0.451,
+      "blowoutWinnerGoldDiff": 2248
+    },
+    "JGL": {
+      "medianCS15": 117.0,
+      "medianAbsoluteGoldDiff15": 463.0,
+      "medianAbsoluteCSDiff15": 10.0,
+      "earlyKillsPerPlayer": 1.131,
+      "medianCSPM": 6.91,
+      "medianDPM": 444,
+      "DPMQuartiles": [
+        340,
+        444,
+        559
+      ],
+      "over20kShare": 0.191,
+      "blowoutWinnerGoldDiff": 2805
+    },
+    "MID": {
+      "medianCS15": 150.0,
+      "medianAbsoluteGoldDiff15": 540.0,
+      "medianAbsoluteCSDiff15": 11.0,
+      "earlyKillsPerPlayer": 0.918,
+      "medianCSPM": 9.17,
+      "medianDPM": 649,
+      "DPMQuartiles": [
+        512,
+        649,
+        807
+      ],
+      "over20kShare": 0.546,
+      "blowoutWinnerGoldDiff": 2738
+    },
+    "BOT": {
+      "medianCS15": 146.0,
+      "medianAbsoluteGoldDiff15": 643.0,
+      "medianAbsoluteCSDiff15": 12.0,
+      "earlyKillsPerPlayer": 0.918,
+      "medianCSPM": 10.13,
+      "medianDPM": 745,
+      "DPMQuartiles": [
+        584,
+        745,
+        919
+      ],
+      "over20kShare": 0.66,
+      "blowoutWinnerGoldDiff": 3783
+    },
+    "SUP": {
+      "medianCS15": 21.0,
+      "medianAbsoluteGoldDiff15": 281.0,
+      "medianAbsoluteCSDiff15": 5.0,
+      "earlyKillsPerPlayer": 0.329,
+      "medianCSPM": 1.05,
+      "medianDPM": 210,
+      "DPMQuartiles": [
+        156,
+        210,
+        285
+      ],
+      "over20kShare": 0.006,
+      "blowoutWinnerGoldDiff": 1588
+    }
+  },
+  "priorYearSha256": "1adfa81d8ea54cd62b332d18f8a4089cb64331da448b11f0ff7084fac55ed406"
+}

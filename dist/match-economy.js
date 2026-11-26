@@ -31,7 +31,18 @@ export function settleDeathBounty(s,victim,reward,assistPaid){
 }
 export function markBusy(s,players,until){for(const p of players){const id=typeof p==='string'?p:p.player;s.busyAt[id]=(s.busyUntil[id]??0)>s.clock?Math.min(s.busyAt[id],s.clock):s.clock;s.busyUntil[id]=Math.max(s.busyUntil[id]??0,until);}}
 export function availableFarmMinutes(s,p,from,to){
- const start=Math.max(from,1.8);if(to<=start)return 0;
- const windows=[[s.deathAt[p.player],s.respawnAt?.[p.player]],[s.busyAt[p.player],s.busyUntil[p.player]]].filter(([a,b])=>Number.isFinite(a)&&b>start&&a<to).map(([a,b])=>[Math.max(a,start),Math.min(b,to)]).sort((a,b)=>a[0]-b[0]);
+ const farmStart=s.version>=15&&s.input.objectiveEra===2026?(p.role==='JGL'?55/60:p.role==='MID'?1.02:1.13):1.8;
+ const start=Math.max(from,farmStart);if(to<=start)return 0;
+ const windows=[[s.deathAt[p.player],s.farmReturnAt?.[p.player]??s.respawnAt?.[p.player]],[s.busyAt[p.player],s.busyUntil[p.player]]].filter(([a,b])=>Number.isFinite(a)&&b>start&&a<to).map(([a,b])=>[Math.max(a,start),Math.min(b,to)]).sort((a,b)=>a[0]-b[0]);
  let lost=0,end=start;for(const [a,b]of windows){lost+=Math.max(0,b-Math.max(a,end));end=Math.max(end,b);}return Math.max(0,to-start-lost);
+}
+
+export function botQuestReward(s,p,{laneMinutes=0,awayMinutes=0,minions=0,points=0,takedown=false}={}){
+ if(s.version<15||s.input.objectiveEra!==2026||p.role!=='BOT')return 0;
+ const patch=Number(s.input.patch?.split('.')[1]??1),takedownGold=patch>=9?40:50;
+ if(p.questPoints===1350)return fractionalIncome(s,p.player,'roleQuest',minions*2+(takedown?takedownGold:0));
+ const progress=laneMinutes*(patch>=9?90:96)+awayMinutes*20+minions*3+points+(takedown?15:0);
+ const remaining=1350-(p.questPoints??0);
+ p.questPoints=Math.min(1350,(p.questPoints??0)+progress);
+ return progress>=remaining?300+fractionalIncome(s,p.player,'roleQuest',minions*2*(1-remaining/progress)):0;
 }

@@ -1,4 +1,5 @@
-import {accountIncome,fractionalIncome,availableFarmMinutes} from './match-economy.js';
+import {accountIncome,fractionalIncome,availableFarmMinutes,botQuestReward} from './match-economy.js';
+import {laningFarmRate,damageRate} from './laning.js';
 import {claimObjectiveBounty,bountySnapshot} from './objective-bounties.js';
 // Persistent structures, player economy and vision. Numerical coefficients are
 // game estimates; damage is resolved per scene, not with LoL's server combat.
@@ -30,8 +31,13 @@ export function farmPlayers(s,delta,{rng=()=>.5}={}){
  for(const p of s.stats){
   const passiveMinutes=Math.max(0,s.clock-Math.max(from,1+50/60));creditPlayer(s,p.player,fractionalIncome(s,p.player,'passive',passiveMinutes*122.4),{source:'passive'});
   const available=availableFarmMinutes(s,p,from,s.clock),skill=clamp((p.team===s.teams[0]?s.powerGap:-s.powerGap)*.002,-.06,.06),rate=p.role==='SUP'?.8:p.role==='JGL'?5.8:7.6;
-  const cs=available*rate*tempo*(1+skill),source=p.role==='JGL'?'jungle':'lane',unit=p.role==='JGL'?27:21;
+  const cs=available*tempo*(s.version>=15?laningFarmRate(s,p,from):rate*(1+skill)),source=p.role==='JGL'?'jungle':'lane',unit=p.role==='JGL'?(s.version>=15?23:27):21;
   p.cs+=cs;creditPlayer(s,p.player,fractionalIncome(s,p.player,source,cs*unit),{source});
+  if(s.version>=15){
+   const quest=botQuestReward(s,p,{laneMinutes:available,awayMinutes:Math.max(0,s.clock-Math.max(from,1+5/60)-available),minions:cs});
+   if(quest)creditPlayer(s,p.player,quest,{source:'roleQuest'});
+   p.damage+=available*damageRate(s,p)*(p.role==='JGL'?.46:.64);
+  }
   p.level=clamp(1+Math.floor(s.clock*.25+p.cs/40+(p.k+p.a*.25)*.12),1,18);
  }
 }
@@ -41,6 +47,7 @@ export function collectSideResources(s,id,{lane,rng,maximum=350}={}){
  const minions=Math.min(10,Math.floor((3+rng()*8)*quality*ready)),laneGold=Math.min(maximum,minions*21),camp=rng()<quality*.65&&ready>=.7&&alive.some(p=>p.role==='JGL'||p.role==='TOP')?1:0,jungleGold=camp?Math.min(maximum-laneGold,80+Math.floor(rng()*21)):0;
  const receiver=laners.find(p=>p.role===(lane==='top'?'TOP':lane==='bot'?'BOT':'MID'))??laners[0],jungler=alive.find(p=>p.role==='JGL')??receiver;
  creditPlayer(s,receiver.player,laneGold,{source:'sideLane'});receiver.cs+=laneGold/21;creditPlayer(s,jungler.player,jungleGold,{source:'sideJungle'});jungler.cs+=camp?4:0;s.sideCollections[key]=s.clock;
+ const quest=botQuestReward(s,receiver,{minions:laneGold/21});if(quest)creditPlayer(s,receiver.player,quest,{source:'roleQuest'});
  return {gold:laneGold+jungleGold,lane:laneGold,jungle:jungleGold,minions,camps:camp};
 }
 export function tickRift(s,minute){
@@ -121,6 +128,10 @@ export function attackStructures(s,id,{lane='mid',rng,dead=[],uncontested=false,
   const b=nextBuilding(s,id,lane);if(b.hp<=0)break;const dealt=Math.min(b.hp,damage);damage-=dealt;result.damage+=dealt;const hp=Math.max(0,b.hp-dealt),base=s.structures[defender],l=base.lanes[lane];
   if(b.kind==='tower')l.towers[b.index]=hp;else if(b.kind==='inhibitor'){l.inhibitor=hp;if(!hp)l.inhibitorUntil=s.clock+5;}else if(b.kind==='nexusTower')base.nexusTowers[b.index]=hp;else base.nexus=hp;
   const change={...b,hpBefore:b.hp,hpAfter:hp,destroyed:hp===0};result.structures.push(change);
+  if(!hp&&s.version>=15&&b.kind==='tower'){
+   const carry=s.stats.find(p=>p.team===id&&p.role==='BOT'&&(!roles||roles.includes(p.role))&&(s.respawnAt[p.player]??0)<=s.clock);
+   if(carry){const quest=botQuestReward(s,carry,{points:lane==='bot'?50:25});if(quest)creditPlayer(s,carry.player,quest,{source:'roleQuest'});}
+  }
   if(!hp){const bonus=claimObjectiveBounty(s,id,b.kind,b.index);const reward=BUILDING_GOLD[b.kind];if(reward>0){creditTeam(s,id,reward,{roles,source:'structures'});result.gold+=reward;change.gold=reward;}if(!s.firstTowerClaimed&&['tower','nexusTower'].includes(b.kind)){s.firstTowerClaimed=true;creditTeam(s,id,300,{roles,source:'firstTower'});result.gold+=300;change.firstTower=300;}if(bonus){creditTeam(s,id,bonus,{source:'objectiveBounty'});result.bounty+=bonus;change.bounty=bonus;}result.vision.push(...gainVision(s,id,lane,b.kind==='tower'?22:14));if(b.kind==='nexus')break;}
   if(hp>0)break;
  }

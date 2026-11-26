@@ -1,0 +1,601 @@
+{
+  "source": "Games of Legends",
+  "timelineURL": "https://gol.gg/game/stats/{id}/page-timeline/",
+  "selection": "Evenly spaced opening sets across Cup, Rounds 1\u20132, Rounds 3\u20134 and playoffs, all Road to MSI opening sets, and three cross-check sets. One of 32 selected timelines could not be read in the archive.",
+  "missingGameIds": [
+    81362
+  ],
+  "unresolvedAssistRoleKills": 11,
+  "matchCount": 31,
+  "data": {
+    "73121": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 1,
+      "other": 3,
+      "earlyKills": 4,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          578,
+          0
+        ],
+        [
+          907,
+          5
+        ]
+      ]
+    },
+    "73139": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 3,
+      "jungleSmall": 7,
+      "other": 9,
+      "earlyKills": 19,
+      "repeatDuo": 2,
+      "dragons": [
+        [
+          604,
+          7
+        ],
+        [
+          1044,
+          3
+        ]
+      ]
+    },
+    "73405": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 1,
+      "other": 9,
+      "earlyKills": 10,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          335,
+          0
+        ],
+        [
+          713,
+          1
+        ]
+      ]
+    },
+    "73690": {
+      "topSolo": 2,
+      "midSolo": 1,
+      "botDuo": 0,
+      "jungleSmall": 3,
+      "other": 1,
+      "earlyKills": 7,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          659,
+          0
+        ],
+        [
+          1057,
+          2
+        ]
+      ]
+    },
+    "74165": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 8,
+      "other": 3,
+      "earlyKills": 11,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          646,
+          0
+        ],
+        [
+          1001,
+          2
+        ]
+      ]
+    },
+    "74678": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 2,
+      "other": 2,
+      "earlyKills": 4,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          347,
+          0
+        ],
+        [
+          683,
+          0
+        ]
+      ]
+    },
+    "75840": {
+      "topSolo": 1,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 1,
+      "other": 3,
+      "earlyKills": 5,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          520,
+          0
+        ],
+        [
+          872,
+          2
+        ]
+      ]
+    },
+    "76055": {
+      "topSolo": 1,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 2,
+      "other": 4,
+      "earlyKills": 7,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          457,
+          1
+        ],
+        [
+          789,
+          1
+        ]
+      ]
+    },
+    "76524": {
+      "topSolo": 0,
+      "midSolo": 2,
+      "botDuo": 0,
+      "jungleSmall": 2,
+      "other": 1,
+      "earlyKills": 5,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          369,
+          0
+        ],
+        [
+          689,
+          0
+        ]
+      ]
+    },
+    "76935": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 5,
+      "other": 2,
+      "earlyKills": 7,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          613,
+          0
+        ],
+        [
+          931,
+          0
+        ]
+      ]
+    },
+    "77658": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 1,
+      "other": 3,
+      "earlyKills": 4,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          727,
+          2
+        ],
+        [
+          1052,
+          0
+        ]
+      ]
+    },
+    "78063": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 1,
+      "other": 7,
+      "earlyKills": 8,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          821,
+          1
+        ],
+        [
+          1192,
+          2
+        ]
+      ]
+    },
+    "78878": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 3,
+      "other": 1,
+      "earlyKills": 4,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          647,
+          1
+        ],
+        [
+          1010,
+          0
+        ]
+      ]
+    },
+    "79147": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 4,
+      "other": 0,
+      "earlyKills": 4,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          641,
+          0
+        ],
+        [
+          1087,
+          1
+        ]
+      ]
+    },
+    "79270": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 1,
+      "jungleSmall": 1,
+      "other": 1,
+      "earlyKills": 3,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          410,
+          0
+        ],
+        [
+          740,
+          0
+        ]
+      ]
+    },
+    "79275": {
+      "topSolo": 0,
+      "midSolo": 1,
+      "botDuo": 0,
+      "jungleSmall": 3,
+      "other": 3,
+      "earlyKills": 7,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          360,
+          1
+        ],
+        [
+          686,
+          2
+        ]
+      ]
+    },
+    "79438": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 2,
+      "other": 4,
+      "earlyKills": 6,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          403,
+          0
+        ],
+        [
+          723,
+          0
+        ]
+      ]
+    },
+    "79479": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 3,
+      "jungleSmall": 4,
+      "other": 6,
+      "earlyKills": 13,
+      "repeatDuo": 1,
+      "dragons": [
+        [
+          501,
+          3
+        ],
+        [
+          830,
+          1
+        ]
+      ]
+    },
+    "80681": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 1,
+      "other": 6,
+      "earlyKills": 7,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          380,
+          0
+        ],
+        [
+          787,
+          1
+        ]
+      ]
+    },
+    "80743": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 1,
+      "other": 5,
+      "earlyKills": 6,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          839,
+          0
+        ],
+        [
+          1155,
+          1
+        ]
+      ]
+    },
+    "81044": {
+      "topSolo": 1,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 2,
+      "other": 5,
+      "earlyKills": 8,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          377,
+          0
+        ],
+        [
+          794,
+          3
+        ]
+      ]
+    },
+    "81344": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 4,
+      "other": 1,
+      "earlyKills": 5,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          498,
+          0
+        ],
+        [
+          858,
+          0
+        ]
+      ]
+    },
+    "81856": {
+      "topSolo": 1,
+      "midSolo": 0,
+      "botDuo": 1,
+      "jungleSmall": 2,
+      "other": 6,
+      "earlyKills": 10,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          429,
+          0
+        ],
+        [
+          749,
+          0
+        ]
+      ]
+    },
+    "82396": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 2,
+      "other": 6,
+      "earlyKills": 8,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          487,
+          0
+        ],
+        [
+          825,
+          1
+        ]
+      ]
+    },
+    "82409": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 1,
+      "other": 6,
+      "earlyKills": 7,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          378,
+          0
+        ],
+        [
+          714,
+          1
+        ]
+      ]
+    },
+    "82414": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 3,
+      "other": 4,
+      "earlyKills": 7,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          369,
+          0
+        ],
+        [
+          690,
+          3
+        ]
+      ]
+    },
+    "82620": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 2,
+      "jungleSmall": 0,
+      "other": 3,
+      "earlyKills": 5,
+      "repeatDuo": 1,
+      "dragons": [
+        [
+          528,
+          4
+        ],
+        [
+          997,
+          2
+        ]
+      ]
+    },
+    "82692": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 2,
+      "jungleSmall": 0,
+      "other": 3,
+      "earlyKills": 5,
+      "repeatDuo": 1,
+      "dragons": [
+        [
+          556,
+          3
+        ],
+        [
+          898,
+          1
+        ]
+      ]
+    },
+    "82962": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 1,
+      "jungleSmall": 2,
+      "other": 3,
+      "earlyKills": 6,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          659,
+          2
+        ],
+        [
+          1013,
+          0
+        ]
+      ]
+    },
+    "82963": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 3,
+      "other": 6,
+      "earlyKills": 9,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          372,
+          0
+        ],
+        [
+          715,
+          1
+        ]
+      ]
+    },
+    "82965": {
+      "topSolo": 0,
+      "midSolo": 0,
+      "botDuo": 0,
+      "jungleSmall": 3,
+      "other": 2,
+      "earlyKills": 5,
+      "repeatDuo": 0,
+      "dragons": [
+        [
+          426,
+          0
+        ],
+        [
+          750,
+          0
+        ]
+      ]
+    }
+  }
+}

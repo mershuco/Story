@@ -1,6 +1,7 @@
 import {deathTimerSeconds} from './death-timer.js';
 import * as legacyV10 from './match-sim-v10.js';
-import {initializeEconomy,killReward,settleDeathBounty,markBusy} from './match-economy.js';
+import {initializeEconomy,killReward,settleDeathBounty,markBusy,botQuestReward} from './match-economy.js';
+import {LANING_END,laneEvent,lanePressure,localFightChance,dragonLaneControl,addFightDamage} from './laning.js';
 import * as legacyV9 from './match-sim-v9.js';
 import {initializeBounties,updateBounties,claimObjectiveBounty} from './objective-bounties.js';
 import * as legacyV8 from './match-sim-v8.js';
@@ -14,7 +15,7 @@ import {initializeRift,creditPlayer,creditTeam,farmPlayers,tickRift,gainVision,v
 import * as legacyV5 from './match-sim-v5.js';
 import {initializeObjectives,takeDragon,grantTemporaryBuff,loseBuffsOnDeath,buffCoverage,objectivePower,structurePressure,objectiveSnapshot,DRAKES} from './objective-effects.js';
 export {goldInfluence,battleFactors,battleProbability,matchRandom};
-export const SIMULATION_MODEL='event-v14';
+export const SIMULATION_MODEL='event-v15';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const sigmoid=x=>1/(1+Math.exp(-x));
 const round=n=>Math.round(n*1000)/1000;
@@ -27,6 +28,7 @@ const comp=(s,id)=>id===s.input.blue?s.input.compositionBlue:s.input.composition
 const nextGap=(s,rng)=>.95+rng()*1.65+(1-(s.macros[0].aggression+s.macros[1].aggression)/2)*.65;
 function macro(s,id){return s.macros[s.teams.indexOf(id)];}
 function farming(s,minute,rng){
+ if(s.version>=15&&s.events.length)minute=Math.max(minute,(s.events.at(-1).second+1)/60);
  const delta=Math.max(0,minute-s.clock);tickRift(s,minute);s.clock=round(minute);farmPlayers(s,delta,{rng});
 }
 function record(s,{kind,title,location='mid',roles=null,team=null,kills=[],objective=null,...extra}){
@@ -41,25 +43,34 @@ function record(s,{kind,title,location='mid',roles=null,team=null,kills=[],objec
 }
 export function createMatchState(input,seed=0,external){
  const snapshot=structuredClone(input),{blue,red}=snapshot,teams=[blue,red],zeros=()=>Object.fromEntries(teams.map(id=>[id,0]));
- const version=input.model==='event-v11'?11:input.model==='event-v12'?12:input.model==='event-v13'?13:14;
+ const version=['event-v11','event-v12','event-v13','event-v14'].includes(input.model)?Number(input.model.slice(7)):15;
  const s={version,input:snapshot,rng:seed>>>0,teams,clock:0,stats:snapshot.roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),gold:{[blue]:2500,[red]:2500},score:zeros(),dragons:zeros(),grubs:zeros(),heralds:zeros(),barons:zeros(),elders:zeros(),baronUntil:zeros(),elderUntil:zeros(),momentum:zeros(),minLead:zeros(),events:[],lastLeader:null,leadChanges:0,winner:null,finished:false,pending:null,window:0,decisions:[],soul:null,steps:0};
  s.powerGap=(input.teamStrengthBlue??input.bluePower)-(input.teamStrengthRed??input.redPower);s.championGap=input.bluePower-input.redPower-s.powerGap;
  s.macros=[macroProfile(blue,input.compositionBlue,input.blueStrategy),macroProfile(red,input.compositionRed,input.redStrategy)];
  const rng=()=>draw(s,external),delay=()=>.3+rng()*1.4+(1-(s.macros[0].objective+s.macros[1].objective)/2)*.8;
  s.timers={dragon:5+delay(),grubs:input.objectiveEra===2022?null:8+delay(),herald:null,baron:20+delay(),elder:null};s.nextMacro=2.4+rng()*1.3;
  initializeObjectives(s,rng);initializeRift(s);initializeBounties(s);s.respawnAt={};initializeEconomy(s);
+ if(version>=15){
+  s.timers.dragon+=.65+rng()*.7;
+  s.farmReturnAt={};s.duoKillAt={};s.lastLaneRoll=1.65;
+  s.laneForm=Object.fromEntries(s.stats.map(p=>[p.player,(rng()-.5)*10]));
+  for(const p of s.stats)p.damage=0;
+ }
  const matchup=compositionMatchup(input.compositionBlue,input.compositionRed,0,'teamfight',{synergies:version>=12,synergySpikes:version>=13,expandedSynergies:version>=14});s.initialBlueProbability=battleProbability({powerGap:s.powerGap,championGap:s.championGap,compositionGap:matchup.gap});
  record(s,{kind:'opening',title:'라인 배치'});return s;
 }
-function combatEstimate(s,minute,kind,roles=null,execution=0){
+function combatEstimate(s,minute,kind,roles=null,execution=0,participants=null){
  const [blue,red]=s.teams,lead=s.gold[blue]-s.gold[red];
  const blueStats=s.stats.filter(p=>p.team===blue),redStats=s.stats.filter(p=>p.team===red);
  const options={blueStats,redStats,roles,synergies:s.version>=12,synergySpikes:s.version>=13,expandedSynergies:s.version>=14};
  if(options.synergies){
-  const absent=players=>players.filter(p=>(s.respawnAt[p.player]??0)>minute).map(p=>p.champion);
+  const absent=players=>players.filter(p=>(s.respawnAt[p.player]??0)>minute||participants&&!participants[p.team].includes(p)).map(p=>p.champion);
   options.blueAbsent=absent(blueStats);options.redAbsent=absent(redStats);
  }
- const matchup=compositionMatchup(comp(s,blue),comp(s,red),minute,kind,options);
+ const composition=id=>{
+  const draft=comp(s,id);return participants&&draft?{...draft,members:participants[id].map(p=>[p.champion,p.role])}:draft;
+ };
+ const matchup=compositionMatchup(composition(blue),composition(red),minute,kind,options);
  const strategy=(plan)=>plan==='early'?clamp((18-minute)/12,-.4,1)*1.4:plan==='late'?clamp((minute-16)/18,-.5,1)*1.4:0;
  const effects=[objectivePower(s,blue,minute,kind,roles),objectivePower(s,red,minute,kind,roles)],buffGap=effects[0].total-effects[1].total;
  const scaleGap=comp(s,blue)&&comp(s,red)?0:((s.input.scaleBlue??0)-(s.input.scaleRed??0))*.9;
@@ -79,11 +90,15 @@ function tradePlan(s,id,kind){
  const lane=['dragon','elder'].includes(kind)?'top':'bot',roles=lane==='top'?['TOP','MID']:['BOT','SUP'];
  return {lane,roles,resourceMaximum:350};
 }
-function battle(s,kind,location,roles,rng){
+function battle(s,kind,location,roles,rng,laneFight=null){
  s.battleLocation=location;
- const [blue,red]=s.teams,before=s.gold[blue]-s.gold[red],c=combatEstimate(s,s.clock,kind,roles,(rng()-rng())*3.5),byId=Object.fromEntries(s.stats.map(p=>[p.player,p])),pools=Object.fromEntries(s.teams.map(id=>[id,s.stats.filter(p=>p.team===id&&(!roles||roles.includes(p.role))&&(s.respawnAt[p.player]??0)<=s.clock)]));
- const roll=rng(),winner=!pools[blue].length?red:!pools[red].length?blue:roll<c.probability?blue:red,loser=enemy(s,winner),quotes=Object.fromEntries(s.stats.map(p=>[p.player,killReward(s,p)]));
- const elder=buffCoverage(s,'elder',winner,s.clock,roles),extraExecute=elder>0&&rng()<elder*.65,max=roles?Math.min(2,pools[loser].length):s.clock<15?3:5,wins=pools[winner].length?Math.min(pools[loser].length,1+Math.floor(rng()*max)+(extraExecute?1:0)):0,losses=Math.min(pools[winner].length,Math.max(0,Math.floor(rng()*Math.min(wins,3))-(elder>0?1:0))),kills=[];let bounty=0;
+ const [blue,red]=s.teams,before=s.gold[blue]-s.gold[red],c=combatEstimate(s,s.clock,kind,roles,(rng()-rng())*3.5,laneFight?.participants),byId=Object.fromEntries(s.stats.map(p=>[p.player,p])),pools=laneFight?.participants??Object.fromEntries(s.teams.map(id=>[id,s.stats.filter(p=>p.team===id&&(!roles||roles.includes(p.role))&&(s.respawnAt[p.player]??0)<=s.clock)]));
+ const gank=laneFight&&kind==='gank',localOdds=laneFight?localFightChance(s,location,pools,gank?laneFight.attacker:null):c.probability;
+ const roll=rng(),winner=!pools[blue].length?red:!pools[red].length?blue:laneFight&&!gank?laneFight.attacker:roll<localOdds?blue:red,loser=enemy(s,winner),quotes=Object.fromEntries(s.stats.map(p=>[p.player,killReward(s,p)]));
+ const elder=buffCoverage(s,'elder',winner,s.clock,roles),extraExecute=elder>0&&rng()<elder*.65;
+ const max=roles?Math.min(2,pools[loser].length):s.clock<15?3:5;
+ const wins=pools[winner].length?Math.min(pools[loser].length,laneFight?1+(gank&&location==='bot'&&rng()<.24?1:0):1+Math.floor(rng()*max)+(extraExecute?1:0)):0;
+ const losses=Math.min(pools[winner].length,laneFight?Number(!!gank&&rng()<.17):Math.max(0,Math.floor(rng()*Math.min(wins,3))-(elder>0?1:0))),kills=[];let bounty=0;
  for(const[id,count]of[[winner,wins],[loser,losses]])for(const[victim,index]of shuffle(pools[enemy(s,id)],rng).slice(0,count).map((p,i)=>[p,i])){
   const elderPool=pools[id].filter(p=>s.buffHolders.elder[id].includes(p.player)),killerPool=id===winner&&extraExecute&&index===wins-1&&elderPool.length?elderPool:pools[id];if(!killerPool.length)continue;
   const killer=weighted(killerPool.map(p=>[p,{TOP:2,JGL:2.2,MID:3,BOT:3.2,SUP:.7}[p.role]??1]),rng),assists=shuffle(pools[id].filter(p=>p.player!==killer.player),rng).slice(0,Math.min(pools[id].length-1,1+Math.floor(rng()*4))).map(p=>p.player),reward={...quotes[victim.player],firstBlood:s.firstBloodClaimed?0:100};
@@ -91,11 +106,18 @@ function battle(s,kind,location,roles,rng){
   byId[killer.player].k++;byId[victim.player].d++;for(const pid of assists)byId[pid].a++;s.score[id]++;
   creditPlayer(s,killer.player,reward.base,{source:'kills'});creditPlayer(s,killer.player,reward.shutdown,{source:'shutdown'});creditPlayer(s,killer.player,reward.firstBlood,{source:'firstBlood'});
   let left=reward.assistPool;assists.forEach((pid,i)=>{const amount=i===assists.length-1?left:Math.floor(reward.assistPool/assists.length);left-=amount;creditPlayer(s,pid,amount,{source:'assists'});});
+  if(s.version>=15)for(const pid of [killer.player,...assists]){
+   const quest=botQuestReward(s,byId[pid],{takedown:true});if(quest)creditPlayer(s,pid,quest,{source:'roleQuest'});
+  }
   bounty+=reward.shutdown;
  }
  for(const k of kills){s.deathAt[k.victim]=s.clock;s.respawnAt[k.victim]=s.clock+deathTimerSeconds(byId[k.victim].level,s.clock)/60;k.respawnAtSecond=Math.round(s.respawnAt[k.victim]*60);settleDeathBounty(s,byId[k.victim],{base:k.gold.kill,shutdown:k.gold.shutdown},k.gold.assists);}
+ if(s.version>=15){
+  for(const k of kills)s.farmReturnAt[k.victim]=s.respawnAt[k.victim]+(s.clock<LANING_END?.26:0);
+  addFightDamage(s,pools,kills,kind);
+ }
  markBusy(s,[...pools[blue],...pools[red]],s.clock+.18);loseBuffsOnDeath(s,kills.map(k=>k.victim));s.momentum[winner]++;s.momentum[loser]=0;
- const info={combatTeam:winner,leadBefore:before,blueWinProbability:c.probability,goldWeight:c.factors.goldWeight,compositionGap:c.matchup.gap,teamStrengthGap:s.powerGap,bounty,championPhaseGap:c.matchup.phaseGap,championFormGap:c.matchup.formGap,objectiveBuffGap:c.effects[0].total-c.effects[1].total,visionFightGap:c.visionGap,elderExecutions:kills.filter(k=>k.elderExecute).length};
+ const info={combatTeam:winner,leadBefore:before,blueWinProbability:localOdds,goldWeight:c.factors.goldWeight,compositionGap:c.matchup.gap,teamStrengthGap:s.powerGap,bounty,championPhaseGap:c.matchup.phaseGap,championFormGap:c.matchup.formGap,objectiveBuffGap:c.effects[0].total-c.effects[1].total,visionFightGap:c.visionGap,elderExecutions:kills.filter(k=>k.elderExecute).length};
  if(c.matchup.driver){const p=c.matchup.driver;info.championFormImpact=[p.side,p.champion,p.k,p.d,p.a,Math.round(p.performance*100)/100];}
  if(s.version>=12){
   const strongest=[
@@ -106,7 +128,11 @@ function battle(s,kind,location,roles,rng){
  }
  return {winner,loser,kills,bounty,winnerKills:wins,dead:kills.map(k=>k.victim),info};
 }
-function objectiveRoles(s,kind){if(!['grubs','herald'].includes(kind))return null;return(s.macros[0].vision+s.macros[1].vision)/2>.72?['TOP','JGL','MID','SUP']:['TOP','JGL','MID'];}
+function objectiveRoles(s,kind){
+ if(s.version>=15&&kind==='dragon'&&s.clock<LANING_END)return ['JGL','MID','BOT','SUP'];
+ if(!['grubs','herald'].includes(kind))return null;
+ return(s.macros[0].vision+s.macros[1].vision)/2>.72?['TOP','JGL','MID','SUP']:['TOP','JGL','MID'];
+}
 function nextObjective(s){
  if(s.timers.grubs!==null&&(s.clock>14.75||s.timers.grubs>14.75))s.timers.grubs=null;if(s.timers.herald!==null&&(s.clock>19.5||s.timers.herald>19.5))s.timers.herald=null;
  return Object.entries(s.timers).filter(([,time])=>time!==null).sort((a,b)=>a[1]-b[1])[0]??null;
@@ -124,8 +150,30 @@ function awardObjective(s,kind,owner,rng,dead=[]){
  if(kind==='elder'){s.elders[owner]++;grantTemporaryBuff(s,'elder',owner,dead);}
  return {kind,team:owner,...(kind==='dragon'?{soul:s.soul===owner}:{}),bounty};
 }
+function takeLaningDragon(s,time,rng){
+ const [blue,red]=s.teams,first=s.dragons[blue]+s.dragons[red]===0,drake=s.dragonType;
+ const control=dragonLaneControl(s);
+ if(!first&&control.blueReady&&control.redReady&&rng()>=control.concessionChance)return false;
+ farming(s,Math.max(time,s.clock+.2),rng);
+ const {blueReady,redReady,blueChance}=dragonLaneControl(s);
+ if(!blueReady&&!redReady){s.timers.dragon=s.clock+.5;return true;}
+ const owner=rng()<blueChance?blue:red;
+ const helpers=s.stats.filter(p=>p.team===owner&&['JGL','BOT','SUP'].includes(p.role)&&(s.respawnAt[p.player]??0)<=s.clock);
+ markBusy(s,helpers,s.clock+.18);gainVision(s,owner,'dragon',7);
+ for(const p of helpers){const quest=botQuestReward(s,p,{points:30});if(quest)creditPlayer(s,p.player,quest,{source:'roleQuest'});}
+ const reward=awardObjective(s,'dragon',owner,rng);
+ s.timers.dragon=s.clock+5+.4+rng()*.85;
+ record(s,{kind:'dragon',title:`${name(s,owner)} · ${first?'첫':'두 번째'} 드래곤 무교전 확보`,location:'dragon',team:owner,participants:helpers.map(p=>p.player),
+  objective:{...reward,dragonType:drake,startedBy:owner,contested:false},objectiveChance:round(blueChance),objectiveMode:'lane-control',
+  objectiveBountyGold:reward.bounty,bounty:reward.bounty,
+  text:`${name(s,owner)}이 하단 라인 상황과 정글 동선을 이용해 교전 없이 ${DRAKES[drake].name}용을 확보합니다.`});
+ s.nextMacro=Math.max(s.nextMacro,s.clock+.35);return true;
+}
 function resolveObjective(s,action,controlledTeam,rng){
  const p=s.pending,preview=objectivePreview(s),[blue,red]=s.teams,override=(s.input.decisionOverrides??[]).find(x=>x[0]===p.id),actions=Object.fromEntries(s.teams.map(id=>[id,chooseAuto(s,id,preview)]));
+ if(s.version>=15&&p.kind==='dragon'&&s.dragons[blue]+s.dragons[red]===1&&Math.abs(s.gold[blue]-s.gold[red])<4500){
+  actions[blue]='contest';actions[red]='contest';
+ }
  if(override){actions[override[1]]=override[2];s.decisions.push(override);}
  if(controlledTeam&&action&&action!=='auto'){actions[controlledTeam]=action;s.decisions.push([p.id,controlledTeam,action]);}
  const traders=s.teams.filter(id=>actions[id]==='trade'),fighters=s.teams.filter(id=>actions[id]==='contest');farming(s,p.minute,rng);
@@ -137,6 +185,10 @@ function resolveObjective(s,action,controlledTeam,rng){
  for(let n=0;n<count;n++)owners.push(fighters.length===1?fighters[0]:rng()<secure.blueChance?blue:red);
  const totals=Object.fromEntries(s.teams.map(id=>[id,owners.filter(owner=>owner===id).length])),main=totals[blue]>totals[red]?blue:red,steal=owners.some(owner=>owner!==initiator);let reward;
  for(const owner of owners)reward=awardObjective(s,p.kind,owner,rng,c?.dead??[]);
+ if(s.version>=15){
+  const carry=s.stats.find(player=>player.team===main&&player.role==='BOT'&&fighters.includes(main)&&(!p.roles||p.roles.includes('BOT'))&&(s.respawnAt[player.player]??0)<=s.clock);
+  if(carry){const quest=botQuestReward(s,carry,{points:30});if(quest)creditPlayer(s,carry.player,quest,{source:'roleQuest'});}
+ }
  if(p.kind==='grubs'||p.kind==='herald')s.timers[p.kind]=null;
  else if(p.kind==='dragon'&&!s.soul)s.timers.dragon=s.clock+5+.3+rng()*.7;
  else if(p.kind==='baron'||p.kind==='elder')s.timers[p.kind]=s.clock+6+.3+rng()*.7;
@@ -203,10 +255,29 @@ function macroEvent(s,rng){
  record(s,{kind,title:`${name(s,c.winner)} · ${lane==='top'?'상체':lane==='bot'?'하체':'미드'} ${kind==='siege'?'공성 전 교전':kind==='gank'?'갱킹':kind==='flank'?'측면 진입':'합류 교전'}`,location:lane,roles,team:c.winner,kills:c.kills,...c.info,macro:m.label});
  if(s.clock>12&&(kind==='siege'||(!roles&&c.winnerKills>=2))){farming(s,s.clock+.06,rng);const bigWin=c.winnerKills>=3&&c.kills.filter(k=>s.stats.find(p=>p.player===k.killer)?.team===c.winner).length-c.kills.filter(k=>s.stats.find(p=>p.player===k.killer)?.team===c.loser).length>=2;resolveCampaign(s,c.winner,rng,{lane,dead:c.dead,uncontested:c.winnerKills>=3,baron:buffCoverage(s,'baron',c.winner)>0,bigWin});}
 }
+function laningEvent(s,rng){
+ const elapsed=s.clock-s.lastLaneRoll;s.lastLaneRoll=s.clock;
+ const event=laneEvent(s,elapsed,rng);
+ if(!event){
+  const lane=weighted([['top',.31],['mid',.29],['bot',.4]],rng),gap=lanePressure(s,lane),leader=gap>=0?s.teams[0]:s.teams[1];
+  record(s,{kind:'laning',title:`${{top:'탑',mid:'미드',bot:'바텀'}[lane]} · 라인전`,location:lane,
+   text:Math.abs(gap)<4?'양 팀이 웨이브를 정리하며 CS를 챙깁니다.':`${name(s,leader)}이 웨이브 주도권으로 상대의 CS 확보를 압박합니다.`});
+  return;
+ }
+ const {kind,lane}=event,laneName={top:'탑',mid:'미드',bot:'바텀'}[lane];
+ const roles=event.participants?[...new Set(Object.values(event.participants).flat().map(p=>p.role))]:{top:['TOP','JGL','MID'],mid:['MID','JGL','SUP'],bot:['BOT','SUP','JGL']}[lane];
+ const fight=battle(s,kind,lane,roles,rng,event.participants?event:null);
+ if(kind==='duo-kill')s.duoKillAt[fight.winner]=s.clock;
+ gainVision(s,fight.winner,lane,kind==='gank'?7:4);
+ const type=kind==='solo-kill'?'솔로킬':kind==='duo-kill'?'듀오킬':kind==='gank'?fight.winner===event.attacker?'갱킹 성공':'갱킹 받아치기':'합류 교전';
+ const participants=event.participants?Object.values(event.participants).flat().map(p=>p.player):s.stats.filter(p=>roles.includes(p.role)&&((s.respawnAt[p.player]??0)<=s.clock||fight.dead.includes(p.player))).map(p=>p.player);
+ record(s,{kind,title:`${name(s,fight.winner)} · ${laneName} ${type}`,location:lane,roles,participants,team:fight.winner,kills:fight.kills,
+  text:`${name(s,fight.winner)}이 ${laneName}에서 ${type}으로 ${fight.winnerKills}킬을 얻습니다.`,...fight.info});
+}
 function finishMatch(s,winner,rng){
  if(s.structures[enemy(s,winner)].nexus>0)throw Error('넥서스를 파괴하기 전에는 승자를 정할 수 없습니다.');
  farming(s,round(s.clock+.06),rng);s.winner=winner;s.finished=true;s.pending=null;
- for(const p of s.stats){p.cs=Math.round(p.cs);p.damage=Math.round((p.role==='SUP'?380:p.role==='JGL'?600:820)*s.clock+p.k*340+rng()*2600);}
+ for(const p of s.stats){p.cs=Math.round(p.cs);p.damage=s.version>=15?Math.round(p.damage):Math.round((p.role==='SUP'?380:p.role==='JGL'?600:820)*s.clock+p.k*340+rng()*2600);}
  record(s,{kind:'nexus',title:'넥서스 파괴',location:winner===s.teams[0]?'baseRed':'baseBlue',team:winner,objective:{kind:'nexus',team:winner}});
 }
 export function advanceMatch(s,{controlledTeam=null,action=null,auto=false,maxEvents=Infinity}={},external){
@@ -219,8 +290,27 @@ export function advanceMatch(s,{controlledTeam=null,action=null,auto=false,maxEv
   const finish=finishingPlan(s);if(finish){s.pending=null;resolveClosing(s,finish,rng);if(s.events.length-startCount>=maxEvents)return s;continue;}
   const pressure=closingPressurePlan(s);if(pressure){resolveClosing(s,pressure,rng,{pressure:true});if(s.events.length-startCount>=maxEvents)return s;continue;}
   const next=nextObjective(s);
-  if(next&&next[1]<=s.nextMacro){prepareObjective(s,next[0],next[1],rng);if(controlledTeam&&!auto)return s;resolveObjective(s,null,null,rng);if(s.events.length-startCount>=maxEvents)return s;continue;}
-  farming(s,Math.max(s.clock+.2,s.nextMacro),rng);macroEvent(s,rng);s.nextMacro=s.clock+nextGap(s,rng)-(s.events.at(-1)?.kind==='recall'&&buffCoverage(s,'baron',s.events.at(-1).team)>0?4/60:0);s.steps++;if(s.events.length-startCount>=maxEvents)return s;
+  if(next&&next[1]<=s.nextMacro){
+   const dragons=s.dragons[s.teams[0]]+s.dragons[s.teams[1]];
+   const closeGold=Math.abs(s.gold[s.teams[0]]-s.gold[s.teams[1]])<4500;
+   if(s.version>=15&&next[0]==='dragon'&&(dragons===0||dragons===1&&closeGold)&&takeLaningDragon(s,next[1],rng)){
+    if(s.events.length-startCount>=maxEvents)return s;continue;
+   }
+   prepareObjective(s,next[0],next[1],rng);
+   // The setup can put a fresh wave in finishing range. Recheck at the
+   // same point even when automatic play never yields for a decision.
+   const finishAfterSetup=s.version>=15?finishingPlan(s):null;
+   if(finishAfterSetup){s.pending=null;resolveClosing(s,finishAfterSetup,rng);}
+   else{if(controlledTeam&&!auto)return s;resolveObjective(s,null,null,rng);}
+   if(s.events.length-startCount>=maxEvents)return s;continue;
+  }
+  farming(s,s.version>=15&&s.nextMacro===LANING_END&&s.clock<LANING_END?LANING_END:Math.max(s.clock+.2,s.nextMacro),rng);
+  if(s.version>=15&&s.clock<LANING_END){laningEvent(s,rng);s.nextMacro=Math.min(LANING_END,s.clock+.85+rng()*.7);}
+  else if(s.version>=15&&!s.laningEnded){
+   s.laningEnded=true;s.nextMacro=s.clock+.45+rng()*.35;
+   record(s,{kind:'lane-transition',title:'라인전 종료 · 운영 전환',text:'선수들이 웨이브를 정리하고 오브젝트와 포탑을 중심으로 움직입니다.'});
+  }else{macroEvent(s,rng);s.nextMacro=s.clock+nextGap(s,rng)-(s.events.at(-1)?.kind==='recall'&&buffCoverage(s,'baron',s.events.at(-1).team)>0?4/60:0);}
+  s.steps++;if(s.events.length-startCount>=maxEvents)return s;
  }
  if(!s.finished&&!s.pending)throw Error('경기 진행이 안전 한도에 도달했습니다.');return s;
 }
@@ -244,4 +334,4 @@ export function simulateMatch(input,rng){
  }else s=createMatchState(input,0,rng);
  advanceMatch(s,{auto:true},rng);return matchOutcome(s);
 }
-export function replayMatch(input){return (input.model===SIMULATION_MODEL||input.model==='event-v11'||input.model==='event-v12'||input.model==='event-v13')?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}
+export function replayMatch(input){return [SIMULATION_MODEL,'event-v14','event-v13','event-v12','event-v11'].includes(input.model)?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}

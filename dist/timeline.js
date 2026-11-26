@@ -1,5 +1,5 @@
 import {structurePosition} from './broadcast-hud.js';
-import {replayMatch} from './match-sim.js';
+import {replayMatch,SIMULATION_MODEL} from './match-sim.js';
 // Deterministic highlight reconstruction. This layer never changes match results or save RNG.
 const ROLES=['TOP','JGL','MID','BOT','SUP'];
 const BASE={blue:[63,537],red:[537,63]};
@@ -31,7 +31,7 @@ function take(queue,amount,roles){
 export function buildTimeline(set,{teamNames={},playerNames={}}={}){
  const rng=seeded(hash(JSON.stringify([set.blue,set.red,set.number,set.winner,set.picks,set.stats])));
  let out,records=set.events;
- if(!set.live&&!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3','event-v4','event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14'].includes(set.simulationReplay?.model)){
+ if(!set.live&&!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3','event-v4','event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14',SIMULATION_MODEL].includes(set.simulationReplay?.model)){
   const replay=replayMatch({...set.simulationReplay,blue:set.blue,red:set.red,number:set.number,roster:set.stats,teamNames});
   if(replay.winner===set.winner&&replay.duration===set.duration&&JSON.stringify(replay.stats)===JSON.stringify(set.stats))records=replay.events;
  }
@@ -97,8 +97,8 @@ export function buildTimeline(set,{teamNames={},playerNames={}}={}){
    const stillDead=set.simulationVersion>=7&&(deathUntil[stat?.player]??0)>scene.second,respawn=dead.has(stat?.player)&&!stillDead,from=respawn||stillDead?[...home]:[...(positions[key]??home)];
    let target=[...baseLane],via=[];
    const front=p.role==='TOP'||p.role==='JGL',radius=front?38:p.role==='SUP'?62:88;const direction=side==='blue'?1:-1;
-   const peaceful=['farm','trade','split','vision','objective-setup','recall','opening','trade-push','baron-push','waveclear'].includes(scene.kind);
-   const involvedHere=scene.push?(p.team===scene.push.team?scene.roles?scene.roles.includes(p.role):true:scene.push.clear>20&&['MID','BOT','SUP'].includes(p.role)):scene.decisions?.[p.team]==='trade'?false:['farm','trade'].includes(scene.kind)?false:scene.kind==='split'?p.role==='TOP':scene.kind==='vision'?p.team===scene.team&&['JGL','SUP'].includes(p.role):scene.roles?scene.roles.includes(p.role):true;
+   const peaceful=['farm','trade','split','vision','objective-setup','recall','opening','trade-push','baron-push','waveclear','laning','lane-transition'].includes(scene.kind)||scene.objectiveMode==='lane-control';
+   const involvedHere=scene.participants?scene.participants.includes(stat?.player):scene.push?(p.team===scene.push.team?scene.roles?scene.roles.includes(p.role):true:scene.push.clear>20&&['MID','BOT','SUP'].includes(p.role)):scene.decisions?.[p.team]==='trade'?false:['farm','trade','laning','lane-transition'].includes(scene.kind)?false:scene.kind==='split'?p.role==='TOP':scene.kind==='vision'?p.team===scene.team&&['JGL','SUP'].includes(p.role):scene.roles?scene.roles.includes(p.role):true;
    if(scene.kind==='opening')target=baseLane;
    else if(scene.kind==='recall'){target=[home[0]+(i-2)*9,home[1]+(i-2)*6];via=[from,[from[0]+direction*10,from[1]-direction*10],target];}
    else if(scene.kind==='baron-setup') {target=['JGL','SUP','TOP'].includes(p.role)?[center[0]+direction*(i*13-32),center[1]+direction*65]:baseLane;}

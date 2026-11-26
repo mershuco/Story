@@ -38,7 +38,7 @@ test('all income, fight reward pools and actual trade buildings reconcile exactl
  }
 });
 test('28-minute large kill and objective lead with 2–0 towers retains a material earned gold lead',()=>{
- const out=simulateMatch(input,matchRandom(77)),e=out.events.find(e=>e.minute>=28&&e.minute<29&&e.score.B-e.score.R>=15&&e.rift.towers.B===2&&e.rift.towers.R===0);assert(e);assert(e.lead>6000);const b=e.rift.economy.B,r=e.rift.economy.R;assert(b.kills+b.assists>r.kills+r.assists);assert.equal(e.lead,Object.values(b).reduce((a,b)=>a+b,0)-Object.values(r).reduce((a,b)=>a+b,0));
+ const out=simulateMatch({...input,model:'event-v14'},matchRandom(77)),e=out.events.find(e=>e.minute>=28&&e.minute<29&&e.score.B-e.score.R>=15&&e.rift.towers.B===2&&e.rift.towers.R===0);assert(e);assert(e.lead>6000);const b=e.rift.economy.B,r=e.rift.economy.R;assert(b.kills+b.assists>r.kills+r.assists);assert.equal(e.lead,Object.values(b).reduce((a,b)=>a+b,0)-Object.values(r).reduce((a,b)=>a+b,0));
 });
 test('v9 archive remains exact; an upgraded live set preserves its old prefix and reproduces the new economy after reload',()=>{
  const old=v9.simulateMatch(input,matchRandom(93));assert.equal(createHash('sha256').update(JSON.stringify(old)).digest('hex'),'9ab4c2166114ef5fdff24b2f9e599da4904c525d1c5928b979803e0caf96d907');assert.deepEqual(replayMatch({...input,model:'event-v9',seed:93}),old);

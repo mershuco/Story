@@ -43,12 +43,13 @@ test('Elder is a major temporary combat advantage, can overcome 6000G, and still
 test('full scheduler awards correct elemental stacks/soul then Elder exclusively in dragon pit; upper pit never spawns Herald',()=>{
  const s=createMatchState(input,42);s.timers.grubs=null;s.timers.baron=null;s.nextMacro=59;
  advanceMatch(s,{controlledTeam:'B'});
- for(let i=0;i<5;i++){
-  const p=s.pending;assert(p);assert.equal(p.kind,i<4?'dragon':'elder');s.input.decisionOverrides=[[p.id,'R','trade']];advanceMatch(s,{controlledTeam:'B',action:'contest'});
+ const owner=s.events.find(e=>e.kind==='dragon').team,opponent=s.teams.find(id=>id!==owner);
+ for(let i=0;i<6&&!s.elders[owner];i++){
+  const p=s.pending;assert(p);assert.equal(p.kind,s.soul?'elder':'dragon');s.input.decisionOverrides=[[p.id,opponent,'trade']];advanceMatch(s,{controlledTeam:owner,action:'contest'});
  }
- const events=s.events.filter(e=>e.objective);assert.equal(events.filter(e=>e.kind==='dragon').length,4);const soul=events.find(e=>e.objective.soul);assert(soul);assert.equal(soul.objective.soulType,s.drakeHistory[2]);const elder=events.find(e=>e.kind==='elder');assert(elder.minute>=soul.minute+6);assert(elder.objectiveState.elder[0][0]>=Math.round((elder.minute+2.5)*60));
+ const events=s.events.filter(e=>e.objective);assert.equal(events.filter(e=>e.kind==='dragon'&&e.team===owner).length,4);const soul=events.find(e=>e.objective.soul);assert(soul);assert.equal(soul.objective.soulType,s.drakeHistory[2]);const elder=events.find(e=>e.kind==='elder');assert(elder.minute>=soul.minute+6);assert(elder.objectiveState.elder[s.teams.indexOf(owner)][0]>=Math.round((elder.minute+2.5)*60));
  for(let seed=1;seed<=100;seed++){
-  const out=simulateMatch(input,matchRandom(seed));assert.equal(out.model,'event-v14');assert(!out.events.some(e=>e.kind==='herald'||e.location==='herald'));
+  const out=simulateMatch(input,matchRandom(seed));assert.equal(out.model,'event-v15');assert(!out.events.some(e=>e.kind==='herald'||e.location==='herald'));
   const drakes=out.events.filter(e=>e.kind==='dragon');if(drakes.length>=3){assert.equal(new Set(drakes.slice(0,3).map(e=>e.objective.dragonType)).size,3);for(const d of drakes.slice(3))assert.equal(d.objective.dragonType,drakes[2].objective.dragonType);}
   for(const e of out.events.filter(e=>e.objective)){if(['dragon','elder'].includes(e.kind))assert.equal(e.location,'dragon');if(['grubs','baron'].includes(e.kind))assert.equal(e.location,e.kind);}
  }

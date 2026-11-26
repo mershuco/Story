@@ -23,8 +23,8 @@ test('viewer reconstruction preserves the result, all KDA totals, saved RNG and 
 test('ganks, objective rotations and recalls move champions to their corresponding map locations',()=>{
  const scenes=m.sets.flatMap(z=>buildTimeline(z));const gank=scenes.find(s=>s.kind==='gank'),dragon=scenes.find(s=>s.kind==='dragon'),recall=scenes.find(s=>s.kind==='recall');
  assert(gank&&dragon&&recall);assert.deepEqual([gank.focus.x,gank.focus.y],{top:[95,175],mid:[300,300],bot:[485,447]}[gank.location]);assert.deepEqual([dragon.focus.x,dragon.focus.y],[410,400]);
- const frames=[sampleScene(gank,0),sampleScene(gank,.25),sampleScene(gank,.65)];const jungle=frames.map(f=>f.find(a=>a.team==='T1'&&a.role==='JGL'));assert.notEqual(jungle[0].x,jungle[1].x);assert.notEqual(jungle[1].x,jungle[2].x);
- const absent=gank.actors.find(a=>a.team==='T1'&&!gank.roles.includes(a.role));assert(absent);assert.equal(absent.involved,false);
+ const frames=[sampleScene(gank,0),sampleScene(gank,.25),sampleScene(gank,.65)];const jungler=gank.actors.find(a=>a.role==='JGL'&&a.involved&&!a.alreadyDead);assert(jungler);const jungle=frames.map(f=>f.find(a=>a.id===jungler.id));assert.notEqual(jungle[0].x,jungle[1].x);assert.notEqual(jungle[1].x,jungle[2].x);
+ const absent=gank.actors.find(a=>gank.participants?!gank.participants.includes(a.id):!gank.roles.includes(a.role));assert(absent);assert.equal(absent.involved,false);
  for(const actor of sampleScene(dragon,1)){assert(actor.x>=0&&actor.x<=600);assert(actor.y>=0&&actor.y<=600);}
  for(const actor of sampleScene(recall,1)){const base=actor.side==='blue'?[63,537]:[537,63];assert(Math.hypot(actor.x-base[0],actor.y-base[1])<35);assert.equal(actor.hp,100);}
 });

@@ -69,13 +69,16 @@ test('actual event probabilities use only pre-fight individual KDA and match par
  const out=simulateMatch(input,matchRandom(19)),counts=Object.fromEntries([...bs,...rs].map(p=>[p.player,{...p}]));let checked=0,personal=0;
  for(const e of out.events){
   if(Number.isFinite(e.championPhaseGap)){
-   const c=compositionMatchup(input.compositionBlue,input.compositionRed,e.minute,e.kind,{blueStats:Object.values(counts).filter(p=>p.team==='B'),redStats:Object.values(counts).filter(p=>p.team==='R'),roles:e.roles});
+   const players=Object.values(counts);
+   const local=e.participants&&['solo-kill','duo-kill','gank'].includes(e.kind);
+   const present=(id,comp)=>local?{...comp,members:players.filter(p=>p.team===id&&e.participants.includes(p.player)).map(p=>[p.champion,p.role])}:comp;
+   const c=compositionMatchup(present('B',input.compositionBlue),present('R',input.compositionRed),e.minute,e.kind,{blueStats:players.filter(p=>p.team==='B'),redStats:players.filter(p=>p.team==='R'),roles:e.roles});
    near(e.championPhaseGap,c.phaseGap);near(e.championFormGap,c.formGap);checked++;
-   if(e.championFormImpact){const [side,id,k,d,a]=e.championFormImpact,p=Object.values(counts).find(p=>p.champion===id&&p.team===(side==='blue'?'B':'R'));assert.deepEqual([k,d,a],[p.k,p.d,p.a]);if(e.roles)assert(e.roles.includes(p.role));personal++;}
+   if(e.championFormImpact){const [side,id,k,d,a]=e.championFormImpact,p=players.find(p=>p.champion===id&&p.team===(side==='blue'?'B':'R'));assert.deepEqual([k,d,a],[p.k,p.d,p.a]);if(e.roles)assert(e.roles.includes(p.role));if(local)assert(e.participants.includes(p.player));personal++;}
   }
   for(const kill of e.kills){counts[kill.killer].k++;counts[kill.victim].d++;for(const id of kill.assists)counts[id].a++;}
  }
- assert(checked>5);assert(personal>2);assert.deepEqual(out,replayMatch({...input,model:'event-v14',seed:19}));
+ assert(checked>5);assert(personal>2);assert.deepEqual(out,replayMatch({...input,model:'event-v15',seed:19}));
 });
 test('event-v3 replay retains archived composition rules, KDA and gold after the v4 upgrade',()=>{
  const bp=oldProfile(picks(early),map),rp=oldProfile(picks(late),map),input={blue:'B',red:'R',bluePower:80,redPower:80,compositionBlue:bp,compositionRed:rp,roster:[...stats(early,'B'),...stats(late,'R')]};
