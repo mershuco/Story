@@ -4,45 +4,50 @@ const COLORS={pearl:'#9ef3ff',frost:'#9bd6ff',green:'#a7ffd2',arcane:'#8dbbff',v
 const escapeAttr=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const clamp=n=>Math.max(0,Math.min(1,n));
 const mix=(a,b,t)=>a+(b-a)*t;
+const LANE_LABELS={top:'탑',mid:'미드',bot:'바텀'};
 
 export function laneWaveMarkup(lane) {
  if (!lane) return '';
- return `<g class="lane-wave" aria-hidden="true">${lane.minions.map(m=>`<g data-lane-minion="${m.id}" class="${m.side}" opacity="0">${m.index===2?'<path d="M0 -6 6 0 0 6 -6 0Z"/>':'<circle r="4.8"/>'}</g>`).join('')}</g>`;
+ return `<g class="lane-wave" aria-hidden="true">${lane.minions.map(m=>`<g data-lane-minion="${m.id}" data-lane="${m.lane}" class="${m.side}" opacity="0">${m.index===2?'<path d="M0 -6 6 0 0 6 -6 0Z"/>':'<circle r="4.8"/>'}</g>`).join('')}</g>`;
 }
 export function laneAttackMarkup(lane) {
  if (!lane) return '';
  return `<g class="lane-attack-layer" aria-hidden="true">${lane.actions.map((action,i)=>{
   const color=COLORS[action.color]??(action.side==='blue'?'#9be3ff':'#ff9cc4');
   const radius=action.form==='shot'?3.8:action.form==='projectile'||action.form==='returning'?6.5:0;
-  return `<g data-lane-action="${i}" data-form="${action.form}" data-element="${action.element}" data-skill="${escapeAttr(action.name)}" style="--strike-color:${color}" opacity="0"><path class="lane-trail"/><circle class="lane-projectile" r="${radius}"/><circle class="lane-ring"/><path class="lane-impact"/></g>`;
+  return `<g data-lane-action="${i}" data-lane="${action.lane}" data-form="${action.form}" data-element="${action.element}" data-skill="${escapeAttr(action.name)}" style="--strike-color:${color}" opacity="0"><path class="lane-trail"/><circle class="lane-projectile" r="${radius}"/><circle class="lane-ring"/><path class="lane-impact"/></g>`;
  }).join('')}</g>`;
 }
 
 export function laneActionNarration(lane,progress) {
  if (!lane || progress>=.93) return null;
- const action=lane.actions.findLast(a=>progress>=a.cast&&progress<a.until);
+ const visible=a=>progress>=a.cast&&progress<a.until;
+ const action=lane.actions.findLast(a=>a.lane===lane.focus&&visible(a))??(lane.quiet?lane.actions.findLast(visible):null);
  if(!action) return null;
- if(action.minion) return `${action.actorName} · ${progress>=action.land?'미니언 막타':'미니언에 평타'}`;
+ const who=`${LANE_LABELS[action.lane]} ${action.actorName}`;
+ if(action.minion) return `${who} · ${progress>=action.land?'미니언 막타':'미니언에 평타'}`;
  const move=action.slot?`${action.slot} ${action.name}`:action.name;
  const result=progress<action.land?'':action.form==='shield'?' · 보호막':action.form==='heal'?' · 체력 회복':' 적중';
- return `${action.actorName} · ${move}${result}`;
+ return `${who} · ${move}${result}`;
 }
 
 export function paintLaneEffects(dom,lane,actors,progress) {
  if(!lane) return;
  const minions=sampleMinions(lane,progress),positions=Object.fromEntries([...Object.values(actors),...minions].map(a=>[a.id,a]));
- for(const minion of minions){
-  const node=dom.querySelector(`[data-lane-minion="${minion.id}"]`);
+ const waveNodes=dom.querySelectorAll('[data-lane-minion]');
+ for(const [i,minion] of minions.entries()){
+  const node=waveNodes[i];
   if(!node) continue;
   node.setAttribute('transform',`translate(${minion.x} ${minion.y})`);
   node.setAttribute('opacity',minion.visible);
  }
+ const actionNodes=dom.querySelectorAll('[data-lane-action]');
  for(const [i,action]of lane.actions.entries()){
-  const node=dom.querySelector(`[data-lane-action="${i}"]`);
+  const node=actionNodes[i];
   if(!node) continue;
   const actor=positions[action.from],victim=positions[action.target];
   const visible=actor&&victim&&progress>=action.cast&&progress<action.until;
-  node.setAttribute('opacity',visible?'1':'0');
+  node.setAttribute('opacity',visible?(lane.quiet||action.lane===lane.focus?'1':'.72'):'0');
   if(!visible)continue;
   const travel=clamp((progress-action.cast)/(action.land-action.cast));
   const impact=clamp((progress-action.land)/(action.until-action.land));

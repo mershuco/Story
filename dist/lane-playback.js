@@ -4,6 +4,8 @@ const LANES = {
  mid: {roles: ['MID'], points: [[219, 381], [300, 300], [381, 219]]},
  bot: {roles: ['BOT', 'SUP'], points: [[400, 521], [472, 521], [503, 507], [520, 475], [521, 403]]},
 };
+const LANE_NAMES=Object.keys(LANES);
+const ROLE_LANE=Object.fromEntries(Object.entries(LANES).flatMap(([lane,{roles}])=>roles.map(role=>[role,lane])));
 const LANE_SCENES = new Set(['laning','solo-kill','duo-kill','gank','skirmish','dive']);
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 const smooth = t => t * t * (3 - 2 * t);
@@ -91,52 +93,62 @@ function lanePoint(path, distance, lateral = 0) {
  }
  return path.points.at(-1);
 }
+function actorLane(scene,actor) {
+ if(actor.alreadyDead)return null;
+ return scene.kind!=='laning'&&actor.involved?scene.location:ROLE_LANE[actor.role];
+}
 export function laneActorTarget(scene, actor) {
- if (!hasLanePlayback(scene)||actor.alreadyDead) return null;
- const laner=LANES[scene.location].roles.includes(actor.role);
- if (!(scene.kind==='laning'?laner:actor.involved)) return null;
+ if(!hasLanePlayback(scene))return null;
+ const lane=actorLane(scene,actor);
+ if(!lane)return null;
  const sign=sideSign(actor.side), distance=RANGED.has(actor.champion)?44:27;
- return lanePoint(pathFor(scene.location),sign*(distance+(actor.role==='SUP'?4:0)),actor.role==='BOT'?sign*14:actor.role==='SUP'?-sign*24:actor.role==='JGL'?sign*24:0);
+ return lanePoint(pathFor(lane),sign*(distance+(actor.role==='SUP'?4:0)),actor.role==='BOT'?sign*14:actor.role==='SUP'?-sign*24:actor.role==='JGL'?sign*24:0);
 }
 
 export function buildLanePlayback(scene, {champions={},patch,previousHealth={}}={}) {
  if (!hasLanePlayback(scene)) return null;
- const quiet=scene.kind==='laning', path=pathFor(scene.location), laneRoles=LANES[scene.location].roles;
- const active=scene.actors.filter(a=>!a.alreadyDead&&(quiet?laneRoles.includes(a.role):a.involved));
- const blue=active.filter(a=>a.side==='blue'),red=active.filter(a=>a.side==='red');
+ const quiet=scene.kind==='laning', focus=scene.location;
+ const locations=Object.fromEntries(scene.actors.map(a=>[a.id,actorLane(scene,a)]));
+ const active=scene.actors.filter(a=>locations[a.id]);
  const actions=[], outgoing=Object.fromEntries(active.map(a=>[a.id,[]]));
  const deathSpacing=Math.min(.055,.24/Math.max(1,scene.kills.length-1));
  const deathAt=Object.fromEntries(scene.kills.map((k,i)=>[k.victim,.69+i*deathSpacing]));
  const actorsById=Object.fromEntries(active.map(a=>[a.id,a]));
  const add=(actor,target,cast,land,style,extra={})=>{
   if (!actor||!target||!style || cast>=(deathAt[actor.id]??1) || (!extra.lethal&&land>=(deathAt[target]??1))) return;
-  const action={...style,from:actor.id,target,cast,land,until:Math.min(.995,land+.16),side:actor.side,
+  const action={...style,from:actor.id,target,cast,land,until:Math.min(.995,land+.16),side:actor.side,lane:locations[actor.id],
    actorName:champions[actor.champion]?.name??actor.champion,...extra};
   actions.push(action);outgoing[actor.id].push(action);
  };
- const minions=['blue','red'].flatMap(side=>Array.from({length:3},(_,i)=>({id:side+'-minion-'+i,side,index:i})));
+ const paths=Object.fromEntries(LANE_NAMES.map(lane=>[lane,pathFor(lane)]));
+ const minions=LANE_NAMES.flatMap(lane=>['blue','red'].flatMap(side=>
+  Array.from({length:3},(_,index)=>({id:`${lane}-${side}-minion-${index}`,lane,side,index}))));
  const index=Math.round(scene.second/11);
- const pairs=[[blue,red],[red,blue]];
  const mainActor=side=>side.find(a=>a.role!=='SUP'&&a.role!=='JGL')??side[0];
- if(index%2)pairs.reverse();
- // Last hits lead into a short trade, then each side backs towards its wave.
- for (const [i,[own]] of pairs.entries()) {
-  const laner=mainActor(own);
-  if (laner) add(laner,(laner.side==='blue'?'red':'blue')+'-minion-'+i,.075+i*.09,.17+i*.09,basicAttack(laner),{minion:true});
- }
- if (blue.length&&red.length) {
-  const [first, second]=pairs;
-  const [attacker,other]=[mainActor(first[0]),mainActor(second[0])];
-  const trade=quiet?[[attacker,other,.26,.37],[other,attacker,.43,.54]]:
+ for(const [laneIndex,lane] of LANE_NAMES.entries()){
+  const nearby=active.filter(a=>locations[a.id]===lane);
+  const sides=['blue','red'].map(side=>nearby.filter(a=>a.side===side));
+  if((index+laneIndex)%2)sides.reverse();
+  const [first,second]=sides;
+  const [attacker,other]=[mainActor(first),mainActor(second)];
+  const offset=(laneIndex-1)*.025;
+  // Slightly offset each lane while keeping their trades visible at the same time.
+  const hitMinion=(laner,number,cast,land)=>add(laner,`${lane}-${laner.side==='blue'?'red':'blue'}-minion-${number}`,
+   cast+offset,land+offset,basicAttack(laner),{minion:true});
+  if(attacker)hitMinion(attacker,0,.075,.17);
+  if(other)hitMinion(other,1,.165,.26);
+  if(!attacker||!other)continue;
+  const farming=quiet||lane!==focus;
+  const trade=farming?[[attacker,other,.26,.37],[other,attacker,.43,.54]]:
    [[attacker,other,.255,.36],[other,attacker,.405,.513]];
-  trade.forEach(([from,to,cast,land],i)=>add(from,to.id,cast,land,signature(from,champions,patch,index+i),{damage:quiet?9+i*2:13+i*3}));
-  const support=second[0].find(a=>a.role==='SUP');
-  if (quiet&&support) {
+  trade.forEach(([from,to,cast,land],i)=>add(from,to.id,cast+offset,land+offset,signature(from,champions,patch,index+i),{damage:farming?9+i*2:13+i*3}));
+  const support=second.find(a=>a.role==='SUP');
+  if (farming&&support) {
    const protect=supportAction(support,champions,patch);
-   if (protect&&support!==other) add(support,other.id,.59,.64,protect);
-   else add(support,attacker.id,.59,.675,signature(support,champions,patch,index),{damage:7});
+   if (protect&&support!==other) add(support,other.id,.59+offset,.64+offset,protect);
+   else add(support,attacker.id,.59+offset,.675+offset,signature(support,champions,patch,index),{damage:7});
   }
-  if (quiet) add(attacker,other.side+'-minion-2',.74,.84,basicAttack(attacker),{minion:true});
+  if(farming)hitMinion(attacker,2,.74,.84);
  }
  // Current fights use the actual killer, assistant and victim IDs from the event.
  for (const [i,kill] of scene.kills.entries()) {
@@ -150,7 +162,7 @@ export function buildLanePlayback(scene, {champions={},patch,previousHealth={}}=
  }
  actions.sort((a,b)=>a.land-b.land);
  const health=Object.fromEntries(active.map(a=>[a.id,a.respawn?88:clamp((previousHealth[a.id]??100)+13,20,100)]));
- return {path,active:active.map(a=>a.id),actions,outgoing,minions,deathAt,health};
+ return {paths,focus,quiet,active:active.map(a=>a.id),actions,outgoing,minions,deathAt,health};
 }
 
 export function laneHealth(lane, actor, progress) {
@@ -205,7 +217,7 @@ export function sampleMinions(lane, progress) {
  return lane.minions.map(m=>{
   const sign=sideSign(m.side),advance=smooth(ratio(progress,0,.22));
   const d=sign*(mix(68,6,advance)+m.index*9);
-  const [x,y]=lanePoint(lane.path,d,(m.index-1)*8+sign*4);
+  const [x,y]=lanePoint(lane.paths[m.lane],d,(m.index-1)*8+sign*4);
   const lastHit=lane.actions.find(a=>a.minion&&a.target===m.id);
   const visible=lastHit?1-ratio(progress,lastHit.land,lastHit.land+.09):1;
   return {...m,x,y,visible};

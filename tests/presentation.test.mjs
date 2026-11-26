@@ -34,16 +34,26 @@ test('combat effects and death states appear after movement rather than at scene
  const start=sampleScene(scene,0).find(a=>a.id===killed),end=sampleScene(scene,1).find(a=>a.id===killed);assert.equal(start.visibleDeath,false);assert.equal(end.visibleDeath,true);assert.equal(end.hp,0);
 });
 
-test('early lane highlights show champion skills, basic attacks and waves without changing the match event',()=>{
+const lanePicks={
+ B:{TOP:'Darius',JGL:'LeeSin',MID:'Ahri',BOT:'Ezreal',SUP:'Rakan'},
+ R:{TOP:'Ornn',JGL:'Vi',MID:'Yasuo',BOT:'Jinx',SUP:'Lulu'}
+};
+const lanePicksByTeam=Object.entries(lanePicks).flatMap(([team,roster])=>Object.entries(roster).map(([role,champion])=>({team,role,champion})));
+const laneStats=lanePicksByTeam.map(p=>({...p,player:p.team+p.role}));
+
+test('early highlights show skills, basic attacks and minion waves on all three lanes at the same time',()=>{
  const champions=Object.fromEntries(JSON.parse(readFileSync(new URL('../dist/data/season-2026/champions.json',import.meta.url))).map(c=>[c.id,c]));
- const picks=[{team:'B',role:'MID',champion:'Ahri'},{team:'R',role:'MID',champion:'Yasuo'}];
- const stats=picks.map(p=>({...p,player:p.team+'MID'}));
  const event={minute:4,second:240,kind:'laning',location:'mid',kills:[]};
- const match={blue:'B',red:'R',live:true,patch:'16.1.1',simulationVersion:15,stats,picks,events:[event]};
+ const match={blue:'B',red:'R',live:true,patch:'16.1.1',simulationVersion:15,stats:laneStats,picks:lanePicksByTeam,events:[event]};
  const before=JSON.stringify(match),[scene]=buildTimeline(match,{champions});
  assert.equal(JSON.stringify(match),before);
  assert.deepEqual(buildTimeline(match,{champions}),[scene]);
- assert.equal(scene.lanePlayback.minions.length,6);
+ const minions=sampleMinions(scene.lanePlayback,.32);
+ assert.equal(new Set(minions.map(m=>m.id)).size,18);
+ for(const lane of ['top','mid','bot'])assert.equal(minions.filter(m=>m.lane===lane).length,6);
+ const simultaneous=scene.lanePlayback.actions.filter(a=>!a.minion&&a.cast<.32&&a.land>.32);
+ assert.deepEqual(new Set(simultaneous.map(a=>a.lane)),new Set(['top','mid','bot']));
+ assert.equal(scene.lanePlayback.active.length,8);
  const orb=scene.lanePlayback.actions.find(a=>a.from==='BMID'&&a.slot==='Q');
  assert.equal(orb.name,'현혹의 구슬');
  assert.equal(orb.form,'returning');
@@ -60,11 +70,9 @@ test('early lane highlights show champion skills, basic attacks and waves withou
 });
 
 test('damaging hits precede a recorded lane kill and the death and kill feed reveal together',()=>{
- const picks=[{team:'B',role:'TOP',champion:'Darius'},{team:'R',role:'TOP',champion:'Ornn'}];
- const stats=picks.map(p=>({...p,player:p.team+'TOP'}));
  const event={minute:4,second:240,kind:'solo-kill',location:'top',roles:['TOP'],kills:[{killer:'BTOP',victim:'RTOP',assists:[],respawnAtSecond:258}]};
  const next={minute:4.2,second:252,kind:'laning',location:'top',kills:[]};
- const match={blue:'B',red:'R',live:true,simulationVersion:15,stats,picks,events:[event,next]};
+ const match={blue:'B',red:'R',live:true,simulationVersion:15,stats:laneStats,picks:lanePicksByTeam,events:[event,next]};
  const [scene,after]=buildTimeline(match);
  const finishing=scene.lanePlayback.actions.find(x=>x.lethal);
  assert(finishing&&finishing.from==='BTOP'&&finishing.target==='RTOP');
@@ -73,5 +81,18 @@ test('damaging hits precede a recorded lane kill and the death and kill feed rev
  assert(sampleScene(scene,finishing.land-.001).find(p=>p.id==='RTOP').hp>0);
  assert.equal(sampleScene(scene,finishing.land).find(p=>p.id==='RTOP').hp,0);
  assert(sampleScene(scene,finishing.land).find(p=>p.id==='RTOP').visibleDeath);
+ const otherLanes=scene.lanePlayback.actions.filter(a=>a.lane!=='top');
+ assert.deepEqual(new Set(otherLanes.filter(a=>a.damage).map(a=>a.lane)),new Set(['mid','bot']));
+ assert(otherLanes.every(a=>!a.lethal));
  assert(!after.lanePlayback.actions.some(a=>a.from==='RTOP'||a.target==='RTOP'));
+});
+
+test('a laner who roams joins the recorded fight and leaves the opposing laner to farm',()=>{
+ const event={minute:4,second:240,kind:'gank',location:'top',participants:['BTOP','BJGL','BMID','RTOP'],
+  kills:[{killer:'BTOP',victim:'RTOP',assists:['BMID'],respawnAtSecond:258}]};
+ const [scene]=buildTimeline({blue:'B',red:'R',live:true,simulationVersion:15,stats:laneStats,picks:lanePicksByTeam,events:[event]});
+ const midActions=scene.lanePlayback.actions.filter(a=>a.lane==='mid');
+ assert(midActions.length&&midActions.every(a=>a.from==='RMID'&&a.minion));
+ assert(scene.lanePlayback.actions.some(a=>a.from==='BMID'&&a.lane==='top'&&a.target==='RTOP'));
+ assert(!scene.lanePlayback.actions.some(a=>a.from==='RJGL'));
 });
