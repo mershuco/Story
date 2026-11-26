@@ -19,9 +19,16 @@ test('mastery uses evidence from 2013 onward, with bounded highlight bonuses and
  const archive=JSON.parse(readFileSync(new URL('../research/2026/career-match-history.json',import.meta.url)));
  assert.deepEqual(Object.keys(players).sort(),Object.keys(data.mastery.players).sort());
  assert.deepEqual(careerCoverage,archive.coverage);
- assert.equal(archive.firstObserved.faker,'2013-04-06');
- assert.deepEqual(archive.players.faker['2013'].Zed,[4,4,1]);
- assert.equal(archive.coverage['2013'].appearances,63);
+ assert.equal(archive.firstObserved.faker,'2013-03-23');
+ assert.deepEqual(archive.players.faker['2013'].Zed,[5,5,1]);
+ assert.equal(archive.coverage['2013'].appearances,79);
+ assert.equal(archive.coverage['2013'].inven,10);
+ assert.equal(archive.coverage['2014'].inven,20);
+ const appearances=(id,year)=>Object.values(archive.players[id][year]).reduce((n,[games])=>n+games,0);
+ assert.equal(appearances('on','2019'),70);
+ assert.equal(appearances('sero','2022'),33);
+ assert.equal(appearances('ghost','2017'),103);
+ assert.deepEqual(coverage.additionalLeaguepediaAppearances,{'2025':24,'2026':20});
  assert.equal(coverage.worlds.sets,98);
  assert.equal(coverage.worlds.additionalSets,76);
  assert.equal(coverage.worlds.additionalAppearances,654);
@@ -31,17 +38,17 @@ test('mastery uses evidence from 2013 onward, with bounded highlight bonuses and
  }
  const s=E.newGame();
  assert.equal(E.masteryEvidence('faker','Zed').score,48);
- assert.equal(E.mastery(s,'faker','Zed'),57);
+ assert.equal(E.mastery(s,'faker','Zed'),60);
  assert.equal(E.masteryEvidence('viper','Yunara').score,81);
- assert.equal(E.mastery(s,'viper','Yunara'),82);
- assert.equal(E.mastery(s,'faker','Azir'),92);
+ assert.equal(E.mastery(s,'viper','Yunara'),71);
+ assert.equal(E.mastery(s,'faker','Azir'),98);
  assert.equal(data.mastery.players.pop9.observed2025Games,122);
  s.date='2026-08-08';assert.equal(E.mastery(s,'faker','Locke'),48);
- s.date='2026-08-09';assert.equal(E.mastery(s,'faker','Locke'),50);
+ s.date='2026-08-09';assert.equal(E.mastery(s,'faker','Locke'),51);
  s.date='2026-08-15';assert.equal(E.mastery(s,'faker','Locke'),54);
- s.date='2026-11-14';assert.equal(E.mastery(s,'chovy','Syndra'),79);
- s.date='2026-11-15';assert.equal(E.mastery(s,'chovy','Syndra'),81);
- s.masteryGains.chovy={Syndra:25};assert.equal(E.mastery(s,'chovy','Syndra'),99);
+ s.date='2026-11-14';assert.equal(E.mastery(s,'chovy','Syndra'),70);
+ s.date='2026-11-15';assert.equal(E.mastery(s,'chovy','Syndra'),72);
+ s.masteryGains.chovy={Syndra:30};assert.equal(E.mastery(s,'chovy','Syndra'),99);
  assert.equal(E.mastery(s,'unlinked-player','Azir'),48);
 });
 test('2026 patch schedule, champion releases, datedkits and weeklymeta never use later observations',()=>{

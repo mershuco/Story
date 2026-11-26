@@ -189,27 +189,27 @@ python qa/gold_composition_test.py
 
 - 국내106명: 개막 주전50명, CL첫 관측 주전50명, 확인된 후보6명. T1의Peyz, HLE의Kanavi/Gumayusi, DK의Smash/Career 등2026 개막 라인업을 사용합니다. DNS/BFX/KRX 등 구단 이름도 갱신했습니다.
 - 해외19개 구단95명, 합계 **201명 ×173종 =34,773개 숙련 조합**입니다. 2013년부터 2026년까지 연결한 공식전 출전 기록으로 선수별 챔피언 숙련도를 계산합니다. 현재까지 관측되지 않은 선수·챔피언 조합에는 중립48점을 적용합니다.
-- 2025년까지의 커리어는 개막 숙련도에 반영하며 최근 경기의 가중치가 더 큽니다. 2026 결과는 게임 날짜가 그 경기를 지난 뒤 반영합니다. 기록으로 확인된 쿼드라킬은 +1점, 펜타킬은 +2점, 자료로 확인한 별도 대표 장면은 +1점이며 선수·챔피언별 보너스 상한은 3점입니다. 점수는 공식전 데이터로 추정한 게임용 값입니다. [숙련도 자료와 확인 범위](research/2026/career-mastery.md)
+- 2025년까지의 커리어는 개막 숙련도에 반영합니다. 최근 출전과 누적 경험을 함께 계산하고, 승률은 해당 선수의 전체 기록을 기준으로 보정합니다. 2026 결과는 게임 날짜가 그 경기를 지난 뒤 반영합니다. 기록으로 확인된 쿼드라킬은 +1점, 펜타킬은 +2점, 자료로 확인한 별도 대표 장면은 +1점이며 선수·챔피언별 보너스 상한은 3점입니다. 점수는 공식전 데이터로 추정한 게임용 값입니다. [숙련도 자료와 확인 범위](research/2026/career-mastery.md)
 - 챔피언은 시작 패치172종, 최신 수집 패치173종입니다. Riot Data Dragon **26.01~26.23의23개 패치 가용 목록·패시브/QWER 설명**을 수집했습니다. 내부 Data Dragon 버전16.x와 공개 표기26.xx를 구분합니다.
 - 실전 메타는42개 주간 스냅샷입니다. 기준일 이전56일의 주요 리그·국제대회·컵 **1세트** 기록으로 픽·밴 비중과 관측 역할을 집계합니다.2025말 기록을 개막 참고값으로 이어 사용합니다. S/A/B 표시는 공식 티어가 아닌 해당 표본의 출현 빈도 구간입니다.
 - 실제 LCK에서 해당 패치가 처음 관측된 날짜와 FST26.05/MSI26.13/Worlds26.20 패치를 반영합니다. 신규 챔피언은 출시 패치 유예를 적용합니다. 개별 버그·리워크에 대한 사무국의 추가 금지는 완전한 원장을 확보하지 못했습니다.
 
-[전체 숙련CSV](research/2026/player-champion-mastery.csv) · [출처와 식별자](research/2026/sources.json) · [패치별 회고 메타](research/2026/patch-meta-reports.json) · [공식 챔피언 자료 해시](research/2026/champion-provenance.json)
+[2025 표본의 기존 점수 CSV](research/2026/player-champion-mastery.csv) · [커리어 숙련도 데이터](dist/data/season-2026/mastery-records.json) · [출처와 식별자](research/2026/sources.json) · [패치별 회고 메타](research/2026/patch-meta-reports.json) · [공식 챔피언 자료 해시](research/2026/champion-provenance.json)
 
 재생성:
 
 ```bash
 python scripts/build_season_2026.py --input-dir /path/to/verified/matches
-python scripts/build_career_history.py --oracle-dir /path/to/verified/matches --chain-dir /path/to/annual-csv-gz --profiles-dir /path/to/player-profiles --output research/2026/career-match-history.json
+python scripts/build_career_history.py --oracle-dir /path/to/verified/matches --chain-dir /path/to/annual-csv-gz --profiles-dir /path/to/player-profiles --roster-archive /path/to/dex.js --output research/2026/career-match-history.json
 python scripts/build_player_match_records.py --input-dir /path/to/verified/matches --supplement-csv /path/to/chaincc-players-2026.csv.gz
 python scripts/collect_2026_champions.py
 ```
 
-첫 명령은 출처 보고서에 기록한2025/2026 공개 CSV를 입력받습니다. 원시CSV와 Data Dragon 다운로드 캐시는 버전 관리에서 제외하고 출처·해시를 남깁니다. 기존 루트 `dist/data/`의2022 자료는 호환성을 위해 보관합니다.
+첫 명령은 출처 보고서에 기록한2025/2026 공개 CSV를 입력받습니다. 소속 이력의 `dex.js` 다운로드 주소와 파일 해시는 커리어 집계의 `leaguepediaTenures`에 기록했습니다. 원시CSV와 Data Dragon 다운로드 캐시는 버전 관리에서 제외하고 출처·해시를 남깁니다. 기존 루트 `dist/data/`의2022 자료는 호환성을 위해 보관합니다.
 
 ## 확인 범위와 간소화
 
-**확보한2026 경기 자료는10월18일까지**입니다. 이후 패치·11월 경기·월즈 최종 성적의 실전 통계가 모두 수집되었다고 주장하지 않습니다. 이후 날짜는 마지막 확인된 메타를 표시합니다. 공식 패치 설명과 실제 선수·대회 통계의 확인 범위는 서로 다릅니다.
+**기본 2026 메타 원장은 10월 18일까지**입니다. 이후 날짜는 마지막 확인된 메타를 표시합니다. 숙련도에는 11월 14일 월즈 결승 및 11월 21일까지 확인한 일부 다른 대회의 출전도 반영합니다.
 
 그룹 선발·상대 지명은 코치가 자동 결정합니다. LCK밖의 지역 리그 전체를 운영하지 않으며 확보한 해외 구단 풀의 전력으로 대표를 정합니다. 일부 다자 동률·지역 성적의 세부 타이브레이커와 시드 추첨을 간소화했습니다. 릴레이 첫 선택권은 일반 홈팀 규칙을 적용한 게임 해석입니다. 사무국의 예외 판정·일정 변경 원장 전체를 구현하지 않았습니다.
 
