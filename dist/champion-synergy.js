@@ -54,6 +54,31 @@ add('Nocturne', 'Shen', '피해망상·단결된 의지', '쉔이 진입하는 �
 add('Rumble', 'JarvanIV', '대격변 → 이퀄라이저', '자르반의 지형으로 이동을 제한해 럼블 궁극기 장판에서 빠져나가기 어렵게 합니다.', 'engage', 1.14);
 add('Smolder', 'Milio', '사거리·성장 딜러 보호', '밀리오의 사거리와 보호가 스몰더의 강화 공격과 이탈을 돕습니다.', 'protect', .88);
 
+// Completed replays through event-v13 use the original catalogue.
+const originalPairs = new Map(pairs);
+
+// Skill chains with a verified allied appearance in the 2026 tournament data.
+add('Nocturne', 'Orianna', '피해망상 → 충격파', '녹턴이 적의 시야를 끊고 진입할 때 오리아나가 붙인 구체로 적을 끌어당깁니다. 구체를 유지할 수 있는 거리에서 합류할 때 강합니다.', 'engage', 1.28);
+add('Ambessa', 'Vi', '정지 명령 → 공개 처형', '바이의 지정 궁극기가 대상을 띄우는 동안 암베사가 공개 처형을 맞혀 같은 적을 제압합니다.', 'pickUltimate', 1.24);
+add('Ambessa', 'Orianna', '공개 처형 → 충격파', '구체를 받은 암베사가 적 후방에 진입하면 오리아나가 충격파로 주변 적을 끌어당깁니다.', 'engage', 1.12);
+add('Ambessa', 'Galio', '공개 처형 → 영웅출현', '암베사가 후방 딜러를 제압한 위치에 갈리오가 착지해 주변 적을 띄웁니다.', 'engage', 1.14);
+add('Vi', 'Neeko', '정지 명령 → 만개', '바이가 우선 대상을 띄워 이탈을 막는 동안 니코가 궁극기를 준비해 대상과 주변 적을 함께 제어합니다.', 'engage', 1.1);
+add('Pantheon', 'Ahri', '방호의 도약 → 매혹', '판테온의 지정 기절에 아리가 매혹을 맞혀 적이 빠져나가기 전에 피해를 집중합니다.', 'pick', 1);
+add('Bard', 'Caitlyn', '운명의 소용돌이 → 요들잡이 덫', '바드가 적을 정지시킨 동안 케이틀린이 발밑에 덫을 깔아 정지가 풀리는 순간 속박을 노립니다.', 'laneControl', 1.12);
+add('Elise', 'Caitlyn', '고치 → 요들잡이 덫', '엘리스가 고치로 대상을 기절시키면 케이틀린이 덫을 이어 속박과 헤드샷을 노립니다.', 'lane', 1.05);
+add('Jhin', 'Neeko', '칭칭올가미 → 살상연희', '니코의 올가미가 첫 속박과 표식을 만들면 진이 먼 거리에서 살상연희를 맞혀 속박을 이어갑니다.', 'laneControl', 1);
+add('Jhin', 'Nautilus', '폭뢰 → 살상연희', '노틸러스가 지정 궁극기로 대상을 띄우면 진이 표식이 생긴 적에게 원거리 속박을 잇습니다.', 'laneControl', .98);
+add('Rell', 'Rumble', '자기 폭풍 → 이퀄라이저 미사일', '렐이 여러 적을 모아 이탈을 막는 동안 럼블이 이퀄라이저를 깔아 장판 피해를 누적합니다.', 'engage', 1.14);
+add('Ashe', 'Rumble', '마법의 수정화살 → 이퀄라이저 미사일', '애쉬의 수정화살로 적을 기절시키고 퇴로에 이퀄라이저를 깔아 화염에 머무는 시간을 늘립니다.', 'pickUltimate', 1.05);
+add('MissFortune', 'Neeko', '만개 → 쌍권총 난사', '니코가 여러 적을 띄우고 기절시키면 미스 포츈이 움직임이 묶인 적들에게 궁극기를 퍼붓습니다.', 'engage', 1.18);
+add('JarvanIV', 'Aurora', '대격변 → 세계의 경계', '자르반이 지형으로 퇴로를 막은 자리에 오로라가 궁극기 범위를 겹쳐 광역 피해와 둔화를 이어갑니다.', 'engage', 1.1);
+add('JarvanIV', 'Viktor', '대격변 → 중력장·아케인 폭풍', '자르반이 만든 지형 안에 빅토르가 중력장을 깔아 기절을 노리고 아케인 폭풍으로 지속 피해를 줍니다.', 'engage', 1.1);
+add('Kaisa', 'Neeko', '만개 → 플라즈마·사냥본능', '니코의 광역 이동 불가로 표식이 생긴 적에게 카이사가 궁극기로 후속 진입할 수 있습니다.', 'follow', .95);
+add('Ziggs', 'Trundle', '얼음 기둥 → 폭탄 적중', '트런들이 얼음 기둥으로 좁은 길을 막고 적을 둔화시키면 직스가 남은 퇴로에 폭탄을 맞히기 쉬워집니다.', 'poke', .92);
+add('Gnar', 'Taliyah', '대지의 파동 → 나르!', '탈리야가 바위밭을 깐 방향으로 메가 나르가 적을 밀어 기절을 유도합니다.', 'engage', 1.13);
+add('Poppy', 'Anivia', '결정화 → 용감한 돌진', '애니비아가 만든 얼음 벽으로 뽀삐가 적을 밀어 벽꿍 기절을 만듭니다.', 'pick', 1.04);
+add('Sejuani', 'Yone', '근접 공격 → 만년 서리', '요네가 근접 기본 공격으로 서리 중첩을 쌓아 세주아니가 더 빨리 대상을 얼릴 수 있습니다.', 'pick', .98);
+
 export const CHAMPION_SYNERGIES = [...pairs.values()];
 export const championSynergy = key => pairs.get(key);
 
@@ -99,7 +124,12 @@ const pairSpikes = {
  'Rakan+Xayah': {start:11,end:27,strength:1.05},
  'JarvanIV+Rumble': {start:10,end:27,strength:1.1},
  'Milio+Smolder': {start:30,end:Infinity,strength:1.08},
- 'Nocturne+Shen': {start:8,end:22,context:'catch',label:'갱킹·소규모 교전·용'}
+ 'Nocturne+Shen': {start:8,end:22,context:'catch',label:'갱킹·소규모 교전·용'},
+ 'Nocturne+Orianna': {start:12,end:29,strength:1.08},
+ 'Ambessa+Vi': {start:8,end:26,strength:1.06},
+ 'Bard+Caitlyn': {start:8,end:24},
+ 'Ashe+Rumble': {start:8,end:24},
+ 'Gnar+Taliyah': {start:11,end:29}
 };
 
 function spikeProfile(synergy) {
@@ -133,12 +163,13 @@ function spikeBonus(synergy, minute, kind, pairRoles, participantCount) {
  return synergy.strength * profile.strength * ramp * fade;
 }
 
-export function activeChampionSynergies(members, minute, kind, { roles = null, absent = [], spikes = true } = {}) {
+export function activeChampionSynergies(members, minute, kind, { roles = null, absent = [], spikes = true, expanded = true } = {}) {
  const active = (members ?? []).filter(([id, role]) => (!roles || roles.includes(role)) && !absent.includes(id));
+ const catalogue = expanded ? pairs : originalPairs;
  const matches = [];
  for (let i = 0; i < active.length; i++) {
   for (let j = i + 1; j < active.length; j++) {
-   const synergy = pairs.get(synergyKey(active[i][0], active[j][0]));
+   const synergy = catalogue.get(synergyKey(active[i][0], active[j][0]));
    if (!synergy) continue;
    const pairRoles = [active[i][1], active[j][1]];
    const base = synergy.strength * timing(synergy, minute, kind, pairRoles, active.length);

@@ -39,7 +39,7 @@ test('manual objective pauses reveal only the prefix and choosing trade grants g
 test('saved mid-game decisions and RNG resume identically; previews and invalid commands never reroll',()=>{
  const s=createMatchState(base,271);advanceMatch(s,{controlledTeam:'B'});const clone=JSON.parse(JSON.stringify(s)),before=JSON.stringify(s);objectivePreview(s);objectivePreview(s);assert.equal(JSON.stringify(s),before);assert.throws(()=>advanceMatch(s,{controlledTeam:'B',action:'bad'}));assert.equal(JSON.stringify(s),before);
  advanceMatch(s,{controlledTeam:'B',action:'trade'});advanceMatch(clone,{controlledTeam:'B',action:'trade'});assert.deepEqual(s,clone);advanceMatch(s,{auto:true});advanceMatch(clone,{auto:true});assert.deepEqual(matchOutcome(s),matchOutcome(clone));
- const result=matchOutcome(s),replayed=replayMatch({...base,seed:271,model:'event-v13',decisionOverrides:result.decisionOverrides});assert.deepEqual(replayed,result);
+ const result=matchOutcome(s),replayed=replayMatch({...base,seed:271,model:'event-v14',decisionOverrides:result.decisionOverrides});assert.deepEqual(replayed,result);
 });
 test('engine live play commits no winner or series score early, locks rosters, and completes exactly once',()=>{
  const{s,m}=setup(42,true);E.startLiveMatch(s);assert.equal(m.sets.length,0);assert.deepEqual(m.score,[0,0]);assert(E.activeMatchSet(s).pending);assert(!E.activeMatchSet(s).winner);

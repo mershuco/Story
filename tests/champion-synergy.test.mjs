@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-import {activeChampionSynergies, CHAMPION_SYNERGIES, synergyKey} from '../dist/champion-synergy.js';
+import {activeChampionSynergies, CHAMPION_SYNERGIES, synergyKey, synergySpikeLabel} from '../dist/champion-synergy.js';
 import {draftSynergies, observedSynergies} from '../dist/draft-synergies.js';
 import {compositionProfile} from '../dist/composition.js';
 import {createMatchState, objectivePreview, replayMatch, SIMULATION_MODEL} from '../dist/match-sim.js';
@@ -101,8 +101,48 @@ test('new match odds and recorded combat use the bonuses, with exact old replay 
  assert.equal(createHash('sha256').update(JSON.stringify(oldSynergies)).digest('hex'),
   'b3b04d5405c782b643360f3bc079ed84837db849cb962870450b8a8a5ee6f275');
  const result=replayMatch({...input,model:SIMULATION_MODEL});
- assert.equal(result.model,'event-v13');
+ assert.equal(result.model,'event-v14');
  assert(result.events.some(event=>event.championSynergies?.some(combo=>combo.key===synergyKey('Ahri','Vi'))));
  assert(result.events.some(event=>event.championSynergies?.some(combo=>combo.powerSpike)&&event.text.includes('강한 구간')));
  assert.deepEqual(replayMatch({...input,model:SIMULATION_MODEL}),result);
+});
+
+test('added skill chains have 2026 appearances and improve the intended fights without changing archived replays', () => {
+ const observed=observedSynergies(records);
+ const added=CHAMPION_SYNERGIES.slice(-20);
+ assert(added.every(pair=>observed.has(pair.key)));
+ const cup=records.filter(game=>game.event==='LCK_CUP');
+ const cupSkills=draftSynergies(cup);
+ for(const [key,games,time] of [['Nocturne+Orianna',6,'12~29분'],['Ambessa+Vi',2,'8~26분']]){
+  const pair=cupSkills.find(row=>row.key===key);
+  assert.equal(pair.games,games);
+  assert(synergySpikeLabel(pair.skill).startsWith(time));
+ }
+ assert(!cupSkills.some(row=>row.key==='Camille+Galio'));
+ assert(draftSynergies(records.filter(game=>game.event==='LCK_ROAD')).some(row=>row.key==='Camille+Galio'&&row.games===1));
+
+ const expandedBlue=picks(['Ambessa','Vi','Orianna','Caitlyn','Bard'],'B');
+ const expandedRed=picks(['Gnar','Nocturne','Taliyah','Ashe','Seraphine'],'R');
+ const expandedInput={...input,roster:[...expandedBlue,...expandedRed],
+  compositionBlue:compositionProfile(expandedBlue,champMap),compositionRed:compositionProfile(expandedRed,champMap)};
+ const legacy=createMatchState({...expandedInput,model:'event-v13'},17);
+ const current=createMatchState({...expandedInput,model:SIMULATION_MODEL},17);
+ for (const state of [legacy,current]) {
+  state.clock=16;
+  state.pending={kind:'dragon',minute:16,roles};
+ }
+ assert(objectivePreview(current).fightChance>objectivePreview(legacy).fightChance);
+ const expandedComp=picks(['Camille','Nocturne','Orianna','Jinx','Lulu'],'B').map(p=>[p.champion,p.role]);
+ const findPair=(minute,kind,absent=[])=>activeChampionSynergies(expandedComp,minute,kind,{absent}).matches.find(row=>row.key==='Nocturne+Orianna');
+ assert(findPair(20,'baron').spike>1);
+ assert.equal(findPair(20,'gank').spike,0);
+ assert.equal(findPair(38,'baron').spike,0);
+ assert.equal(findPair(20,'baron',['Orianna']),undefined);
+ for(const [model,expected] of [
+  ['event-v12','ba0141a5f1daf2a56d7cdab11d765ebe55eee9073ca7c6b50472f8a6497bcc0d'],
+  ['event-v13','5b767a64a5b1159326779ad94a318fb7cabc685c2084d45f7282783bb0c72065']
+ ]){
+  const previous=replayMatch({...expandedInput,model});
+  assert.equal(createHash('sha256').update(JSON.stringify(previous)).digest('hex'),expected);
+ }
 });

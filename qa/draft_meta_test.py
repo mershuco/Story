@@ -25,6 +25,11 @@ with sync_playwright() as p:
  q.locator('[data-change=draft-synergy-champion]').select_option('Vi')
  assert synergy.locator('[data-synergy-key="Ahri+Vi"]').count()==0
  assert '1세트' in synergy.locator('[data-synergy-key="Orianna+Vi"]').inner_text()
+ assert '공개 처형' in synergy.locator('[data-synergy-key="Ambessa+Vi"]').inner_text()
+ q.locator('[data-change=draft-synergy-champion]').select_option('Nocturne')
+ nocturne=synergy.locator('[data-synergy-key="Nocturne+Orianna"]')
+ assert '충격파' in nocturne.inner_text() and '6세트' in nocturne.inner_text()
+ assert '12~29분' in nocturne.locator('.synergy-spike').inner_text()
  q.locator('[data-change=draft-synergy-champion]').select_option('Milio')
  q.locator('[data-action=draft-meta-synergy-mode][data-id=observed]').click()
  assert 'LCK CUP' in synergy.locator('.meta-evidence').inner_text()

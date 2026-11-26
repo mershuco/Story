@@ -14,7 +14,7 @@ import {initializeRift,creditPlayer,creditTeam,farmPlayers,tickRift,gainVision,v
 import * as legacyV5 from './match-sim-v5.js';
 import {initializeObjectives,takeDragon,grantTemporaryBuff,loseBuffsOnDeath,buffCoverage,objectivePower,structurePressure,objectiveSnapshot,DRAKES} from './objective-effects.js';
 export {goldInfluence,battleFactors,battleProbability,matchRandom};
-export const SIMULATION_MODEL='event-v13';
+export const SIMULATION_MODEL='event-v14';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const sigmoid=x=>1/(1+Math.exp(-x));
 const round=n=>Math.round(n*1000)/1000;
@@ -41,20 +41,20 @@ function record(s,{kind,title,location='mid',roles=null,team=null,kills=[],objec
 }
 export function createMatchState(input,seed=0,external){
  const snapshot=structuredClone(input),{blue,red}=snapshot,teams=[blue,red],zeros=()=>Object.fromEntries(teams.map(id=>[id,0]));
- const version=input.model==='event-v11'?11:input.model==='event-v12'?12:13;
+ const version=input.model==='event-v11'?11:input.model==='event-v12'?12:input.model==='event-v13'?13:14;
  const s={version,input:snapshot,rng:seed>>>0,teams,clock:0,stats:snapshot.roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),gold:{[blue]:2500,[red]:2500},score:zeros(),dragons:zeros(),grubs:zeros(),heralds:zeros(),barons:zeros(),elders:zeros(),baronUntil:zeros(),elderUntil:zeros(),momentum:zeros(),minLead:zeros(),events:[],lastLeader:null,leadChanges:0,winner:null,finished:false,pending:null,window:0,decisions:[],soul:null,steps:0};
  s.powerGap=(input.teamStrengthBlue??input.bluePower)-(input.teamStrengthRed??input.redPower);s.championGap=input.bluePower-input.redPower-s.powerGap;
  s.macros=[macroProfile(blue,input.compositionBlue,input.blueStrategy),macroProfile(red,input.compositionRed,input.redStrategy)];
  const rng=()=>draw(s,external),delay=()=>.3+rng()*1.4+(1-(s.macros[0].objective+s.macros[1].objective)/2)*.8;
  s.timers={dragon:5+delay(),grubs:input.objectiveEra===2022?null:8+delay(),herald:null,baron:20+delay(),elder:null};s.nextMacro=2.4+rng()*1.3;
  initializeObjectives(s,rng);initializeRift(s);initializeBounties(s);s.respawnAt={};initializeEconomy(s);
- const matchup=compositionMatchup(input.compositionBlue,input.compositionRed,0,'teamfight',{synergies:version>=12,synergySpikes:version>=13});s.initialBlueProbability=battleProbability({powerGap:s.powerGap,championGap:s.championGap,compositionGap:matchup.gap});
+ const matchup=compositionMatchup(input.compositionBlue,input.compositionRed,0,'teamfight',{synergies:version>=12,synergySpikes:version>=13,expandedSynergies:version>=14});s.initialBlueProbability=battleProbability({powerGap:s.powerGap,championGap:s.championGap,compositionGap:matchup.gap});
  record(s,{kind:'opening',title:'라인 배치'});return s;
 }
 function combatEstimate(s,minute,kind,roles=null,execution=0){
  const [blue,red]=s.teams,lead=s.gold[blue]-s.gold[red];
  const blueStats=s.stats.filter(p=>p.team===blue),redStats=s.stats.filter(p=>p.team===red);
- const options={blueStats,redStats,roles,synergies:s.version>=12,synergySpikes:s.version>=13};
+ const options={blueStats,redStats,roles,synergies:s.version>=12,synergySpikes:s.version>=13,expandedSynergies:s.version>=14};
  if(options.synergies){
   const absent=players=>players.filter(p=>(s.respawnAt[p.player]??0)>minute).map(p=>p.champion);
   options.blueAbsent=absent(blueStats);options.redAbsent=absent(redStats);
@@ -244,4 +244,4 @@ export function simulateMatch(input,rng){
  }else s=createMatchState(input,0,rng);
  advanceMatch(s,{auto:true},rng);return matchOutcome(s);
 }
-export function replayMatch(input){return (input.model===SIMULATION_MODEL||input.model==='event-v11'||input.model==='event-v12')?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}
+export function replayMatch(input){return (input.model===SIMULATION_MODEL||input.model==='event-v11'||input.model==='event-v12'||input.model==='event-v13')?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}

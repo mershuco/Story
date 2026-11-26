@@ -23,7 +23,7 @@ function fitViewer(){
  const height=Math.max(180,Math.min(host.clientHeight,visibleBottom-rect.top-2)-parseFloat(style.paddingTop)-parseFloat(style.paddingBottom));
  screen.style.height=height+'px';
  const board=screen.querySelector('.spectator-layout');
- const mobile=matchMedia('(max-width:680px)').matches;
+ const mobile=matchMedia('(max-width:639px), (max-width:680px) and (orientation:portrait)').matches;
  const portrait=mobile&&matchMedia('(orientation: portrait)').matches;
  const powerPlays=screen.querySelector('.power-play-strip');
  const sidebar=board.querySelector('.rift-side');
@@ -32,9 +32,11 @@ function fitViewer(){
  const fixed=[...screen.children].filter(el=>el!==board).reduce((n,el)=>n+el.getBoundingClientRect().height,0);
  const gap=parseFloat(getComputedStyle(screen).gap)||0,gaps=([...screen.children].filter(el=>getComputedStyle(el).display!=='none').length-1)*gap;
  const side=mobile?0:screen.querySelector('.spectator-team').getBoundingClientRect().width;
- const roster=mobile?parseFloat(getComputedStyle(screen).getPropertyValue('--roster-height'))+gap:0;
- // In portrait, reserve a readable kill log column and use the remaining square space.
- const mapWidth=portrait?Math.min(screen.clientWidth*.6,screen.clientWidth-132):screen.clientWidth-(mobile?0:side*2+16);
+ const boardGap=parseFloat(getComputedStyle(board).columnGap)||0;
+ const roster=mobile?parseFloat(getComputedStyle(screen).getPropertyValue('--roster-height'))+boardGap:0;
+ const feedWidth=sidebar.getBoundingClientRect().width;
+ // Keep the feed clear of the map and player panels, even when the side margins are narrow.
+ const mapWidth=mobile?Math.min(screen.clientWidth*.6,screen.clientWidth-132):screen.clientWidth-side*2-feedWidth-boardGap*4;
  const size=Math.floor(Math.max(100,Math.min(mapWidth,height-fixed-gaps-roster)));
  screen.style.setProperty('--map-size',size+'px');screen.style.setProperty('--board-height',(size+roster)+'px');
  screen.classList.toggle('is-short',size<370);screen.dataset.fitted='true';

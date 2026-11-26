@@ -35,15 +35,19 @@ with sync_playwright() as p:
   assert result['actions']['bottom']<=result['dialog']['bottom'],result
   for choice in ['contest','trade','auto']:
    action=q.locator(f'[data-action=objective-choice][data-choice={choice}]');assert action.is_visible();action.click(trial=True)
-  # The map scales while portrait pixels in the kill feed stay at 20px.
+  # Kill entries never cover the minimap or the red team panel.
   assert q.locator('.rift-side .kill-entry').count()>0
+  map_box=q.locator('.live-rift').bounding_box()
+  feed=q.locator('.rift-killfeed').bounding_box()
+  sidebar=q.locator('.rift-side').bounding_box()
+  layout=q.locator('.spectator-layout').bounding_box()
+  assert feed['x']>=map_box['x']+map_box['width'] and abs(feed['y']-map_box['y'])<=1
+  assert feed['x']+feed['width']<=layout['x']+layout['width']+1
+  if q.evaluate('!matchMedia("(max-width:639px), (max-width:680px) and (orientation:portrait)").matches'):
+   red=q.locator('.spectator-team.red').bounding_box()
+   assert feed['x']>=red['x']+red['width'] and map_box['x']+map_box['width']<=red['x']
   if q.evaluate('matchMedia("(max-width:680px) and (orientation: portrait)").matches'):
-   map_box=q.locator('.live-rift').bounding_box()
-   feed=q.locator('.rift-killfeed').bounding_box()
-   sidebar=q.locator('.rift-side').bounding_box()
-   layout=q.locator('.spectator-layout').bounding_box()
    assert abs(map_box['x']-layout['x'])<=1
-   assert feed['x']>=map_box['x']+map_box['width'] and abs(feed['y']-map_box['y'])<=1
    assert abs(feed['x']+feed['width']-layout['x']-layout['width'])<=1
    for buff in q.locator('.power-play-card:visible').all():
     box=buff.bounding_box()
@@ -53,9 +57,9 @@ with sync_playwright() as p:
   assert q.evaluate('document.documentElement.scrollWidth<=innerWidth')
   return result
  load(fixture)
- for width,height in [(1440,900),(1280,720),(1024,768),(1024,650),(1180,640),(390,844),(390,700)]:
+ for width,height in [(1920,960),(1440,900),(1280,720),(1024,768),(1024,650),(1180,640),(720,640),(667,600),(390,844),(390,700)]:
   q.set_viewport_size({'width':width,'height':height});result=fits();q.screenshot(path=str(ROOT/f'2026-viewport-overlay-{width}-{height}.png'),full_page=True)
-  report['checks'].append(f'{width}x{height}: header, all 10 players, narration, playback and timeline fit; map dialog and all actions stay inside the map; kill portraits remain 20px')
+  report['checks'].append(f'{width}x{height}: header, all 10 players, narration, playback and timeline fit; map dialog and all actions stay inside the map; the feed stays to the right with 20px portraits')
  report['checks'].append('phone portrait: square map flush left, kill entries stay in the right column, active buff timers follow the feed')
  # Resizing the same viewer restores the wide layout without duplicating the timers.
  q.set_viewport_size({'width':1024,'height':650});fits();assert q.locator('.spectator-screen > .power-play-strip').count()==1;assert q.locator('.power-play-strip').count()==1

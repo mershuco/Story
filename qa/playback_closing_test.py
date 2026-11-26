@@ -30,7 +30,8 @@ with sync_playwright() as p:
    assert abs(rift['x']-q.locator('.spectator-layout').bounding_box()['x'])<=1
    assert feed['x']+feed['width']<=q.locator('.spectator-layout').bounding_box()['x']+q.locator('.spectator-layout').bounding_box()['width']+1
   else:
-   assert feed['x']>=rift['x'] and feed['x']+feed['width']<=rift['x']+rift['width']
+   red_panel=q.locator('.spectator-team.red').bounding_box();board=q.locator('.spectator-layout').bounding_box()
+   assert feed['x']>=red_panel['x']+red_panel['width'] and feed['x']+feed['width']<=board['x']+board['width']+1
   red=q.locator('.broadcast-score-team.red').bounding_box();grubs=q.locator('.broadcast-score-team.red .score-grub-icons').bounding_box();assert grubs['x']+grubs['width']>=red['x']+red['width']-20,{'width':width,'red':red,'grubs':grubs,'styles':q.locator('.broadcast-score-team.red').evaluate('(e)=>({direction:getComputedStyle(e).direction,columns:getComputedStyle(e).gridTemplateColumns})')}
   assert q.evaluate('document.documentElement.scrollWidth<=innerWidth');q.screenshot(path=str(ROOT/f'2026-playback-scroll-{width}.png'),full_page=True);q.locator('.match-sheet').evaluate('(el)=>el.scrollTop=0');q.screenshot(path=str(ROOT/f'2026-playback-header-{width}.png'),full_page=True)
   report['checks'].append(f'{width}px: continuous x8 Baron playback advances >=3 highlights in 1.35s; map width and top stay constant across scene transitions, same scroll container without unwanted scroll; speed changes preserve scroll; red grubs align right')
