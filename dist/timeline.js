@@ -1,5 +1,6 @@
 import {structurePosition} from './broadcast-hud.js';
 import {replayMatch,SIMULATION_MODEL} from './match-sim.js';
+import {buildLanePlayback,laneActorTarget,laneHealth,sampleLaneActors} from './lane-playback.js';
 // Deterministic highlight reconstruction. This layer never changes match results or save RNG.
 const ROLES=['TOP','JGL','MID','BOT','SUP'];
 const BASE={blue:[63,537],red:[537,63]};
@@ -28,7 +29,7 @@ function take(queue,amount,roles){
  for(let i=0;i<queue.length&&out.length<amount;){const k=queue[i];if(!k.victim||seen.has(k.victim)||(roles&&(!roles.includes(k.killerRole)||!roles.includes(k.victimRole)))){i++;continue;}out.push(queue.splice(i,1)[0]);seen.add(k.victim);}
  return out;
 }
-export function buildTimeline(set,{teamNames={},playerNames={}}={}){
+export function buildTimeline(set,{teamNames={},playerNames={},champions={}}={}){
  const rng=seeded(hash(JSON.stringify([set.blue,set.red,set.number,set.winner,set.picks,set.stats])));
  let out,records=set.events;
  if(!set.live&&!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3','event-v4','event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14',SIMULATION_MODEL].includes(set.simulationReplay?.model)){
@@ -87,11 +88,11 @@ export function buildTimeline(set,{teamNames={},playerNames={}}={}){
  }
  out.push({minute:duration,second:duration*60,kind:'nexus',title:'넥서스 파괴',location:set.winner===set.blue?'baseRed':'baseBlue',team:set.winner,kills:[],objective:{kind:'nexus',team:set.winner},lead:(set.winner===set.blue?1:-1)*(5500+Math.floor(rng()*7000)),score:{...totals},dragons:{...dragons},text:`${teamNames[set.winner]??set.winner}이 넥서스를 파괴하고 ${set.number}세트를 가져갑니다.`});
  }
- let positions=Object.fromEntries(set.picks.map(p=>[p.team+'|'+p.role,BASE[p.team===set.blue?'blue':'red']]));let dead=new Set();const deathUntil={};
+ const positions=Object.fromEntries(set.picks.map(p=>[p.team+'|'+p.role,BASE[p.team===set.blue?'blue':'red']]));let dead=new Set();const deathUntil={},earlyHealth={};
  if(set.simulationVersion>=7)out.forEach((scene,i)=>{scene.endSecond=scene.kind==='nexus'?scene.second:Math.min(scene.decisionSecond??scene.second+18,out[i+1]?.second??Infinity);});
  for(const scene of out){
   const building=scene.push?.structures?.[0],center=building?structurePosition(building.defender===set.blue?'blue':'red',building.lane,building.kind,building.index):POI[scene.location]??POI.mid;scene.focus={x:center[0],y:center[1],radius:['baron','dragon','herald','grubs','elder','objective-setup'].includes(scene.kind)?65:scene.kind==='opening'?0:85};
-  const killed=new Set(scene.kills.map(k=>k.victim));const involved=new Set(scene.kills.flatMap(k=>[k.killer,k.victim,...k.assists]));
+  const killed=new Set(scene.kills.map(k=>k.victim));
   scene.actors=set.picks.map(p=>{
    const stat=set.stats.find(z=>z.team===p.team&&z.role===p.role);const side=p.team===set.blue?'blue':'red',i=ROLES.indexOf(p.role),key=p.team+'|'+p.role,home=BASE[side],baseLane=LANES[side][p.role];
    const stillDead=set.simulationVersion>=7&&(deathUntil[stat?.player]??0)>scene.second,respawn=dead.has(stat?.player)&&!stillDead,from=respawn||stillDead?[...home]:[...(positions[key]??home)];
@@ -109,20 +110,45 @@ export function buildTimeline(set,{teamNames={},playerNames={}}={}){
     if((scene.kind==='flank'||scene.kind==='teamfight')&&['TOP','SUP'].includes(p.role))via=[[center[0]+direction*110,center[1]+direction*(p.role==='TOP'?-120:115)]];
     if(scene.objective?.steal&&p.team===scene.team&&p.role==='JGL'){via=[[center[0]+direction*90,center[1]-direction*90]];target=[...center];}
    }
+   if(set.simulationVersion>=15){
+    const laneTarget=laneActorTarget(scene,{...p,side,involved:involvedHere,alreadyDead:stillDead});
+    if(laneTarget)target=laneTarget;
+   }
    if(stillDead){target=[...home];via=[];}
    target=target.map(v=>clamp(v,30,570));const dies=killed.has(stat?.player);
    const actor={id:stat?.player??key,champion:p.champion,team:p.team,side,role:p.role,from:[...from],to:[...target],path:[from,...via,target],deathUntil:scene.kills.find(k=>k.victim===stat?.player)?.respawnAtSecond??deathUntil[stat?.player]??0,dead:dies||stillDead,alreadyDead:stillDead,respawn,hpFrom:stillDead?0:respawn?80:100,hpTo:dies||stillDead?0:peaceful?100:involvedHere?50+Math.floor(rng()*45):100,involved:involvedHere};
    positions[key]=target;return actor;
-  });for(const victim of killed)deathUntil[victim]=scene.kills.find(k=>k.victim===victim)?.respawnAtSecond??scene.second+Math.min(65,15+scene.minute*.8);dead=killed;
+  });
+  if(set.simulationVersion>=15){
+   const lane=buildLanePlayback(scene,{champions,patch:set.patch,previousHealth:earlyHealth});
+   if(lane){
+    scene.lanePlayback=lane;
+    for(const actor of scene.actors){
+     const hp=laneHealth(lane,actor,1);
+     if(hp!==null)earlyHealth[actor.id]=hp;
+    }
+   }
+  }
+  for(const victim of killed){
+   delete earlyHealth[victim];
+   deathUntil[victim]=scene.kills.find(k=>k.victim===victim)?.respawnAtSecond??scene.second+Math.min(65,15+scene.minute*.8);
+  }
+  dead=killed;
  }
  return out;
 }
 export function sampleScene(scene,progress){
- const p=clamp(progress,0,1);return scene.actors.map(actor=>{
-  const move=clamp(p/.65,0,1),points=actor.path,lengths=points.slice(1).map((b,i)=>Math.hypot(b[0]-points[i][0],b[1]-points[i][1])),total=lengths.reduce((a,b)=>a+b,0);let travelled=move*total,x=points[0][0],y=points[0][1];
+ const p=clamp(progress,0,1),actors=scene.actors.map(actor=>{
+  const travelTime=scene.lanePlayback?.active.includes(actor.id)?.38:.65;
+  const move=clamp(p/travelTime,0,1),points=actor.path,lengths=points.slice(1).map((b,i)=>Math.hypot(b[0]-points[i][0],b[1]-points[i][1])),total=lengths.reduce((a,b)=>a+b,0);let travelled=move*total,x=points[0][0],y=points[0][1];
   for(let i=0;i<lengths.length;i++){const ratio=lengths[i]?Math.min(1,travelled/lengths[i]):1;x=points[i][0]+(points[i+1][0]-points[i][0])*ratio;y=points[i][1]+(points[i+1][1]-points[i][1])*ratio;if(travelled<=lengths[i])break;travelled-=lengths[i];}
   const hpProgress=clamp((p-.38)/.4,0,1),hp=actor.hpFrom+(actor.hpTo-actor.hpFrom)*hpProgress;
   return {...actor,x,y,hp,visibleDeath:actor.alreadyDead||(actor.dead&&p>=.78),recalling:scene.kind==='recall'&&p<.7};
  });
+ return sampleLaneActors(scene.lanePlayback,actors,p);
+}
+export function sceneVisibleKills(scene,progress){
+ if(scene.lanePlayback)return scene.kills.filter(k=>progress>=scene.lanePlayback.deathAt[k.victim]);
+ return scene.kills.slice(0,Math.max(0,Math.floor((progress-.48)/.3*scene.kills.length)+1));
 }
 export function sceneClock(scene,progress){if(Number.isFinite(scene.endSecond))return scene.second+Math.round(clamp(progress,0,1)*(scene.endSecond-scene.second));if(scene.kind==='objective-setup'&&Number.isFinite(scene.decisionSecond))return scene.second+Math.round(clamp(progress,0,1)*(scene.decisionSecond-scene.second));return scene.kind==='nexus'?scene.second:scene.second+Math.round(clamp(progress,0,1)*Math.min(20,scene.kind==='opening'?10:18));}

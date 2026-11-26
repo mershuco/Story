@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import * as E from '../dist/engine.js';
-import {buildTimeline,sampleScene,sceneClock} from '../dist/timeline.js';
+import {buildTimeline,sampleScene,sceneClock,sceneVisibleKills} from '../dist/timeline.js';
+import {sampleMinions} from '../dist/lane-playback.js';
 import {historicalDraft} from '../dist/broadcast.js';
 const keys=['players','teams','champions','mastery','meta','international'];
 const data=Object.fromEntries(keys.map(k=>[k,JSON.parse(readFileSync(new URL(`../dist/data/${k}.json`,import.meta.url)))]));E.configure(data);
@@ -31,4 +32,46 @@ test('ganks, objective rotations and recalls move champions to their correspondi
 test('combat effects and death states appear after movement rather than at scene start',()=>{
  const scene=buildTimeline(set).find(scene=>scene.kills.length);assert(scene);const killed=scene.kills[0].victim;
  const start=sampleScene(scene,0).find(a=>a.id===killed),end=sampleScene(scene,1).find(a=>a.id===killed);assert.equal(start.visibleDeath,false);assert.equal(end.visibleDeath,true);assert.equal(end.hp,0);
+});
+
+test('early lane highlights show champion skills, basic attacks and waves without changing the match event',()=>{
+ const champions=Object.fromEntries(JSON.parse(readFileSync(new URL('../dist/data/season-2026/champions.json',import.meta.url))).map(c=>[c.id,c]));
+ const picks=[{team:'B',role:'MID',champion:'Ahri'},{team:'R',role:'MID',champion:'Yasuo'}];
+ const stats=picks.map(p=>({...p,player:p.team+'MID'}));
+ const event={minute:4,second:240,kind:'laning',location:'mid',kills:[]};
+ const match={blue:'B',red:'R',live:true,patch:'16.1.1',simulationVersion:15,stats,picks,events:[event]};
+ const before=JSON.stringify(match),[scene]=buildTimeline(match,{champions});
+ assert.equal(JSON.stringify(match),before);
+ assert.deepEqual(buildTimeline(match,{champions}),[scene]);
+ assert.equal(scene.lanePlayback.minions.length,6);
+ const orb=scene.lanePlayback.actions.find(a=>a.from==='BMID'&&a.slot==='Q');
+ assert.equal(orb.name,'현혹의 구슬');
+ assert.equal(orb.form,'returning');
+ const basic=scene.lanePlayback.actions.filter(a=>a.minion);
+ assert(basic.some(a=>a.from==='BMID'&&a.form==='shot'));
+ assert(basic.some(a=>a.from==='RMID'&&a.form==='strike'));
+ const beforeHit=sampleScene(scene,orb.land-.001).find(p=>p.id==='RMID'),hit=sampleScene(scene,orb.land).find(p=>p.id==='RMID');
+ assert(hit.hp<beforeHit.hp && !hit.visibleDeath);
+ const x=sampleScene(scene,.7).find(p=>p.id==='BMID'),y=sampleScene(scene,.81).find(p=>p.id==='BMID');
+ assert.notDeepEqual([x.x,x.y],[y.x,y.y]);
+ const picture=sampleMinions(scene.lanePlayback,basic[0].land+.1).find(m=>m.id===basic[0].target);
+ assert.equal(picture.visible,0);
+ assert.deepEqual(sceneVisibleKills(scene,1),[]);
+});
+
+test('damaging hits precede a recorded lane kill and the death and kill feed reveal together',()=>{
+ const picks=[{team:'B',role:'TOP',champion:'Darius'},{team:'R',role:'TOP',champion:'Ornn'}];
+ const stats=picks.map(p=>({...p,player:p.team+'TOP'}));
+ const event={minute:4,second:240,kind:'solo-kill',location:'top',roles:['TOP'],kills:[{killer:'BTOP',victim:'RTOP',assists:[],respawnAtSecond:258}]};
+ const next={minute:4.2,second:252,kind:'laning',location:'top',kills:[]};
+ const match={blue:'B',red:'R',live:true,simulationVersion:15,stats,picks,events:[event,next]};
+ const [scene,after]=buildTimeline(match);
+ const finishing=scene.lanePlayback.actions.find(x=>x.lethal);
+ assert(finishing&&finishing.from==='BTOP'&&finishing.target==='RTOP');
+ assert(!sceneVisibleKills(scene,finishing.land-.001).length);
+ assert.equal(sceneVisibleKills(scene,finishing.land).length,1);
+ assert(sampleScene(scene,finishing.land-.001).find(p=>p.id==='RTOP').hp>0);
+ assert.equal(sampleScene(scene,finishing.land).find(p=>p.id==='RTOP').hp,0);
+ assert(sampleScene(scene,finishing.land).find(p=>p.id==='RTOP').visibleDeath);
+ assert(!after.lanePlayback.actions.some(a=>a.from==='RTOP'||a.target==='RTOP'));
 });

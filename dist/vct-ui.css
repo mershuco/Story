@@ -186,3 +186,18 @@ body{background:var(--bg);font-family:var(--body);overflow:hidden}body[data-scre
  .power-play-card .objective-icon{width:19px;height:19px}.power-play-card .power-time{font-size:20px}
  .broadcast-commentary{gap:8px;margin-top:10px}.rift-killfeed{grid-template-columns:1fr}.kill-entry>strong{font-size:11px}.scene-narration{margin-top:0}
 }
+
+/* Early lane cues use scene progress so replay controls freeze every effect. */
+.lane-wave,.lane-attack-layer{pointer-events:none}
+.lane-wave .blue{fill:#81e5ff;stroke:#122b3a;stroke-width:1.7}
+.lane-wave .red{fill:#fba5af;stroke:#421d2b;stroke-width:1.7}
+.lane-attack-layer{color:var(--strike-color)}
+.lane-projectile{fill:var(--strike-color);stroke:#fff8e8;stroke-width:1.4}
+.lane-trail,.lane-ring,.lane-impact{fill:none;stroke:var(--strike-color);stroke-linecap:round}
+.lane-trail{stroke-width:5;filter:drop-shadow(0 0 3px var(--strike-color))}
+.lane-ring{stroke-width:3}
+.lane-impact{stroke-width:2.6;stroke:#fff6de}
+.lane-attack-layer [data-element="basic"] .lane-trail{stroke-width:3}
+.lane-attack-layer [data-form="hook"] .lane-trail{stroke-dasharray:6 3}
+.lane-attack-layer [data-form="field"] .lane-ring{stroke-dasharray:4 3;fill:color-mix(in srgb,var(--strike-color) 20%,transparent)}
+.lane-attack-layer [data-form="heal"] .lane-ring,.lane-attack-layer [data-form="shield"] .lane-ring{fill:color-mix(in srgb,var(--strike-color) 17%,transparent);stroke-width:4}
