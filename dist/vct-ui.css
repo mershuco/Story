@@ -201,3 +201,4 @@ body{background:var(--bg);font-family:var(--body);overflow:hidden}body[data-scre
 .lane-attack-layer [data-form="hook"] .lane-trail{stroke-dasharray:6 3}
 .lane-attack-layer [data-form="field"] .lane-ring{stroke-dasharray:4 3;fill:color-mix(in srgb,var(--strike-color) 20%,transparent)}
 .lane-attack-layer [data-form="heal"] .lane-ring,.lane-attack-layer [data-form="shield"] .lane-ring{fill:color-mix(in srgb,var(--strike-color) 17%,transparent);stroke-width:4}
+.live-rift:has(.lane-wave) .rift-scene-tag{left:50%;transform:translateX(-50%);white-space:nowrap}
