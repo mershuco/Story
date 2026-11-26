@@ -396,13 +396,62 @@ function draftRoleScorer(s,d,teamId,meta=autoDraftMeta(s,d)) {
 }
 // All possible role matchings remain open during selection. The coach can prefer a
 // lane without reserving it; only post-draft assignment writes a role to a pick.
-function matchingStates(picks,score,fixed=false) {
- let states=new Map([[0,{score:0,roles:[]}]]);
+function matchingStates(picks,score,fixed=false,occupied=0) {
+ let states=new Map([[occupied,{score:0,roles:[]}]]);
  for(const pick of picks){const next=new Map();for(const [mask,state] of states)for(let r=0;r<5;r++){
   if(mask&(1<<r)||fixed&&pick.role&&pick.role!==ROLES[r])continue;
   const key=mask|(1<<r),value=state.score+score(pick.champion,ROLES[r]);
+  if(value===-Infinity)continue;
   if(!next.has(key)||next.get(key).score<value)next.set(key,{score:value,roles:[...state.roles,ROLES[r]]});
  }states=next;}return states;
+}
+const bottomRoles=['BOT','SUP'];
+const bottomMask=bottomRoles.reduce((mask,role)=>mask|(1<<ROLES.indexOf(role)),0);
+const fullRoleMask=(1<<ROLES.length)-1;
+function bottomDuoPlans(picks,available,meta,fit,preserve=false) {
+ if(!meta?.bottomDuos.length)return [];
+ const locked=new Map(picks.map(pick=>[pick.champion,preserve?pick.role:null]));
+ const statesByLineup=new Map();
+ const score=(id,role)=>fit(id,role).viable?fit(id,role).score:-Infinity;
+ const plans=[];
+ for(const duo of meta.bottomDuos){
+  const ids=[duo.bot,duo.support];
+  const missing=ids.filter(id=>!locked.has(id));
+  if(missing.length>ROLES.length-picks.length||missing.some(id=>!available.has(id)))continue;
+  if(ids.some((id,i)=>!fit(id,bottomRoles[i]).viable||locked.get(id)&&locked.get(id)!==bottomRoles[i]))continue;
+  const rest=picks.filter(p=>!ids.includes(p.champion));
+  const key=rest.map(p=>p.champion).join(':');
+  if(!statesByLineup.has(key))statesByLineup.set(key,matchingStates(rest,score,preserve,bottomMask));
+  const states=statesByLineup.get(key);
+  if(!states.size)continue;
+  const freeRoles=[...states.keys()].reduce((mask,used)=>mask|(fullRoleMask^used),0);
+  const current=ids.every((id,i)=>meta.roles.get(id+':'+bottomRoles[i])?.primary>0);
+  plans.push({duo,missing,states,freeRoles,rest,current});
+ }
+ return plans;
+}
+function preferBottomDuos(rows,own,meta,fit,nextPickIsOurs) {
+ const plans=bottomDuoPlans(own,new Set(rows.map(row=>row.champion)),meta,fit);
+ if(!plans.length)return rows;
+ const ranked=[];
+ for(const row of rows){
+  const mask=ROLES.reduce((mask,role,i)=>fit(row.champion,role).viable?mask|(1<<i):mask,0);
+  let tier=-1,bonus=0;
+  for(const {duo,missing,freeRoles,current} of plans){
+   const advances=missing.includes(row.champion);
+   if(!advances&&!(mask&freeRoles))continue;
+   // Preserve an already complete duo before starting another one.
+   const priority=(duo.skill?4:0)+2*Number(!missing.length)+Number(current);
+   const strength=advances?Math.min(5,duo.patchGames+duo.games*.25):0;
+   const progress=advances?(missing.length===1?28:12+(nextPickIsOurs?7:0)):0;
+   if(priority>tier||priority===tier&&progress+strength>bonus){
+    tier=priority;bonus=progress+strength;
+   }
+  }
+  ranked.push({...row,baseScore:row.score,score:row.score+bonus,duoPriority:tier});
+ }
+ const bestTier=Math.max(...ranked.map(row=>row.duoPriority));
+ return bestTier<0?rows:ranked.filter(row=>row.duoPriority===bestTier);
 }
 export function recommendations(s,d,limit=3) {
  const turn=draftTurn(d);if(!turn)return[];
@@ -411,7 +460,7 @@ export function recommendations(s,d,limit=3) {
  const states=matchingStates(own,score),baseline=Math.max(...[...states.values()].map(x=>x.score));
  const needsEngage=!own.some(x=>DB.champMap[x.champion].features.engage);
  const needsMagic=!own.some(x=>DB.champMap[x.champion].features.ap);
- const rows=legalChampions(s,d).map(c=>{
+ let rows=legalChampions(s,d).map(c=>{
   let best=-Infinity,role='MID';
   for(const [mask,state] of states)for(let r=0;r<5;r++){
    if(own.length<5&&mask&(1<<r))continue;
@@ -429,7 +478,12 @@ export function recommendations(s,d,limit=3) {
   if(s.strategy==='late'&&c.features.scale&&targetTeam===s.myTeam)best+=3;
   if(s.strategy==='early'&&!c.features.scale&&targetTeam===s.myTeam)best+=3;
   return{champion:c.id,name:c.name,role,score:best,viable:fit(c.id,role).viable,reason:turn.kind==='ban'?`상대 숙련·현재 메타 대응 · ${ROLE_NAMES[role]} 가능`:`${ROLE_NAMES[role]} 활용 가능 · 최종 배치는 밴픽 종료 후`};
- });return rows.sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name)).slice(0,limit);
+ });
+ if(meta&&turn.kind==='pick'){
+  const next=draftActions(d)[d.step+1];
+  rows=preferBottomDuos(rows,own,meta,fit,next?.[0]===side&&next[1]==='pick');
+ }
+ return rows.sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name)).slice(0,limit);
 }
 // A saved late-series opening plan intentionally trades a few power picks.
 // This is drafting policy, never an exception to availability or Fearless rules.
@@ -466,7 +520,18 @@ function refreshDraftOpenings(s,d,plan){
 }
 export function autoOne(s,d) {
  const turn=draftTurn(d);if(!turn)throw Error('밴픽이 끝났습니다.');
- let choices=recommendations(s,d,d.set>=2?200:3),planned=false,protecting=false;
+ const meta=autoDraftMeta(s,d);
+ const secondBans=meta&&turn.kind==='ban'&&draftStatus(d).id==='ban2';
+ let choices=recommendations(s,d,d.set>=2||secondBans?200:3),planned=false,protecting=false;
+ if(secondBans){
+  const fit=draftRoleScorer(s,d,turn.team,meta);
+  const plans=bottomDuoPlans(d.picks[turn.side],new Set(choices.map(row=>row.champion)),meta,fit);
+  if(!plans.some(plan=>!plan.missing.length)){
+   const partners=new Set(plans.filter(({duo,missing})=>duo.skill&&missing.length===1).map(plan=>plan.missing[0]));
+   const alternatives=choices.filter(row=>!partners.has(row.champion));
+   if(alternatives.length)choices=alternatives;
+  }
+ }
  if(d.set>=2){
   const plan=refreshDraftOpenings(s,d,draftOpeningPlan(s,d)),open=new Set(plan.openings),targets=plan.claims[turn.side];
   if(turn.kind==='ban'){
@@ -485,12 +550,14 @@ export function autoOne(s,d) {
     choices=cover.length?cover:rows;protecting=!!cover.length;
    }
   }else{
-   const captures=choices.filter(c=>targets.includes(c.champion)&&c.viable&&c.score>=choices[0].score-10).sort((a,b)=>targets.indexOf(a.champion)-targets.indexOf(b.champion)||b.score-a.score);
+   // The duo filter already kept picks that preserve the best available pair.
+   const bestBase=Math.max(...choices.map(c=>c.baseScore??c.score));
+   const captures=choices.filter(c=>targets.includes(c.champion)&&c.viable&&(c.baseScore??c.score)>=bestBase-10).sort((a,b)=>targets.indexOf(a.champion)-targets.indexOf(b.champion)||b.score-a.score);
    if(captures.length){choices=captures;planned=true;}
   }
  }
  if(!choices.length)throw Error('선택 가능한 챔피언이 없습니다.');
- const capped=turn.kind==='pick'&&autoDraftMeta(s,d)?choices.filter(c=>c.score>=choices[0].score-8):choices;
+ const capped=turn.kind==='pick'&&meta?choices.filter(c=>c.score>=choices[0].score-8):choices;
  const width=planned?1:Math.min(protecting?3:d.set>=2&&turn.kind==='ban'?4:2,capped.length),c=capped[Math.floor(random(s)*width)];draftAction(s,d,c.champion);
  if(protecting){const h=d.history.at(-1);h.protects=c.counter.target;h.reason=`${DB.champMap[c.counter.target].name} 확보·활용 보호 · ${c.counter.reason}`;}
 }
@@ -504,10 +571,25 @@ export function assignChampion(d,side,champion,role) {
 }
 export function autoAssignDraft(s,d,side=null,preserve=true) {
  if(d.step!==20)throw Error('밴픽을 모두 마쳐야 자동 배치할 수 있습니다.');
+ const meta=autoDraftMeta(s,d);
  for(const key of side?[side]:['blue','red']){
-  const picks=d.picks[key],fit=draftRoleScorer(s,d,d[key]),score=(id,r)=>fit(id,r).score;
-  const best=matchingStates(picks,score,preserve).get(31);if(!best)throw Error('배치 가능한 5인 조합을 확인하세요.');
-  picks.forEach((p,i)=>p.role=best.roles[i]);
+  const picks=d.picks[key],fit=draftRoleScorer(s,d,d[key],meta),score=(id,r)=>fit(id,r).score;
+  const plans=bottomDuoPlans(picks,new Set(),meta,fit,preserve);
+  let assigned=null,priority=-1,bestScore=-Infinity;
+  for(const {duo,states,rest} of plans){
+   const state=states.get(fullRoleMask);
+   if(!state)continue;
+   const tier=Number(!!duo.skill);
+   const value=state.score+score(duo.bot,'BOT')+score(duo.support,'SUP');
+   if(tier<priority||tier===priority&&value<=bestScore)continue;
+   priority=tier;bestScore=value;
+   const roles=new Map(rest.map((pick,i)=>[pick.champion,state.roles[i]]));
+   roles.set(duo.bot,'BOT');roles.set(duo.support,'SUP');
+   assigned=picks.map(pick=>roles.get(pick.champion));
+  }
+  const best=assigned??matchingStates(picks,score,preserve).get(fullRoleMask)?.roles;
+  if(!best)throw Error('배치 가능한 5인 조합을 확인하세요.');
+  picks.forEach((p,i)=>p.role=best[i]);
  }return d;
 }
 export function prepareAssignments(s,d) {

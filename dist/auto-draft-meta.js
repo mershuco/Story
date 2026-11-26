@@ -1,3 +1,5 @@
+import {championSynergy,synergyKey} from './champion-synergy.js';
+
 function patchNumber(patch) {
  const [major, minor] = patch.split('.').map(Number);
  return major * 100 + minor;
@@ -37,5 +39,17 @@ export function buildAutoDraftMeta(records, event, patch) {
    priority.set(id, (priority.get(id) ?? 0) + 1 / opening.length);
   }
  }
- return {roles, champions, priority, weightedGames, openingGames:opening.length};
+ const bottomDuos = new Map();
+ for (const game of games) for (const lineup of game.lineups) {
+  const bot = lineup.find(pick => pick[1] === 'BOT')[0];
+  const support = lineup.find(pick => pick[1] === 'SUP')[0];
+  const key = bot + ':' + support;
+  if (!bottomDuos.has(key)) {
+   bottomDuos.set(key, {bot,support,skill:championSynergy(synergyKey(bot,support)),games:0,patchGames:0});
+  }
+  const duo = bottomDuos.get(key);
+  duo.games++;
+  if (game.patch === primaryPatch) duo.patchGames++;
+ }
+ return {roles, champions, priority, weightedGames, openingGames:opening.length,bottomDuos:[...bottomDuos.values()]};
 }

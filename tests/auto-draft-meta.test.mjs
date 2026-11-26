@@ -50,11 +50,78 @@ test('both sides prefer actual roles through a fearless series and keep assignme
    assert(picks.every(p=>!d.used.includes(p.champion)));
    for(const pick of picks){
     assert(!['Viego:JGL','Corki:MID','Malphite:MID'].includes(pick.champion+':'+pick.role));
-    if(set<=3)assert(observed.roles.get(pick.champion+':'+pick.role)?.primary);
+    if(set<=3){
+     const usage=observed.roles.get(pick.champion+':'+pick.role);
+     if(['BOT','SUP'].includes(pick.role))assert(usage?.picks,`${event} ${pick.champion} ${pick.role}`);
+     else assert(usage?.primary,`${event} ${pick.champion} ${pick.role}`);
+    }
    }
    match.sets.push({picks,loser:set%2?'GEN':'T1'});
   }
  }
+});
+
+test('auto picks complete a registered bottom duo and use a real alternative if the partner is unavailable', () => {
+ for(const unavailable of ['', 'ban', 'fearless', 'opponent']){
+  const {s,d}=setup('2026-01-14');
+  d.firstPickSide='red';
+  d.step=19;
+  d.picks.blue=['Ambessa','Ryze','Yunara','JarvanIV'].map(champion=>({champion,team:d.blue,role:null}));
+  if(unavailable==='ban')d.bans.red.push('Lulu');
+  if(unavailable==='fearless')d.used.push('Lulu');
+  if(unavailable==='opponent')d.picks.red.push({champion:'Lulu',team:d.red,role:null});
+  E.autoOne(s,d);
+  assert.equal(d.picks.blue.at(-1).role,null);
+  E.autoAssignDraft(s,d,'blue');
+  const bot=d.picks.blue.find(p=>p.role==='BOT').champion;
+  const support=d.picks.blue.find(p=>p.role==='SUP').champion;
+  const duos=buildAutoDraftMeta(data.draftMeta.records,'LCK_CUP',d.patch).bottomDuos;
+  assert.equal(bot,'Yunara');
+  assert.equal(support==='Lulu',!unavailable);
+  const duo=duos.find(p=>p.bot===bot&&p.support===support);
+  assert(duo);
+  assert.equal(!!duo.skill,!unavailable);
+ }
+});
+
+test('the automated second ban phase keeps a viable partner for its own locked bottom champion', () => {
+ const {s,d}=setup('2026-01-14');
+ d.firstPickSide='blue';
+ d.step=12;
+ d.picks.red=['Yunara','Ryze','KSante'].map(champion=>({champion,team:d.red,role:null}));
+ d.picks.blue=['Aphelios','Azir','Ambessa'].map(champion=>({champion,team:d.blue,role:null}));
+ d.used=E.legalChampions(s,d).filter(c=>!['Lulu','Ziggs'].includes(c.id)).map(c=>c.id);
+ assert.equal(E.recommendations(s,d,1)[0].champion,'Lulu');
+ E.autoOne(s,d);
+ assert.deepEqual(d.bans.red,['Ziggs']);
+});
+
+test('registered duos dominate full auto drafts for both sides across tournament pools', () => {
+ let registered=0,observed=0,total=0;
+ for(const [date,competition,phase,event] of [
+  ['2026-01-14','CUP','CUP_GROUP','LCK_CUP'],
+  ['2026-06-12','ROAD','ROAD_TOP','LCK_ROAD'],
+  ['2026-11-14','WORLDS','WORLD_FINAL','WORLDS']
+ ])for(const seed of [3,17,78,301]){
+  const {s,match}=setup(date,competition,phase,seed);
+  for(let set=1;set<=5;set++){
+   const d=E.completeDraft(s,E.newDraft(s,match));
+   const duos=buildAutoDraftMeta(data.draftMeta.records,event,d.patch).bottomDuos;
+   E.autoAssignDraft(s,d);
+   assert(E.assignmentsReady(d));
+   for(const picks of Object.values(d.picks)){
+    const bot=picks.find(p=>p.role==='BOT').champion;
+    const support=picks.find(p=>p.role==='SUP').champion;
+    const duo=duos.find(pair=>pair.bot===bot&&pair.support===support);
+    registered+=Number(!!duo?.skill);
+    observed+=Number(!!duo);
+    total++;
+   }
+   match.sets.push({picks:[...d.picks.blue,...d.picks.red],loser:set%2?'T1':'GEN'});
+  }
+ }
+ assert(registered>=total*.93,`${registered}/${total} registered`);
+ assert(observed>=total*.98,`${observed}/${total} played in their event`);
 });
 
 test('the same off-meta pick ranks higher for a player with recent professional experience in that role', () => {
