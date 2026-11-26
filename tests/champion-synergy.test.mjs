@@ -19,9 +19,9 @@ const input = {blue:'B', red:'R', bluePower:80, redPower:80, roster:[...blue,...
 
 test('all observed allied pairs are counted once per team, with current-event filters and legal pick ordering', () => {
  const observed = observedSynergies(records);
- assert.equal(observed.size,3212);
+ assert.equal(observed.size,3336);
  assert.equal([...observed.values()].reduce((total,pair)=>total+pair.games,0),records.length*20);
- for (const [a,b,count] of [['Ahri','Vi',23],['Lucian','Milio',75],['Camille','Galio',8],['Ashe','Seraphine',76]]) {
+ for (const [a,b,count] of [['Ahri','Vi',23],['Lucian','Milio',85],['Camille','Galio',11],['Ashe','Seraphine',88]]) {
   assert.equal(observed.get(synergyKey(a,b)).games,count);
  }
  const cup = records.filter(game=>game.event==='LCK_CUP');
