@@ -31535,8 +31535,8 @@ pop9,Pop9,DCG,JGL,Illaoi,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Irelia,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Ivern,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Janna,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,JarvanIV,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Jax,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,JarvanIV,87,12,9,medium_exposure,oe_2025_observed_simulation,2025-10-06 06:06:50,"{""JGL"": 12}"
+pop9,Pop9,DCG,JGL,Jax,79,7,5,medium_exposure,oe_2025_observed_simulation,2025-10-06 06:53:23,"{""JGL"": 7}"
 pop9,Pop9,DCG,JGL,Jayce,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Jhin,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Jinx,48,0,0,unknown,estimated_unobserved,,{}
@@ -31555,9 +31555,9 @@ pop9,Pop9,DCG,JGL,Kindred,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Kled,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,KogMaw,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Leblanc,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,LeeSin,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,LeeSin,80,7,6,medium_exposure,oe_2025_observed_simulation,2025-10-07 09:06:39,"{""JGL"": 7}"
 pop9,Pop9,DCG,JGL,Leona,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Lillia,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Lillia,56,1,0,low_sample,oe_2025_observed_simulation,2025-04-09 09:59:17,"{""JGL"": 1}"
 pop9,Pop9,DCG,JGL,Lissandra,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Locke,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Lucian,48,0,0,unknown,estimated_unobserved,,{}
@@ -31565,30 +31565,30 @@ pop9,Pop9,DCG,JGL,Lulu,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Lux,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Malphite,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Malzahar,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Maokai,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Maokai,79,8,3,medium_exposure,oe_2025_observed_simulation,2025-08-26 10:36:41,"{""JGL"": 8}"
 pop9,Pop9,DCG,JGL,MasterYi,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Mel,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Milio,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,MissFortune,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,MonkeyKing,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,MonkeyKing,85,11,8,medium_exposure,oe_2025_observed_simulation,2025-10-08 10:37:09,"{""JGL"": 11}"
 pop9,Pop9,DCG,JGL,Mordekaiser,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Morgana,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Naafiri,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Naafiri,72,4,3,low_sample,oe_2025_observed_simulation,2025-10-01 06:48:47,"{""JGL"": 4}"
 pop9,Pop9,DCG,JGL,Nami,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Nasus,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Nautilus,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Neeko,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Nidalee,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Nilah,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Nocturne,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Nocturne,83,10,7,medium_exposure,oe_2025_observed_simulation,2025-08-27 11:27:32,"{""JGL"": 10}"
 pop9,Pop9,DCG,JGL,Nunu,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Olaf,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Orianna,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Ornn,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Pantheon,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Poppy,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Pantheon,87,14,9,medium_exposure,oe_2025_observed_simulation,2025-08-27 09:02:07,"{""JGL"": 14}"
+pop9,Pop9,DCG,JGL,Poppy,70,4,3,low_sample,oe_2025_observed_simulation,2025-06-11 09:56:48,"{""JGL"": 4}"
 pop9,Pop9,DCG,JGL,Pyke,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Qiyana,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Qiyana,59,1,0,low_sample,oe_2025_observed_simulation,2025-10-03 10:36:40,"{""JGL"": 1}"
 pop9,Pop9,DCG,JGL,Quinn,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Rakan,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Rammus,48,0,0,unknown,estimated_unobserved,,{}
@@ -31601,7 +31601,7 @@ pop9,Pop9,DCG,JGL,Riven,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Rumble,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Ryze,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Samira,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Sejuani,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Sejuani,88,13,12,medium_exposure,oe_2025_observed_simulation,2025-08-31 10:39:20,"{""JGL"": 13}"
 pop9,Pop9,DCG,JGL,Senna,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Seraphine,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Sett,48,0,0,unknown,estimated_unobserved,,{}
@@ -31611,7 +31611,7 @@ pop9,Pop9,DCG,JGL,Shyvana,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Singed,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Sion,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Sivir,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Skarner,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Skarner,56,1,0,low_sample,oe_2025_observed_simulation,2025-03-24 10:03:38,"{""JGL"": 1}"
 pop9,Pop9,DCG,JGL,Smolder,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Sona,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Soraka,48,0,0,unknown,estimated_unobserved,,{}
@@ -31625,7 +31625,7 @@ pop9,Pop9,DCG,JGL,Taric,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Teemo,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Thresh,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Tristana,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Trundle,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Trundle,72,4,3,low_sample,oe_2025_observed_simulation,2025-10-02 11:07:33,"{""JGL"": 4}"
 pop9,Pop9,DCG,JGL,Tryndamere,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,TwistedFate,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Twitch,48,0,0,unknown,estimated_unobserved,,{}
@@ -31636,15 +31636,15 @@ pop9,Pop9,DCG,JGL,Vayne,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Veigar,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Velkoz,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Vex,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Vi,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Viego,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Vi,85,11,8,medium_exposure,oe_2025_observed_simulation,2025-10-08 11:24:25,"{""JGL"": 11}"
+pop9,Pop9,DCG,JGL,Viego,73,4,4,low_sample,oe_2025_observed_simulation,2025-10-03 12:17:38,"{""JGL"": 4}"
 pop9,Pop9,DCG,JGL,Viktor,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Vladimir,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Volibear,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Warwick,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Xayah,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Xerath,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,XinZhao,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,XinZhao,77,7,3,medium_exposure,oe_2025_observed_simulation,2025-08-30 09:03:46,"{""JGL"": 7}"
 pop9,Pop9,DCG,JGL,Yasuo,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Yone,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Yorick,48,0,0,unknown,estimated_unobserved,,{}
@@ -31652,12 +31652,12 @@ pop9,Pop9,DCG,JGL,Yunara,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Yuumi,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Zaahen,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Zac,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Zed,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Zed,65,2,2,low_sample,oe_2025_observed_simulation,2025-08-27 12:13:06,"{""JGL"": 2}"
 pop9,Pop9,DCG,JGL,Zeri,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Ziggs,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Zilean,48,0,0,unknown,estimated_unobserved,,{}
 pop9,Pop9,DCG,JGL,Zoe,48,0,0,unknown,estimated_unobserved,,{}
-pop9,Pop9,DCG,JGL,Zyra,48,0,0,unknown,estimated_unobserved,,{}
+pop9,Pop9,DCG,JGL,Zyra,56,1,1,low_sample,oe_2025_observed_simulation,2025-02-18 09:09:58,"{""JGL"": 1}"
 hongsuo,HongSuo,DCG,MID,Aatrox,48,0,0,unknown,estimated_unobserved,,{}
 hongsuo,HongSuo,DCG,MID,Ahri,86,11,8,medium_exposure,oe_2025_observed_simulation,2025-10-08 10:37:09,"{""MID"": 11}"
 hongsuo,HongSuo,DCG,MID,Akali,64,2,1,low_sample,oe_2025_observed_simulation,2025-08-27 12:13:06,"{""MID"": 2}"

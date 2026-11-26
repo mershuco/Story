@@ -27,8 +27,9 @@ RESERVES=[('Ghost','SUP','KT'),('Peter','SUP','KDF'),('Vincenzo','JGL','DRX'),('
 LEGACY_IDS={'doran':['oe:player:a1f3b2bb3f36e5113237f92d76dc4c8'],
             'taeyoon':['oe:player:952237fce714ed1eca8ded17523bee9'],
             'mihawk':['oe:player:14f5ba672bc5fd0b3f28a6b0eb3043b'],
-            'calix':['oe:player:c9441d0e78cf438ef0b372dc74010e3']}
-PLAYER_ALIASES={'hanssamd':'samd','sanghyeon':'kabbie','bonnie':'pangsu','hype':'kingkong','kice':'rebel','dispel':'blessing'}
+            'calix':['oe:player:c9441d0e78cf438ef0b372dc74010e3'],
+            'pop9':['oe:player:84117275be999ff55a987b9381e01f9','oe:player:84668a76e72149d9006cdb9580def31']}
+PLAYER_ALIASES={'hanssamd':'samd','sanghyeon':'kabbie','bonnie':'pangsu','hype':'kingkong','kice':'rebel','dispel':'blessing','665':'pop9'}
 FOREIGN=[('BLG','Bilibili Gaming','LPL'),('AL',"Anyone's Legend",'LPL'),('TES','Top Esports','LPL'),('JDG','JD Gaming','LPL'),
  ('G2','G2 Esports','LEC'),('MKOI','Movistar KOI','LEC'),('FNC','Fnatic','LEC'),('KC','Karmine Corp','LEC'),
  ('FLY','FlyQuest','LCS'),('TL','Team Liquid','LCS'),('C9','Cloud9','LCS'),('LYON','LYON','LCS'),('PNG','paiN Gaming','CBLOL'),('FUR','FURIA','CBLOL'),('LOS','LØS','CBLOL'),

@@ -14,25 +14,33 @@ test('2026 opening rosters use verified starters, contemporary brands and2025-on
  for(const p of Object.values(data.mastery.players)){assert.equal(Object.keys(p.champions).length,data.champions.length);for(const x of Object.values(p.champions))if(x.games)assert(x.lastPlayed<'2026-01-01');else assert.equal(x.score,48);}
  E.startSeason(s);assert.deepEqual(s.cupGroups.map(g=>g[0]),['GEN','HLE']);assert.equal(s.matches[0].date,'2026-01-14');
 });
-test('verified mastery applies small multikill bonuses and only uses pro results before the career date',()=>{
- const {coverage,players}=data.masteryRecords;
+test('mastery uses evidence from 2013 onward, with bounded highlight bonuses and dated 2026 results',()=>{
+ const {coverage,careerCoverage,players}=data.masteryRecords;
+ const archive=JSON.parse(readFileSync(new URL('../research/2026/career-match-history.json',import.meta.url)));
  assert.deepEqual(Object.keys(players).sort(),Object.keys(data.mastery.players).sort());
+ assert.deepEqual(careerCoverage,archive.coverage);
+ assert.equal(archive.firstObserved.faker,'2013-04-06');
+ assert.deepEqual(archive.players.faker['2013'].Zed,[4,4,1]);
+ assert.equal(archive.coverage['2013'].appearances,63);
  assert.equal(coverage.worlds.sets,98);
  assert.equal(coverage.worlds.additionalSets,76);
  assert.equal(coverage.worlds.additionalAppearances,654);
- for(const [id,champions] of Object.entries(players))for(const [champion,updates] of Object.entries(champions)){
-  const base=data.mastery.players[id].champions[champion].score;
+ for(const champions of Object.values(players))for(const updates of Object.values(champions)){
   assert(updates.every(([day,score],i)=>score>=48&&score<=99&&(!i||day>updates[i-1][0])));
-  assert(updates.filter(([day])=>day<'2026-01-01').every(([,score])=>score>base&&score<=base+3));
+  assert(updates.every(([day])=>day>='2025-12-31'));
  }
  const s=E.newGame();
+ assert.equal(E.masteryEvidence('faker','Zed').score,48);
+ assert.equal(E.mastery(s,'faker','Zed'),57);
  assert.equal(E.masteryEvidence('viper','Yunara').score,81);
  assert.equal(E.mastery(s,'viper','Yunara'),82);
- assert.equal(E.mastery(s,'faker','Azir'),88);
- s.date='2026-01-18';assert.equal(E.mastery(s,'pop9','Vi'),48);
- s.date='2026-01-19';assert.equal(E.mastery(s,'pop9','Vi'),51);
+ assert.equal(E.mastery(s,'faker','Azir'),92);
+ assert.equal(data.mastery.players.pop9.observed2025Games,122);
+ s.date='2026-08-08';assert.equal(E.mastery(s,'faker','Locke'),48);
+ s.date='2026-08-09';assert.equal(E.mastery(s,'faker','Locke'),50);
+ s.date='2026-08-15';assert.equal(E.mastery(s,'faker','Locke'),54);
  s.date='2026-11-14';assert.equal(E.mastery(s,'chovy','Syndra'),79);
- s.date='2026-11-15';assert.equal(E.mastery(s,'chovy','Syndra'),80);
+ s.date='2026-11-15';assert.equal(E.mastery(s,'chovy','Syndra'),81);
  s.masteryGains.chovy={Syndra:25};assert.equal(E.mastery(s,'chovy','Syndra'),99);
  assert.equal(E.mastery(s,'unlinked-player','Azir'),48);
 });

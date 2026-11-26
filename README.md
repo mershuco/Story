@@ -188,9 +188,8 @@ python qa/gold_composition_test.py
 ## 선수·챔피언·메타 자료
 
 - 국내106명: 개막 주전50명, CL첫 관측 주전50명, 확인된 후보6명. T1의Peyz, HLE의Kanavi/Gumayusi, DK의Smash/Career 등2026 개막 라인업을 사용합니다. DNS/BFX/KRX 등 구단 이름도 갱신했습니다.
-- 해외19개 구단95명, 합계 **201명 ×173종 =34,773개 숙련 조합**입니다. 국내106명과 해외94명에게2025 출전 근거가 있습니다. 선수 ID를 확인하지 못한 기록은 제외하며, 현재까지 관측되지 않은 선수·챔피언 조합에는 중립48점을 적용합니다.
-- 개막 선수 능력치와 기본 숙련도는2025 자료를 사용합니다. 2026 숙련도는 게임 날짜 이전에 확인된 대회 출전·승패를 반영해 갱신하고, 처음 관측된 챔피언의 1~4세트 표본은 중립값 쪽으로 보정합니다. 기록으로 확인된 쿼드라킬에 1점, 펜타킬에 2점을 더하며 선수·챔피언별 총 보너스는 3점까지입니다. 같은 세트의 펜타킬과 쿼드라킬은 펜타킬 한 건으로 셉니다. 점수는 공식전 데이터로 추정한 게임용 값입니다.
-- 선수 출전 기록을 2025년21,121건, 2026년23,089건 대조했습니다. 2026 월즈는 결승까지98세트를 확인했으며 기존 파일과 겹치는22세트는 한 번씩 집계했습니다. 보완 자료는 이전에 확인한 이름과 실제 소속 팀으로 선수 식별이 된 기록만 반영합니다. [Oracle’s Elixir](https://oracleselixir.com/tools/downloads) · [ChainCC, CC BY 4.0](https://chaincc.lol/free/data/) · [월즈 경기 결과](https://gol.gg/tournament/tournament-matchlist/Worlds%202026%20Main%20Event/)
+- 해외19개 구단95명, 합계 **201명 ×173종 =34,773개 숙련 조합**입니다. 2013년부터 2026년까지 연결한 공식전 출전 기록으로 선수별 챔피언 숙련도를 계산합니다. 현재까지 관측되지 않은 선수·챔피언 조합에는 중립48점을 적용합니다.
+- 2025년까지의 커리어는 개막 숙련도에 반영하며 최근 경기의 가중치가 더 큽니다. 2026 결과는 게임 날짜가 그 경기를 지난 뒤 반영합니다. 기록으로 확인된 쿼드라킬은 +1점, 펜타킬은 +2점, 자료로 확인한 별도 대표 장면은 +1점이며 선수·챔피언별 보너스 상한은 3점입니다. 점수는 공식전 데이터로 추정한 게임용 값입니다. [숙련도 자료와 확인 범위](research/2026/career-mastery.md)
 - 챔피언은 시작 패치172종, 최신 수집 패치173종입니다. Riot Data Dragon **26.01~26.23의23개 패치 가용 목록·패시브/QWER 설명**을 수집했습니다. 내부 Data Dragon 버전16.x와 공개 표기26.xx를 구분합니다.
 - 실전 메타는42개 주간 스냅샷입니다. 기준일 이전56일의 주요 리그·국제대회·컵 **1세트** 기록으로 픽·밴 비중과 관측 역할을 집계합니다.2025말 기록을 개막 참고값으로 이어 사용합니다. S/A/B 표시는 공식 티어가 아닌 해당 표본의 출현 빈도 구간입니다.
 - 실제 LCK에서 해당 패치가 처음 관측된 날짜와 FST26.05/MSI26.13/Worlds26.20 패치를 반영합니다. 신규 챔피언은 출시 패치 유예를 적용합니다. 개별 버그·리워크에 대한 사무국의 추가 금지는 완전한 원장을 확보하지 못했습니다.
@@ -201,6 +200,7 @@ python qa/gold_composition_test.py
 
 ```bash
 python scripts/build_season_2026.py --input-dir /path/to/verified/matches
+python scripts/build_career_history.py --oracle-dir /path/to/verified/matches --chain-dir /path/to/annual-csv-gz --profiles-dir /path/to/player-profiles --output research/2026/career-match-history.json
 python scripts/build_player_match_records.py --input-dir /path/to/verified/matches --supplement-csv /path/to/chaincc-players-2026.csv.gz
 python scripts/collect_2026_champions.py
 ```

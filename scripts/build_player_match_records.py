@@ -6,9 +6,10 @@ import gzip
 import hashlib
 import json
 from collections import Counter, defaultdict
+from datetime import datetime
 from pathlib import Path
 
-from build_season_2026 import LEGACY_IDS, N, OUT, PLAYER_ALIASES, RESEARCH, ROOT, ROLES, dump, mastery_score
+from build_season_2026 import ASOF, LEGACY_IDS, N, OUT, PLAYER_ALIASES, RESEARCH, ROOT, ROLES, dump, mastery_score
 
 
 ORACLE_URL = 'https://oracleselixir.com/tools/downloads'
@@ -70,30 +71,57 @@ def reconcile_worlds(original, supplement, champion_ids):
     return shared
 
 
-def dated_scores(days, baseline):
-    """Retain each opening estimate, then update it as recorded sets become available."""
+def dated_scores(days, baseline, career):
+    """Use complete career evidence at opening, then include earlier 2026 matches."""
     counts = {champion: [entry['games'], entry['wins'], 0] for champion, entry in baseline.items()}
-    totals = sum(games for games, _, _ in counts.values())
+    sample_sizes = {champion: entry['games'] for champion, entry in baseline.items()}
     scores = {champion: entry['score'] for champion, entry in baseline.items()}
     changes = defaultdict(list)
-    for day in sorted(days):
-        picks = days[day]
-        recent = day >= '2026-01-01'
-        if recent:
-            totals += sum(games for games, _, _ in picks.values())
+    latest = {}
+    for year, picks in sorted(career.items()):
+        weight = max(.15, .8 ** (2025 - int(year)))
         for champion, (games, wins, moment) in picks.items():
-            count = counts[champion]
-            if recent:
-                count[0] += games
-                count[1] += wins
-            count[2] = min(3, count[2] + moment)
-            estimate = mastery_score(count[0], count[1], totals, 0) if recent else baseline[champion]['score']
-            if recent and not baseline[champion]['games'] and count[0] < 5:
-                estimate = round(48 + (estimate - 48) * count[0] / 5)
-            score = min(99, estimate + count[2])
-            if score != scores[champion]:
-                scores[champion] = score
-                changes[champion].append([day, score])
+            counts[champion][0] += weight * games
+            counts[champion][1] += weight * wins
+            counts[champion][2] += moment
+            sample_sizes[champion] += games
+            latest[champion] = datetime(int(year), 12, 31)
+    for day, picks in days.items():
+        if day < '2026-01-01':
+            for champion, (_, _, moment) in picks.items():
+                counts[champion][2] += moment
+
+    totals = sum(games for games, _, _ in counts.values())
+
+    def save_score(champion, day, estimate):
+        score = min(99, estimate + min(3, counts[champion][2]))
+        if score != scores[champion]:
+            scores[champion] = score
+            changes[champion].append([day, score])
+
+    def estimate_score(champion, days_since):
+        games, wins, _ = counts[champion]
+        estimate = mastery_score(games, wins, totals, days_since)
+        if not baseline[champion]['games'] and sample_sizes[champion] < 5:
+            estimate = round(48 + (estimate - 48) * sample_sizes[champion] / 5)
+        return estimate
+
+    for champion, entry in baseline.items():
+        estimate = entry['score']
+        if champion in latest:
+            played = datetime.fromisoformat(entry['lastPlayed']) if entry['lastPlayed'] else latest[champion]
+            estimate = estimate_score(champion, (ASOF - played).days)
+        save_score(champion, '2025-12-31', estimate)
+
+    for day in sorted(day for day in days if day >= '2026-01-01'):
+        picks = days[day]
+        totals += sum(games for games, _, _ in picks.values())
+        for champion, (games, wins, moment) in picks.items():
+            counts[champion][0] += games
+            counts[champion][1] += wins
+            counts[champion][2] += moment
+            sample_sizes[champion] += games
+            save_score(champion, day, estimate_score(champion, 0))
     return dict(changes)
 
 
@@ -101,6 +129,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--input-dir', required=True, type=Path)
     parser.add_argument('--supplement-csv', required=True, type=Path)
+    parser.add_argument('--career-history', type=Path, default=RESEARCH / 'career-match-history.json')
     args = parser.parse_args()
 
     roster = read_json(OUT / 'players.json') + [
@@ -190,10 +219,15 @@ def main():
                           'additionalAppearances': added['WLDs'], 'through': max(key[1] for key in worlds)[:10],
                           'sha256': hashlib.sha256(args.supplement_csv.read_bytes()).hexdigest()}
     coverage['otherAdditionalAppearances'] = sum(added.values()) - added['WLDs']
-    adjustments = {pid: dated_scores(days, existing[pid]['champions']) for pid, days in samples.items()}
+    career = read_json(args.career_history)
+    if set(career['players']) != set(samples):
+        raise ValueError('Career evidence must match the game roster')
+    adjustments = {pid: dated_scores(days, existing[pid]['champions'], career['players'][pid])
+                   for pid, days in samples.items()}
     coverage['players'] = len(adjustments)
     coverage['multiKillAppearances'] = dict(highlights)
     dump(OUT / 'mastery-records.json', {'players': adjustments, 'coverage': coverage,
+        'careerCoverage': career['coverage'],
         'sources': {'oracle': ORACLE_URL, 'chaincc': CHAINCC_URL, 'chainccLicense': 'CC BY 4.0',
                     'worldsCheck': WORLDS_FINAL}})
     print(json.dumps(coverage, ensure_ascii=False, indent=2))
