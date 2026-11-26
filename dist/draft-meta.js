@@ -15,7 +15,7 @@ export function draftMetaView(data,{date,competition,phase,patch,mode='event'}){
  const records=(data.draftMeta?.records??[]).filter(g=>g.event===event&&(mode!=='prior'||g.date.replace(' ','T')<referenceDate));
  const roles=Object.fromEntries(META_ROLES.map(r=>[r,[]])),label=LABELS[event]??competition;
  if(!records.length)return {event,patch,mode,label,empty:true,games:0,openingGames:0,roles,records,asOf:mode==='prior'?referenceDate:null};
- const opening=records.filter(g=>g.set===1),patchRecords=records.filter(g=>g.patch===patch),priorityGames=patchRecords.filter(g=>g.set===1),priority=priorityGames.length?priorityGames:opening;
+ const opening=records.filter(g=>g.set===1),patchRecords=records.filter(g=>g.patch===patch),priorityGames=patchRecords.filter(g=>g.set===1&&g.bans),priority=priorityGames.length?priorityGames:opening.filter(g=>g.bans);
  const stats=new Map();const row=id=>{if(!stats.has(id))stats.set(id,{id,picks:0,wins:0,roles:{},openingPicks:0,openingBans:0});return stats.get(id);};
  for(const g of records)for(const lineup of g.lineups)for(const [id,role,,won] of lineup){const ch=row(id);ch.picks++;ch.wins+=won;ch.roles[role]??={picks:0,wins:0};ch.roles[role].picks++;ch.roles[role].wins+=won;}
  for(const g of priority){for(const [id] of g.lineups.flat())row(id).openingPicks++;for(const id of g.bans)row(id).openingBans++;}
@@ -30,7 +30,7 @@ export function draftMetaView(data,{date,competition,phase,patch,mode='event'}){
   }
  }
  for(const list of Object.values(roles))list.sort((a,b)=>b.score-a.score||b.picks-a.picks||a.id.localeCompare(b.id));
- return {event,patch,mode,label,games:records.length,openingGames:priority.length,totalOpeningGames:opening.length,patchGames:patchRecords.length,priorityPatch:priorityGames.length?patch:null,firstDate:records[0].date,lastDate:records.at(-1).date,asOf:mode==='prior'?referenceDate:null,partial:event==='WORLDS',customRounds:event==='LCK_REG34',roles,records};
+ return {event,patch,mode,label,games:records.length,openingGames:priority.length,totalOpeningGames:opening.length,patchGames:patchRecords.length,priorityPatch:priorityGames.length?patch:null,firstDate:records[0].date,lastDate:records.at(-1).date,asOf:mode==='prior'?referenceDate:null,banGames:records.filter(g=>g.bans).length,customRounds:event==='LCK_REG34',roles,records};
 }
 // Refill visible slots from legal observed picks before using labeled estimates.
 export function draftMetaCandidates(view,role,{champions,available=()=>true,rank=()=>0,limit=4}){

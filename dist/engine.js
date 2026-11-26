@@ -1,4 +1,7 @@
 import {draftCounterThreat} from './draft-matchups.js';
+import {draftMetaEvent} from './draft-meta.js';
+import {buildAutoDraftMeta} from './auto-draft-meta.js';
+import {championSynergy,synergyKey} from './champion-synergy.js';
 import {start2026Cup,begin2026International,advance2026Phase,groupPoints,migrate2026SecondHalf} from './rules2026.js';
 import {simulateMatch,SIMULATION_MODEL,battleProbability,createMatchState,advanceMatch,matchOutcome,objectivePreview,upgradeMatchState} from './match-sim.js';
 import {PLAYER_LANE_STYLE,ROLE_DPM,CHAMPION_ROLE_DPM} from './lane-calibration-2026.js';
@@ -23,7 +26,9 @@ export function draftStatus(d){
  }return {id:'assignment',label:'포지션 배치',count:0,index:0,remaining:0};
 }
 let DB;
+const autoDraftMetaCache=new Map();
 export function configure(data) {
+ autoDraftMetaCache.clear();
  DB=data; DB.champMap=Object.fromEntries(data.champions.map(c=>[c.id,c]));
  DB.playerMap=Object.fromEntries(data.players.map(p=>[p.id,p]));
  return DB;
@@ -322,7 +327,7 @@ function firstSelection(s,m,choice){
 }
 export function newDraft(s,m,preferredSide='blue') {
  const last=m.sets.at(-1);const rights=m.relay?m.firstSelectionRights:last?last.loser:(m.firstSelectionRights??m.teams[0]);const blue=(rights===s.myTeam&&preferredSide==='red')?m.teams.find(id=>id!==rights):rights;
- return {matchId:m.id,set:m.sets.length+1,blue,red:m.teams.find(id=>id!==blue),...(DB.season?.competitionFormat===2026?firstSelection(s,m,preferredSide):{}),rights,step:0,phase:"selection",assignment:{remaining:60,paused:false,expired:false,confirmed:false},bans:{blue:[],red:[]},picks:{blue:[],red:[]},history:[],used:[...new Set(m.sets.flatMap(z=>z.picks.map(p=>p.champion)))],patch:patchAt(s.date,m.competition)};
+ return {matchId:m.id,competition:m.competition,matchPhase:m.phase??s.phase?.key,set:m.sets.length+1,blue,red:m.teams.find(id=>id!==blue),...(DB.season?.competitionFormat===2026?firstSelection(s,m,preferredSide):{}),rights,step:0,phase:"selection",assignment:{remaining:60,paused:false,expired:false,confirmed:false},bans:{blue:[],red:[]},picks:{blue:[],red:[]},history:[],used:[...new Set(m.sets.flatMap(z=>z.picks.map(p=>p.champion)))],patch:patchAt(s.date,m.competition)};
 }
 function competitivelyAvailable(s,c,patch){
  if(!c.available[patch])return false;if(DB.season?.competitionFormat!==2026)return true;
@@ -344,15 +349,50 @@ export function draftAction(s,d,championId) {
  d.history.push({...turn,champion:championId,role:null});d.step++;
  if(d.step===20){d.phase='assignment';d.assignment??={remaining:60,paused:false,expired:false,confirmed:false};}
 }
-function recommendationScore(s,d,c,role,teamId,metaPresence=null) {
- const t=team(s,teamId),p=getPlayer(s,t.lineup[role]);const meta=metaPresence??metaFor(s).champions.find(z=>z.id===c.id)?.presence??.2;
- const own=d.picks[d.blue===teamId?'blue':'red'];let score=(p?.ovr??75)*.1+mastery(s,p?.id,c.id)*.5+meta*22+(c.roles.includes(role)?16:-35);
- if(!own.some(x=>DB.champMap[x.champion].features.engage)&&c.features.engage)score+=5;
- if(!own.some(x=>DB.champMap[x.champion].features.ap)&&c.features.ap&&role==='MID')score+=4;
- if(own.filter(x=>DB.champMap[x.champion].features.scale).length>=3&&c.features.scale)score-=5;
- if(s.strategy==='early'&&!c.features.scale&&teamId===s.myTeam)score+=3;
- if(s.strategy==='late'&&c.features.scale&&teamId===s.myTeam)score+=3;
- return score;
+function autoDraftMeta(s,d) {
+ if(!DB.draftMeta?.records)return null;
+ const match=d.competition?d:s.matches.find(m=>m.id===d.matchId);
+ const event=draftMetaEvent(match?.competition,match?.matchPhase??match?.phase??s.phase?.key,s.date);
+ if(!event)return null;
+ const key=event+':'+d.patch;
+ if(!autoDraftMetaCache.has(key))autoDraftMetaCache.set(key,buildAutoDraftMeta(DB.draftMeta.records,event,d.patch));
+ return autoDraftMetaCache.get(key);
+}
+function draftRoleScorer(s,d,teamId,meta=autoDraftMeta(s,d)) {
+ const players=Object.fromEntries(ROLES.map(role=>[role,s.players[team(s,teamId).lineup[role]]]));
+ const fallback=meta?null:new Map(metaFor(s).champions.map(c=>[c.id,c.presence]));
+ const cache=new Map(),seasonDay=s.date.slice(5,10);
+ return (id,role)=>{
+  const key=id+':'+role;
+  if(cache.has(key))return cache.get(key);
+  const champion=DB.champMap[id],player=players[role],comfort=mastery(s,player?.id,id),listed=champion.roles.includes(role);
+  let result;
+  if(!meta){
+   result={score:(player?.ovr??75)*.1+comfort*.5+(fallback.get(id)??.2)*22+(listed?16:-35),viable:listed};
+  }else{
+   const observed=meta.roles.get(key),rolePicks=observed?.weighted??0,totalPicks=meta.champions.get(id)??0;
+   const playerPicks=observed?.byPlayer.get(player?.name?.toLowerCase())?.filter(day=>day<seasonDay).length??0;
+   const history=masteryEvidence(player?.id,id);
+   const lastPlayed=history.lastPlayed?.slice(0,10);
+   const recentRole=(history.roleGames?.[role]??0)>=6&&lastPlayed<s.date&&dayDistance(lastPlayed,s.date)<=330;
+   const joker=comfort>=76&&(playerPicks>=2||recentRole&&(listed||observed)&&(!totalPicks||rolePicks/totalPicks>=.2));
+   const current=observed?.primary??0;
+   let basis=listed?(totalPicks?-20:-5):-76;
+   if(current>=2)basis=32;
+   else if(current===1)basis=25;
+   else if(joker)basis=19;
+   else if(observed)basis=18;
+   const usage=40*Math.sqrt(rolePicks/meta.weightedGames);
+   const presence=(meta.priority.get(id)??0)*18*meta.openingGames/(meta.openingGames+8);
+   const pressure=rolePicks?presence*Math.sqrt(rolePicks/totalPicks)*rolePicks/(rolePicks+1):0;
+   const setFit=Math.min(3,(observed?.bySet[d.set]??0)*.65);
+   const masteryBonus=(comfort-48)*(observed||joker ? .18 : .07);
+   const jokerBonus=joker?Math.min(7,(comfort-76)*.25+Math.min(3,playerPicks)):0;
+   result={score:basis+usage+pressure+setFit+masteryBonus+jokerBonus,viable:!!observed||joker||listed&&!totalPicks};
+  }
+  cache.set(key,result);
+  return result;
+ };
 }
 // All possible role matchings remain open during selection. The coach can prefer a
 // lane without reserving it; only post-draft assignment writes a role to a pick.
@@ -367,9 +407,10 @@ function matchingStates(picks,score,fixed=false) {
 export function recommendations(s,d,limit=3) {
  const turn=draftTurn(d);if(!turn)return[];
  const side=turn.kind==='ban'?(turn.side==='blue'?'red':'blue'):turn.side,targetTeam=d[side],own=d.picks[side];
- const meta=new Map(metaFor(s).champions.map(c=>[c.id,c.presence]));
- const score=(id,r)=>{const c=DB.champMap[id],p=getPlayer(s,team(s,targetTeam).lineup[r]);return (p?.ovr??75)*.1+mastery(s,p?.id,id)*.5+(meta.get(id)??.2)*22+(c.roles.includes(r)?16:-35);};
+ const meta=autoDraftMeta(s,d),fit=draftRoleScorer(s,d,targetTeam,meta),score=(id,r)=>fit(id,r).score;
  const states=matchingStates(own,score),baseline=Math.max(...[...states.values()].map(x=>x.score));
+ const needsEngage=!own.some(x=>DB.champMap[x.champion].features.engage);
+ const needsMagic=!own.some(x=>DB.champMap[x.champion].features.ap);
  const rows=legalChampions(s,d).map(c=>{
   let best=-Infinity,role='MID';
   for(const [mask,state] of states)for(let r=0;r<5;r++){
@@ -378,10 +419,16 @@ export function recommendations(s,d,limit=3) {
    if(value>best){best=value;role=ROLES[r];}
   }
   // Composition advice adds variety without making the suggested lane binding.
-  if(!own.some(x=>DB.champMap[x.champion].features.engage)&&c.features.engage)best+=5;
+  if(needsEngage&&c.features.engage)best+=5;
+  if(meta){
+   if(needsMagic&&c.features.ap&&role==='MID')best+=3;
+   const combo=Math.max(0,...own.map(p=>championSynergy(synergyKey(c.id,p.champion))?.strength??0));
+   best+=combo*4;
+   if(turn.kind==='ban')best+=(meta.priority.get(c.id)??0)*24*meta.openingGames/(meta.openingGames+8);
+  }
   if(s.strategy==='late'&&c.features.scale&&targetTeam===s.myTeam)best+=3;
   if(s.strategy==='early'&&!c.features.scale&&targetTeam===s.myTeam)best+=3;
-  return{champion:c.id,name:c.name,role,score:best,reason:turn.kind==='ban'?`상대 숙련·현재 메타 대응 · ${ROLE_NAMES[role]} 가능`:`${ROLE_NAMES[role]} 활용 가능 · 최종 배치는 밴픽 종료 후`};
+  return{champion:c.id,name:c.name,role,score:best,viable:fit(c.id,role).viable,reason:turn.kind==='ban'?`상대 숙련·현재 메타 대응 · ${ROLE_NAMES[role]} 가능`:`${ROLE_NAMES[role]} 활용 가능 · 최종 배치는 밴픽 종료 후`};
  });return rows.sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name)).slice(0,limit);
 }
 // A saved late-series opening plan intentionally trades a few power picks.
@@ -389,10 +436,14 @@ export function recommendations(s,d,limit=3) {
 export function draftOpeningPlan(s,d){
  if(d.set<2)return {version:1,target:0,openings:[],powerPool:[]};
  if(d.aiOpeningPlan)return d.aiOpeningPlan;
- const first=d.firstPickSide??'blue',second=first==='blue'?'red':'blue',meta=new Map(metaFor(s).champions.map(c=>[c.id,c]));
- const fitCache=new Map(),fit=(id,side)=>{const key=id+':'+side;if(!fitCache.has(key))fitCache.set(key,Math.max(...ROLES.map(r=>recommendationScore(s,d,DB.champMap[id],r,d[side],meta.get(id)?.presence??.2))));return fitCache.get(key);};
- const rows=legalChampions(s,d).map(c=>({id:c.id,meta:meta.get(c.id)?.presence??0,score:Math.max(fit(c.id,first),fit(c.id,second))}));
- const observed=rows.filter(c=>c.meta>=.35),ranked=(observed.length>=2?observed:rows).sort((a,b)=>(b.meta*55+b.score*.35)-(a.meta*55+a.score*.35)||a.id.localeCompare(b.id));
+ const first=d.firstPickSide??'blue',second=first==='blue'?'red':'blue',meta=autoDraftMeta(s,d);
+ const priority=meta?.priority??new Map(metaFor(s).champions.map(c=>[c.id,c.presence]));
+ const scorers={blue:draftRoleScorer(s,d,d.blue,meta),red:draftRoleScorer(s,d,d.red,meta)};
+ const fit=(id,side)=>Math.max(...ROLES.map(role=>scorers[side](id,role).score));
+ const rows=legalChampions(s,d).map(c=>({id:c.id,priority:priority.get(c.id)??0,score:Math.max(fit(c.id,first),fit(c.id,second))}));
+ const observed=rows.filter(c=>c.priority>=.35&&(!meta||meta.champions.has(c.id)));
+ const pressure=meta?24*meta.openingGames/(meta.openingGames+8):55/.35;
+ const ranked=(observed.length>=2?observed:rows).sort((a,b)=>(b.priority*pressure+b.score)-(a.priority*pressure+a.score)||a.id.localeCompare(b.id));
  const pool=ranked.slice(0,6).map(c=>c.id),reserveCount=d.set>=3?2:1,target=Math.min(2,pool.length),openings=[];
  for(const side of [first,second].slice(0,target)){
   const options=pool.filter(id=>!openings.includes(id)).sort((a,b)=>fit(b,side)-fit(a,side)||a.localeCompare(b));
@@ -424,7 +475,7 @@ export function autoOne(s,d) {
     const best=alternatives[0].score;
     const rows=alternatives.map(c=>{
      let counter={weight:0,reason:'',target:null};
-     if(DB.champMap[c.champion].roles.includes(c.role))for(const [i,id]of targets.entries()){
+     if(c.viable)for(const [i,id]of targets.entries()){
       const threat=draftCounterThreat(DB.champMap[id],DB.champMap[c.champion]),weight=threat.weight*(i===0?1:.55);
       if(weight>counter.weight)counter={...threat,weight,target:id};
      }
@@ -434,12 +485,13 @@ export function autoOne(s,d) {
     choices=cover.length?cover:rows;protecting=!!cover.length;
    }
   }else{
-   const captures=choices.filter(c=>targets.includes(c.champion)&&DB.champMap[c.champion].roles.includes(c.role)&&c.score>=choices[0].score-10).sort((a,b)=>targets.indexOf(a.champion)-targets.indexOf(b.champion)||b.score-a.score);
+   const captures=choices.filter(c=>targets.includes(c.champion)&&c.viable&&c.score>=choices[0].score-10).sort((a,b)=>targets.indexOf(a.champion)-targets.indexOf(b.champion)||b.score-a.score);
    if(captures.length){choices=captures;planned=true;}
   }
  }
  if(!choices.length)throw Error('선택 가능한 챔피언이 없습니다.');
- const width=planned?1:Math.min(protecting?3:d.set>=2&&turn.kind==='ban'?4:2,choices.length),c=choices[Math.floor(random(s)*width)];draftAction(s,d,c.champion);
+ const capped=turn.kind==='pick'&&autoDraftMeta(s,d)?choices.filter(c=>c.score>=choices[0].score-8):choices;
+ const width=planned?1:Math.min(protecting?3:d.set>=2&&turn.kind==='ban'?4:2,capped.length),c=capped[Math.floor(random(s)*width)];draftAction(s,d,c.champion);
  if(protecting){const h=d.history.at(-1);h.protects=c.counter.target;h.reason=`${DB.champMap[c.counter.target].name} 확보·활용 보호 · ${c.counter.reason}`;}
 }
 export function autoOpponents(s,d) {while(draftTurn(d)&&draftTurn(d).team!==s.myTeam)autoOne(s,d);if(d.step===20)prepareAssignments(s,d);}
@@ -453,7 +505,7 @@ export function assignChampion(d,side,champion,role) {
 export function autoAssignDraft(s,d,side=null,preserve=true) {
  if(d.step!==20)throw Error('밴픽을 모두 마쳐야 자동 배치할 수 있습니다.');
  for(const key of side?[side]:['blue','red']){
-  const picks=d.picks[key],score=(id,r)=>recommendationScore(s,d,DB.champMap[id],r,d[key]);
+  const picks=d.picks[key],fit=draftRoleScorer(s,d,d[key]),score=(id,r)=>fit(id,r).score;
   const best=matchingStates(picks,score,preserve).get(31);if(!best)throw Error('배치 가능한 5인 조합을 확인하세요.');
   picks.forEach((p,i)=>p.role=best.roles[i]);
  }return d;
@@ -469,8 +521,8 @@ export function expireAssignment(s,d) {if(d.step!==20||d.assignment?.expired)ret
 export function swapAssignments(d,side,roleA,roleB) {const a=d.picks[side].find(p=>p.role===roleA),b=d.picks[side].find(p=>p.role===roleB);if(!a||!b)throw Error('교환할 포지션을 선택하세요.');assignChampion(d,side,a.champion,roleB);}
 export function migrateDraft(d) {if(!d)return;if(d.step<20){for(const side of ['blue','red'])for(const p of d.picks[side])p.role=null;for(const a of d.history)a.role=null;d.phase='selection';}else d.phase='assignment';d.assignment??={remaining:60,paused:false,expired:false,confirmed:false};}
 export function startOwnDraft(s,matchId,side='blue',advanceOpponent=true) {if(s.activeMatch)throw Error('진행 중인 경기를 먼저 마쳐 주세요.');const m=s.matches.find(m=>m.id===matchId);if(!m||m.status==='done'||!m.teams.includes(s.myTeam)||m.date>s.date)throw Error('오늘 진행할 우리 팀 경기가 아닙니다.');s.activeDraft??=newDraft(s,m,side);if(advanceOpponent)autoOpponents(s,s.activeDraft);return s.activeDraft;}
-function compositionPower(s,teamId,picks) {
- let total=0;for(const pick of picks){const p=getPlayer(s,team(s,teamId).lineup[pick.role]);const c=DB.champMap[pick.champion];total+=(p?.ovr??75)+(.12*(mastery(s,p?.id,c.id)-50))-(p?.fatigue??0)*.045+(p?.morale-70)*.018+(c.roles.includes(pick.role)?0:-9);}
+function compositionPower(s,teamId,picks,roleFits) {
+ let total=0;for(const pick of picks){const p=getPlayer(s,team(s,teamId).lineup[pick.role]);total+=(p?.ovr??75)+(.12*(mastery(s,p?.id,pick.champion)-50))-(p?.fatigue??0)*.045+(p?.morale-70)*.018+(roleFits(pick)?0:-9);}
  return total/5+(team(s,teamId).synergy-50)*.025;
 }
 export function draftComposition(d){
@@ -482,14 +534,15 @@ export function draftComposition(d){
 function matchInput(s,m,d) {
  if(d.step!==20)throw Error('밴픽을 끝내야 경기를 시작할 수 있습니다.');
  if(!assignmentsReady(d)||!d.assignment?.confirmed)throw Error('포지션 배치를 완료하고 확정해야 경기를 시작할 수 있습니다.');
- const bp=compositionPower(s,d.blue,d.picks.blue),rp=compositionPower(s,d.red,d.picks.red),picks=[...d.picks.blue,...d.picks.red];
+ const meta=autoDraftMeta(s,d),roleFits=({champion,role})=>DB.champMap[champion].roles.includes(role)||meta?.roles.has(champion+':'+role);
+ const bp=compositionPower(s,d.blue,d.picks.blue,roleFits),rp=compositionPower(s,d.red,d.picks.red,roleFits),picks=[...d.picks.blue,...d.picks.red];
  const jungleSkill=side=>{const pick=d.picks[side].find(p=>p.role==='JGL'),p=getPlayer(s,team(s,d[side]).lineup.JGL);return Math.round(clamp(p.ovr*.8+mastery(s,p.id,pick.champion)*.2-(p.fatigue??0)*.06,40,99)*10)/10;};
  const playerProfiles=Object.fromEntries(picks.map(pick=>{
   const player=team(s,pick.team).lineup[pick.role],p=getPlayer(s,player),champion=DB.champMap[pick.champion];
   const [activity=0,csDiff=0]=PLAYER_LANE_STYLE[player]?.[pick.role]??[];
   const tank=champion.classes?.includes('Tank')&&!champion.classes?.includes('Fighter');
   const baseline=(ROLE_DPM[pick.role]??500)*(tank&&pick.role!=='SUP'?.75:1);
-  return [player,{rating:p.ovr-(p.fatigue??0)*.045+(p.morale-70)*.018-(champion.roles.includes(pick.role)?0:8),
+  return [player,{rating:p.ovr-(p.fatigue??0)*.045+(p.morale-70)*.018-(roleFits(pick)?0:8),
    mastery:mastery(s,player,pick.champion),activity,csDiff,dpm:CHAMPION_ROLE_DPM[pick.role]?.[pick.champion]??Math.round(baseline)}];
  }));
  const simulationReplay={smiteSkills:[jungleSkill('blue'),jungleSkill('red')],objectiveEra:DB.season?.startYear??2022,model:SIMULATION_MODEL,patch:d.patch,seed:s.rng,bluePower:bp,redPower:rp,playerProfiles,

@@ -7,13 +7,15 @@ test('real patch and tournament records change the role priorities: Cup jungle J
  const later=draftMetaView(data,{date:'2026-02-12',competition:'CUP',patch:'16.3.1'});assert.equal(later.patch,'16.3.1');assert.notDeepEqual(cup.roles.JGL,later.roles.JGL);
 });
 test('pick and win totals reconcile, bans never inflate presence beyond 100%, and each role comes from actual picks',()=>{
- assert.equal(data.draftMeta.reports.reduce((n,r)=>n+r.games,0),640);
+ assert.equal(data.draftMeta.reports.reduce((n,r)=>n+r.games,0),716);
  for(const r of data.draftMeta.reports){assert.equal(r.champions.reduce((n,c)=>n+c.picks,0),r.games*10);assert.equal(r.champions.reduce((n,c)=>n+c.wins,0),r.games*5);assert.equal(r.champions.reduce((n,c)=>n+c.openingPicks,0),r.openingGames*10);
   for(const c of r.champions){assert(c.picks+c.bans<=r.games);assert(c.openingPicks+c.openingBans<=r.openingGames);assert.equal(Object.values(c.roles).reduce((n,v)=>n+v.picks,0),c.picks);assert.equal(Object.values(c.roles).reduce((n,v)=>n+v.wins,0),c.wins);}
  }
 });
-test('an OP label requires sufficient opening-game evidence; partial Worlds records cannot manufacture OP confidence',()=>{
- const worlds=draftMetaView(data,{date:'2026-11-14',competition:'WORLDS',patch:'16.20.1'});assert(worlds.partial);assert.equal(worlds.games,22);assert.equal(worlds.openingGames,6);assert(Object.values(worlds.roles).flat().every(c=>c.priority!=='OP'));assert.equal(worlds.lastDate.slice(0,10),'2026-10-18');
+test('Worlds uses final-day picks and only confirmed opening bans for OP labels',()=>{
+ const worlds=draftMetaView(data,{date:'2026-11-14',competition:'WORLDS',patch:'16.20.1'});assert.equal(worlds.games,98);assert.equal(worlds.banGames,22);assert.equal(worlds.openingGames,6);assert.equal(worlds.totalOpeningGames,46);assert(Object.values(worlds.roles).flat().every(c=>c.priority!=='OP'));assert.equal(worlds.lastDate.slice(0,10),'2026-11-14');
+ assert.equal(worlds.roles.BOT.find(c=>c.id==='Corki').picks,9);
+ assert.deepEqual(worlds.records.filter(g=>g.date.startsWith('2026-11-14')).map(g=>[g.set,g.bans]),[[1,null],[2,null],[3,null],[4,null]]);
  const cup=draftMetaView(data,{date:'2026-01-14',competition:'CUP',patch:'16.1.1'});for(const c of Object.values(cup.roles).flat().filter(c=>c.priority==='OP'))assert(c.presence>=.65&&c.openingGames>=10&&c.picks>=2);
 });
 test('current-time mode uses only earlier records from the same event; a missing patch cannot borrow other events',()=>{
@@ -53,9 +55,9 @@ test('refilling references does not mutate draft state or bypass fearless and ba
 });
 
 test('every available set is retained and tournament pools never mix',()=>{
- assert.equal(data.draftMeta.records.length,640);assert.equal(data.draftMeta.lck.games,502);
- assert.equal(new Set(data.draftMeta.records.map(g=>g.id)).size,640);
- const expected=[['CUP','CUP_GROUP',125],['FST','FST26_R1',45],['REGULAR','REG12',204],['ROAD','ROAD_TOP',20],['REGULAR','REG35',98],['SEASON_PO','SEASON_PO1',55],['MSI','MSI_QF',71],['WORLDS','WORLD_QF',22]];
+ assert.equal(data.draftMeta.records.length,716);assert.equal(data.draftMeta.lck.games,502);
+ assert.equal(new Set(data.draftMeta.records.map(g=>g.id)).size,716);
+ const expected=[['CUP','CUP_GROUP',125],['FST','FST26_R1',45],['REGULAR','REG12',204],['ROAD','ROAD_TOP',20],['REGULAR','REG35',98],['SEASON_PO','SEASON_PO1',55],['MSI','MSI_QF',71],['WORLDS','WORLD_QF',98]];
  for(const [competition,phase,count] of expected){const v=draftMetaView(data,{date:'2026-11-14',competition,phase,patch:'16.20.1'});assert.equal(v.games,count);assert(v.records.every(g=>g.event===v.event));}
  for(const g of data.draftMeta.records){assert.equal(g.lineups.length,2);assert.equal(g.lineups.flat().length,10);assert.equal(g.lineups.flat().reduce((n,p)=>n+p[3],0),5);assert(g.lineups.every(l=>new Set(l.map(p=>p[1])).size===5));assert.equal(new Set(g.lineups.flat().map(p=>p[0])).size,10);}
  const options={date:'2026-08-01',competition:'ROAD',patch:'16.14.1'},before=draftMetaView(data,options),copy={...data,draftMeta:{...data.draftMeta,records:data.draftMeta.records.filter(g=>g.event===before.event)}};

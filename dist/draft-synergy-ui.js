@@ -53,7 +53,7 @@ export function draftSynergyMarkup(c, d, view) {
     ${btn('대회 동반 기록','draft-meta-synergy-mode','data-id="observed" aria-pressed="'+(mode==='observed')+'"',mode==='observed'?'compact primary':'compact')}
     <label>챔피언 <select data-change="draft-synergy-champion"><option value="">전체</option>${options}</select></label>
    </div>
-   <p class="meta-evidence">${esc(view.label)} · ${view.mode==='prior'?'게임 날짜 이전 · ':''}${view.games}세트 기준${view.partial?' · 월즈 일부 기록':''}
+   <p class="meta-evidence">${esc(view.label)} · ${view.mode==='prior'?'게임 날짜 이전 · ':''}${view.games}세트 기준
    · ${mode==='skills'?'해당 대회에서 한 팀으로 출전한 스킬 연계 조합입니다.':'같은 대회에서 한 팀으로 뛴 기록입니다. 스킬 연계가 설정된 조합은 설명을 함께 표시합니다.'}</p>
    <div class="synergy-cards">${rows.length?rows.slice(activePage*PAGE_SIZE,(activePage+1)*PAGE_SIZE).map(card).join(''):'<p class="meta-empty">해당 대회에서 확인된 조합이 없습니다.</p>'}</div>
    ${pages>1?`<div class="meta-controls synergy-pagination">

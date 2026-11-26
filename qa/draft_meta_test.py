@@ -51,8 +51,8 @@ with sync_playwright() as p:
   load(f['state']);assert '동일 대회 전체' in q.locator('.meta-evidence').inner_text();assert q.locator('[data-meta-lane]').count()==5
   if f['competition']=='MSI':
    assert q.locator('[data-meta-lane=SUP] .meta-champion').first.get_attribute('data-id')=='Camille';q.screenshot(path=str(ROOT/'2026-draft-meta-msi.png'),full_page=True)
-  if f['competition']=='WORLDS':assert '일부 기록(10/18까지)' in q.locator('.meta-evidence').inner_text();assert q.locator('.is-op').count()==0
- report['checks'].append('dated competition fixtures: Cup patch change, LCK 1–2/3–5 (observed 3–4), Road, First Stand, MSI, playoffs, Worlds; MSI support Camille and partial Worlds coverage verified')
+  if f['competition']=='WORLDS':assert '98세트' in q.locator('.meta-evidence').inner_text() and '밴이 확인된 22세트' in q.locator('.meta-evidence').inner_text();assert q.locator('.is-op').count()==0
+ report['checks'].append('dated competition fixtures: Cup patch change, LCK 1–2/3–5 (observed 3–4), Road, First Stand, MSI, playoffs, Worlds; MSI support Camille and Worlds pick/ban coverage verified')
  # Exhaust every observed support in a saved draft; estimated legal alternatives refill.
  depleted=q.evaluate("""async()=>{const {draftMetaView}=await import('./draft-meta.js'),E=await import('./engine.js'),s=JSON.parse(localStorage.getItem('lck-manager-save-v1')),d=s.activeDraft,m=s.matches.find(m=>m.id===d.matchId),v=draftMetaView(E.database(),{date:s.date,competition:m.competition,phase:m.phase,patch:d.patch});d.used=[...new Set([...d.used,...v.roles.SUP.map(c=>c.id)])];return s;}""")
  load(depleted);q.locator('[data-action=draft-meta-role][data-id=SUP]').click();cards=q.locator('[data-meta-lane=SUP] .meta-champions .meta-champion');assert cards.count()==12
