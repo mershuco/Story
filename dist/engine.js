@@ -4,7 +4,7 @@ import {buildAutoDraftMeta} from './auto-draft-meta.js';
 import {championSynergy,synergyKey} from './champion-synergy.js';
 import {start2026Cup,begin2026International,advance2026Phase,groupPoints,migrate2026SecondHalf} from './rules2026.js';
 import {simulateMatch,SIMULATION_MODEL,battleProbability,createMatchState,advanceMatch,matchOutcome,objectivePreview,upgradeMatchState} from './match-sim.js';
-import {PLAYER_LANE_STYLE,ROLE_DPM,CHAMPION_ROLE_DPM} from './lane-calibration-2026.js';
+import {PLAYER_LANE_STYLE} from './lane-calibration-2026.js';
 export {championCombatProfile,championCombat,combatLabels,phaseStrength,fightStage} from './champion-combat.js';
 import {compositionProfile,compositionMatchup,compositionLabels} from './composition.js';
 export const ROLES = ['TOP','JGL','MID','BOT','SUP'];
@@ -620,12 +620,10 @@ function matchInput(s,m,d) {
  const bp=compositionPower(s,d.blue,d.picks.blue,roleFits),rp=compositionPower(s,d.red,d.picks.red,roleFits),picks=[...d.picks.blue,...d.picks.red];
  const jungleSkill=side=>{const pick=d.picks[side].find(p=>p.role==='JGL'),p=getPlayer(s,team(s,d[side]).lineup.JGL);return Math.round(clamp(p.ovr*.8+mastery(s,p.id,pick.champion)*.2-(p.fatigue??0)*.06,40,99)*10)/10;};
  const playerProfiles=Object.fromEntries(picks.map(pick=>{
-  const player=team(s,pick.team).lineup[pick.role],p=getPlayer(s,player),champion=DB.champMap[pick.champion];
+  const player=team(s,pick.team).lineup[pick.role],p=getPlayer(s,player);
   const [activity=0,csDiff=0]=PLAYER_LANE_STYLE[player]?.[pick.role]??[];
-  const tank=champion.classes?.includes('Tank')&&!champion.classes?.includes('Fighter');
-  const baseline=(ROLE_DPM[pick.role]??500)*(tank&&pick.role!=='SUP'?.75:1);
   return [player,{rating:p.ovr-(p.fatigue??0)*.045+(p.morale-70)*.018-(roleFits(pick)?0:8),
-   mastery:mastery(s,player,pick.champion),activity,csDiff,dpm:CHAMPION_ROLE_DPM[pick.role]?.[pick.champion]??Math.round(baseline)}];
+   mastery:mastery(s,player,pick.champion),activity,csDiff}];
  }));
  const simulationReplay={smiteSkills:[jungleSkill('blue'),jungleSkill('red')],objectiveEra:DB.season?.startYear??2022,model:SIMULATION_MODEL,patch:d.patch,seed:s.rng,bluePower:bp,redPower:rp,playerProfiles,
   teamStrengthBlue:power(s,d.blue),teamStrengthRed:power(s,d.red),
@@ -685,6 +683,6 @@ export function simulateSeries(s,m) {for(let guard=0;guard<5&&m.status!=='done';
 export function autoOwnSeries(s,matchId) {if(s.activeMatch){if(s.activeMatch.matchId!==matchId)throw Error('진행 중인 다른 경기를 먼저 마쳐 주세요.');advanceOwnMatch(s,'auto',true);}const m=s.matches.find(m=>m.id===matchId);if(!m||!m.teams.includes(s.myTeam)||m.date>s.date)throw Error('진행할 수 없는 경기입니다.');if(s.activeDraft){completeDraft(s,s.activeDraft);autoAssignDraft(s,s.activeDraft);confirmDraftAssignments(s.activeDraft);commitOwnDraft(s);}simulateSeries(s,m);s.viewing={matchId:m.id,setIndex:m.sets.length-1};return m;}
 // Completed modern logs are reproducible from seed + recorded decisions. Keep live
 // prefixes intact; never mutate the in-memory match while writing a save.
-export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14',SIMULATION_MODEL].includes(this.simulationReplay?.model)?[]:value;});}
+export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14','event-v15',SIMULATION_MODEL].includes(this.simulationReplay?.model)?[]:value;});}
 
 export function migrateSeasonFormat(s){return DB.season?.competitionFormat===2026?migrate2026SecondHalf(s):false;}

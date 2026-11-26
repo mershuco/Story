@@ -101,7 +101,7 @@ test('new match odds and recorded combat use the bonuses, with exact old replay 
  assert.equal(createHash('sha256').update(JSON.stringify(oldSynergies)).digest('hex'),
   'b3b04d5405c782b643360f3bc079ed84837db849cb962870450b8a8a5ee6f275');
  const result=replayMatch({...input,model:SIMULATION_MODEL});
- assert.equal(result.model,'event-v15');
+ assert.equal(result.model,'event-v16');
  assert(result.events.some(event=>event.championSynergies?.some(combo=>combo.key===synergyKey('Ahri','Vi'))));
  assert(result.events.some(event=>event.championSynergies?.some(combo=>combo.powerSpike)&&event.text.includes('강한 구간')));
  assert.deepEqual(replayMatch({...input,model:SIMULATION_MODEL}),result);

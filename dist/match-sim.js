@@ -2,6 +2,7 @@ import {deathTimerSeconds} from './death-timer.js';
 import * as legacyV10 from './match-sim-v10.js';
 import {initializeEconomy,killReward,settleDeathBounty,markBusy,botQuestReward} from './match-economy.js';
 import {LANING_END,laneEvent,lanePressure,localFightChance,dragonLaneControl,addFightDamage} from './laning.js';
+import {estimateChampionDamage} from './champion-damage.js';
 import * as legacyV9 from './match-sim-v9.js';
 import {initializeBounties,updateBounties,claimObjectiveBounty} from './objective-bounties.js';
 import * as legacyV8 from './match-sim-v8.js';
@@ -15,7 +16,7 @@ import {initializeRift,creditPlayer,creditTeam,farmPlayers,tickRift,gainVision,v
 import * as legacyV5 from './match-sim-v5.js';
 import {initializeObjectives,takeDragon,grantTemporaryBuff,loseBuffsOnDeath,buffCoverage,objectivePower,structurePressure,objectiveSnapshot,DRAKES} from './objective-effects.js';
 export {goldInfluence,battleFactors,battleProbability,matchRandom};
-export const SIMULATION_MODEL='event-v15';
+export const SIMULATION_MODEL='event-v16';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const sigmoid=x=>1/(1+Math.exp(-x));
 const round=n=>Math.round(n*1000)/1000;
@@ -43,7 +44,7 @@ function record(s,{kind,title,location='mid',roles=null,team=null,kills=[],objec
 }
 export function createMatchState(input,seed=0,external){
  const snapshot=structuredClone(input),{blue,red}=snapshot,teams=[blue,red],zeros=()=>Object.fromEntries(teams.map(id=>[id,0]));
- const version=['event-v11','event-v12','event-v13','event-v14'].includes(input.model)?Number(input.model.slice(7)):15;
+ const version=['event-v11','event-v12','event-v13','event-v14','event-v15'].includes(input.model)?Number(input.model.slice(7)):16;
  const s={version,input:snapshot,rng:seed>>>0,teams,clock:0,stats:snapshot.roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),gold:{[blue]:2500,[red]:2500},score:zeros(),dragons:zeros(),grubs:zeros(),heralds:zeros(),barons:zeros(),elders:zeros(),baronUntil:zeros(),elderUntil:zeros(),momentum:zeros(),minLead:zeros(),events:[],lastLeader:null,leadChanges:0,winner:null,finished:false,pending:null,window:0,decisions:[],soul:null,steps:0};
  s.powerGap=(input.teamStrengthBlue??input.bluePower)-(input.teamStrengthRed??input.redPower);s.championGap=input.bluePower-input.redPower-s.powerGap;
  s.macros=[macroProfile(blue,input.compositionBlue,input.blueStrategy),macroProfile(red,input.compositionRed,input.redStrategy)];
@@ -54,7 +55,7 @@ export function createMatchState(input,seed=0,external){
   s.timers.dragon+=.65+rng()*.7;
   s.farmReturnAt={};s.duoKillAt={};s.lastLaneRoll=1.65;
   s.laneForm=Object.fromEntries(s.stats.map(p=>[p.player,(rng()-.5)*10]));
-  for(const p of s.stats)p.damage=0;
+  if(version===15)for(const p of s.stats)p.damage=0;
  }
  const matchup=compositionMatchup(input.compositionBlue,input.compositionRed,0,'teamfight',{synergies:version>=12,synergySpikes:version>=13,expandedSynergies:version>=14});s.initialBlueProbability=battleProbability({powerGap:s.powerGap,championGap:s.championGap,compositionGap:matchup.gap});
  record(s,{kind:'opening',title:'라인 배치'});return s;
@@ -114,7 +115,7 @@ function battle(s,kind,location,roles,rng,laneFight=null){
  for(const k of kills){s.deathAt[k.victim]=s.clock;s.respawnAt[k.victim]=s.clock+deathTimerSeconds(byId[k.victim].level,s.clock)/60;k.respawnAtSecond=Math.round(s.respawnAt[k.victim]*60);settleDeathBounty(s,byId[k.victim],{base:k.gold.kill,shutdown:k.gold.shutdown},k.gold.assists);}
  if(s.version>=15){
   for(const k of kills)s.farmReturnAt[k.victim]=s.respawnAt[k.victim]+(s.clock<LANING_END?.26:0);
-  addFightDamage(s,pools,kills,kind);
+  if(s.version===15)addFightDamage(s,pools,kills,kind);
  }
  markBusy(s,[...pools[blue],...pools[red]],s.clock+.18);loseBuffsOnDeath(s,kills.map(k=>k.victim));s.momentum[winner]++;s.momentum[loser]=0;
  const info={combatTeam:winner,leadBefore:before,blueWinProbability:localOdds,goldWeight:c.factors.goldWeight,compositionGap:c.matchup.gap,teamStrengthGap:s.powerGap,bounty,championPhaseGap:c.matchup.phaseGap,championFormGap:c.matchup.formGap,objectiveBuffGap:c.effects[0].total-c.effects[1].total,visionFightGap:c.visionGap,elderExecutions:kills.filter(k=>k.elderExecute).length};
@@ -277,7 +278,13 @@ function laningEvent(s,rng){
 function finishMatch(s,winner,rng){
  if(s.structures[enemy(s,winner)].nexus>0)throw Error('넥서스를 파괴하기 전에는 승자를 정할 수 없습니다.');
  farming(s,round(s.clock+.06),rng);s.winner=winner;s.finished=true;s.pending=null;
- for(const p of s.stats){p.cs=Math.round(p.cs);p.damage=s.version>=15?Math.round(p.damage):Math.round((p.role==='SUP'?380:p.role==='JGL'?600:820)*s.clock+p.k*340+rng()*2600);}
+ for(const p of s.stats)p.cs=Math.round(p.cs);
+ if(s.version>=16){
+  const damage=estimateChampionDamage(s.stats,s.clock);
+  s.stats.forEach((p,i)=>p.damage=damage[i]);
+ }else{
+  for(const p of s.stats)p.damage=s.version===15?Math.round(p.damage):Math.round((p.role==='SUP'?380:p.role==='JGL'?600:820)*s.clock+p.k*340+rng()*2600);
+ }
  record(s,{kind:'nexus',title:'넥서스 파괴',location:winner===s.teams[0]?'baseRed':'baseBlue',team:winner,objective:{kind:'nexus',team:winner}});
 }
 export function advanceMatch(s,{controlledTeam=null,action=null,auto=false,maxEvents=Infinity}={},external){
@@ -334,4 +341,4 @@ export function simulateMatch(input,rng){
  }else s=createMatchState(input,0,rng);
  advanceMatch(s,{auto:true},rng);return matchOutcome(s);
 }
-export function replayMatch(input){return [SIMULATION_MODEL,'event-v14','event-v13','event-v12','event-v11'].includes(input.model)?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}
+export function replayMatch(input){return [SIMULATION_MODEL,'event-v15','event-v14','event-v13','event-v12','event-v11'].includes(input.model)?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}

@@ -1,0 +1,145 @@
+{
+  "holdoutMatches": 121,
+  "matchMinutes": [
+    20.97,
+    53.27
+  ],
+  "matches": 716,
+  "models": {
+    "BOT": {
+      "actualMedian": 23243,
+      "fittedMedian": 22998,
+      "groups": {
+        "damage": {
+          "samples": 1432,
+          "timeMedians": [
+            16912,
+            21906,
+            30430,
+            38883
+          ]
+        }
+      },
+      "medianAbsolutePercentageError": 0.135,
+      "samples": 242
+    },
+    "JGL": {
+      "actualMedian": 13728,
+      "fittedMedian": 13895,
+      "groups": {
+        "damage": {
+          "samples": 1236,
+          "timeMedians": [
+            10946,
+            13717,
+            16520,
+            19753
+          ]
+        },
+        "tank": {
+          "samples": 196,
+          "timeMedians": [
+            11750,
+            13083,
+            15884,
+            17456
+          ]
+        }
+      },
+      "medianAbsolutePercentageError": 0.154,
+      "samples": 242
+    },
+    "MID": {
+      "actualMedian": 19831,
+      "fittedMedian": 20449,
+      "groups": {
+        "damage": {
+          "samples": 1366,
+          "timeMedians": [
+            16813,
+            19996,
+            25082,
+            31577
+          ]
+        },
+        "tank": {
+          "samples": 66,
+          "timeMedians": [
+            11698,
+            15453,
+            22916,
+            25511
+          ]
+        }
+      },
+      "medianAbsolutePercentageError": 0.154,
+      "samples": 242
+    },
+    "SUP": {
+      "actualMedian": 6534,
+      "fittedMedian": 6490,
+      "groups": {
+        "engage": {
+          "samples": 571,
+          "timeMedians": [
+            4446,
+            5090,
+            5932,
+            6617
+          ]
+        },
+        "poke": {
+          "samples": 493,
+          "timeMedians": [
+            7645,
+            8196,
+            9873,
+            11478
+          ]
+        },
+        "utility": {
+          "samples": 368,
+          "timeMedians": [
+            5232,
+            5629,
+            6583,
+            7146
+          ]
+        }
+      },
+      "medianAbsolutePercentageError": 0.185,
+      "samples": 242
+    },
+    "TOP": {
+      "actualMedian": 19251,
+      "fittedMedian": 18438,
+      "groups": {
+        "damage": {
+          "samples": 1146,
+          "timeMedians": [
+            15822,
+            19919,
+            22559,
+            26036
+          ]
+        },
+        "tank": {
+          "samples": 286,
+          "timeMedians": [
+            11708,
+            14441,
+            17326,
+            22772
+          ]
+        }
+      },
+      "medianAbsolutePercentageError": 0.18,
+      "samples": 242
+    }
+  },
+  "scoreboards": 7160,
+  "sources": {
+    "chainccSha256": "088e529588434839b77d90f34bf2bb513c4e2879ba5e507947cf809aabd67fc5",
+    "oracleSha256": "cf499d20eb3f84667b487fc1e28c5c73d47b3f535f155f8f5156eac7610b29f4"
+  }
+}

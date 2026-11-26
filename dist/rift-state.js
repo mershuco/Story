@@ -36,7 +36,7 @@ export function farmPlayers(s,delta,{rng=()=>.5}={}){
   if(s.version>=15){
    const quest=botQuestReward(s,p,{laneMinutes:available,awayMinutes:Math.max(0,s.clock-Math.max(from,1+5/60)-available),minions:cs});
    if(quest)creditPlayer(s,p.player,quest,{source:'roleQuest'});
-   p.damage+=available*damageRate(s,p)*(p.role==='JGL'?.46:.64);
+   if(s.version===15)p.damage+=available*damageRate(s,p)*(p.role==='JGL'?.46:.64);
   }
   p.level=clamp(1+Math.floor(s.clock*.25+p.cs/40+(p.k+p.a*.25)*.12),1,18);
  }
