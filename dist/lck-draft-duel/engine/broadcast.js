@@ -1,5 +1,5 @@
-import {draftConfirmMarkup} from './draft-confirm.js';
-import {draftMetaMarkup} from './draft-meta-ui.js';
+import {draftConfirmMarkup} from './draft-confirm.js?v=345ebe2e4f45';
+import {draftMetaMarkup} from './draft-meta-ui.js?v=345ebe2e4f45';
 export function historicalDraft(example,step=20){
  const d={step,set:example.game,blue:example.blue.id,red:example.red.id,bans:{blue:[],red:[]},picks:{blue:[],red:[]},used:[],patch:example.patch,history:[],reference:true};
  for(const a of example.actions.slice(0,step)){d.history.push(a);if(a.kind==='ban')d.bans[a.side].push(a.champion);else d.picks[a.side].push({...a,team:a.team});}

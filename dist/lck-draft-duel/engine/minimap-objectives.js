@@ -1,4 +1,4 @@
-import {DRAKES} from './objective-effects.js';
+import {DRAKES} from './objective-effects.js?v=345ebe2e4f45';
 const timer=n=>`${Math.floor(n/60)}:${String(Math.floor(n%60)).padStart(2,'0')}`;
 // Spawn/cooldown display uses only events already revealed by the viewer.
 export function minimapObjectives(timeline,index,progress,second){

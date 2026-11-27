@@ -1,4 +1,4 @@
-import {championSynergy,synergyKey} from './champion-synergy.js';
+import {championSynergy,synergyKey} from './champion-synergy.js?v=345ebe2e4f45';
 
 function patchNumber(patch) {
  const [major, minor] = patch.split('.').map(Number);

@@ -1,4 +1,4 @@
-import {CHAMPION_SYNERGIES, championSynergy, synergyKey} from './champion-synergy.js';
+import {CHAMPION_SYNERGIES, championSynergy, synergyKey} from './champion-synergy.js?v=345ebe2e4f45';
 
 export function observedSynergies(records) {
  const pairs = new Map();

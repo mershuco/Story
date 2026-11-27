@@ -1,11 +1,11 @@
-import {observeViewerLayout} from './viewer-layout.js';
-import {paintObjectivePits} from './minimap-objectives.js';
-import {powerPlayMarkup,paintPowerPlays} from './power-play-ui.js';
-import {scoreboard,mapStateMarkup,paintMap,goldRows,drakeIcons,grubIcons,goldLeadLabels} from './broadcast-hud.js';
-import {objectiveDecisionMarkup} from './objective-ui.js';
-import {sampleScene,sceneClock,sceneVisibleKills} from './timeline.js';
-import {laneWaveMarkup,laneAttackMarkup,laneActionNarration,paintLaneEffects} from './lane-effects.js';
-import {resultDamageRows} from './champion-damage.js';
+import {observeViewerLayout} from './viewer-layout.js?v=345ebe2e4f45';
+import {paintObjectivePits} from './minimap-objectives.js?v=345ebe2e4f45';
+import {powerPlayMarkup,paintPowerPlays} from './power-play-ui.js?v=345ebe2e4f45';
+import {scoreboard,mapStateMarkup,paintMap,goldRows,drakeIcons,grubIcons,goldLeadLabels} from './broadcast-hud.js?v=345ebe2e4f45';
+import {objectiveDecisionMarkup} from './objective-ui.js?v=345ebe2e4f45';
+import {sampleScene,sceneClock,sceneVisibleKills} from './timeline.js?v=345ebe2e4f45';
+import {laneWaveMarkup,laneAttackMarkup,laneActionNarration,paintLaneEffects} from './lane-effects.js?v=345ebe2e4f45';
+import {resultDamageRows} from './champion-damage.js?v=345ebe2e4f45';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const clockLabel=seconds=>`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(Math.floor(seconds%60)).padStart(2,'0')}`;
 function titleForKind(kind){return {'finish-push':'넥서스 우선 공성','baron-push':'바론 강화 공성','trade-push':'오브젝트 교환 공성',waveclear:'수비·미니언 정리',opening:'라인 배치',laning:'동시 라인전','lane-transition':'운영 전환','solo-kill':'솔로킬','duo-kill':'바텀 듀오킬',gank:'갱킹',dive:'다이브',skirmish:'소규모 교전',dragon:'드래곤',herald:'협곡의 전령',grubs:'공허 유충',elder:'장로 드래곤',split:'사이드 압박',farm:'자원 확보',trade:'골드 교환',vision:'시야 장악','objective-setup':'오브젝트 판단','baron-setup':'바론 시야',baron:'바론',siege:'공성',teamfight:'한타',flank:'측면 진입',recall:'귀환 · 정비',nexus:'넥서스'}[kind]??'교전';}

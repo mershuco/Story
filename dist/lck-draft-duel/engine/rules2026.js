@@ -1,5 +1,5 @@
 //2026 competition format. Isolated from the2022-roster/2025-format save profile.
-import * as E from './engine.js';
+import * as E from './engine.js?v=345ebe2e4f45';
 const W=m=>m.winner,L=m=>m.teams.find(id=>id!==m.winner);
 const regions=['LCK','LPL','LEC','LCS','LCP','CBLOL'];
 const ownYear=(s,m)=>m.id.startsWith(s.year+'-');

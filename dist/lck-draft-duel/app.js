@@ -1,8 +1,9 @@
-import * as E from './engine/engine.js';
-import {draftMarkup} from './engine/broadcast.js';
-import {mountMatch} from './game.js';
-import {duelMatch,duelState,matchupDraft} from './model.js';
-import {badge,button,championImage,esc,playerName,sheet,teamIcon,teamName} from './ui.js';
+import * as E from './engine/engine.js?v=345ebe2e4f45';
+import {draftMarkup} from './engine/broadcast.js?v=345ebe2e4f45';
+import {SIMULATION_MODEL} from './engine/match-sim.js?v=345ebe2e4f45';
+import {mountMatch} from './game.js?v=345ebe2e4f45';
+import {duelMatch,duelState,matchupDraft} from './model.js?v=345ebe2e4f45';
+import {badge,button,championImage,esc,playerName,sheet,teamIcon,teamName} from './ui.js?v=345ebe2e4f45';
 
 const root=document.querySelector('#duel'),status=document.querySelector('#duel-status');
 const roomApi=document.querySelector('meta[name="duel-api"]')?.content||'./api';
@@ -185,14 +186,14 @@ root.addEventListener('submit',event=>{
  const values=Object.fromEntries(new FormData(form));
  if(form.dataset.form==='create')perform(async()=>{
   const key=newToken();
-  enter(await request('/rooms',{bestOf:Number(values.bestOf)},key),key);
+  enter(await request('/rooms',{bestOf:Number(values.bestOf),simulationModel:SIMULATION_MODEL},key),key);
  });
  if(form.dataset.form==='join')perform(async()=>{
   const id=normalizeCode(values.code);
   if(!validCode(id))throw Error('초대코드 8자리를 확인해 주세요.');
   const key=load(roomKey(id))??newToken();
   save(roomKey(id),key);
-  enter(await request('/rooms/'+id+'/join',{},key),key);
+  enter(await request('/rooms/'+id+'/join',{simulationModel:SIMULATION_MODEL},key),key);
  });
 });
 root.addEventListener('input',e=>{if(e.target.id==='draft-search'){const pos=e.target.selectionStart;ui.draftSearch=e.target.value;draftUI();try{root.querySelector('#draft-search').setSelectionRange(pos,pos);}catch{}}});

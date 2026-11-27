@@ -1,6 +1,7 @@
-import * as E from './engine/engine.js';
+import * as E from './engine/engine.js?v=345ebe2e4f45';
 
 export const duelTeams=['P1','P2'];
+export const LEGACY_SIMULATION_MODEL='event-v17';
 export const duelSide=(room,player)=>room.teams.blue===player?'blue':'red';
 
 export function duelMatch(room,sets=room.sets){
@@ -33,6 +34,6 @@ export function runSharedMatch(room,rules){
  const state=duelState('P1',room.seed);
  const match=duelMatch(room,room.sets.filter(set=>set.number<room.number));
  state.matches=[match];
- const set=E.resolveDraft(state,match,matchupDraft(room,rules));
+ const set=E.resolveDraft(state,match,matchupDraft(room,rules),{model:room.simulationModel??LEGACY_SIMULATION_MODEL});
  return {state,match,set};
 }

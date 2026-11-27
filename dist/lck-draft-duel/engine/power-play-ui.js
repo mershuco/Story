@@ -1,4 +1,4 @@
-import {objectiveIcon} from './broadcast-hud.js';
+import {objectiveIcon} from './broadcast-hud.js?v=345ebe2e4f45';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const clock=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
 export function powerPlayMarkup(set){return `<section class="power-play-strip" aria-label="바론·장로 보유 현황">${['blue','red'].map(side=>`<div class="power-play-team ${side}">${['baron','elder'].map(kind=>`<article class="power-play-card ${kind}" data-power-play="${side}:${kind}" hidden role="status"><div class="power-owner"></div>${objectiveIcon(kind)}<strong class="power-time"></strong><div class="power-progress"><i></i></div></article>`).join('')}</div>`).join('')}</section>`;}

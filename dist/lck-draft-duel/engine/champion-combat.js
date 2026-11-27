@@ -1,4 +1,4 @@
-import {CHAMPION_COMBAT_PROFILES,COMBAT_PROFILE_VERSION} from './champion-combat-profiles.js';
+import {CHAMPION_COMBAT_PROFILES,COMBAT_PROFILE_VERSION} from './champion-combat-profiles.js?v=345ebe2e4f45';
 export {CHAMPION_COMBAT_PROFILES,COMBAT_PROFILE_VERSION};
 export const PHASE_MINUTES=[5,14,24,34,45];
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));

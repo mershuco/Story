@@ -1,10 +1,10 @@
-import {accountIncome,fractionalIncome,availableFarmMinutes,botQuestReward} from './match-economy.js';
-import {laningFarmRate,damageRate} from './laning.js';
-import {claimObjectiveBounty,bountySnapshot} from './objective-bounties.js';
+import {accountIncome,fractionalIncome,availableFarmMinutes,botQuestReward} from './match-economy.js?v=345ebe2e4f45';
+import {laningFarmRate,damageRate} from './laning.js?v=345ebe2e4f45';
+import {claimObjectiveBounty,bountySnapshot} from './objective-bounties.js?v=345ebe2e4f45';
 // Persistent structures, player economy and vision. Numerical coefficients are
 // game estimates; damage is resolved per scene, not with LoL's server combat.
-import {phaseStrength} from './champion-combat.js';
-import {buffCoverage,structurePressure} from './objective-effects.js';
+import {phaseStrength} from './champion-combat.js?v=345ebe2e4f45';
+import {buffCoverage,structurePressure} from './objective-effects.js?v=345ebe2e4f45';
 export const LANES=['top','mid','bot'];
 export const ZONES=['blueTop','blueBot','redTop','redBot','riverTop','riverBot'];
 export const TOWER_HP=[2700,3200,3600];

@@ -1,10 +1,10 @@
-import * as E from './engine/engine.js';
-import {buildTimeline} from './engine/timeline.js';
-import {viewerMarkup,paintScene} from './engine/spectator.js';
-import {playbackIncrement} from './engine/power-play-ui.js';
-import {refreshViewer} from './engine/viewer-layout.js';
-import {runSharedMatch} from './model.js';
-import {button,badge,championImage,esc,playerName,sheet,teamIcon,teamName} from './ui.js';
+import * as E from './engine/engine.js?v=345ebe2e4f45';
+import {buildTimeline} from './engine/timeline.js?v=345ebe2e4f45';
+import {viewerMarkup,paintScene} from './engine/spectator.js?v=345ebe2e4f45';
+import {playbackIncrement} from './engine/power-play-ui.js?v=345ebe2e4f45';
+import {refreshViewer} from './engine/viewer-layout.js?v=345ebe2e4f45';
+import {runSharedMatch} from './model.js?v=345ebe2e4f45';
+import {button,badge,championImage,esc,playerName,sheet,teamIcon,teamName} from './ui.js?v=345ebe2e4f45';
 
 export {runSharedMatch};
 

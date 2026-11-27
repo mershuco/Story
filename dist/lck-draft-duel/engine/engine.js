@@ -1,12 +1,12 @@
-import {draftCounterThreat} from './draft-matchups.js';
-import {draftMetaEvent} from './draft-meta.js';
-import {buildAutoDraftMeta} from './auto-draft-meta.js';
-import {championSynergy,synergyKey} from './champion-synergy.js';
-import {start2026Cup,begin2026International,advance2026Phase,groupPoints,migrate2026SecondHalf} from './rules2026.js';
-import {simulateMatch,SIMULATION_MODEL,battleProbability,createMatchState,advanceMatch,matchOutcome,objectivePreview,upgradeMatchState} from './match-sim.js';
-import {PLAYER_LANE_STYLE} from './lane-calibration-2026.js';
-export {championCombatProfile,championCombat,combatLabels,phaseStrength,fightStage} from './champion-combat.js';
-import {compositionProfile,compositionMatchup,compositionLabels} from './composition.js';
+import {draftCounterThreat} from './draft-matchups.js?v=345ebe2e4f45';
+import {draftMetaEvent} from './draft-meta.js?v=345ebe2e4f45';
+import {buildAutoDraftMeta} from './auto-draft-meta.js?v=345ebe2e4f45';
+import {championSynergy,synergyKey} from './champion-synergy.js?v=345ebe2e4f45';
+import {start2026Cup,begin2026International,advance2026Phase,groupPoints,migrate2026SecondHalf} from './rules2026.js?v=345ebe2e4f45';
+import {simulateMatch,SIMULATION_MODEL,battleProbability,createMatchState,advanceMatch,matchOutcome,objectivePreview,upgradeMatchState} from './match-sim.js?v=345ebe2e4f45';
+import {PLAYER_LANE_STYLE} from './lane-calibration-2026.js?v=345ebe2e4f45';
+export {championCombatProfile,championCombat,combatLabels,phaseStrength,fightStage} from './champion-combat.js?v=345ebe2e4f45';
+import {compositionProfile,compositionMatchup,compositionLabels} from './composition.js?v=345ebe2e4f45';
 export const ROLES = ['TOP','JGL','MID','BOT','SUP'];
 export const ROLE_NAMES = {TOP:'탑',JGL:'정글',MID:'미드',BOT:'원딜',SUP:'서포터'};
 export const PROGRAMS = {balanced:'균형 훈련',mechanics:'개인 기량',champion:'챔피언 집중',scrim:'팀 스크림',rest:'휴식'};
@@ -613,7 +613,7 @@ export function draftComposition(d){
  const scenarios=[{label:'초반 상체 3:3',minute:8,kind:'skirmish',roles:['TOP','JGL','MID']},{label:'초반 5:5 한타',minute:12,kind:'teamfight'},{label:'후반 상체 3:3',minute:40,kind:'skirmish',roles:['TOP','JGL','MID']},{label:'극후반 5:5 한타',minute:45,kind:'teamfight'}].map(x=>({...x,blueChance:comparison(x.minute,x.kind,x.roles)}));
  return {blue,red,blueLabels:compositionLabels(blue),redLabels:compositionLabels(red),blueChance20:comparison(20),blueChance45:comparison(45),scenarios};
 }
-function matchInput(s,m,d) {
+function matchInput(s,m,d,model=SIMULATION_MODEL) {
  if(d.step!==20)throw Error('밴픽을 끝내야 경기를 시작할 수 있습니다.');
  if(!assignmentsReady(d)||!d.assignment?.confirmed)throw Error('포지션 배치를 완료하고 확정해야 경기를 시작할 수 있습니다.');
  const meta=autoDraftMeta(s,d),roleFits=({champion,role})=>DB.champMap[champion].roles.includes(role)||meta?.roles.has(champion+':'+role);
@@ -625,7 +625,7 @@ function matchInput(s,m,d) {
   return [player,{rating:p.ovr-(p.fatigue??0)*.045+(p.morale-70)*.018-(roleFits(pick)?0:8),
    mastery:mastery(s,player,pick.champion),activity,csDiff}];
  }));
- const simulationReplay={smiteSkills:[jungleSkill('blue'),jungleSkill('red')],objectiveEra:DB.season?.startYear??2022,model:SIMULATION_MODEL,patch:d.patch,seed:s.rng,bluePower:bp,redPower:rp,playerProfiles,
+ const simulationReplay={smiteSkills:[jungleSkill('blue'),jungleSkill('red')],objectiveEra:DB.season?.startYear??2022,model,patch:d.patch,seed:s.rng,bluePower:bp,redPower:rp,playerProfiles,
   teamStrengthBlue:power(s,d.blue),teamStrengthRed:power(s,d.red),
   compositionBlue:compositionProfile(d.picks.blue,DB.champMap),compositionRed:compositionProfile(d.picks.red,DB.champMap),
   scaleBlue:d.picks.blue.filter(p=>DB.champMap[p.champion].features.scale).length,
@@ -643,7 +643,7 @@ function storeMatch(s,m,d,input,outcome){
  if(m.score.some(n=>n>=Math.ceil(m.bestOf/2))) {m.status='done';m.winner=winning;if(!m.exhibition)team(s,winning).budget+=.25;if(!m.exhibition&&m.teams.includes(s.myTeam)){news(s,winning===s.myTeam?'시리즈 승리':'시리즈 종료',`${m.teams[0]} ${m.score[0]} : ${m.score[1]} ${m.teams[1]}`);team(s,s.myTeam).fan+=winning===s.myTeam?1500:300;}}
  return set;
 }
-export function resolveDraft(s,m,d){const input=matchInput(s,m,d);return storeMatch(s,m,d,input,simulateMatch(input,()=>random(s)));}
+export function resolveDraft(s,m,d,{model=SIMULATION_MODEL}={}){const input=matchInput(s,m,d,model);return storeMatch(s,m,d,input,simulateMatch(input,()=>random(s)));}
 export function startLiveMatch(s,{incremental=false}={}){
  if(s.activeMatch)throw Error('이미 진행 중인 경기가 있습니다.');const d=s.activeDraft;if(!d)throw Error('진행 중인 밴픽이 없습니다.');
  const m=s.matches.find(m=>m.id===d.matchId),input=matchInput(s,m,d),simulation=createMatchState(input,s.rng);
@@ -683,6 +683,6 @@ export function simulateSeries(s,m) {for(let guard=0;guard<5&&m.status!=='done';
 export function autoOwnSeries(s,matchId) {if(s.activeMatch){if(s.activeMatch.matchId!==matchId)throw Error('진행 중인 다른 경기를 먼저 마쳐 주세요.');advanceOwnMatch(s,'auto',true);}const m=s.matches.find(m=>m.id===matchId);if(!m||!m.teams.includes(s.myTeam)||m.date>s.date)throw Error('진행할 수 없는 경기입니다.');if(s.activeDraft){completeDraft(s,s.activeDraft);autoAssignDraft(s,s.activeDraft);confirmDraftAssignments(s.activeDraft);commitOwnDraft(s);}simulateSeries(s,m);s.viewing={matchId:m.id,setIndex:m.sets.length-1};return m;}
 // Completed modern logs are reproducible from seed + recorded decisions. Keep live
 // prefixes intact; never mutate the in-memory match while writing a save.
-export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14','event-v15','event-v16',SIMULATION_MODEL].includes(this.simulationReplay?.model)?[]:value;});}
+export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14','event-v15','event-v16','event-v17',SIMULATION_MODEL].includes(this.simulationReplay?.model)?[]:value;});}
 
 export function migrateSeasonFormat(s){return DB.season?.competitionFormat===2026?migrate2026SecondHalf(s):false;}

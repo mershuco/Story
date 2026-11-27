@@ -1,6 +1,6 @@
-import {structurePosition} from './broadcast-hud.js';
-import {replayMatch,SIMULATION_MODEL} from './match-sim.js';
-import {buildLanePlayback,laneActorTarget,laneHealth,sampleLaneActors} from './lane-playback.js';
+import {structurePosition} from './broadcast-hud.js?v=345ebe2e4f45';
+import {replayMatch,SIMULATION_MODEL} from './match-sim.js?v=345ebe2e4f45';
+import {buildLanePlayback,laneActorTarget,laneHealth,sampleLaneActors} from './lane-playback.js?v=345ebe2e4f45';
 // Deterministic highlight reconstruction. This layer never changes match results or save RNG.
 const ROLES=['TOP','JGL','MID','BOT','SUP'];
 const BASE={blue:[63,537],red:[537,63]};
@@ -32,7 +32,7 @@ function take(queue,amount,roles){
 export function buildTimeline(set,{teamNames={},playerNames={},champions={}}={}){
  const rng=seeded(hash(JSON.stringify([set.blue,set.red,set.number,set.winner,set.picks,set.stats])));
  let out,records=set.events;
- if(!set.live&&!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3','event-v4','event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14','event-v15','event-v16',SIMULATION_MODEL].includes(set.simulationReplay?.model)){
+ if(!set.live&&!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3','event-v4','event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14','event-v15','event-v16','event-v17',SIMULATION_MODEL].includes(set.simulationReplay?.model)){
   const replay=replayMatch({...set.simulationReplay,blue:set.blue,red:set.red,number:set.number,roster:set.stats,teamNames});
   if(replay.winner===set.winner&&replay.duration===set.duration&&JSON.stringify(replay.stats)===JSON.stringify(set.stats))records=replay.events;
  }

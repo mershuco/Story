@@ -1,7 +1,7 @@
-import {replayMatch as replayArchived,goldInfluence,battleFactors,battleProbability,matchRandom} from './match-sim-v4.js';
-import {compositionMatchup} from './composition-v5.js';
-import {phaseStrength} from './champion-combat.js';
-import {macroProfile,objectiveChances,automaticObjectiveDecision,OBJECTIVE_NAMES} from './macro-objectives-v5.js';
+import {replayMatch as replayArchived,goldInfluence,battleFactors,battleProbability,matchRandom} from './match-sim-v4.js?v=345ebe2e4f45';
+import {compositionMatchup} from './composition-v5.js?v=345ebe2e4f45';
+import {phaseStrength} from './champion-combat.js?v=345ebe2e4f45';
+import {macroProfile,objectiveChances,automaticObjectiveDecision,OBJECTIVE_NAMES} from './macro-objectives-v5.js?v=345ebe2e4f45';
 export {goldInfluence,battleFactors,battleProbability,matchRandom};
 export const SIMULATION_MODEL='event-v5';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));

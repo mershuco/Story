@@ -1,4 +1,4 @@
-import {DAMAGE_MODELS,TANK_CHAMPIONS,ENGAGE_SUPPORTS,UTILITY_SUPPORTS} from './damage-calibration-2026.js';
+import {DAMAGE_MODELS,TANK_CHAMPIONS,ENGAGE_SUPPORTS,UTILITY_SUPPORTS} from './damage-calibration-2026.js?v=345ebe2e4f45';
 
 const tanks = new Set(TANK_CHAMPIONS);
 const engageSupports = new Set(ENGAGE_SUPPORTS);

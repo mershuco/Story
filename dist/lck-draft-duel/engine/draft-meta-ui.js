@@ -1,7 +1,7 @@
-import {draftSynergyMarkup} from './draft-synergy-ui.js';
-import {draftMetaView,META_ROLES} from './draft-meta.js';
-import {draftAdvice} from './draft-advice.js';
-import {draftConfirmMarkup} from './draft-confirm.js';
+import {draftSynergyMarkup} from './draft-synergy-ui.js?v=345ebe2e4f45';
+import {draftMetaView,META_ROLES} from './draft-meta.js?v=345ebe2e4f45';
+import {draftAdvice} from './draft-advice.js?v=345ebe2e4f45';
+import {draftConfirmMarkup} from './draft-confirm.js?v=345ebe2e4f45';
 export function draftMetaMarkup(c,d,m){
  const {data,state:s,ui,E,esc,img,btn}=c;
  const view=draftMetaView(data,{date:s.date,competition:m.competition,phase:m.phase??s.phase?.key,patch:d.patch,mode:ui.draftMetaMode??'event'});if(!view)return '';

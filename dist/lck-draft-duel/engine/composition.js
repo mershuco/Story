@@ -1,5 +1,5 @@
-import {activeChampionSynergies} from './champion-synergy.js';
-import {teamChampionCombat,phaseStrength} from './champion-combat.js';
+import {activeChampionSynergies} from './champion-synergy.js?v=345ebe2e4f45';
+import {teamChampionCombat,phaseStrength} from './champion-combat.js?v=345ebe2e4f45';
 // Game estimates of team composition, not official champion win-rate statistics.
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const set=s=>new Set(s.split(' '));
