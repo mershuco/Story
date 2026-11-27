@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+ <meta name="theme-color" content="#0b1017">
+ <meta name="description" content="초대코드로 친구와 실시간 1대1 밴픽을 하고 같은 경기를 관전하세요.">
+ <meta name="duel-api" content="https://lck-draft-duel.fronjk30.chatgpt.site/api">
+ <title>LCK Draft Duel · 2026 1대1 밴픽</title>
+ <link rel="stylesheet" href="./engine/local-fonts.css">
+ <link rel="stylesheet" href="./engine/style.css">
+ <link rel="stylesheet" href="./engine/vct-ui.css">
+ <link rel="stylesheet" href="./duel.css">
+</head>
+<body data-screen="duel">
+ <header class="duel-header">
+  <a class="wordmark" href="./" aria-label="LCK Draft Duel 홈"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span>LCK <b>DRAFT DUEL</b></span></a>
+  <span class="season-label">2026 시즌</span>
+ </header>
+ <main id="duel"><p class="duel-loading" role="status">경기 데이터를 불러오는 중입니다.</p></main>
+ <div id="duel-status" role="status" aria-live="polite"></div>
+ <script type="module" src="./app.js"></script>
+</body>
+</html>

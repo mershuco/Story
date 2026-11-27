@@ -1,0 +1,73 @@
+:root{color-scheme:dark;--duel-bg:#0b1017;--duel-panel:#141c27;--duel-line:#263442;--duel-text:#edf3f7;--duel-muted:#acbac7;--duel-accent:#bdf27a;--duel-blue:#88c7ff;--duel-red:#ffa38d}
+html{min-height:100%;background:var(--duel-bg)}
+body[data-screen=duel]{margin:0;min-height:100vh;overflow-y:auto;background:radial-gradient(ellipse at 74% 18%,#182b2f 0,transparent 45%),var(--duel-bg);color:var(--duel-text);font-family:"Inter","Pretendard","Noto Sans KR",system-ui,sans-serif}
+.duel-header{border-bottom:1px solid var(--duel-line);padding:0 clamp(18px,4vw,58px);height:66px;display:flex;align-items:center;justify-content:space-between;background:#0b1017ea}
+.wordmark{display:flex;align-items:center;gap:12px;color:var(--duel-text);text-decoration:none;letter-spacing:.12em;font-size:13px;font-weight:850}
+.wordmark b{color:var(--duel-accent)}
+.mark{display:flex;gap:3px;height:17px;align-items:end;transform:skew(-15deg);margin:0 3px}
+.mark i{display:block;background:var(--duel-accent);height:65%;width:4px}
+.mark i:nth-child(2){height:100%}.mark i:nth-child(3){height:45%}
+.season-label{color:var(--duel-muted);font-weight:650;font-size:.8rem}
+#duel{width:min(100% - clamp(28px,7vw,100px),1300px);margin:0 auto;min-width:0}
+body[data-screen=duel] #duel h1,body[data-screen=duel] #duel h2,body[data-screen=duel] #duel p{margin:0}
+.duel-intro{min-height:calc(88vh - 66px);width:min(100%,1070px);margin:auto;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.9fr);gap:clamp(28px,7vw,100px);align-items:center;padding:50px 0}
+.hero-kicker{color:var(--duel-accent);font-size:.78rem;font-weight:750;letter-spacing:.09em}
+#duel .hero-copy h1{font-size:clamp(3rem,7.5vw,7.3rem);line-height:1.04;letter-spacing:-.085em;font-weight:900;margin:15px 0 24px}
+.hero-copy em{font-style:normal;color:var(--duel-accent)}
+.hero-help{max-width:400px;color:var(--duel-muted);font-size:clamp(.95rem,1.5vw,1.2rem);line-height:1.7}
+.hero-facts{display:flex;gap:26px;margin-top:34px;color:var(--duel-muted);font-size:.8rem}
+.hero-facts span{display:grid;gap:5px}
+.hero-facts b{font:750 1.1rem/1.2 ui-monospace,monospace;color:var(--duel-text)}
+.duel-form-card,.invite-link,.duel-assign{border:1px solid var(--duel-line);border-radius:17px;background:var(--duel-panel);padding:clamp(17px,3vw,28px)}
+#duel .duel-form-card h2{font-size:1.3rem;margin:16px 0}
+.mini-rift{height:138px;background:linear-gradient(140deg,#141c2799,#102f2699),url('https://mershuco.github.io/Story/assets/maps/summoners-rift.png') center 45%/100% auto;border-radius:8px}
+.duel-team-form{display:grid;gap:10px}
+.duel-team-form label,.invite-link label{font-size:.8rem;color:var(--duel-muted);font-weight:650}
+#duel select,#duel input{min-width:0;width:100%;border:1px solid #314354;border-radius:8px;color:var(--duel-text);background:#0c121a;padding:11px 12px;font:inherit}
+#duel select{min-height:44px}
+.duel-button{display:inline-flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--duel-line);border-radius:8px;background:#192631;color:var(--duel-text);font:inherit;font-weight:700;text-decoration:none;padding:12px 15px;cursor:pointer;min-height:43px;white-space:nowrap;transition:background .16s}
+.duel-button.primary{background:var(--duel-accent);color:#14210e;border-color:var(--duel-accent)}
+.duel-button.primary:hover{background:#d2ff9a}
+.duel-button:hover{background:#243747}
+#duel .form-note{margin-top:14px;color:var(--duel-muted);font-size:.79rem}
+.invite-team{display:flex;align-items:center;gap:14px}
+.invite-team span,.duel-seat div{display:grid;gap:3px}
+.invite-team small,.duel-seat small{color:var(--duel-muted);font-size:.78rem}
+.invite-team strong{font-size:1.4rem}
+.duel-team-logo{width:42px;height:42px;object-fit:contain}
+.lobby-stage,.duel-error{max-width:740px;margin:auto;padding:clamp(42px,9vw,100px) 0;text-align:center}
+#duel .lobby-stage h1{font-size:clamp(1.8rem,5vw,3rem);letter-spacing:-.06em;margin-bottom:25px}
+.duel-seat{background:var(--duel-panel);border:1px solid var(--duel-line);border-top:2px solid var(--duel-blue);border-radius:10px;min-height:78px;display:flex;align-items:center;justify-content:center;gap:12px}
+.duel-seat.red{border-top-color:var(--duel-red)}
+.duel-seat strong{font-size:1.6rem}
+.seat-vs{font-size:.75rem;font-weight:800;color:var(--duel-muted)}
+.invite-link{text-align:left}
+.invite-link>div{display:flex;gap:8px;margin:8px 0}
+.invite-link p,.duel-error p{font-size:.85rem;color:var(--duel-muted)}
+.duel-error a{margin-top:14px}
+
+.duel-join-form{border-top:1px solid var(--duel-line);padding-top:16px;margin-top:17px}
+#room-code{text-transform:uppercase;font-family:ui-monospace,monospace;font-size:1.4rem;letter-spacing:.13em}
+body:is([data-screen=draft],[data-screen=viewer]) .duel-header{display:none}
+.duel-player-logo{display:inline-grid;place-items:center;aspect-ratio:1;width:36px;border-radius:7px;border:1px solid #5983a8;color:#9bcaff;background:#182f46;font-weight:800;flex-shrink:0}
+.duel-player-logo.p2{border-color:#9b626a;color:#ffb2b9;background:#462e3c}
+.duel-stage-shell .broadcast-nameplate>span{display:none}
+.duel-stage-shell .work-sheet.match-sheet{overflow-anchor:none}
+.duel-series-setup{max-width:720px;padding:24px;margin:auto;color:#f0f0f6}
+.duel-series-setup h1{margin:8px 0}
+.duel-format-choices{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
+.duel-format-choices b{min-width:65px}
+.duel-series-winner{color:#ffdca4;margin-right:12px}
+.duel-examples{max-width:min(95vw,680px);max-height:85vh;overflow:auto;background:#1c212b;color:#fff;border:1px solid #3a4957;border-radius:10px;padding:18px}
+.duel-examples div{display:grid;gap:6px;margin:10px 0}
+.duel-examples::backdrop{background:#000b}
+.duel-loading{padding:50px 0;text-align:center}
+#duel-status:not(:empty){position:fixed;bottom:15px;right:16px;z-index:50;max-width:min(94vw,420px);background:#213442;border:1px solid #426572;border-radius:8px;padding:10px 13px;color:white;font-size:.86rem}
+#duel-status.error{background:#44262a;border-color:#9b5755}
+#duel :focus-visible,.wordmark:focus-visible{outline:2px solid var(--duel-accent);outline-offset:2px}
+@media(max-width:700px){
+ .duel-header{height:52px}
+ .duel-intro{grid-template-columns:1fr;gap:22px;min-height:0;padding:38px 0}
+ #duel .hero-copy h1{margin:9px 0 14px}
+ .hero-facts{margin-top:18px}.mini-rift{height:82px}
+}
