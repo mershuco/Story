@@ -1,8 +1,9 @@
 import {championCombatProfile, phaseStrength} from './champion-combat.js';
 import {activeChampionSynergies} from './champion-synergy.js';
+import {LANE_ROLES, laneCounterEdge} from './lane-counters.js';
+export {LANE_ROLES};
 
 export const LANING_END = 15;
-export const LANE_ROLES = {top: ['TOP'], mid: ['MID'], bot: ['BOT', 'SUP']};
 const ROLE_LANE = {TOP: 'top', MID: 'mid', BOT: 'bot', SUP: 'bot'};
 const EARLY_CS = {TOP: 10.7, JGL: 8.65, MID: 11.25, BOT: 11.15, SUP: 1.6};
 const LATE_CS = {TOP: 8.1, JGL: 6.55, MID: 8.9, BOT: 10, SUP: .62};
@@ -45,7 +46,14 @@ export function laningFarmRate(s, p, from) {
  const macro = s.macros[s.teams.indexOf(p.team)];
  const recovery = 1 + clamp(form(p) * (p.role === 'BOT' ? .18 : .1) + (phase - 3) * .025
   + (macro.split - .55) * .13, -.24, .23);
- const laneRate = earlyRate * (1 + advantage);
+ let laneRate = earlyRate * (1 + advantage);
+ if (lane && early > 0) {
+  const side = p.team === s.teams[0] ? 1 : -1;
+  const edge = laneCounterEdge(s, lane) * side;
+  const gain = p.role === 'SUP' ? earlyRate * .04 : Math.max(0, Math.min(earlyRate * .075, 12.35 - laneRate));
+  const loss = earlyRate * (p.role === 'SUP' ? .04 : .115);
+  laneRate += edge * (edge > 0 ? gain : loss);
+ }
  return early * laneRate + (1 - early) * lateRate * recovery;
 }
 
@@ -59,7 +67,9 @@ export function localFightChance(s, lane, participants, attacker = null) {
  const numbers = participants[blue].length - participants[red].length - owner;
  const synergy = id => activeChampionSynergies(participants[id].map(p => [p.champion, p.role]), s.clock,
   attacker ? 'gank' : 'skirmish').score;
- return clamp(logistic(lanePressure(s, lane) * .063 + clamp((gold(blue) - gold(red)) / 1800, -.65, .65)
+ const counter = s.clock < LANING_END ? laneCounterEdge(s, lane) : 0;
+ return clamp(logistic(lanePressure(s, lane) * .063 + counter * (attacker ? .24 : .96)
+  + clamp((gold(blue) - gold(red)) / 1800, -.65, .65)
   + owner * jungleImpact + numbers * .7 + (synergy(blue)-synergy(red)) * .11), .09, .91);
 }
 
@@ -73,6 +83,7 @@ function entriesForLane(s, lane) {
  const aggression = clamp(1 + activity * .31 + kits * .14
   + Math.abs(lanePressure(s, lane)) * .035, .55, 2.25);
  const blueChance = localFightChance(s, lane, participants);
+ const counter = laneCounterEdge(s, lane);
  const base = (s.version >= 17 ? LANE_KILL_RATE : LEGACY_LANE_KILL_RATE)[lane];
  const snowball = id => {
   const since = s.clock - (s.duoKillAt?.[id] ?? -Infinity);
@@ -80,7 +91,8 @@ function entriesForLane(s, lane) {
  };
  const fights = s.teams.map(id => ({
   lane, participants, attacker: id, kind: lane === 'bot' ? 'duo-kill' : 'solo-kill',
-  rate: base * aggression * (id === blue ? blueChance : 1 - blueChance) * snowball(id),
+  rate: base * aggression * (id === blue ? blueChance : 1 - blueChance) * snowball(id)
+   * (1 + Math.max(0, id === blue ? counter : -counter) * (lane === 'bot' ? .44 : .65)),
  }));
  for (const id of s.teams) {
   const jungle = s.stats.find(p => p.team === id && p.role === 'JGL');

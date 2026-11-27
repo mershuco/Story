@@ -2,6 +2,7 @@ import {deathTimerSeconds} from './death-timer.js';
 import * as legacyV10 from './match-sim-v10.js';
 import {initializeEconomy,killReward,settleDeathBounty,markBusy,botQuestReward} from './match-economy.js';
 import {LANING_END,laneEvent,lanePressure,localFightChance,dragonLaneControl,addFightDamage} from './laning.js';
+import {laneCounterEdge} from './lane-counters.js';
 import {estimateChampionDamage} from './champion-damage.js';
 import * as legacyV9 from './match-sim-v9.js';
 import {initializeBounties,updateBounties,claimObjectiveBounty} from './objective-bounties.js';
@@ -16,7 +17,8 @@ import {initializeRift,creditPlayer,creditTeam,farmPlayers,tickRift,gainVision,v
 import * as legacyV5 from './match-sim-v5.js';
 import {initializeObjectives,takeDragon,grantTemporaryBuff,loseBuffsOnDeath,buffCoverage,objectivePower,structurePressure,objectiveSnapshot,DRAKES} from './objective-effects.js';
 export {goldInfluence,battleFactors,battleProbability,matchRandom};
-export const SIMULATION_MODEL='event-v17';
+export const SIMULATION_MODEL='event-v18';
+const LANE_SIMULATION_MODELS=['event-v11','event-v12','event-v13','event-v14','event-v15','event-v16','event-v17',SIMULATION_MODEL];
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const sigmoid=x=>1/(1+Math.exp(-x));
 const round=n=>Math.round(n*1000)/1000;
@@ -44,7 +46,7 @@ function record(s,{kind,title,location='mid',roles=null,team=null,kills=[],objec
 }
 export function createMatchState(input,seed=0,external){
  const snapshot=structuredClone(input),{blue,red}=snapshot,teams=[blue,red],zeros=()=>Object.fromEntries(teams.map(id=>[id,0]));
- const version=['event-v11','event-v12','event-v13','event-v14','event-v15','event-v16'].includes(input.model)?Number(input.model.slice(7)):17;
+ const version=Number((LANE_SIMULATION_MODELS.includes(input.model)?input.model:SIMULATION_MODEL).slice(7));
  const s={version,input:snapshot,rng:seed>>>0,teams,clock:0,stats:snapshot.roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),gold:{[blue]:2500,[red]:2500},score:zeros(),dragons:zeros(),grubs:zeros(),heralds:zeros(),barons:zeros(),elders:zeros(),baronUntil:zeros(),elderUntil:zeros(),momentum:zeros(),minLead:zeros(),events:[],lastLeader:null,leadChanges:0,winner:null,finished:false,pending:null,window:0,decisions:[],soul:null,steps:0};
  s.powerGap=(input.teamStrengthBlue??input.bluePower)-(input.teamStrengthRed??input.redPower);s.championGap=input.bluePower-input.redPower-s.powerGap;
  s.macros=[macroProfile(blue,input.compositionBlue,input.blueStrategy),macroProfile(red,input.compositionRed,input.redStrategy)];
@@ -260,9 +262,10 @@ function laningEvent(s,rng){
  const elapsed=s.clock-s.lastLaneRoll;s.lastLaneRoll=s.clock;
  const event=laneEvent(s,elapsed,rng);
  if(!event){
-  const lane=weighted([['top',.31],['mid',.29],['bot',.4]],rng),gap=lanePressure(s,lane),leader=gap>=0?s.teams[0]:s.teams[1];
+  const lane=weighted([['top',.31],['mid',.29],['bot',.4]],rng),gap=lanePressure(s,lane),leader=gap>=0?s.teams[0]:s.teams[1],counter=laneCounterEdge(s,lane);
+  const counterTeam=s.teams[counter>0?0:1];
   record(s,{kind:'laning',title:`${{top:'탑',mid:'미드',bot:'바텀'}[lane]} · 라인전`,location:lane,
-   text:Math.abs(gap)<4?'양 팀이 웨이브를 정리하며 CS를 챙깁니다.':`${name(s,leader)}이 웨이브 주도권으로 상대의 CS 확보를 압박합니다.`});
+   text:Math.abs(counter)>=.5?`${name(s,counterTeam)}이 챔피언 상성을 활용해 상대의 CS 확보를 압박합니다.`:Math.abs(gap)<4?'양 팀이 웨이브를 정리하며 CS를 챙깁니다.':`${name(s,leader)}이 웨이브 주도권으로 상대의 CS 확보를 압박합니다.`});
   return;
  }
  const {kind,lane}=event,laneName={top:'탑',mid:'미드',bot:'바텀'}[lane];
@@ -272,8 +275,10 @@ function laningEvent(s,rng){
  gainVision(s,fight.winner,lane,kind==='gank'?7:4);
  const type=kind==='solo-kill'?'솔로킬':kind==='duo-kill'?'듀오킬':kind==='gank'?fight.winner===event.attacker?'갱킹 성공':'갱킹 받아치기':'합류 교전';
  const participants=event.participants?Object.values(event.participants).flat().map(p=>p.player):s.stats.filter(p=>roles.includes(p.role)&&((s.respawnAt[p.player]??0)<=s.clock||fight.dead.includes(p.player))).map(p=>p.player);
+ const counterEdge=laneCounterEdge(s,lane)*(fight.winner===s.teams[0]?1:-1);
+ const counterText=(kind==='solo-kill'||kind==='duo-kill')&&counterEdge>=.5?' 챔피언 상성이 딜교환에 힘을 실었습니다.':'';
  record(s,{kind,title:`${name(s,fight.winner)} · ${laneName} ${type}`,location:lane,roles,participants,team:fight.winner,kills:fight.kills,
-  text:`${name(s,fight.winner)}이 ${laneName}에서 ${type}으로 ${fight.winnerKills}킬을 얻습니다.`,...fight.info});
+  text:`${name(s,fight.winner)}이 ${laneName}에서 ${type}으로 ${fight.winnerKills}킬을 얻습니다.${counterText}`,...fight.info});
 }
 function finishMatch(s,winner,rng){
  if(s.structures[enemy(s,winner)].nexus>0)throw Error('넥서스를 파괴하기 전에는 승자를 정할 수 없습니다.');
@@ -341,4 +346,4 @@ export function simulateMatch(input,rng){
  }else s=createMatchState(input,0,rng);
  advanceMatch(s,{auto:true},rng);return matchOutcome(s);
 }
-export function replayMatch(input){return [SIMULATION_MODEL,'event-v16','event-v15','event-v14','event-v13','event-v12','event-v11'].includes(input.model)?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}
+export function replayMatch(input){return LANE_SIMULATION_MODELS.includes(input.model)?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}

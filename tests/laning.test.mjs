@@ -3,12 +3,63 @@ import assert from 'node:assert/strict';
 import {createMatchState, advanceMatch, matchRandom, simulateMatch, replayMatch} from '../dist/match-sim.js';
 import {botQuestReward} from '../dist/match-economy.js';
 import {farmPlayers} from '../dist/rift-state.js';
-import {laneEvent, localFightChance, dragonLaneControl} from '../dist/laning.js';
+import {laneEvent, localFightChance, dragonLaneControl, laningFarmRate} from '../dist/laning.js';
+import {championLaneCounter, laneCounterEdge} from '../dist/lane-counters.js';
 
 const roles = ['TOP', 'JGL', 'MID', 'BOT', 'SUP'];
 const roster = ['B', 'R'].flatMap(team => roles.map(role => ({team, role, player: team + role, champion: 'Annie'})));
 const input = {blue: 'B', red: 'R', bluePower: 80, redPower: 80, objectiveEra: 2026, patch: '16.9.1', roster, teamNames: {}};
 const find = (s, id) => s.stats.find(p => p.player === id);
+
+test('VSChamp grades apply to the assigned lane and cancel conflicting grades', () => {
+ const counter = (counter, target, role, targetRole=role) =>
+  championLaneCounter({champion: counter, role}, {champion: target, role: targetRole});
+ assert.equal(counter('Irelia', 'Gnar', 'TOP'), 1);
+ assert.equal(counter('Gnar', 'Irelia', 'TOP'), -1);
+ assert.equal(counter('Jayce', 'Gnar', 'TOP'), .52);
+ assert.equal(counter('Irelia', 'Gnar', 'MID'), 0);
+ assert.equal(counter('Braum', 'MissFortune', 'SUP', 'BOT'), 1);
+ assert.equal(counter('Braum', 'MissFortune', 'JGL', 'BOT'), 0);
+ assert.equal(counter('DrMundo', 'Darius', 'TOP'), 0);
+ assert.equal(counter('Caitlyn', 'Senna', 'BOT'), 0);
+ const s = createMatchState(input, 2);
+ find(s, 'BSUP').champion = 'Braum';
+ find(s, 'RBOT').champion = 'MissFortune';
+ assert(laneCounterEdge(s, 'bot') > 0);
+});
+
+test('a hard counter raises solo kill frequency and earns its extra gold through CS before 15', () => {
+ const shared = createMatchState(input, 23);
+ find(shared, 'BTOP').champion = 'Irelia';
+ find(shared, 'RTOP').champion = 'Gnar';
+ shared.clock = 8;
+ const before = {...shared, version: 17};
+ const participants = {B: [find(shared, 'BTOP')], R: [find(shared, 'RTOP')]};
+ assert(localFightChance(shared, 'top', participants) - localFightChance(before, 'top', participants) > .15);
+ const count = s => {
+  const rng = matchRandom(4741);
+  let soloKills = 0;
+  for (let i=0; i<10000; i++) {
+   const e = laneEvent(s, 1.25, rng);
+   if (e?.kind === 'solo-kill' && e.lane === 'top' && e.attacker === 'B') soloKills++;
+  }
+  return soloKills;
+ };
+ assert(count(shared) > count(before) * 1.75);
+ const measured = [17, 18].map(version => {
+  const s = structuredClone({...shared, version, clock: 15});
+  farmPlayers(s, 13);
+  return s;
+ });
+ const gap = (s, key) => find(s,'BTOP')[key] - find(s,'RTOP')[key];
+ const extraCS = gap(measured[1], 'cs') - gap(measured[0], 'cs');
+ assert(extraCS >= 23 && extraCS <= 28);
+ assert(Math.abs(gap(measured[1], 'gold') - gap(measured[0], 'gold') - extraCS * 21) < 2);
+ shared.clock = 16;
+ before.clock = 16;
+ assert.equal(localFightChance(shared, 'top', participants), localFightChance(before, 'top', participants));
+ assert.equal(laningFarmRate(shared, participants.B[0], 15), laningFarmRate(before, participants.B[0], 15));
+});
 
 test('line OVR, champion timing, and kill history raise the relevant lane odds', () => {
  const even = createMatchState(input, 2);
