@@ -16,7 +16,7 @@ import {initializeRift,creditPlayer,creditTeam,farmPlayers,tickRift,gainVision,v
 import * as legacyV5 from './match-sim-v5.js';
 import {initializeObjectives,takeDragon,grantTemporaryBuff,loseBuffsOnDeath,buffCoverage,objectivePower,structurePressure,objectiveSnapshot,DRAKES} from './objective-effects.js';
 export {goldInfluence,battleFactors,battleProbability,matchRandom};
-export const SIMULATION_MODEL='event-v16';
+export const SIMULATION_MODEL='event-v17';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const sigmoid=x=>1/(1+Math.exp(-x));
 const round=n=>Math.round(n*1000)/1000;
@@ -44,7 +44,7 @@ function record(s,{kind,title,location='mid',roles=null,team=null,kills=[],objec
 }
 export function createMatchState(input,seed=0,external){
  const snapshot=structuredClone(input),{blue,red}=snapshot,teams=[blue,red],zeros=()=>Object.fromEntries(teams.map(id=>[id,0]));
- const version=['event-v11','event-v12','event-v13','event-v14','event-v15'].includes(input.model)?Number(input.model.slice(7)):16;
+ const version=['event-v11','event-v12','event-v13','event-v14','event-v15','event-v16'].includes(input.model)?Number(input.model.slice(7)):17;
  const s={version,input:snapshot,rng:seed>>>0,teams,clock:0,stats:snapshot.roster.map(p=>({team:p.team,role:p.role,player:p.player,champion:p.champion,k:0,d:0,a:0})),gold:{[blue]:2500,[red]:2500},score:zeros(),dragons:zeros(),grubs:zeros(),heralds:zeros(),barons:zeros(),elders:zeros(),baronUntil:zeros(),elderUntil:zeros(),momentum:zeros(),minLead:zeros(),events:[],lastLeader:null,leadChanges:0,winner:null,finished:false,pending:null,window:0,decisions:[],soul:null,steps:0};
  s.powerGap=(input.teamStrengthBlue??input.bluePower)-(input.teamStrengthRed??input.redPower);s.championGap=input.bluePower-input.redPower-s.powerGap;
  s.macros=[macroProfile(blue,input.compositionBlue,input.blueStrategy),macroProfile(red,input.compositionRed,input.redStrategy)];
@@ -341,4 +341,4 @@ export function simulateMatch(input,rng){
  }else s=createMatchState(input,0,rng);
  advanceMatch(s,{auto:true},rng);return matchOutcome(s);
 }
-export function replayMatch(input){return [SIMULATION_MODEL,'event-v15','event-v14','event-v13','event-v12','event-v11'].includes(input.model)?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}
+export function replayMatch(input){return [SIMULATION_MODEL,'event-v16','event-v15','event-v14','event-v13','event-v12','event-v11'].includes(input.model)?simulateMatch(input,matchRandom(input.seed)):input.model==='event-v10'?legacyV10.replayMatch(input):input.model==='event-v9'?legacyV9.replayMatch(input):input.model==='event-v8'?legacyV8.replayMatch(input):input.model==='event-v7'?legacyV7.replayMatch(input):input.model==='event-v6'?legacyV6.replayMatch(input):input.model==='event-v5'?legacyV5.replayMatch(input):replayArchived(input);}

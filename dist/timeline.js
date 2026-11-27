@@ -32,7 +32,7 @@ function take(queue,amount,roles){
 export function buildTimeline(set,{teamNames={},playerNames={},champions={}}={}){
  const rng=seeded(hash(JSON.stringify([set.blue,set.red,set.number,set.winner,set.picks,set.stats])));
  let out,records=set.events;
- if(!set.live&&!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3','event-v4','event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14','event-v15',SIMULATION_MODEL].includes(set.simulationReplay?.model)){
+ if(!set.live&&!records?.some(e=>e.kind==='nexus')&&['event-v2','event-v3','event-v4','event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14','event-v15','event-v16',SIMULATION_MODEL].includes(set.simulationReplay?.model)){
   const replay=replayMatch({...set.simulationReplay,blue:set.blue,red:set.red,number:set.number,roster:set.stats,teamNames});
   if(replay.winner===set.winner&&replay.duration===set.duration&&JSON.stringify(replay.stats)===JSON.stringify(set.stats))records=replay.events;
  }

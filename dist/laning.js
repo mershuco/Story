@@ -7,6 +7,9 @@ const ROLE_LANE = {TOP: 'top', MID: 'mid', BOT: 'bot', SUP: 'bot'};
 const EARLY_CS = {TOP: 10.7, JGL: 8.65, MID: 11.25, BOT: 11.15, SUP: 1.6};
 const LATE_CS = {TOP: 8.1, JGL: 6.55, MID: 8.9, BOT: 10, SUP: .62};
 const ROLE_DAMAGE = {TOP: 606, JGL: 444, MID: 649, BOT: 745, SUP: 210};
+const LEGACY_LANE_KILL_RATE = {top: .017, mid: .01, bot: .036};
+// Targets 35% top, 20% mid and 50% bot for either team to score before 15 minutes.
+const LANE_KILL_RATE = {top: .0305, mid: .018, bot: .0565};
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 const logistic = n => 1 / (1 + Math.exp(-n));
 const form = p => Math.tanh((p.k + .4 * p.a - 1.05 * p.d) / 2.5);
@@ -70,7 +73,7 @@ function entriesForLane(s, lane) {
  const aggression = clamp(1 + activity * .31 + kits * .14
   + Math.abs(lanePressure(s, lane)) * .035, .55, 2.25);
  const blueChance = localFightChance(s, lane, participants);
- const base = {top: .017, mid: .01, bot: .036}[lane];
+ const base = (s.version >= 17 ? LANE_KILL_RATE : LEGACY_LANE_KILL_RATE)[lane];
  const snowball = id => {
   const since = s.clock - (s.duoKillAt?.[id] ?? -Infinity);
   return lane === 'bot' && since < 4 ? 1 + .16 * (1 - since / 4) : 1;

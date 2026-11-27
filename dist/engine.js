@@ -683,6 +683,6 @@ export function simulateSeries(s,m) {for(let guard=0;guard<5&&m.status!=='done';
 export function autoOwnSeries(s,matchId) {if(s.activeMatch){if(s.activeMatch.matchId!==matchId)throw Error('진행 중인 다른 경기를 먼저 마쳐 주세요.');advanceOwnMatch(s,'auto',true);}const m=s.matches.find(m=>m.id===matchId);if(!m||!m.teams.includes(s.myTeam)||m.date>s.date)throw Error('진행할 수 없는 경기입니다.');if(s.activeDraft){completeDraft(s,s.activeDraft);autoAssignDraft(s,s.activeDraft);confirmDraftAssignments(s.activeDraft);commitOwnDraft(s);}simulateSeries(s,m);s.viewing={matchId:m.id,setIndex:m.sets.length-1};return m;}
 // Completed modern logs are reproducible from seed + recorded decisions. Keep live
 // prefixes intact; never mutate the in-memory match while writing a save.
-export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14','event-v15',SIMULATION_MODEL].includes(this.simulationReplay?.model)?[]:value;});}
+export function serializeSave(s){return JSON.stringify(s,function(key,value){return key==='events'&&['event-v5','event-v6','event-v7','event-v8','event-v9','event-v10','event-v11','event-v12','event-v13','event-v14','event-v15','event-v16',SIMULATION_MODEL].includes(this.simulationReplay?.model)?[]:value;});}
 
 export function migrateSeasonFormat(s){return DB.season?.competitionFormat===2026?migrate2026SecondHalf(s):false;}

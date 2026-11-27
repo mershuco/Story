@@ -49,7 +49,7 @@ test('full scheduler awards correct elemental stacks/soul then Elder exclusively
  }
  const events=s.events.filter(e=>e.objective);assert.equal(events.filter(e=>e.kind==='dragon'&&e.team===owner).length,4);const soul=events.find(e=>e.objective.soul);assert(soul);assert.equal(soul.objective.soulType,s.drakeHistory[2]);const elder=events.find(e=>e.kind==='elder');assert(elder.minute>=soul.minute+6);assert(elder.objectiveState.elder[s.teams.indexOf(owner)][0]>=Math.round((elder.minute+2.5)*60));
  for(let seed=1;seed<=100;seed++){
-  const out=simulateMatch(input,matchRandom(seed));assert.equal(out.model,'event-v16');assert(!out.events.some(e=>e.kind==='herald'||e.location==='herald'));
+  const out=simulateMatch(input,matchRandom(seed));assert.equal(out.model,'event-v17');assert(!out.events.some(e=>e.kind==='herald'||e.location==='herald'));
   const drakes=out.events.filter(e=>e.kind==='dragon');if(drakes.length>=3){assert.equal(new Set(drakes.slice(0,3).map(e=>e.objective.dragonType)).size,3);for(const d of drakes.slice(3))assert.equal(d.objective.dragonType,drakes[2].objective.dragonType);}
   for(const e of out.events.filter(e=>e.objective)){if(['dragon','elder'].includes(e.kind))assert.equal(e.location,'dragon');if(['grubs','baron'].includes(e.kind))assert.equal(e.location,e.kind);}
  }
