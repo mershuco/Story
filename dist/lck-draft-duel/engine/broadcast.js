@@ -1,5 +1,5 @@
-import {draftConfirmMarkup} from './draft-confirm.js?v=345ebe2e4f45';
-import {draftMetaMarkup} from './draft-meta-ui.js?v=345ebe2e4f45';
+import {draftConfirmMarkup} from './draft-confirm.js?v=da4ae1c9cc2f';
+import {draftMetaMarkup} from './draft-meta-ui.js?v=da4ae1c9cc2f';
 export function historicalDraft(example,step=20){
  const d={step,set:example.game,blue:example.blue.id,red:example.red.id,bans:{blue:[],red:[]},picks:{blue:[],red:[]},used:[],patch:example.patch,history:[],reference:true};
  for(const a of example.actions.slice(0,step)){d.history.push(a);if(a.kind==='ban')d.bans[a.side].push(a.champion);else d.picks[a.side].push({...a,team:a.team});}
@@ -37,7 +37,7 @@ export function draftMarkup(c){
  const hover=ui.hoverChampion&&legal.has(ui.hoverChampion)?ui.hoverChampion:null;
  const preview=hover??d.history.at(-1)?.champion??(reference?reference.actions[0].champion:null);
  const champion=E.database().champMap[preview];
- const pool=data.champions.filter(c=>c.available[d.patch]&&(ui.draftRole==='all'||c.roles.includes(ui.draftRole))&&(c.name+c.id).toLowerCase().includes(ui.draftSearch.toLowerCase()));
+ const pool=data.champions.filter(c=>c.available[d.patch]&&(ui.draftRole==='all'||E.draftChampionRoles(s,d,c).includes(ui.draftRole))&&(c.name+c.id).toLowerCase().includes(ui.draftSearch.toLowerCase()));
  const currentKind=turn?.kind==='ban'?'밴':'픽',status=E.draftStatus(d);
  const orderName=status.order==='first'?'선픽 팀':'후픽 팀';
  const blockLabel=turn?.kind==='pick'?`${orderName} · ${status.count}픽 중 ${status.index}번째`:`${orderName} · ${Math.max(0,(d.bans[turn?.side]?.length??0)-(d.step>=12?3:0))+1}/${d.step>=12?2:3}밴`;

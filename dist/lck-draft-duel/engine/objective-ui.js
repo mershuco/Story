@@ -1,6 +1,6 @@
-import {objectiveIcon} from './broadcast-hud.js?v=345ebe2e4f45';
-import {objectiveRewardText,DRAKES} from './objective-effects.js?v=345ebe2e4f45';
-import {OBJECTIVE_NAMES} from './macro-objectives.js?v=345ebe2e4f45';
+import {objectiveIcon} from './broadcast-hud.js?v=da4ae1c9cc2f';
+import {objectiveRewardText,DRAKES} from './objective-effects.js?v=da4ae1c9cc2f';
+import {OBJECTIVE_NAMES} from './macro-objectives.js?v=da4ae1c9cc2f';
 export function objectiveDecisionMarkup(c,set){
  const {state:s,esc,img,btn}=c,p=set.pending;if(!p)return '';
  const blue=set.blue===s.myTeam,side=blue?'blue':'red',other=blue?'red':'blue',chance=n=>Math.round((blue?n:1-n)*100),skills=p.secure;

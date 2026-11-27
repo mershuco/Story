@@ -1,12 +1,13 @@
-import * as E from './engine/engine.js?v=345ebe2e4f45';
-import {draftMarkup} from './engine/broadcast.js?v=345ebe2e4f45';
-import {SIMULATION_MODEL} from './engine/match-sim.js?v=345ebe2e4f45';
-import {mountMatch} from './game.js?v=345ebe2e4f45';
-import {duelMatch,duelState,matchupDraft} from './model.js?v=345ebe2e4f45';
-import {badge,button,championImage,esc,playerName,sheet,teamIcon,teamName} from './ui.js?v=345ebe2e4f45';
+import * as E from './engine/engine.js?v=da4ae1c9cc2f';
+import {draftMarkup} from './engine/broadcast.js?v=da4ae1c9cc2f';
+import {SIMULATION_MODEL} from './engine/match-sim.js?v=da4ae1c9cc2f';
+import {mountMatch} from './game.js?v=da4ae1c9cc2f';
+import {duelMatch,duelMeta,duelState,matchupDraft} from './model.js?v=da4ae1c9cc2f';
+import {badge,button,championImage,esc,playerName,sheet,teamIcon,teamName} from './ui.js?v=da4ae1c9cc2f';
 
 const root=document.querySelector('#duel'),status=document.querySelector('#duel-status');
 const roomApi=document.querySelector('meta[name="duel-api"]')?.content||'./api';
+const assetVersion=new URL(import.meta.url).search;
 const activeRoomKey='lck-draft-duel-active-room';
 const roomKey=id=>'lck-draft-duel-room:'+id;
 const newToken=()=>Array.from(crypto.getRandomValues(new Uint8Array(32)),byte=>byte.toString(16).padStart(2,'0')).join('');
@@ -68,30 +69,39 @@ function home(){
  snapshot=null;seat=null;roomId=null;activeSet=null;localRoles={};ui.draftReferenceId=null;
  toast('');render();
 }
+const patchText=meta=>'PATCH '+E.patchLabel(meta.patch);
+function roomFormat(room){
+ const meta=duelMeta(room,rules);
+ return `${meta.label} · ${patchText(meta)} · BO${room.bestOf}`;
+}
 function renderStart(){
- root.innerHTML=`<section class="duel-intro"><div class="hero-copy"><p class="hero-kicker">2026 리그 오브 레전드</p><h1>1대1 밴픽.<br><em>같은 경기.</em></h1><p class="hero-help">친구와 밴픽하고, 각자 포지션을 배치한 뒤 함께 관전하세요.</p><div class="hero-facts"><span><b>${data.draftMeta.records.length}</b> 2026 메타 세트</span><span><b>BO1 · BO3 · BO5</b> 대결 형식</span></div></div>
+ const metas=Object.entries(rules.metas);
+ const options=metas.map(([id,meta])=>`<option value="${esc(id)}">${esc(meta.label)}</option>`).join('');
+ root.innerHTML=`<section class="duel-intro"><div class="hero-copy"><p class="hero-kicker">2026 리그 오브 레전드</p><h1>1대1 밴픽.<br><em>같은 경기.</em></h1><p class="hero-help">친구와 밴픽하고, 각자 포지션을 배치한 뒤 함께 관전하세요.</p><div class="hero-facts"><span><b>${metas.length}개</b> 2026 대회 메타</span><span><b>BO1 · BO3 · BO5</b> 대결 형식</span></div></div>
  <div class="duel-form-card"><div class="mini-rift" aria-hidden="true"></div><h2>대결 방 만들기</h2>
- <form data-form="create" class="duel-team-form"><label for="best-of">대결 형식</label><select id="best-of" name="bestOf"><option value="1">BO1 · 단판</option><option value="3">BO3 · 3전 2선승</option><option value="5">BO5 · 5전 3선승</option></select><button class="duel-button primary" type="submit">방 만들기</button></form>
+ <form data-form="create" class="duel-team-form"><label for="room-meta">대회 메타</label><select id="room-meta" name="metaId" aria-describedby="room-meta-details" required><option value="" selected disabled>메타 선택</option>${options}</select><small id="room-meta-details" aria-live="polite" hidden></small>
+ <label for="best-of">대결 형식</label><select id="best-of" name="bestOf"><option value="1">BO1 · 단판</option><option value="3">BO3 · 3전 2선승</option><option value="5">BO5 · 5전 3선승</option></select><button class="duel-button primary" type="submit">방 만들기</button></form>
  <form data-form="join" class="duel-team-form duel-join-form"><label for="invite-entry">초대코드로 입장</label><input id="invite-entry" name="code" maxlength="12" required placeholder="초대코드 8자리" autocapitalize="characters" autocomplete="off" spellcheck="false"><button class="duel-button" type="submit">입장</button></form></div></section>`;
 }
 function renderLobby(room){
- root.innerHTML=`<section class="lobby-stage"><p class="hero-kicker">BO${room.bestOf}</p><h1>상대를 기다리는 중</h1>
+ root.innerHTML=`<section class="lobby-stage"><p class="hero-kicker">${esc(roomFormat(room))}</p><h1>상대를 기다리는 중</h1>
  <div class="invite-link"><label for="room-code">초대코드</label><div><input id="room-code" readonly value="${formatCode(roomId)}"><button class="duel-button primary" data-action="copy-code">복사</button></div><p>친구가 이 코드를 입력하면 같은 방에 입장합니다.</p></div></section>`;
 }
 function renderSelection(room){
  const {rights,choice}=room.selection,turn=choice?rights==='P1'?'P2':'P1':rights;
  const labels={side:[['blue','블루 진영'],['red','레드 진영']],pick:[['first','선픽'],['second','후픽']]};
- const score=duelMatch(room).score;
+ const score=duelMatch(room,rules).score;
  const choices=Object.keys(labels).filter(category=>!choice||choice.category!==category).map(category=>
   `<div class="duel-format-choices"><b>${category==='side'?'진영':'픽 순서'}</b>${labels[category].map(([id,name])=>button(name,'select-side',`data-category="${category}" data-id="${id}"`,'primary')).join('')}</div>`).join('');
- root.innerHTML=sheet(`<section class="duel-series-setup"><p class="hero-kicker">BO${room.bestOf} · GAME ${room.number}</p><h1>진영 · 픽 순서 선택</h1>
+ root.innerHTML=sheet(`<section class="duel-series-setup"><p class="hero-kicker">${esc(roomFormat(room))} · GAME ${room.number}</p><h1>진영 · 픽 순서 선택</h1>
  <p>P1 ${score[0]} : ${score[1]} P2</p><p>${turn===snapshot.player?'내 선택 차례입니다.':`${playerName(turn)}의 선택을 기다립니다.`}</p>${turn===snapshot.player?choices:''}</section>`);
 }
 function activeDraft(){
  const room=snapshot.room;
  draft=matchupDraft(room,rules);
- const state=duelState(snapshot.player,0);
- state.matches=[duelMatch(room)];state.activeDraft=draft;
+ const match=duelMatch(room,rules);
+ const state=duelState(snapshot.player,0,match.date);
+ state.matches=[match];state.activeDraft=draft;
  if(draft.step===20){
   const side=snapshot.side;
   for(const p of draft.picks[side]){
@@ -186,14 +196,16 @@ root.addEventListener('submit',event=>{
  const values=Object.fromEntries(new FormData(form));
  if(form.dataset.form==='create')perform(async()=>{
   const key=newToken();
-  enter(await request('/rooms',{bestOf:Number(values.bestOf),simulationModel:SIMULATION_MODEL},key),key);
+  const created=await request('/rooms',{bestOf:Number(values.bestOf),simulationModel:SIMULATION_MODEL,metaId:values.metaId},key);
+  if(created.room.metaId!==values.metaId)throw Error('선택한 대회 메타로 방을 만들 수 없습니다. 잠시 후 다시 시도해 주세요.');
+  enter(created,key);
  });
  if(form.dataset.form==='join')perform(async()=>{
   const id=normalizeCode(values.code);
   if(!validCode(id))throw Error('초대코드 8자리를 확인해 주세요.');
   const key=load(roomKey(id))??newToken();
   save(roomKey(id),key);
-  enter(await request('/rooms/'+id+'/join',{simulationModel:SIMULATION_MODEL},key),key);
+  enter(await request('/rooms/'+id+'/join',{simulationModel:SIMULATION_MODEL,metaVersion:rules.metaVersion},key),key);
  });
 });
 root.addEventListener('input',e=>{if(e.target.id==='draft-search'){const pos=e.target.selectionStart;ui.draftSearch=e.target.value;draftUI();try{root.querySelector('#draft-search').setSelectionRange(pos,pos);}catch{}}});
@@ -203,6 +215,11 @@ function assign(id,role){
 }
 root.addEventListener('change',e=>{
  const target=e.target;
+ if(target.id==='room-meta'){
+  const meta=rules.metas[target.value],details=root.querySelector('#room-meta-details');
+  details.hidden=!meta;
+  details.textContent=meta?`${patchText(meta)} · 참고 경기 ${meta.games}세트`:'';
+ }
  if(target.dataset.change==='assign-champion')assign(target.value,target.dataset.role);
  if(target.dataset.change==='draft-synergy-champion'){ui.draftSynergyChampion=target.value;ui.draftSynergyPage=0;draftUI();}
 });
@@ -246,7 +263,7 @@ setInterval(()=>{
 
 try{
  [data,rules]=await Promise.all(['game-data','rules'].map(async id=>{
-  const response=await fetch('./engine/'+id+'.json');
+  const response=await fetch('./engine/'+id+'.json'+assetVersion);
   if(!response.ok)throw Error('경기 데이터를 불러오지 못했습니다.');
   return response.json();
  }));

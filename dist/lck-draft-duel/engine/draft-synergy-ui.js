@@ -1,6 +1,6 @@
-import {synergySpikeLabel} from './champion-synergy.js?v=345ebe2e4f45';
-import {draftConfirmMarkup} from './draft-confirm.js?v=345ebe2e4f45';
-import {draftSynergies} from './draft-synergies.js?v=345ebe2e4f45';
+import {synergySpikeLabel} from './champion-synergy.js?v=da4ae1c9cc2f';
+import {draftConfirmMarkup} from './draft-confirm.js?v=da4ae1c9cc2f';
+import {draftSynergies} from './draft-synergies.js?v=da4ae1c9cc2f';
 
 const PAGE_SIZE = 12;
 

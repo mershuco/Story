@@ -1,12 +1,12 @@
-import {draftCounterThreat} from './draft-matchups.js?v=345ebe2e4f45';
-import {draftMetaEvent} from './draft-meta.js?v=345ebe2e4f45';
-import {buildAutoDraftMeta} from './auto-draft-meta.js?v=345ebe2e4f45';
-import {championSynergy,synergyKey} from './champion-synergy.js?v=345ebe2e4f45';
-import {start2026Cup,begin2026International,advance2026Phase,groupPoints,migrate2026SecondHalf} from './rules2026.js?v=345ebe2e4f45';
-import {simulateMatch,SIMULATION_MODEL,battleProbability,createMatchState,advanceMatch,matchOutcome,objectivePreview,upgradeMatchState} from './match-sim.js?v=345ebe2e4f45';
-import {PLAYER_LANE_STYLE} from './lane-calibration-2026.js?v=345ebe2e4f45';
-export {championCombatProfile,championCombat,combatLabels,phaseStrength,fightStage} from './champion-combat.js?v=345ebe2e4f45';
-import {compositionProfile,compositionMatchup,compositionLabels} from './composition.js?v=345ebe2e4f45';
+import {draftCounterThreat} from './draft-matchups.js?v=da4ae1c9cc2f';
+import {draftMetaEvent} from './draft-meta.js?v=da4ae1c9cc2f';
+import {buildAutoDraftMeta} from './auto-draft-meta.js?v=da4ae1c9cc2f';
+import {championSynergy,synergyKey} from './champion-synergy.js?v=da4ae1c9cc2f';
+import {start2026Cup,begin2026International,advance2026Phase,groupPoints,migrate2026SecondHalf} from './rules2026.js?v=da4ae1c9cc2f';
+import {simulateMatch,SIMULATION_MODEL,battleProbability,createMatchState,advanceMatch,matchOutcome,objectivePreview,upgradeMatchState} from './match-sim.js?v=da4ae1c9cc2f';
+import {PLAYER_LANE_STYLE} from './lane-calibration-2026.js?v=da4ae1c9cc2f';
+export {championCombatProfile,championCombat,combatLabels,phaseStrength,fightStage} from './champion-combat.js?v=da4ae1c9cc2f';
+import {compositionProfile,compositionMatchup,compositionLabels} from './composition.js?v=da4ae1c9cc2f';
 export const ROLES = ['TOP','JGL','MID','BOT','SUP'];
 export const ROLE_NAMES = {TOP:'탑',JGL:'정글',MID:'미드',BOT:'원딜',SUP:'서포터'};
 export const PROGRAMS = {balanced:'균형 훈련',mechanics:'개인 기량',champion:'챔피언 집중',scrim:'팀 스크림',rest:'휴식'};
@@ -358,6 +358,13 @@ function autoDraftMeta(s,d) {
  if(!autoDraftMetaCache.has(key))autoDraftMetaCache.set(key,buildAutoDraftMeta(DB.draftMeta.records,event,d.patch));
  return autoDraftMetaCache.get(key);
 }
+const listedDraftRoles=(d,c)=>d.competition==='DUEL'&&d.matchPhase&&d.matchPhase!=='DUEL'?c.baseRoles??c.roles:c.roles;
+export function draftChampionRoles(s,d,c) {
+ const listed=listedDraftRoles(d,c);
+ if(listed===c.roles)return listed;
+ const meta=autoDraftMeta(s,d);
+ return ROLES.filter(role=>listed.includes(role)||(meta?.roles.get(c.id+':'+role)?.picks??0)>=2);
+}
 function draftRoleScorer(s,d,teamId,meta=autoDraftMeta(s,d)) {
  const players=Object.fromEntries(ROLES.map(role=>[role,s.players[team(s,teamId).lineup[role]]]));
  const fallback=meta?null:new Map(metaFor(s).champions.map(c=>[c.id,c.presence]));
@@ -365,7 +372,7 @@ function draftRoleScorer(s,d,teamId,meta=autoDraftMeta(s,d)) {
  return (id,role)=>{
   const key=id+':'+role;
   if(cache.has(key))return cache.get(key);
-  const champion=DB.champMap[id],player=players[role],comfort=mastery(s,player?.id,id),listed=champion.roles.includes(role);
+  const champion=DB.champMap[id],player=players[role],comfort=mastery(s,player?.id,id),listed=listedDraftRoles(d,champion).includes(role);
   let result;
   if(!meta){
    result={score:(player?.ovr??75)*.1+comfort*.5+(fallback.get(id)??.2)*22+(listed?16:-35),viable:listed};
@@ -616,7 +623,7 @@ export function draftComposition(d){
 function matchInput(s,m,d,model=SIMULATION_MODEL) {
  if(d.step!==20)throw Error('밴픽을 끝내야 경기를 시작할 수 있습니다.');
  if(!assignmentsReady(d)||!d.assignment?.confirmed)throw Error('포지션 배치를 완료하고 확정해야 경기를 시작할 수 있습니다.');
- const meta=autoDraftMeta(s,d),roleFits=({champion,role})=>DB.champMap[champion].roles.includes(role)||meta?.roles.has(champion+':'+role);
+ const meta=autoDraftMeta(s,d),roleFits=({champion,role})=>listedDraftRoles(d,DB.champMap[champion]).includes(role)||meta?.roles.has(champion+':'+role);
  const bp=compositionPower(s,d.blue,d.picks.blue,roleFits),rp=compositionPower(s,d.red,d.picks.red,roleFits),picks=[...d.picks.blue,...d.picks.red];
  const jungleSkill=side=>{const pick=d.picks[side].find(p=>p.role==='JGL'),p=getPlayer(s,team(s,d[side]).lineup.JGL);return Math.round(clamp(p.ovr*.8+mastery(s,p.id,pick.champion)*.2-(p.fatigue??0)*.06,40,99)*10)/10;};
  const playerProfiles=Object.fromEntries(picks.map(pick=>{

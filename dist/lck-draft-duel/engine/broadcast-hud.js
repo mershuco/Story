@@ -1,4 +1,4 @@
-import {DRAKES} from './objective-effects.js?v=345ebe2e4f45';
+import {DRAKES} from './objective-effects.js?v=da4ae1c9cc2f';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const objectiveIcon=(type,alt='')=>`<img class="objective-icon" src="https://mershuco.github.io/Story/assets/objectives/${esc(type)}.png" alt="${esc(alt||DRAKES[type]?.name||({baron:'바론',elder:'장로',ward:'시야',grubs:'공허 유충'})[type]||type)}">`;
 export function structurePosition(side,lane,kind,index=0){

@@ -1,9 +1,9 @@
-import {replayMatch as replayArchived,goldInfluence,battleFactors,battleProbability,matchRandom} from './match-sim-v4.js?v=345ebe2e4f45';
-import {compositionMatchup} from './composition-v5.js?v=345ebe2e4f45';
-import {phaseStrength} from './champion-combat.js?v=345ebe2e4f45';
-import {macroProfile,objectiveChances,automaticObjectiveDecision,OBJECTIVE_NAMES} from './macro-objectives-v5.js?v=345ebe2e4f45';
-import * as legacyV5 from './match-sim-v5.js?v=345ebe2e4f45';
-import {initializeObjectives,takeDragon,grantTemporaryBuff,loseBuffsOnDeath,buffCoverage,objectivePower,structurePressure,objectiveSnapshot,DRAKES} from './objective-effects-v6.js?v=345ebe2e4f45';
+import {replayMatch as replayArchived,goldInfluence,battleFactors,battleProbability,matchRandom} from './match-sim-v4.js?v=da4ae1c9cc2f';
+import {compositionMatchup} from './composition-v5.js?v=da4ae1c9cc2f';
+import {phaseStrength} from './champion-combat.js?v=da4ae1c9cc2f';
+import {macroProfile,objectiveChances,automaticObjectiveDecision,OBJECTIVE_NAMES} from './macro-objectives-v5.js?v=da4ae1c9cc2f';
+import * as legacyV5 from './match-sim-v5.js?v=da4ae1c9cc2f';
+import {initializeObjectives,takeDragon,grantTemporaryBuff,loseBuffsOnDeath,buffCoverage,objectivePower,structurePressure,objectiveSnapshot,DRAKES} from './objective-effects-v6.js?v=da4ae1c9cc2f';
 export {goldInfluence,battleFactors,battleProbability,matchRandom};
 export const SIMULATION_MODEL='event-v6';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));

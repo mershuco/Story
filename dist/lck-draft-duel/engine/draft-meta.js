@@ -1,6 +1,19 @@
 export const META_ROLES=['TOP','JGL','MID','BOT','SUP'];
+export const DUEL_META_PRESETS=[
+ {id:'cup',label:'CUP',events:['LCK_CUP']},
+ {id:'first-stand',label:'First Stand',events:['FST']},
+ {id:'spring',label:'1–2라운드 · 로투엠',events:['LCK_REG12','LCK_ROAD']},
+ {id:'msi',label:'MSI',events:['MSI']},
+ {id:'summer',label:'3–4라운드 · 플옵',events:['LCK_REG34','LCK_PLAYOFFS']},
+ {id:'worlds',label:'월즈',events:['WORLDS']},
+];
+export function draftMetaRecords(records,event){
+ if(event==='SEASON_ALL')return records;
+ const events=DUEL_META_PRESETS.find(preset=>preset.id===event)?.events??[event];
+ return records.filter(game=>events.includes(game.event));
+}
 export function draftMetaEvent(competition,phase='',date='2026-01-01'){
- if(competition==='DUEL'||competition==='1대1')return 'SEASON_ALL';
+ if(competition==='DUEL'||competition==='1대1')return DUEL_META_PRESETS.find(preset=>preset.id===phase)?.id??'SEASON_ALL';
  if(competition==='CUP')return 'LCK_CUP';
  if(competition==='REGULAR'&&phase==='REG12')return 'LCK_REG12';
  if(competition==='REGULAR')return ['REG34','REG35','REG345'].includes(phase)||date.slice(5)>='07-01'?'LCK_REG34':'LCK_REG12';
@@ -14,8 +27,8 @@ export function draftMetaView(data,{date,competition,phase,patch,mode='event'}){
  const event=draftMetaEvent(competition,phase,date),referenceDate='2026-'+date.slice(5)+'T00:00:00';
  // Neither a missing patch nor an empty early-season window may import another event.
  const allSeason=event==='SEASON_ALL';
- const records=(data.draftMeta?.records??[]).filter(g=>(allSeason||g.event===event)&&(mode!=='prior'||g.date.replace(' ','T')<referenceDate));
- const roles=Object.fromEntries(META_ROLES.map(r=>[r,[]])),label=LABELS[event]??competition;
+ const records=draftMetaRecords(data.draftMeta?.records??[],event).filter(g=>mode!=='prior'||g.date.replace(' ','T')<referenceDate);
+ const roles=Object.fromEntries(META_ROLES.map(r=>[r,[]])),label=DUEL_META_PRESETS.find(preset=>preset.id===event)?.label??LABELS[event]??competition;
  if(!records.length)return {event,patch,mode,label,empty:true,games:0,openingGames:0,roles,records,asOf:mode==='prior'?referenceDate:null};
  const opening=records.filter(g=>g.set===1),patchRecords=records.filter(g=>g.patch===patch),priorityGames=allSeason?[]:patchRecords.filter(g=>g.set===1&&g.bans),priority=priorityGames.length?priorityGames:opening.filter(g=>g.bans);
  const stats=new Map();const row=id=>{if(!stats.has(id))stats.set(id,{id,picks:0,wins:0,roles:{},openingPicks:0,openingBans:0});return stats.get(id);};

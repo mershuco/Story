@@ -1,4 +1,5 @@
-import {championSynergy,synergyKey} from './champion-synergy.js?v=345ebe2e4f45';
+import {championSynergy,synergyKey} from './champion-synergy.js?v=da4ae1c9cc2f';
+import {draftMetaRecords} from './draft-meta.js?v=da4ae1c9cc2f';
 
 function patchNumber(patch) {
  const [major, minor] = patch.split('.').map(Number);
@@ -7,7 +8,7 @@ function patchNumber(patch) {
 
 export function buildAutoDraftMeta(records, event, patch) {
  const allSeason=event==='SEASON_ALL';
- const games=allSeason?records:records.filter(game=>game.event===event);
+ const games=draftMetaRecords(records,event);
  if (!games.length) return null;
  const patches = [...new Set(games.map(game => game.patch))].sort((a,b) => patchNumber(b) - patchNumber(a));
  const primaryPatch = patches.find(version => patchNumber(version) <= patchNumber(patch)) ?? patches.at(-1);

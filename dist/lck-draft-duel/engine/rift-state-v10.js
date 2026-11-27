@@ -1,9 +1,9 @@
-import {accountIncome,fractionalIncome,availableFarmMinutes} from './match-economy.js?v=345ebe2e4f45';
-import {claimObjectiveBounty,bountySnapshot} from './objective-bounties.js?v=345ebe2e4f45';
+import {accountIncome,fractionalIncome,availableFarmMinutes} from './match-economy.js?v=da4ae1c9cc2f';
+import {claimObjectiveBounty,bountySnapshot} from './objective-bounties.js?v=da4ae1c9cc2f';
 // Persistent structures, player economy and vision. Numerical coefficients are
 // game estimates; damage is resolved per scene, not with LoL's server combat.
-import {phaseStrength} from './champion-combat.js?v=345ebe2e4f45';
-import {buffCoverage,structurePressure} from './objective-effects-v9.js?v=345ebe2e4f45';
+import {phaseStrength} from './champion-combat.js?v=da4ae1c9cc2f';
+import {buffCoverage,structurePressure} from './objective-effects-v9.js?v=da4ae1c9cc2f';
 export const LANES=['top','mid','bot'];
 export const ZONES=['blueTop','blueBot','redTop','redBot','riverTop','riverBot'];
 export const TOWER_HP=[2700,3200,3600];

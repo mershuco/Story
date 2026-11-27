@@ -1,4 +1,4 @@
-import {VSCHAMP_LANE_DATA} from './vschamp-lane-data.js?v=345ebe2e4f45';
+import {VSCHAMP_LANE_DATA} from './vschamp-lane-data.js?v=da4ae1c9cc2f';
 
 export const LANE_ROLES = {top: ['TOP'], mid: ['MID'], bot: ['BOT', 'SUP']};
 const GRADE = [0, .52, 1];

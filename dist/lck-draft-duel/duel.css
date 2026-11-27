@@ -23,6 +23,7 @@ body[data-screen=duel] #duel h1,body[data-screen=duel] #duel h2,body[data-screen
 .mini-rift{height:138px;background:linear-gradient(140deg,#141c2799,#102f2699),url('https://mershuco.github.io/Story/assets/maps/summoners-rift.png') center 45%/100% auto;border-radius:8px}
 .duel-team-form{display:grid;gap:10px}
 .duel-team-form label,.invite-link label{font-size:.8rem;color:var(--duel-muted);font-weight:650}
+#room-meta-details{color:var(--duel-muted);font-size:.8rem}
 #duel select,#duel input{min-width:0;width:100%;border:1px solid #314354;border-radius:8px;color:var(--duel-text);background:#0c121a;padding:11px 12px;font:inherit}
 #duel select{min-height:44px}
 .duel-button{display:inline-flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--duel-line);border-radius:8px;background:#192631;color:var(--duel-text);font:inherit;font-weight:700;text-decoration:none;padding:12px 15px;cursor:pointer;min-height:43px;white-space:nowrap;transition:background .16s}

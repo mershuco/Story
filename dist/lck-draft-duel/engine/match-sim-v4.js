@@ -1,6 +1,6 @@
-import {simulateMatch as simulateMatchV3} from './match-sim-v3.js?v=345ebe2e4f45';
-import {simulateMatch as simulateMatchV2} from './match-sim-v2.js?v=345ebe2e4f45';
-import {compositionMatchup} from './composition-v4.js?v=345ebe2e4f45';
+import {simulateMatch as simulateMatchV3} from './match-sim-v3.js?v=da4ae1c9cc2f';
+import {simulateMatch as simulateMatchV2} from './match-sim-v2.js?v=da4ae1c9cc2f';
+import {compositionMatchup} from './composition-v4.js?v=da4ae1c9cc2f';
 // Event-by-event simulation. No winner is chosen before the fights are played.
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const sigmoid=x=>1/(1+Math.exp(-x));
